@@ -20,6 +20,7 @@ jobs:
       contents: write
     outputs:
       data_sha: ${{ steps.persist.outputs.sha }}
+      artifact_name: ${{ steps.base.outputs.artifact_name }}
     steps:
       - uses: actions/checkout@v7.0.1
         with:
@@ -30,7 +31,9 @@ jobs:
           python-version: '3.12'
       - name: Remember starting revision
         id: base
-        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "artifact_name=github-pages-${{ github.run_id }}-${{ github.run_attempt }}" >> "$GITHUB_OUTPUT"
       - name: Verify core behavior
         run: |
           python -m unittest discover -s tests -v
@@ -63,6 +66,7 @@ jobs:
       - name: Package the website only
         uses: actions/upload-pages-artifact@v5.0.0
         with:
+          name: ${{ steps.base.outputs.artifact_name }}
           path: site
 
   deploy:
@@ -91,4 +95,6 @@ jobs:
       - name: Deploy the verified artifact
         id: deployment
         uses: actions/deploy-pages@v5.0.1
+        with:
+          artifact_name: ${{ needs.build.outputs.artifact_name }}
 

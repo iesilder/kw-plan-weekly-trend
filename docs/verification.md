@@ -11,9 +11,11 @@
 | 로컬 핵심 테스트 | 10개 통과: 중복·수정·복수 근거·시간대·실패 보존·세대/상태 일치·가상 표시·live 기능 차단 |
 | 독립 Python 프로세스 2회 실행 | 통과: 기사/버전/이슈 7/8/6 유지, 실행 수 1→2, 새 버전 0 |
 | JavaScript 구문 검사 | 통과 |
-| GitHub 테스트 CI | 저장소 반영 후 확인 |
+| GitHub 테스트 CI | 성공: [Demo checks #2](https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41459780096), 커밋 `d7f26b6e518cb06510b32543d888a8e4c533ad3e` |
 | GitHub 수동 워크플로 | 미실행 |
 | Pages 배포 및 공개 URL 확인 | 미검증 |
+
+GitHub 호스팅 Linux 실행기에서 핵심 테스트 10개, JavaScript 구문 검사, 독립 프로세스 반복 실행 검사가 모두 성공했습니다. 이는 push 이벤트의 테스트 CI 결과이며 수동 배포 워크플로의 성공을 의미하지 않습니다. 공식 GitHub 액션은 Node 24 지원 릴리스로 맞췄습니다.
 
 브라우저 자동 제어는 Windows에서 현재 URL을 확인하지 못해 중단됐습니다. 연결된 GitHub 도구는 새 수동 워크플로 실행과 Pages 설정 변경을 지원하지 않아, 이 두 작업의 완료를 주장하지 않습니다. 위 README 절차를 따라 실행한 뒤 Actions 결과와 공개 화면을 별도로 확인해야 합니다.
 

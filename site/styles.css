@@ -4,8 +4,9 @@
   --steel-blue:#2F5D8A;
   --light-blue:#9CC7E6;
   --ivory:#F2E9DA;
-  --page-background:var(--ivory);
-  --surface-background:var(--ivory);
+  --white:#FFFFFF;
+  --page-background:var(--white);
+  --surface-background:var(--white);
   --surface-subtle:rgba(156,199,230,.10);
   --surface-hover:rgba(156,199,230,.20);
   --surface-accent:var(--light-blue);

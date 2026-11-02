@@ -24,5 +24,11 @@
   "legacy_demo_preserved": true,
   "metadata_only": true,
   "github_actions_validation": "pending_new_workflow_dispatch",
-  "pages_phase2_deployment": "pending"
+  "pages_phase2_deployment": "pending",
+  "implementation_commit": "baaf8be8c37e6b9b7c4f730b38a27c2c74ce2e0c",
+  "github_offline_ci": {
+    "url": "https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41549017372",
+    "conclusion": "success",
+    "tests": 58
+  }
 }

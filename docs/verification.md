@@ -2,7 +2,7 @@
 
 ## 2단계 실제 수집 — 개발 실행 환경에서 수동 2회 검증
 
-기존 GitHub SQLite를 읽어 검증용 사본에서 실행했습니다. 사용자 PC나 AI는 사용하지 않았습니다. 아래 결과는 **GitHub Actions 실행 결과가 아닌 개발 실행 환경의 실제 DART 수집 결과**입니다. 검증된 DB·상태·마트를 저장소 반영 대상으로 준비했습니다.
+기존 GitHub SQLite를 읽어 검증용 사본에서 실행했습니다. 사용자 PC나 AI는 사용하지 않았습니다. 아래 결과는 **GitHub Actions 실행 결과가 아닌 개발 실행 환경의 실제 DART 수집 결과**입니다. 검증된 DB·상태·마트와 구현을 [baaf8be8](https://github.com/iesilder/kw-plan-weekly-trend/commit/baaf8be8c37e6b9b7c4f730b38a27c2c74ce2e0c)에 함께 반영했습니다.
 
 | 항목 | 첫 실행 | 두 번째 실행 |
 |---|---:|---:|
@@ -24,7 +24,9 @@
 
 ## GitHub Actions·Pages
 
-2단계용 `Manual collection and Pages`의 새 수동 실행과 실제 Pages 화면 검증은 아직 완료하지 않았습니다. 이전 실행의 재실행은 과거 워크플로 정의를 사용하므로 새 `Run workflow`가 필요합니다. 코드·DB 검증과 외부 배포 검증을 혼동하지 않습니다.
+[Collection checks 실행](https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41549017372)이 위 구현 커밋에서 성공했습니다. 58개 오프라인 테스트, JavaScript 구문 검사, 독립 프로세스 반복 저장 검사가 통과했습니다. 이 검사는 실제 수집·배포를 실행하지 않습니다.
+
+2단계용 `Manual collection and Pages`의 새 수동 실행과 실제 Pages 화면 검증은 아직 완료하지 않았습니다. 이전 실행의 재실행은 과거 워크플로 정의를 사용하므로 새 `Run workflow`가 필요합니다. 코드·DB 검증과 외부 배포 검증을 혼동하지 않습니다. 연결 도구에는 새 workflow_dispatch 시작 기능이 없고 작업 브라우저는 로그아웃 상태이므로, [수동 실행 화면](https://github.com/iesilder/kw-plan-weekly-trend/actions/workflows/pipeline.yml)에서 main의 새 Run workflow가 필요합니다.
 
 1단계/색상 변경의 기존 성공 실행: https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41544024109
 

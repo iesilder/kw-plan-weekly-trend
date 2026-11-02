@@ -1,5 +1,7 @@
 # 주간 경쟁사 동향 · 1단계 최소 데모
 
+**[배포된 데모 열기](https://iesilder.github.io/kw-plan-weekly-trend/)** · [수동 실행 결과](https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41461017107)
+
 가상 기사로 `수집 결과 → 중복·변경 처리 → SQLite → 이슈 후보 JSON → 정적 화면`을 확인하는 프로젝트입니다. **실제 기사 수집, AI 호출, 정기 실행은 연결하지 않았습니다.**
 
 모든 기사는 가상 A~E 증권을 대상으로 만든 시나리오입니다. 최근 경영진 관심사와 실제 보고 이력은 비어 있으며, 보고 상태는 **등록된 실제 보고 이력 없음**으로 표시합니다.

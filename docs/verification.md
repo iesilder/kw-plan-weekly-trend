@@ -1,29 +1,40 @@
 # 검증 기록
 
-## 검증 구분
-
-로컬 테스트, GitHub Actions 실행, Pages 배포는 서로 다른 검증입니다. 수동 워크플로 파일이 존재하는 사실만으로 실행 또는 배포가 완료됐다고 보지 않습니다.
-
-로컬 최종 검증은 2026-11-02에 수행했습니다.
+2026-11-02 기준 1단계 가상 데이터 데모의 구현, GitHub Actions 수동 실행, Pages 배포 및 공개 화면을 확인했습니다.
 
 | 항목 | 결과 |
 |---|---|
 | 로컬 핵심 테스트 | 10개 통과: 중복·수정·복수 근거·시간대·실패 보존·세대/상태 일치·가상 표시·live 기능 차단 |
 | 독립 Python 프로세스 2회 실행 | 통과: 기사/버전/이슈 7/8/6 유지, 실행 수 1→2, 새 버전 0 |
 | JavaScript 구문 검사 | 통과 |
-| GitHub 테스트 CI | 성공: [Demo checks #2](https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41459780096), 커밋 `d7f26b6e518cb06510b32543d888a8e4c533ad3e` |
-| GitHub 수동 워크플로 | 미실행 |
-| Pages 배포 및 공개 URL 확인 | 미검증 |
+| GitHub 테스트 CI | 성공: [Demo checks #2](https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41459780096) |
+| GitHub 수동 워크플로 | 성공: [Manual demo and Pages #1](https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41461017107), 이벤트 workflow_dispatch |
+| Pages 배포 | build·deploy 모두 성공, [공개 사이트](https://iesilder.github.io/kw-plan-weekly-trend/) 접속 확인 |
+| 공개 화면 동작 | 주제·회사 필터, 검색, 근거 펼치기, 보고 이력 빈 상태, 필터 초기화 확인 |
+| 브라우저 실행 오류 | 확인 시 console error/warn 없음 |
 
-GitHub 호스팅 Linux 실행기에서 핵심 테스트 10개, JavaScript 구문 검사, 독립 프로세스 반복 실행 검사가 모두 성공했습니다. 이는 push 이벤트의 테스트 CI 결과이며 수동 배포 워크플로의 성공을 의미하지 않습니다. 공식 GitHub 액션은 Node 24 지원 릴리스로 맞췄습니다.
+## 수동 실행 증거
 
-브라우저 자동 제어는 Windows에서 현재 URL을 확인하지 못해 중단됐습니다. 연결된 GitHub 도구는 새 수동 워크플로 실행과 Pages 설정 변경을 지원하지 않아, 이 두 작업의 완료를 주장하지 않습니다. 위 README 절차를 따라 실행한 뒤 Actions 결과와 공개 화면을 별도로 확인해야 합니다.
+- 실행 시작 커밋: `f7a18da4995ff21e8e9adcdbef83089b9eb12e32`
+- 데이터 저장 커밋: [fb5b6b1](https://github.com/iesilder/kw-plan-weekly-trend/commit/fb5b6b1c6337d5ed8191a9f73f1d22c6938ed2d7)
+- 데이터 생성 ID: `demo-711c88ac4298e3bd681e`
+- 저장 시각: 2026-11-02 23:20:40 한국시간
+- 기사 7개·버전 8개·이슈 6개 유지, 새 버전 0개, 입력 중복 9개
+- 기존 SQLite를 이어 사용해 누적 실행 수가 3→4로 증가
+- SQLite·state·정적 JSON을 Actions 봇이 저장소에 커밋한 후 사이트를 배포
+- latest/status/state의 생성 ID 일치
+- 실제 수집·AI·정기 실행 모두 비활성, 경영진 관심사와 실제 보고 이력 모두 0건
 
-## 수동 배포 확인 기준
+누적 실행 수에는 로컬 데모 실행도 포함됩니다. 이번 검증에서 GitHub 수동 워크플로는 1회 실행했으며, 두 독립 프로세스의 반복 실행 검사는 별도로 통과했습니다.
 
-- `Manual demo and Pages`가 `workflow_dispatch` 이벤트로 시작됩니다.
-- `build`와 `deploy`가 모두 성공합니다.
-- 실행 요약에 기사 7개·버전 8개·이슈 6개, 실제 보고 이력 0건·관심사 0건이 표시됩니다.
-- 저장소의 SQLite/상태/정적 JSON이 같은 실행 결과로 커밋됩니다.
-- 배포 URL에서 5개 주제와 가상 데이터 표시, 검색·필터·근거 확인이 동작합니다.
-- 재실행 후 기사·버전·이슈 수는 같고 실행 횟수만 증가합니다.
+## 공개 화면 확인
+
+- 다섯 개 합의 주제 및 가상 데이터 안내 표시
+- 디지털·AI·신사업 선택 시 후보 1건
+- 검색어 `주문` 입력 시 주문 서비스 장애 복구 후보 1건
+- 회사 `가상 A증권` 선택 시 후보 2건
+- AI 도우미 이슈의 가상 원자료 및 수정 시나리오 표시
+- 실제 보고 이력 창에 등록된 보고 없음 표시
+- 초기화 시 전체 후보 6건 복구
+
+복사·정렬·모바일 화면은 이번 브라우저 점검 범위에 포함하지 않았습니다. 실제 출처 수집, AI 호출, 정기 실행의 정상 동작을 검증한 결과가 아닙니다.

@@ -20,7 +20,7 @@
   "analysis_status": "demo_rules",
   "evidence_confidence": "fictional",
   "schema_version": "1.0",
-  "generation_id": "demo-c656d8032d064ae6b666",
+  "generation_id": "demo-711c88ac4298e3bd681e",
   "change_summary": "가상 자료 간 중복을 정리했습니다. 등록된 실제 보고 이력은 없습니다.",
   "last_report": null,
   "evidence": [

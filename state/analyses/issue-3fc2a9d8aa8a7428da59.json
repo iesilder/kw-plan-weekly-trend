@@ -1,0 +1,58 @@
+{
+  "issue_id": "issue-3fc2a9d8aa8a7428da59",
+  "title": "임원ㆍ주요주주특정증권등소유상황보고서",
+  "company": "NH투자증권",
+  "company_ids": [
+    "company-3"
+  ],
+  "companies": [
+    "NH투자증권"
+  ],
+  "topic_id": "performance",
+  "topic": "실적·자본·주주정책",
+  "priority": "unranked",
+  "report_status": "no_history",
+  "why_now": "제목의 회사·업권 정보와 주제 키워드(주요주주, 소유상황)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+  "bullets": [],
+  "evidence_ids": [
+    "version-d270f6ec6b65dadcf53d"
+  ],
+  "detail_path": "data/issues/issue-3fc2a9d8aa8a7428da59.json",
+  "is_demo": false,
+  "analysis_status": "pending_ai",
+  "evidence_confidence": "metadata_only",
+  "source_name": "DART · NH투자증권",
+  "published_at": null,
+  "published_date": "2026-10-06",
+  "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+  "matched_keywords": [
+    "주요주주",
+    "소유상황"
+  ],
+  "matched_topic_ids": [
+    "strategy",
+    "performance"
+  ],
+  "schema_version": "1.0",
+  "generation_id": "live-611416cb1f6c55e15110",
+  "change_summary": "본문·기보고 대비 변화는 분석하지 않았습니다.",
+  "last_report": null,
+  "evidence": [
+    {
+      "title": "임원ㆍ주요주주특정증권등소유상황보고서",
+      "published_at": null,
+      "published_date": "2026-10-06",
+      "source_updated_at": null,
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "content_level": "metadata_only",
+      "content_text": "",
+      "source_id": "dart-company-3",
+      "source_name": "DART · NH투자증권",
+      "retention_basis": "공시 식별에 필요한 회사명·법정 서식명·접수번호·접수일·원문 링크만 보존합니다. 본문·첨부·제출인 개인정보는 수집하지 않으며 DART 콘텐츠 전체의 재배포 허가를 주장하지 않습니다.",
+      "retention_url": "https://dart.fss.or.kr/introduction/content5.do",
+      "evidence_id": "version-d270f6ec6b65dadcf53d",
+      "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261006000319",
+      "is_demo": false
+    }
+  ]
+}

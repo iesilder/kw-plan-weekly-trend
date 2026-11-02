@@ -15,6 +15,10 @@ def main():
         root = Path(directory)
         for name in ("config", "reports", "tests/fixtures"):
             shutil.copytree(REPO / name, root / name)
+        settings_path = root / "config/pipeline.json"
+        settings = json.loads(settings_path.read_text(encoding="utf-8"))
+        settings.update(mode="demo", real_collection_enabled=False)
+        settings_path.write_text(json.dumps(settings), encoding="utf-8")
 
         def execute(command):
             output = subprocess.check_output(

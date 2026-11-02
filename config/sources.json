@@ -1,5 +1,260 @@
 {
   "schema_version": "1.0",
-  "sources": [],
-  "note": "실제 출처는 수신·저장·AI 활용 조건 검증 후 별도 개발 단계에서 활성화합니다."
+  "sources": [
+    {
+      "id": "dart-company-1",
+      "name": "DART · 미래에셋증권",
+      "enabled": true,
+      "type": "dart_html",
+      "adapter": "dart_html",
+      "url": "https://dart.fss.or.kr/dsab001/search.ax",
+      "company_id": "company-1",
+      "company": "미래에셋증권",
+      "corp_name": "미래에셋증권",
+      "corp_code": "00111722",
+      "scope": "company",
+      "allowed_hosts": [
+        "dart.fss.or.kr"
+      ],
+      "retention": "metadata_only",
+      "policy_status": "verified",
+      "retention_basis": "공시 식별에 필요한 회사명·법정 서식명·접수번호·접수일·원문 링크만 보존합니다. 본문·첨부·제출인 개인정보는 수집하지 않으며 DART 콘텐츠 전체의 재배포 허가를 주장하지 않습니다.",
+      "retention_url": "https://dart.fss.or.kr/introduction/content5.do",
+      "max_pages": 3,
+      "initial_lookback_days": 30,
+      "overlap_hours": 48,
+      "coverage_note": "회사별 공개 공시목록. 최초 최근 30일, 이후 마지막 성공 범위에 48시간을 겹쳐 조회. 최대 3페이지·300건; 잘린 범위는 상태에 표시. 제목만으로 주제를 분류하므로 본문에만 있는 내용은 놓칠 수 있습니다."
+    },
+    {
+      "id": "dart-company-2",
+      "name": "DART · 한국투자증권",
+      "enabled": true,
+      "type": "dart_html",
+      "adapter": "dart_html",
+      "url": "https://dart.fss.or.kr/dsab001/search.ax",
+      "company_id": "company-2",
+      "company": "한국투자증권",
+      "corp_name": "한국투자증권",
+      "corp_code": "00160144",
+      "scope": "company",
+      "allowed_hosts": [
+        "dart.fss.or.kr"
+      ],
+      "retention": "metadata_only",
+      "policy_status": "verified",
+      "retention_basis": "공시 식별에 필요한 회사명·법정 서식명·접수번호·접수일·원문 링크만 보존합니다. 본문·첨부·제출인 개인정보는 수집하지 않으며 DART 콘텐츠 전체의 재배포 허가를 주장하지 않습니다.",
+      "retention_url": "https://dart.fss.or.kr/introduction/content5.do",
+      "max_pages": 3,
+      "initial_lookback_days": 30,
+      "overlap_hours": 48,
+      "coverage_note": "회사별 공개 공시목록. 최초 최근 30일, 이후 마지막 성공 범위에 48시간을 겹쳐 조회. 최대 3페이지·300건; 잘린 범위는 상태에 표시. 제목만으로 주제를 분류하므로 본문에만 있는 내용은 놓칠 수 있습니다."
+    },
+    {
+      "id": "dart-company-3",
+      "name": "DART · NH투자증권",
+      "enabled": true,
+      "type": "dart_html",
+      "adapter": "dart_html",
+      "url": "https://dart.fss.or.kr/dsab001/search.ax",
+      "company_id": "company-3",
+      "company": "NH투자증권",
+      "corp_name": "NH투자증권",
+      "corp_code": "00120182",
+      "scope": "company",
+      "allowed_hosts": [
+        "dart.fss.or.kr"
+      ],
+      "retention": "metadata_only",
+      "policy_status": "verified",
+      "retention_basis": "공시 식별에 필요한 회사명·법정 서식명·접수번호·접수일·원문 링크만 보존합니다. 본문·첨부·제출인 개인정보는 수집하지 않으며 DART 콘텐츠 전체의 재배포 허가를 주장하지 않습니다.",
+      "retention_url": "https://dart.fss.or.kr/introduction/content5.do",
+      "max_pages": 3,
+      "initial_lookback_days": 30,
+      "overlap_hours": 48,
+      "coverage_note": "회사별 공개 공시목록. 최초 최근 30일, 이후 마지막 성공 범위에 48시간을 겹쳐 조회. 최대 3페이지·300건; 잘린 범위는 상태에 표시. 제목만으로 주제를 분류하므로 본문에만 있는 내용은 놓칠 수 있습니다."
+    },
+    {
+      "id": "dart-company-4",
+      "name": "DART · 삼성증권",
+      "enabled": true,
+      "type": "dart_html",
+      "adapter": "dart_html",
+      "url": "https://dart.fss.or.kr/dsab001/search.ax",
+      "company_id": "company-4",
+      "company": "삼성증권",
+      "corp_name": "삼성증권",
+      "corp_code": "00104856",
+      "scope": "company",
+      "allowed_hosts": [
+        "dart.fss.or.kr"
+      ],
+      "retention": "metadata_only",
+      "policy_status": "verified",
+      "retention_basis": "공시 식별에 필요한 회사명·법정 서식명·접수번호·접수일·원문 링크만 보존합니다. 본문·첨부·제출인 개인정보는 수집하지 않으며 DART 콘텐츠 전체의 재배포 허가를 주장하지 않습니다.",
+      "retention_url": "https://dart.fss.or.kr/introduction/content5.do",
+      "max_pages": 3,
+      "initial_lookback_days": 30,
+      "overlap_hours": 48,
+      "coverage_note": "회사별 공개 공시목록. 최초 최근 30일, 이후 마지막 성공 범위에 48시간을 겹쳐 조회. 최대 3페이지·300건; 잘린 범위는 상태에 표시. 제목만으로 주제를 분류하므로 본문에만 있는 내용은 놓칠 수 있습니다."
+    },
+    {
+      "id": "dart-company-5",
+      "name": "DART · KB증권",
+      "enabled": true,
+      "type": "dart_html",
+      "adapter": "dart_html",
+      "url": "https://dart.fss.or.kr/dsab001/search.ax",
+      "company_id": "company-5",
+      "company": "KB증권",
+      "corp_name": "케이비증권",
+      "corp_code": "00164876",
+      "scope": "company",
+      "allowed_hosts": [
+        "dart.fss.or.kr"
+      ],
+      "retention": "metadata_only",
+      "policy_status": "verified",
+      "retention_basis": "공시 식별에 필요한 회사명·법정 서식명·접수번호·접수일·원문 링크만 보존합니다. 본문·첨부·제출인 개인정보는 수집하지 않으며 DART 콘텐츠 전체의 재배포 허가를 주장하지 않습니다.",
+      "retention_url": "https://dart.fss.or.kr/introduction/content5.do",
+      "max_pages": 3,
+      "initial_lookback_days": 30,
+      "overlap_hours": 48,
+      "coverage_note": "회사별 공개 공시목록. 최초 최근 30일, 이후 마지막 성공 범위에 48시간을 겹쳐 조회. 최대 3페이지·300건; 잘린 범위는 상태에 표시. 제목만으로 주제를 분류하므로 본문에만 있는 내용은 놓칠 수 있습니다."
+    },
+    {
+      "id": "dart-company-6",
+      "name": "DART · 신한투자증권",
+      "enabled": true,
+      "type": "dart_html",
+      "adapter": "dart_html",
+      "url": "https://dart.fss.or.kr/dsab001/search.ax",
+      "company_id": "company-6",
+      "company": "신한투자증권",
+      "corp_name": "신한투자증권",
+      "corp_code": "00138321",
+      "scope": "company",
+      "allowed_hosts": [
+        "dart.fss.or.kr"
+      ],
+      "retention": "metadata_only",
+      "policy_status": "verified",
+      "retention_basis": "공시 식별에 필요한 회사명·법정 서식명·접수번호·접수일·원문 링크만 보존합니다. 본문·첨부·제출인 개인정보는 수집하지 않으며 DART 콘텐츠 전체의 재배포 허가를 주장하지 않습니다.",
+      "retention_url": "https://dart.fss.or.kr/introduction/content5.do",
+      "max_pages": 3,
+      "initial_lookback_days": 30,
+      "overlap_hours": 48,
+      "coverage_note": "회사별 공개 공시목록. 최초 최근 30일, 이후 마지막 성공 범위에 48시간을 겹쳐 조회. 최대 3페이지·300건; 잘린 범위는 상태에 표시. 제목만으로 주제를 분류하므로 본문에만 있는 내용은 놓칠 수 있습니다."
+    },
+    {
+      "id": "dart-company-7",
+      "name": "DART · 하나증권",
+      "enabled": true,
+      "type": "dart_html",
+      "adapter": "dart_html",
+      "url": "https://dart.fss.or.kr/dsab001/search.ax",
+      "company_id": "company-7",
+      "company": "하나증권",
+      "corp_name": "하나증권",
+      "corp_code": "00113465",
+      "scope": "company",
+      "allowed_hosts": [
+        "dart.fss.or.kr"
+      ],
+      "retention": "metadata_only",
+      "policy_status": "verified",
+      "retention_basis": "공시 식별에 필요한 회사명·법정 서식명·접수번호·접수일·원문 링크만 보존합니다. 본문·첨부·제출인 개인정보는 수집하지 않으며 DART 콘텐츠 전체의 재배포 허가를 주장하지 않습니다.",
+      "retention_url": "https://dart.fss.or.kr/introduction/content5.do",
+      "max_pages": 3,
+      "initial_lookback_days": 30,
+      "overlap_hours": 48,
+      "coverage_note": "회사별 공개 공시목록. 최초 최근 30일, 이후 마지막 성공 범위에 48시간을 겹쳐 조회. 최대 3페이지·300건; 잘린 범위는 상태에 표시. 제목만으로 주제를 분류하므로 본문에만 있는 내용은 놓칠 수 있습니다."
+    },
+    {
+      "id": "dart-company-8",
+      "name": "DART · 메리츠증권",
+      "enabled": true,
+      "type": "dart_html",
+      "adapter": "dart_html",
+      "url": "https://dart.fss.or.kr/dsab001/search.ax",
+      "company_id": "company-8",
+      "company": "메리츠증권",
+      "corp_name": "메리츠증권",
+      "corp_code": "00163682",
+      "scope": "company",
+      "allowed_hosts": [
+        "dart.fss.or.kr"
+      ],
+      "retention": "metadata_only",
+      "policy_status": "verified",
+      "retention_basis": "공시 식별에 필요한 회사명·법정 서식명·접수번호·접수일·원문 링크만 보존합니다. 본문·첨부·제출인 개인정보는 수집하지 않으며 DART 콘텐츠 전체의 재배포 허가를 주장하지 않습니다.",
+      "retention_url": "https://dart.fss.or.kr/introduction/content5.do",
+      "max_pages": 3,
+      "initial_lookback_days": 30,
+      "overlap_hours": 48,
+      "coverage_note": "회사별 공개 공시목록. 최초 최근 30일, 이후 마지막 성공 범위에 48시간을 겹쳐 조회. 최대 3페이지·300건; 잘린 범위는 상태에 표시. 제목만으로 주제를 분류하므로 본문에만 있는 내용은 놓칠 수 있습니다."
+    },
+    {
+      "id": "dart-company-9",
+      "name": "DART · 토스증권",
+      "enabled": true,
+      "type": "dart_html",
+      "adapter": "dart_html",
+      "url": "https://dart.fss.or.kr/dsab001/search.ax",
+      "company_id": "company-9",
+      "company": "토스증권",
+      "corp_name": "토스증권",
+      "corp_code": "01527984",
+      "scope": "company",
+      "allowed_hosts": [
+        "dart.fss.or.kr"
+      ],
+      "retention": "metadata_only",
+      "policy_status": "verified",
+      "retention_basis": "공시 식별에 필요한 회사명·법정 서식명·접수번호·접수일·원문 링크만 보존합니다. 본문·첨부·제출인 개인정보는 수집하지 않으며 DART 콘텐츠 전체의 재배포 허가를 주장하지 않습니다.",
+      "retention_url": "https://dart.fss.or.kr/introduction/content5.do",
+      "max_pages": 3,
+      "initial_lookback_days": 30,
+      "overlap_hours": 48,
+      "coverage_note": "회사별 공개 공시목록. 최초 최근 30일, 이후 마지막 성공 범위에 48시간을 겹쳐 조회. 최대 3페이지·300건; 잘린 범위는 상태에 표시. 제목만으로 주제를 분류하므로 본문에만 있는 내용은 놓칠 수 있습니다."
+    },
+    {
+      "id": "dart-company-10",
+      "name": "DART · 카카오페이증권",
+      "enabled": true,
+      "type": "dart_html",
+      "adapter": "dart_html",
+      "url": "https://dart.fss.or.kr/dsab001/search.ax",
+      "company_id": "company-10",
+      "company": "카카오페이증권",
+      "corp_name": "카카오페이증권",
+      "corp_code": "00762146",
+      "scope": "company",
+      "allowed_hosts": [
+        "dart.fss.or.kr"
+      ],
+      "retention": "metadata_only",
+      "policy_status": "verified",
+      "retention_basis": "공시 식별에 필요한 회사명·법정 서식명·접수번호·접수일·원문 링크만 보존합니다. 본문·첨부·제출인 개인정보는 수집하지 않으며 DART 콘텐츠 전체의 재배포 허가를 주장하지 않습니다.",
+      "retention_url": "https://dart.fss.or.kr/introduction/content5.do",
+      "max_pages": 3,
+      "initial_lookback_days": 30,
+      "overlap_hours": 48,
+      "coverage_note": "회사별 공개 공시목록. 최초 최근 30일, 이후 마지막 성공 범위에 48시간을 겹쳐 조회. 최대 3페이지·300건; 잘린 범위는 상태에 표시. 제목만으로 주제를 분류하므로 본문에만 있는 내용은 놓칠 수 있습니다."
+    }
+  ],
+  "note": "2단계: DART 공개목록의 사실형 공시 식별정보만 사용. 기사 본문·첨부·이미지·외부 언론사 RSS는 보존하지 않습니다.",
+  "deferred_sources": [
+    {
+      "name": "금융위원회",
+      "reason": "RSS 503, HTML 자료별 재사용 조건 미확인"
+    },
+    {
+      "name": "뉴스와이어·연합인포맥스",
+      "reason": "공개 영구 재저장 범위에 관한 명시적 이용조건 미확인"
+    },
+    {
+      "name": "OpenDART API",
+      "reason": "인증키 미연결; 별도 서비스 이용조건을 RSS/HTML에 적용하지 않음"
+    }
+  ]
 }

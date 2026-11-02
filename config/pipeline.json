@@ -1,9 +1,11 @@
 {
   "schema_version": "1.0",
-  "mode": "demo",
-  "real_collection_enabled": false,
+  "mode": "live",
+  "real_collection_enabled": true,
   "ai_enabled": false,
   "schedule_enabled": false,
   "planned_collection_frequency": "daily_not_enabled",
+  "initial_lookback_days": 30,
+  "overlap_hours": 48,
   "timezone": "Asia/Seoul"
 }

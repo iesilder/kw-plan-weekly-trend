@@ -1,18 +1,60 @@
-# 주간 경쟁사 동향 · 1단계 최소 데모
+# 주간 경쟁사 동향 · 2단계 실제 수집
 
-**[배포된 데모 열기](https://iesilder.github.io/kw-plan-weekly-trend/)** · [수동 실행 결과](https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41461017107)
+[사이트 열기](https://iesilder.github.io/kw-plan-weekly-trend/) · [수동 수집 워크플로](https://github.com/iesilder/kw-plan-weekly-trend/actions/workflows/pipeline.yml)
 
-가상 기사로 `수집 결과 → 중복·변경 처리 → SQLite → 이슈 후보 JSON → 정적 화면`을 확인하는 프로젝트입니다. **실제 기사 수집, AI 호출, 정기 실행은 연결하지 않았습니다.**
+기존 경쟁사 10곳의 DART 공시 식별 메타데이터를 수동 수집해 SQLite에 보존하고, 합의한 5개 주제에 해당하는 자료를 정적 화면에서 확인합니다. **AI 호출과 정기 실행은 연결하지 않았습니다.** 경영진 관심사와 실제 보고 이력은 빈 값입니다.
 
-모든 기사는 가상 A~E 증권을 대상으로 만든 시나리오입니다. 최근 경영진 관심사와 실제 보고 이력은 비어 있으며, 보고 상태는 **등록된 실제 보고 이력 없음**으로 표시합니다.
+## 수집·저장 범위
 
-## 데모 기능
+- 주제: 실적·자본·주주정책 / 디지털·AI·신사업 / 제휴·인수·해외사업 / 조직·경영전략 / 규제·위험·운영.
+- 회사: 미래에셋증권, 한국투자증권, NH투자증권, 삼성증권, KB증권, 신한투자증권, 하나증권, 메리츠증권, 토스증권, 카카오페이증권.
+- 출처: DART 회사별 공식 공개목록. 최초 최근 30일, 이후 마지막 성공 범위와 48시간을 겹쳐 조회합니다. 회사별 최대 3페이지입니다.
+- 공개 보존: 회사명·법정 공시서식명·접수일·접수번호/원문 링크, 출처와 자체 수집·분류 이력. **공시 본문·첨부·제출인 개인정보는 수집하지 않습니다.**
+- 제목 키워드에 따른 분류이며 AI의 중요도 평가·보고 초안이 아닙니다. 회사 경영실적과 상품의 증권발행실적보고서를 구분합니다.
+- URL 중복 제거, 변경 버전 보존, 출처별 수집 실패 및 범위 제한 표시를 지원합니다.
 
-- 합의한 5개 주제만 표시: 실적·자본·주주정책 / 디지털·AI·신사업 / 제휴·인수·해외사업 / 조직·경영전략 / 규제·위험·운영
-- 가상 기사 7개, 기사 버전 8개, 이슈 6개. 중복 URL, 같은 기사 내용 수정, 동일 사건의 복수 근거를 포함합니다.
-- 주제·회사 필터, 검색, 정렬, 근거와 변경 내용 확인, 보고 초안 복사
-- SQLite 영속 저장, 같은 입력의 재실행 시 기사·버전 중복 생성 방지
-- 데이터 세대 일치·근거 참조 검증을 통과한 결과만 반영
+공시 외 언론 기사와 공시에 나오지 않는 신사업 소식까지 모두 포함하지 않습니다. 자료가 없다는 사실을 해당 회사에 변화가 없다는 의미로 해석하지 않습니다. 자세한 조건은 [출처·저장 기준](docs/sources.md)에서 확인합니다.
+
+## GitHub에서 수동 실행
+
+1. **Actions → Manual collection and Pages → Run workflow → main → Run workflow**를 선택합니다.
+2. `build`는 오프라인 테스트, 실제 공시목록 수집, 데이터 검증, SQLite·상태·마트 커밋을 수행합니다.
+3. `deploy`가 같은 검증 결과를 Pages에 배포합니다. `github-pages`의 주소를 엽니다.
+4. 같은 워크플로를 다시 실행해 기존 데이터와 실행 이력이 유지되는지 확인합니다. 변경이 없는 같은 입력은 버전을 추가하지 않습니다. 두 실행 사이 새 공시나 정정이 생기면 건수가 증가할 수 있습니다.
+
+배포 워크플로의 유일한 시작 조건은 `workflow_dispatch`입니다. **Collection checks**는 코드 변경/PR에 오프라인 테스트만 실행합니다. API 키·PAT 등록은 필요 없으며 GitHub 제공 토큰으로 같은 저장소와 Pages에만 기록합니다.
+
+일부 출처 실패는 성공한 자료와 이전 자료를 보존하고 화면에 표시합니다. 전체 수집 실패도 무결성 검증을 통과한 이전 화면과 실패 상태를 보존하며 워크플로는 실패로 표시합니다. DB/마트 검증 실패 또는 실행 중 main 변경 시에는 강제 덮어쓰기·배포하지 않습니다.
+
+## 개발 검증
+
+운영은 GitHub에서 하며 사용자 PC를 요구하지 않습니다. 개발 환경은 Python 3.12 표준 라이브러리와 JavaScript 구문 검사만 필요합니다.
+
+```sh
+python -m unittest discover -s tests -v
+python scripts/check_repeatability.py
+node --check site/app.js
+python -m weekly_trend collect --root .
+python -m weekly_trend verify --root .
+```
+
+`collect`/`run`만 실제 출처를 요청합니다. `demo`는 여전히 가상 입력 전용이며 실행 설정을 demo로 바꾼 별도 시험 폴더에서 사용합니다. 운영 config를 복사한 테스트는 시험 폴더만 demo 모드로 바꿉니다.
+
+## 구성
+
+| 경로 | 역할 |
+|---|---|
+| `config/` | 기존 10사·5주제, 출처별 저장 범위, 빈 관심사 |
+| `weekly_trend/collectors.py` | 제한된 HTTP/RSS/공개목록 어댑터 |
+| `weekly_trend/classification.py` | 제목 기준의 회사·주제 분류 |
+| `weekly_trend/live_storage.py` | 실제 자료 전용 SQLite 테이블과 이력 |
+| `weekly_trend/live_pipeline.py` | 수집·상태·마트·무결성 검증 |
+| `data/raw.sqlite3` | 원자료 메타데이터와 실행 이력. 기존 가상 테이블도 보존 |
+| `state/`, `site/data/` | 미분석 상태, 출처별 성공/실패, 화면 JSON |
+| `reports/history.json` | 빈 실제 보고 이력 |
+| `tests/fixtures/` | 오프라인 테스트용 가상 자료 |
+
+저장소와 Pages는 공개입니다. 비밀키·내부자료를 넣지 않습니다. 원문 전체의 자유로운 재배포 권한을 주장하지 않으며, 출처 범위 확대 전 이용조건을 다시 확인합니다.
 
 ## 디자인 색상
 
@@ -27,50 +69,5 @@
 
 같은 색의 투명도를 사용해 상태와 표면을 구분합니다.
 
-## 로컬 실행
 
-Python 3.12 이상이 필요합니다. 외부 Python 패키지나 API 키는 필요 없습니다.
-
-```sh
-python -m weekly_trend demo --root .
-python -m weekly_trend verify --root .
-python -m unittest discover -s tests -v
-python scripts/check_repeatability.py
-node --check site/app.js
-python -m http.server 8000 --bind 127.0.0.1 --directory site
-```
-
-브라우저에서 `http://localhost:8000`에 접속합니다. `index.html`을 파일로 직접 열면 JSON 요청이 차단될 수 있습니다. Node는 JavaScript 구문 검사에만 사용합니다.
-
-## GitHub Actions와 Pages
-
-1. 저장소 **Settings → Pages → Build and deployment → Source**에서 **GitHub Actions**를 선택합니다.
-2. **Actions → Manual demo and Pages → Run workflow → main**을 실행합니다.
-3. `build`는 테스트, 가상 데이터 처리·검증, DB/상태/JSON 커밋, 정적 사이트 업로드를 수행합니다.
-4. `deploy`는 같은 결과물을 Pages에 배포합니다. 완료 시 환경 `github-pages`의 URL을 엽니다.
-5. 같은 워크플로를 다시 실행합니다. 기사 7개·버전 8개·이슈 6개가 유지되고 실행 횟수만 증가해야 합니다.
-
-배포 워크플로에는 `workflow_dispatch`만 있습니다. 별도 **Demo checks**는 코드 변경 시 테스트만 실행하며 기사 처리 결과를 저장하거나 사이트를 배포하지 않습니다. `schedule`/cron, 외부 데이터 호출, AI 호출은 없습니다.
-
-GitHub가 제공하는 `GITHUB_TOKEN`으로 데이터 커밋과 Pages 배포를 수행합니다. 사용자가 등록할 API 키나 PAT는 없습니다. 토큰은 생성 JSON과 사이트에 저장하지 않습니다. 저장소 규칙이 Actions의 `main` 쓰기를 막는 경우 데이터 저장 단계가 실패하며, 해당 실패 상태에서 배포하지 않습니다.
-
-동시 수동 실행은 직렬화합니다. 실행 중 `main`이 바뀌면 강제 덮어쓰기를 하지 않고 중단합니다. 배포 실패 후에도 성공적으로 커밋된 DB는 유지되므로 원인 해결 후 수동 재실행할 수 있습니다.
-
-## 구성
-
-| 경로 | 역할 |
-|---|---|
-| `config/` | 5개 주제, 경쟁사 초안, 비활성 출처 후보, 빈 관심사 |
-| `tests/fixtures/demo_articles.json` | 전적으로 가상인 입력 데이터 |
-| `weekly_trend/` | 표준 라이브러리 기반 처리·저장·검증 |
-| `data/raw.sqlite3` | 기사, 버전, 수동 실행 이력의 저장 원본 |
-| `state/` | 이슈·가상 규칙 분석·실행 상태 |
-| `reports/history.json` | 빈 실제 보고 이력 |
-| `site/` | Pages에 공개하는 정적 UI와 JSON |
-| `.github/workflows/pipeline.yml` | 수동 처리 및 Pages 배포 |
-| `.github/workflows/ci.yml` | 테스트 전용 CI |
-
-현재는 SQLite를 Git에 저장하는 소규모 데모 구조입니다. 실제 데이터 연결 전 저장 용량·보관 정책·동시 쓰기 방식은 다시 결정해야 합니다. Pages는 공개 화면이며 로그인 기능은 없습니다. 실제 기사 전문, 사내 관심사, 실제 보고 내용, 인증정보를 공개 저장소에 넣지 마세요.
-
-합의한 범위와 다음 단계는 [개발 범위](docs/scope.md), 실행 증거는 [검증 기록](docs/verification.md)에 정리합니다.
-
+[개발 범위](docs/scope.md) · [출처·저장 기준](docs/sources.md) · [검증 기록](docs/verification.md)

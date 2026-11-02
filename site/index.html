@@ -4,19 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0B1D39">
-  <meta name="description" content="주간 경쟁사 동향 플랫폼의 가상 데이터 데모. 실제 기사 수집과 AI 분석은 연결되어 있지 않습니다.">
+  <meta name="description" content="공개 출처에서 수집한 경쟁사 동향 자료를 확인합니다. 제목 기준 주제 분류를 제공하며 AI 분석은 연결되어 있지 않습니다.">
   <title>WEEKLY · 주간 경쟁사 동향</title>
-  <link rel="stylesheet" href="styles.css?v=9b7dbef">
-  <script src="app.js" defer></script>
+  <link rel="stylesheet" href="styles.css?v=phase2">
+  <script src="app.js?v=phase2" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">본문 바로가기</a>
   <aside class="sidebar" aria-label="주제 탐색">
     <a class="brand" href="./" aria-label="WEEKLY 주간 경쟁사 동향 홈"><span class="brand-mark" aria-hidden="true"></span><span>WEEKLY<span class="brand-sub">주간 경쟁사 동향</span></span></a>
-    <div class="workspace-label">STRATEGY DESK <span>DEMO</span></div>
-    <p class="nav-caption">검토할 이슈</p>
+    <div class="workspace-label">STRATEGY DESK <span id="mode-badge">확인 중</span></div>
+    <p class="nav-caption" id="nav-caption">수집 주제</p>
     <nav id="topic-nav" class="topic-nav" aria-label="수집 주제">
-      <button type="button" class="topic-button active" data-topic="" aria-pressed="true"><span class="nav-glyph" aria-hidden="true">▦</span><span>전체 이슈</span><span class="nav-count" id="all-count">—</span></button>
+      <button type="button" class="topic-button active" data-topic="" aria-pressed="true"><span class="nav-glyph" aria-hidden="true">▦</span><span id="all-topic-label">전체 자료</span><span class="nav-count" id="all-count">—</span></button>
       <button type="button" class="topic-button" data-topic="performance" aria-pressed="false"><span class="nav-glyph" aria-hidden="true">↗</span><span>실적·자본·주주정책</span><span class="nav-count" data-count="performance">—</span></button>
       <button type="button" class="topic-button" data-topic="digital" aria-pressed="false"><span class="nav-glyph" aria-hidden="true">✳</span><span>디지털·AI·신사업</span><span class="nav-count" data-count="digital">—</span></button>
       <button type="button" class="topic-button" data-topic="expansion" aria-pressed="false"><span class="nav-glyph" aria-hidden="true">↔</span><span>제휴·인수·해외사업</span><span class="nav-count" data-count="expansion">—</span></button>
@@ -24,23 +24,24 @@
       <button type="button" class="topic-button" data-topic="risk" aria-pressed="false"><span class="nav-glyph" aria-hidden="true">○</span><span>규제·위험·운영</span><span class="nav-count" data-count="risk">—</span></button>
     </nav>
     <div class="sidebar-section"><p class="nav-caption">업무 기준</p><div class="setting-row"><span>경영진 관심사</span><span class="setting-value">미등록</span></div><button type="button" id="history-open" class="history-link"><span>실제 보고 이력</span><span>0건 <span aria-hidden="true">↗</span></span></button></div>
-    <div class="sidebar-bottom"><span class="status-dot" aria-hidden="true"></span><div><strong>수동 실행 모드</strong><p>정기 수집 꺼짐 · AI 미연결</p></div></div>
+    <div class="sidebar-bottom"><span class="status-dot" aria-hidden="true"></span><div><strong id="execution-mode">실행 상태 확인 중</strong><p id="connection-status">AI 분석 미연결</p></div></div>
   </aside>
   <main id="main" class="main">
     <div class="topline"><span>경영기획 / 주간 브리핑</span><a href="https://github.com/iesilder/kw-plan-weekly-trend/actions" target="_blank" rel="noopener noreferrer">실행 기록 <span aria-hidden="true">↗</span></a></div>
-    <header class="masthead"><div><div class="eyebrow">WEEKLY INTELLIGENCE <span id="week-label">DEMO EDITION</span></div><h1>이번 주, 살펴볼 변화</h1><p class="intro">경쟁사의 움직임을 모으고, 보고할 이유를 확인합니다.</p></div><div class="edition"><span>BRIEFING</span><strong id="week-number">—</strong><span id="edition-year">가상 데이터 데모</span></div></header>
-    <section class="demo-notice" aria-label="데모 안내"><span class="demo-icon" aria-hidden="true">i</span><p><strong>가상 데이터 · 실제 기사/AI 분석 아님</strong><span>수집부터 화면까지의 연결을 확인하는 1단계 데모입니다. 모든 회사와 사건은 가상입니다.</span></p><span class="phase-label">PHASE 01</span></section>
+    <header class="masthead"><div><div class="eyebrow">WEEKLY INTELLIGENCE <span id="week-label">WEEKLY SOURCES</span></div><h1 id="page-heading">이번 주, 수집된 자료</h1><p class="intro" id="page-intro">공개 출처의 자료를 모아 원문과 수집 상태를 확인합니다.</p></div><div class="edition"><span>BRIEFING</span><strong id="week-number">—</strong><span id="edition-year">자료 확인 중</span></div></header>
+    <section class="demo-notice" id="mode-notice" aria-label="자료 안내"><span class="demo-icon" aria-hidden="true">i</span><p><strong id="notice-title">자료와 수집 상태를 확인하고 있습니다</strong><span id="notice-description">AI 분석은 연결되어 있지 않습니다. 실제 보고 이력과 경영진 관심사는 비어 있습니다.</span></p><span class="phase-label" id="phase-label">PHASE 02</span></section>
     <div id="error-banner" class="error-banner" role="alert" hidden></div>
-    <section class="overview" aria-label="처리 현황"><div class="metric"><span>검토 후보</span><strong id="issue-count">—<small>건</small></strong></div><div class="metric"><span>원자료</span><strong id="article-count">—<small>건</small></strong></div><div class="metric"><span>보존한 기사 버전</span><strong id="version-count">—<small>개</small></strong></div><div class="metric metric-run"><span>마지막 데모 실행 <b id="run-count">—회</b></span><strong id="last-run">확인 중</strong><small>한국 시간 기준</small></div></section>
-    <section class="briefing" aria-labelledby="list-heading"><div class="section-head"><div><h2 id="list-heading">보고 후보</h2><span id="visible-count" class="result-count">불러오는 중</span></div><span class="review-note">최종 보고는 담당자가 결정합니다</span></div>
-      <div class="toolbar"><label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg><span class="sr-only">제목, 회사, 내용 검색</span><input id="search" type="search" placeholder="제목, 회사, 내용 검색" autocomplete="off"></label><label class="select-label"><span class="sr-only">회사 필터</span><select id="company-filter"><option value="">모든 회사</option></select></label><label class="select-label"><span class="sr-only">후보 정렬</span><select id="sort-order"><option value="priority">중요도순</option><option value="title">제목순</option></select></label><button id="reset-filters" type="button" class="reset-button" title="검색과 필터 초기화">초기화</button></div>
-      <div class="workbench"><div class="candidate-column"><div class="list-label"><span id="active-topic-label">전체 이슈</span><span>DEMO SCENARIOS</span></div><div id="candidate-list" class="candidate-list" aria-label="보고 후보 목록" aria-busy="true"><div class="empty-state"><span class="empty-symbol" aria-hidden="true">⋯</span><strong>데모 자료를 불러오고 있습니다</strong><p>저장된 마트를 확인합니다.</p></div></div><div class="list-footer"><span class="tiny-dot" aria-hidden="true"></span>등록된 실제 보고 이력 없음</div></div>
-      <section id="detail-panel" class="detail-panel" aria-label="선택한 이슈 상세" aria-busy="false"><div class="detail-placeholder"><span class="placeholder-mark" aria-hidden="true">↗</span><h3>이슈의 맥락까지 한눈에</h3><p>왼쪽에서 후보를 선택하면<br>보고 초안과 선정 이유, 근거를 볼 수 있습니다.</p></div></section></div>
+    <section class="overview" aria-label="처리 현황"><div class="metric"><span id="issue-count-label">수집 자료</span><strong id="issue-count">—<small>건</small></strong></div><div class="metric"><span id="article-count-label">보관한 자료</span><strong id="article-count">—<small>건</small></strong></div><div class="metric"><span>보존한 자료 버전</span><strong id="version-count">—<small>개</small></strong></div><div class="metric metric-run"><span><span id="last-run-label">마지막 실행</span> <b id="run-count">—회</b></span><strong id="last-run">확인 중</strong><small>한국 시간 기준</small></div></section>
+    <details id="source-status-panel" class="source-status-panel" hidden><summary><span>출처별 수집 상태</span><span id="source-status-summary">확인 중</span></summary><p class="source-status-note">각 출처의 제공 범위 안에서만 수집합니다. 실패·미분류·필터 제외 내역은 아래 상태에서 확인하세요.</p><div id="source-status-list" class="source-status-list"></div></details>
+    <section class="briefing" aria-labelledby="list-heading"><div class="section-head"><div><h2 id="list-heading">수집 자료</h2><span id="visible-count" class="result-count">불러오는 중</span></div><span class="review-note" id="review-note">제목 기준 주제 분류 · 원문 확인 필요</span></div>
+      <div class="toolbar"><label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg><span class="sr-only">제목, 회사, 출처 검색</span><input id="search" type="search" placeholder="제목, 회사, 출처 검색" autocomplete="off"></label><label class="select-label"><span class="sr-only">회사 필터</span><select id="company-filter"><option value="">모든 회사</option></select></label><label class="select-label"><span class="sr-only">자료 정렬</span><select id="sort-order"><option value="recent">최신순</option><option value="title">제목순</option></select></label><button id="reset-filters" type="button" class="reset-button" title="검색과 필터 초기화">초기화</button></div>
+      <div class="workbench"><div class="candidate-column"><div class="list-label"><span id="active-topic-label">전체 자료</span><span id="list-kind">COLLECTED SOURCES</span></div><div id="candidate-list" class="candidate-list" aria-label="자료 목록" aria-busy="true"><div class="empty-state"><span class="empty-symbol" aria-hidden="true">⋯</span><strong>자료를 불러오고 있습니다</strong><p>저장된 마트를 확인합니다.</p></div></div><div class="list-footer"><span class="tiny-dot" aria-hidden="true"></span>등록된 실제 보고 이력 없음</div></div>
+      <section id="detail-panel" class="detail-panel" aria-label="선택한 자료 상세" aria-busy="false"><div class="detail-placeholder"><span class="placeholder-mark" aria-hidden="true">↗</span><h3>원문과 수집 상태를 함께</h3><p>왼쪽에서 자료를 선택하면<br>출처와 원문 링크, 저장 범위를 확인할 수 있습니다.</p></div></section></div>
     </section>
-    <footer class="page-footer"><span>WEEKLY · 주간 경쟁사 동향</span><span>가상 시나리오 → 원자료 → 마트 → 화면</span><button type="button" id="history-mobile" class="mobile-history">실제 보고 이력</button><button type="button" id="reload-data">자료 다시 불러오기 <span aria-hidden="true">↻</span></button></footer>
+    <footer class="page-footer"><span>WEEKLY · 주간 경쟁사 동향</span><span id="data-flow">공개 출처 → 메타데이터 → 화면</span><button type="button" id="history-mobile" class="mobile-history">실제 보고 이력</button><button type="button" id="reload-data">자료 다시 불러오기 <span aria-hidden="true">↻</span></button></footer>
   </main>
-  <dialog id="history-dialog"><div class="dialog-head"><h2>실제 보고 이력</h2><button type="button" class="icon-button" id="history-close" aria-label="보고 이력 닫기">×</button></div><div class="history-empty"><span class="empty-symbol" aria-hidden="true">▤</span><h3>아직 등록된 보고가 없습니다</h3><p>데모 초안 생성이나 복사는 실제 보고로 기록되지 않습니다.<br>실제 전달한 최종 문구와 보고일을 기록하는 기능은 후속 단계에서 연결합니다.</p></div></dialog>
-  <dialog id="copy-dialog"><div class="dialog-head"><h2>보고 초안 복사</h2><button type="button" class="icon-button" id="copy-close" aria-label="복사 창 닫기">×</button></div><p class="dialog-copy-note">자동 복사가 지원되지 않아 텍스트를 준비했습니다. 아래 내용을 선택해 복사하세요.</p><label class="sr-only" for="copy-text">복사할 데모 보고 초안</label><textarea id="copy-text" readonly rows="12"></textarea><p class="copy-disclaimer">가상 시나리오이며 실제 보고 이력에 저장되지 않습니다.</p></dialog>
+  <dialog id="history-dialog"><div class="dialog-head"><h2>실제 보고 이력</h2><button type="button" class="icon-button" id="history-close" aria-label="보고 이력 닫기">×</button></div><div class="history-empty"><span class="empty-symbol" aria-hidden="true">▤</span><h3>아직 등록된 보고가 없습니다</h3><p><span id="history-explanation">자료 확인이나 복사는 실제 보고로 기록되지 않습니다.</span><br>실제 전달한 최종 문구와 보고일을 기록하는 기능은 후속 단계에서 연결합니다.</p></div></dialog>
+  <dialog id="copy-dialog"><div class="dialog-head"><h2 id="copy-heading">자료 정보 복사</h2><button type="button" class="icon-button" id="copy-close" aria-label="복사 창 닫기">×</button></div><p class="dialog-copy-note">자동 복사가 지원되지 않아 텍스트를 준비했습니다. 아래 내용을 선택해 복사하세요.</p><label class="sr-only" id="copy-text-label" for="copy-text">복사할 자료 정보</label><textarea id="copy-text" readonly rows="12"></textarea><p class="copy-disclaimer" id="copy-disclaimer">자료 정보만 복사하며 실제 보고 이력에 저장되지 않습니다.</p></dialog>
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 </body>
 </html>

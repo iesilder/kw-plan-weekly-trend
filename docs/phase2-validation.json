@@ -1,0 +1,28 @@
+{
+  "validation_environment": "Codex development runtime, not GitHub Actions",
+  "first": {
+    "generation_id": "live-f680d73a308f8d2ebc31",
+    "last_run_at": "2026-11-02T23:47:11.275040+00:00",
+    "fetched_count": 814,
+    "accepted_count": 22,
+    "inserted_versions": 22,
+    "article_count": 22,
+    "version_count": 22,
+    "run_count": 1
+  },
+  "second": {
+    "generation_id": "live-611416cb1f6c55e15110",
+    "last_run_at": "2026-11-02T23:48:53.288213+00:00",
+    "fetched_count": 33,
+    "accepted_count": 1,
+    "inserted_versions": 0,
+    "article_count": 22,
+    "version_count": 22,
+    "run_count": 2
+  },
+  "all_sources_succeeded": true,
+  "legacy_demo_preserved": true,
+  "metadata_only": true,
+  "github_actions_validation": "pending_new_workflow_dispatch",
+  "pages_phase2_deployment": "pending"
+}

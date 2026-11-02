@@ -19,6 +19,10 @@ class PipelineTests(unittest.TestCase):
         self.root = Path(self.temporary.name)
         for directory in ("config", "reports", "tests/fixtures"):
             shutil.copytree(PROJECT / directory, self.root / directory)
+        # Production enables collection; these tests deliberately exercise offline demo mode.
+        settings = read_json(self.root / "config/pipeline.json")
+        settings.update(mode="demo", real_collection_enabled=False)
+        write_json(self.root / "config/pipeline.json", settings)
 
     def rows(self, query):
         with closing(sqlite3.connect(self.root / "data/raw.sqlite3")) as db:

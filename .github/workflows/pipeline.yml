@@ -1,6 +1,6 @@
-name: Manual demo and Pages
+name: Manual collection and Pages
 
-# Intentionally no schedule, push, live sources, or AI credentials.
+# Manual public-metadata collection only. No schedule, push trigger, or AI credentials.
 on:
   workflow_dispatch:
 
@@ -21,6 +21,7 @@ jobs:
     outputs:
       data_sha: ${{ steps.persist.outputs.sha }}
       artifact_name: ${{ steps.base.outputs.artifact_name }}
+      collection_outcome: ${{ steps.collect.outcome }}
     steps:
       - uses: actions/checkout@v7.0.1
         with:
@@ -38,10 +39,12 @@ jobs:
         run: |
           python -m unittest discover -s tests -v
           node --check site/app.js
-      - name: Process fictional articles only
-        run: |
-          python -m weekly_trend demo --root .
-          python -m weekly_trend verify --root .
+      - name: Collect permitted public metadata
+        id: collect
+        continue-on-error: true
+        run: python -m weekly_trend collect --root .
+      - name: Verify the publishable snapshot
+        run: python -m weekly_trend verify --root .
       - name: Persist validated database and mart
         id: persist
         env:
@@ -57,7 +60,7 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add data/raw.sqlite3 state site/data
           if ! git diff --cached --quiet; then
-            git commit -m 'data: refresh fictional demo snapshot'
+            git commit -m 'data: refresh public collection snapshot'
             git push origin HEAD:main
           fi
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
@@ -97,4 +100,9 @@ jobs:
         uses: actions/deploy-pages@v5.0.1
         with:
           artifact_name: ${{ needs.build.outputs.artifact_name }}
+      - name: Surface a failed collection after preserving the verified snapshot
+        if: needs.build.outputs.collection_outcome != 'success'
+        run: |
+          echo 'Collection failed. The validated last snapshot and failure status were preserved.' >&2
+          exit 1
 

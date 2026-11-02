@@ -232,6 +232,10 @@ def run_demo(root, fixture_path=None):
 
 def verify(root):
     root = Path(root).resolve()
+    # Keep the offline demo path intact; live snapshots use their own isolated store.
+    if read_json(root / "site/data/latest.json").get("is_demo") is False:
+        from .live_pipeline import verify_live
+        return verify_live(root)
     load_inputs(root)
     latest = read_json(root / "site/data/latest.json")
     status = read_json(root / "site/data/status.json")

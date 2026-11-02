@@ -1,140 +1,769 @@
 {
   "schema_version": "1.0",
-  "is_demo": true,
-  "generation_id": "demo-29ceede4d1650de7471e",
+  "is_demo": false,
+  "generation_id": "live-611416cb1f6c55e15110",
   "issues": [
     {
-      "issue_id": "demo-issue-ai",
-      "title": "가상 B증권, AI 업무 도우미 시범 도입",
-      "company": "가상 B증권",
-      "topic_id": "digital",
-      "topic": "디지털·AI·신사업",
-      "priority": "high",
-      "report_status": "no_history",
-      "why_now": "AI 서비스의 적용 범위와 실행 단계를 비교하는 가상 사례입니다.",
-      "bullets": [
-        "가상 사실: 가상 B증권의 AI 업무 도우미 시험 대상이 두 부서로 구체화됐다는 수정 시나리오입니다. 전사 도입 완료를 의미하지 않습니다.",
-        "검토 관점: AI 서비스의 적용 범위와 실행 단계를 비교하는 가상 사례입니다.",
-        "등록된 실제 보고 이력이 없습니다. 담당자의 최종 판단이 필요합니다."
+      "issue_id": "issue-da8fab0b0a3a1ac34997",
+      "title": "임원ㆍ주요주주특정증권등소유상황보고서",
+      "company": "NH투자증권",
+      "company_ids": [
+        "company-3"
       ],
-      "evidence_ids": [
-        "demo-version-038b8ed23c6eea6d82a9"
+      "companies": [
+        "NH투자증권"
       ],
-      "detail_path": "data/issues/demo-issue-ai.json",
-      "is_demo": true,
-      "analysis_status": "demo_rules",
-      "evidence_confidence": "fictional"
-    },
-    {
-      "issue_id": "demo-issue-capital",
-      "title": "가상 A증권, 자본 배분 계획 공개",
-      "company": "가상 A증권",
       "topic_id": "performance",
       "topic": "실적·자본·주주정책",
-      "priority": "high",
+      "priority": "unranked",
       "report_status": "no_history",
-      "why_now": "자본 배분과 주주정책 변화를 검토하는 가상 사례입니다.",
-      "bullets": [
-        "가상 사실: 가상 A증권이 배당과 신규 사업 투자의 배분 원칙을 공개했다는 연습용 시나리오입니다.",
-        "검토 관점: 자본 배분과 주주정책 변화를 검토하는 가상 사례입니다.",
-        "등록된 실제 보고 이력이 없습니다. 담당자의 최종 판단이 필요합니다."
-      ],
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(주요주주, 소유상황)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
       "evidence_ids": [
-        "demo-version-092612f31efa7ac7cbd1",
-        "demo-version-2d2065bf0b0d68cd4fc5"
+        "version-bd4d1520db5d235a8d29"
       ],
-      "detail_path": "data/issues/demo-issue-capital.json",
-      "is_demo": true,
-      "analysis_status": "demo_rules",
-      "evidence_confidence": "fictional"
+      "detail_path": "data/issues/issue-da8fab0b0a3a1ac34997.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · NH투자증권",
+      "published_at": null,
+      "published_date": "2026-11-02",
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "matched_keywords": [
+        "주요주주",
+        "소유상황"
+      ],
+      "matched_topic_ids": [
+        "strategy",
+        "performance"
+      ]
     },
     {
-      "issue_id": "demo-issue-outage",
-      "title": "가상 E증권, 주문 서비스 장애 복구",
-      "company": "가상 E증권",
+      "issue_id": "issue-75340941f1298f264ebf",
+      "title": "결산실적공시예고(안내공시)",
+      "company": "미래에셋증권",
+      "company_ids": [
+        "company-1"
+      ],
+      "companies": [
+        "미래에셋증권"
+      ],
+      "topic_id": "performance",
+      "topic": "실적·자본·주주정책",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(실적)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-872b699e4076381e2f99"
+      ],
+      "detail_path": "data/issues/issue-75340941f1298f264ebf.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 미래에셋증권",
+      "published_at": null,
+      "published_date": "2026-10-29",
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "matched_keywords": [
+        "실적"
+      ],
+      "matched_topic_ids": [
+        "performance"
+      ]
+    },
+    {
+      "issue_id": "issue-b4acf9726e522360746c",
+      "title": "연결재무제표기준영업(잠정)실적(공정공시)",
+      "company": "NH투자증권",
+      "company_ids": [
+        "company-3"
+      ],
+      "companies": [
+        "NH투자증권"
+      ],
+      "topic_id": "performance",
+      "topic": "실적·자본·주주정책",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(실적)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-c5450646d7d2c39e4f2a"
+      ],
+      "detail_path": "data/issues/issue-b4acf9726e522360746c.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · NH투자증권",
+      "published_at": null,
+      "published_date": "2026-10-26",
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "matched_keywords": [
+        "실적"
+      ],
+      "matched_topic_ids": [
+        "performance"
+      ]
+    },
+    {
+      "issue_id": "issue-91b82473befb573adeb8",
+      "title": "임원ㆍ주요주주특정증권등소유상황보고서",
+      "company": "NH투자증권",
+      "company_ids": [
+        "company-3"
+      ],
+      "companies": [
+        "NH투자증권"
+      ],
+      "topic_id": "performance",
+      "topic": "실적·자본·주주정책",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(주요주주, 소유상황)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-e6e207f314585e2093b6"
+      ],
+      "detail_path": "data/issues/issue-91b82473befb573adeb8.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · NH투자증권",
+      "published_at": null,
+      "published_date": "2026-10-26",
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "matched_keywords": [
+        "주요주주",
+        "소유상황"
+      ],
+      "matched_topic_ids": [
+        "strategy",
+        "performance"
+      ]
+    },
+    {
+      "issue_id": "issue-213152dc4f723ad002a4",
+      "title": "임원ㆍ주요주주특정증권등소유상황보고서",
+      "company": "미래에셋증권",
+      "company_ids": [
+        "company-1"
+      ],
+      "companies": [
+        "미래에셋증권"
+      ],
+      "topic_id": "performance",
+      "topic": "실적·자본·주주정책",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(주요주주, 소유상황)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-ba495c1a8e91bbbf245c"
+      ],
+      "detail_path": "data/issues/issue-213152dc4f723ad002a4.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 미래에셋증권",
+      "published_at": null,
+      "published_date": "2026-10-21",
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "matched_keywords": [
+        "주요주주",
+        "소유상황"
+      ],
+      "matched_topic_ids": [
+        "strategy",
+        "performance"
+      ]
+    },
+    {
+      "issue_id": "issue-8c6da5de4ec03bf6433d",
+      "title": "임원ㆍ주요주주특정증권등소유상황보고서",
+      "company": "NH투자증권",
+      "company_ids": [
+        "company-3"
+      ],
+      "companies": [
+        "NH투자증권"
+      ],
+      "topic_id": "performance",
+      "topic": "실적·자본·주주정책",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(주요주주, 소유상황)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-d8c4fa8b42803d3b7541"
+      ],
+      "detail_path": "data/issues/issue-8c6da5de4ec03bf6433d.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · NH투자증권",
+      "published_at": null,
+      "published_date": "2026-10-19",
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "matched_keywords": [
+        "주요주주",
+        "소유상황"
+      ],
+      "matched_topic_ids": [
+        "strategy",
+        "performance"
+      ]
+    },
+    {
+      "issue_id": "issue-dbe6e56e84f1c7df39aa",
+      "title": "계열금융회사의약관에의한금융거래-[파생금융상품]",
+      "company": "미래에셋증권",
+      "company_ids": [
+        "company-1"
+      ],
+      "companies": [
+        "미래에셋증권"
+      ],
       "topic_id": "risk",
       "topic": "규제·위험·운영",
-      "priority": "high",
+      "priority": "unranked",
       "report_status": "no_history",
-      "why_now": "운영 위험과 고객 영향, 후속 대응을 점검하는 가상 사례입니다.",
-      "bullets": [
-        "가상 사실: 가상 E증권의 주문 서비스 장애가 복구됐으며 원인 조사가 진행 중이라는 연습용 시나리오입니다.",
-        "검토 관점: 운영 위험과 고객 영향, 후속 대응을 점검하는 가상 사례입니다.",
-        "등록된 실제 보고 이력이 없습니다. 담당자의 최종 판단이 필요합니다."
-      ],
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(계열금융회사의약관에의한금융거래)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
       "evidence_ids": [
-        "demo-version-6af49ff7ed70ba43456a"
+        "version-f6a036219b2073adccbe"
       ],
-      "detail_path": "data/issues/demo-issue-outage.json",
-      "is_demo": true,
-      "analysis_status": "demo_rules",
-      "evidence_confidence": "fictional"
+      "detail_path": "data/issues/issue-dbe6e56e84f1c7df39aa.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 미래에셋증권",
+      "published_at": null,
+      "published_date": "2026-10-16",
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "matched_keywords": [
+        "계열금융회사의약관에의한금융거래"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ]
     },
     {
-      "issue_id": "demo-issue-policy",
-      "title": "가상 A증권, 내부통제 점검 계획 발표",
-      "company": "가상 A증권",
+      "issue_id": "issue-c453fed6bbef152ee196",
+      "title": "계열금융회사의약관에의한금융거래-[장단기차입]",
+      "company": "삼성증권",
+      "company_ids": [
+        "company-4"
+      ],
+      "companies": [
+        "삼성증권"
+      ],
       "topic_id": "risk",
       "topic": "규제·위험·운영",
-      "priority": "high",
+      "priority": "unranked",
       "report_status": "no_history",
-      "why_now": "운영 위험과 고객 영향, 후속 대응을 점검하는 가상 사례입니다.",
-      "bullets": [
-        "가상 사실: 가상 A증권이 내부통제 자체 점검을 계획했으며 결과는 아직 없다는 별개 사건의 연습용 시나리오입니다.",
-        "검토 관점: 운영 위험과 고객 영향, 후속 대응을 점검하는 가상 사례입니다.",
-        "등록된 실제 보고 이력이 없습니다. 담당자의 최종 판단이 필요합니다."
-      ],
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(계열금융회사의약관에의한금융거래)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
       "evidence_ids": [
-        "demo-version-60eee0da8491326d1b27"
+        "version-3649a5239237cdbd2b77"
       ],
-      "detail_path": "data/issues/demo-issue-policy.json",
-      "is_demo": true,
-      "analysis_status": "demo_rules",
-      "evidence_confidence": "fictional"
+      "detail_path": "data/issues/issue-c453fed6bbef152ee196.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 삼성증권",
+      "published_at": null,
+      "published_date": "2026-10-16",
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "matched_keywords": [
+        "계열금융회사의약관에의한금융거래"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ]
     },
     {
-      "issue_id": "demo-issue-org",
-      "title": "가상 D증권, 신사업 조직 통합 계획",
-      "company": "가상 D증권",
-      "topic_id": "strategy",
-      "topic": "조직·경영전략",
-      "priority": "medium",
+      "issue_id": "issue-a0f2497a64d5d6c9b985",
+      "title": "계열금융회사의약관에의한금융거래-[장단기차입]",
+      "company": "미래에셋증권",
+      "company_ids": [
+        "company-1"
+      ],
+      "companies": [
+        "미래에셋증권"
+      ],
+      "topic_id": "risk",
+      "topic": "규제·위험·운영",
+      "priority": "unranked",
       "report_status": "no_history",
-      "why_now": "조직과 자원 배분의 변화를 점검하는 가상 사례입니다.",
-      "bullets": [
-        "가상 사실: 가상 D증권이 신사업 조직을 통합하는 계획을 발표했다는 연습용 시나리오입니다.",
-        "검토 관점: 조직과 자원 배분의 변화를 점검하는 가상 사례입니다.",
-        "등록된 실제 보고 이력이 없습니다. 담당자의 최종 판단이 필요합니다."
-      ],
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(계열금융회사의약관에의한금융거래)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
       "evidence_ids": [
-        "demo-version-e0550333e7b05c0a6de8"
+        "version-2ee2867bf16623abe40e"
       ],
-      "detail_path": "data/issues/demo-issue-org.json",
-      "is_demo": true,
-      "analysis_status": "demo_rules",
-      "evidence_confidence": "fictional"
+      "detail_path": "data/issues/issue-a0f2497a64d5d6c9b985.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 미래에셋증권",
+      "published_at": null,
+      "published_date": "2026-10-16",
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "matched_keywords": [
+        "계열금융회사의약관에의한금융거래"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ]
     },
     {
-      "issue_id": "demo-issue-partner",
-      "title": "가상 C증권, 해외 플랫폼과 제휴 검토",
-      "company": "가상 C증권",
+      "issue_id": "issue-9e1d96c6a59ab1c82d50",
+      "title": "계열금융회사의약관에의한금융거래-[유가증권-채권]",
+      "company": "삼성증권",
+      "company_ids": [
+        "company-4"
+      ],
+      "companies": [
+        "삼성증권"
+      ],
+      "topic_id": "risk",
+      "topic": "규제·위험·운영",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(계열금융회사의약관에의한금융거래)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-2155bbdf6519577cbb6b"
+      ],
+      "detail_path": "data/issues/issue-9e1d96c6a59ab1c82d50.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 삼성증권",
+      "published_at": null,
+      "published_date": "2026-10-16",
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "matched_keywords": [
+        "계열금융회사의약관에의한금융거래"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ]
+    },
+    {
+      "issue_id": "issue-949e16a2e265aadbd6ff",
+      "title": "계열금융회사의약관에의한금융거래-[보험]",
+      "company": "삼성증권",
+      "company_ids": [
+        "company-4"
+      ],
+      "companies": [
+        "삼성증권"
+      ],
+      "topic_id": "risk",
+      "topic": "규제·위험·운영",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(계열금융회사의약관에의한금융거래)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-2e8570798dca29f2c79e"
+      ],
+      "detail_path": "data/issues/issue-949e16a2e265aadbd6ff.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 삼성증권",
+      "published_at": null,
+      "published_date": "2026-10-16",
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "matched_keywords": [
+        "계열금융회사의약관에의한금융거래"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ]
+    },
+    {
+      "issue_id": "issue-86bf455bd76ebedccfd0",
+      "title": "계열금융회사의약관에의한금융거래-[유가증권-채권]",
+      "company": "카카오페이증권",
+      "company_ids": [
+        "company-10"
+      ],
+      "companies": [
+        "카카오페이증권"
+      ],
+      "topic_id": "risk",
+      "topic": "규제·위험·운영",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(계열금융회사의약관에의한금융거래)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-922937e740da1477f9d4"
+      ],
+      "detail_path": "data/issues/issue-86bf455bd76ebedccfd0.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 카카오페이증권",
+      "published_at": null,
+      "published_date": "2026-10-16",
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "matched_keywords": [
+        "계열금융회사의약관에의한금융거래"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ]
+    },
+    {
+      "issue_id": "issue-69411fb6ea20bb18324c",
+      "title": "계열금융회사의약관에의한금융거래-[유가증권-수익증권]",
+      "company": "삼성증권",
+      "company_ids": [
+        "company-4"
+      ],
+      "companies": [
+        "삼성증권"
+      ],
+      "topic_id": "risk",
+      "topic": "규제·위험·운영",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(계열금융회사의약관에의한금융거래)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-ca89a91e460feca7d4d5"
+      ],
+      "detail_path": "data/issues/issue-69411fb6ea20bb18324c.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 삼성증권",
+      "published_at": null,
+      "published_date": "2026-10-16",
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "matched_keywords": [
+        "계열금융회사의약관에의한금융거래"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ]
+    },
+    {
+      "issue_id": "issue-571503c7d9e1b76b12e2",
+      "title": "계열금융회사의약관에의한금융거래-[유가증권-수익증권]",
+      "company": "미래에셋증권",
+      "company_ids": [
+        "company-1"
+      ],
+      "companies": [
+        "미래에셋증권"
+      ],
+      "topic_id": "risk",
+      "topic": "규제·위험·운영",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(계열금융회사의약관에의한금융거래)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-167bcdd6b67dc2aa1c77"
+      ],
+      "detail_path": "data/issues/issue-571503c7d9e1b76b12e2.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 미래에셋증권",
+      "published_at": null,
+      "published_date": "2026-10-16",
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "matched_keywords": [
+        "계열금융회사의약관에의한금융거래"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ]
+    },
+    {
+      "issue_id": "issue-47e64f11c574bd440f82",
+      "title": "계열금융회사의약관에의한금융거래-[유가증권-채권]",
+      "company": "미래에셋증권",
+      "company_ids": [
+        "company-1"
+      ],
+      "companies": [
+        "미래에셋증권"
+      ],
+      "topic_id": "risk",
+      "topic": "규제·위험·운영",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(계열금융회사의약관에의한금융거래)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-04e18edfb5a2232f13a4"
+      ],
+      "detail_path": "data/issues/issue-47e64f11c574bd440f82.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 미래에셋증권",
+      "published_at": null,
+      "published_date": "2026-10-16",
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "matched_keywords": [
+        "계열금융회사의약관에의한금융거래"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ]
+    },
+    {
+      "issue_id": "issue-2ac44a4f03be1b572820",
+      "title": "계열금융회사의약관에의한금융거래-[보험]",
+      "company": "미래에셋증권",
+      "company_ids": [
+        "company-1"
+      ],
+      "companies": [
+        "미래에셋증권"
+      ],
+      "topic_id": "risk",
+      "topic": "규제·위험·운영",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(계열금융회사의약관에의한금융거래)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-4f2bb8b1eb2ab3b347da"
+      ],
+      "detail_path": "data/issues/issue-2ac44a4f03be1b572820.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 미래에셋증권",
+      "published_at": null,
+      "published_date": "2026-10-16",
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "matched_keywords": [
+        "계열금융회사의약관에의한금융거래"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ]
+    },
+    {
+      "issue_id": "issue-22fa8e77586447828840",
+      "title": "계열금융회사의약관에의한금융거래-[파생금융상품]",
+      "company": "삼성증권",
+      "company_ids": [
+        "company-4"
+      ],
+      "companies": [
+        "삼성증권"
+      ],
+      "topic_id": "risk",
+      "topic": "규제·위험·운영",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(계열금융회사의약관에의한금융거래)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-918548868e61bd4a9677"
+      ],
+      "detail_path": "data/issues/issue-22fa8e77586447828840.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 삼성증권",
+      "published_at": null,
+      "published_date": "2026-10-16",
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "matched_keywords": [
+        "계열금융회사의약관에의한금융거래"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ]
+    },
+    {
+      "issue_id": "issue-001eead05febc6efc590",
+      "title": "계열금융회사의약관에의한금융거래-[기타유가증권]",
+      "company": "미래에셋증권",
+      "company_ids": [
+        "company-1"
+      ],
+      "companies": [
+        "미래에셋증권"
+      ],
+      "topic_id": "risk",
+      "topic": "규제·위험·운영",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(계열금융회사의약관에의한금융거래)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-61b89a55cabc2067c59f"
+      ],
+      "detail_path": "data/issues/issue-001eead05febc6efc590.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 미래에셋증권",
+      "published_at": null,
+      "published_date": "2026-10-16",
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "matched_keywords": [
+        "계열금융회사의약관에의한금융거래"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ]
+    },
+    {
+      "issue_id": "issue-2407e59860fb293eab04",
+      "title": "[기재정정] 특수관계인으로부터주식의취득",
+      "company": "토스증권",
+      "company_ids": [
+        "company-9"
+      ],
+      "companies": [
+        "토스증권"
+      ],
       "topic_id": "expansion",
       "topic": "제휴·인수·해외사업",
-      "priority": "medium",
+      "priority": "unranked",
       "report_status": "no_history",
-      "why_now": "제휴를 통한 고객 접점 확장을 검토하는 가상 사례입니다.",
-      "bullets": [
-        "가상 사실: 가상 C증권이 해외 플랫폼과 업무협약을 논의 중이며 계약 체결은 미정이라는 연습용 시나리오입니다.",
-        "검토 관점: 제휴를 통한 고객 접점 확장을 검토하는 가상 사례입니다.",
-        "등록된 실제 보고 이력이 없습니다. 담당자의 최종 판단이 필요합니다."
-      ],
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(주식의취득)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
       "evidence_ids": [
-        "demo-version-c9e775552c60ee900e96"
+        "version-4064c06a9e6f6d07e6ce"
       ],
-      "detail_path": "data/issues/demo-issue-partner.json",
-      "is_demo": true,
-      "analysis_status": "demo_rules",
-      "evidence_confidence": "fictional"
+      "detail_path": "data/issues/issue-2407e59860fb293eab04.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 토스증권",
+      "published_at": null,
+      "published_date": "2026-10-13",
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "matched_keywords": [
+        "주식의취득"
+      ],
+      "matched_topic_ids": [
+        "expansion"
+      ]
+    },
+    {
+      "issue_id": "issue-224238aefbf2b280b5a0",
+      "title": "임원ㆍ주요주주특정증권등소유상황보고서",
+      "company": "NH투자증권",
+      "company_ids": [
+        "company-3"
+      ],
+      "companies": [
+        "NH투자증권"
+      ],
+      "topic_id": "performance",
+      "topic": "실적·자본·주주정책",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(주요주주, 소유상황)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-5e0e1801b5330d7cb77f"
+      ],
+      "detail_path": "data/issues/issue-224238aefbf2b280b5a0.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · NH투자증권",
+      "published_at": null,
+      "published_date": "2026-10-12",
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "matched_keywords": [
+        "주요주주",
+        "소유상황"
+      ],
+      "matched_topic_ids": [
+        "strategy",
+        "performance"
+      ]
+    },
+    {
+      "issue_id": "issue-d90ea84b60adf68cbb5a",
+      "title": "임원ㆍ주요주주특정증권등소유상황보고서",
+      "company": "삼성증권",
+      "company_ids": [
+        "company-4"
+      ],
+      "companies": [
+        "삼성증권"
+      ],
+      "topic_id": "performance",
+      "topic": "실적·자본·주주정책",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(주요주주, 소유상황)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-b76ad5203fa0942e4a04"
+      ],
+      "detail_path": "data/issues/issue-d90ea84b60adf68cbb5a.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 삼성증권",
+      "published_at": null,
+      "published_date": "2026-10-06",
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "matched_keywords": [
+        "주요주주",
+        "소유상황"
+      ],
+      "matched_topic_ids": [
+        "strategy",
+        "performance"
+      ]
+    },
+    {
+      "issue_id": "issue-3fc2a9d8aa8a7428da59",
+      "title": "임원ㆍ주요주주특정증권등소유상황보고서",
+      "company": "NH투자증권",
+      "company_ids": [
+        "company-3"
+      ],
+      "companies": [
+        "NH투자증권"
+      ],
+      "topic_id": "performance",
+      "topic": "실적·자본·주주정책",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(주요주주, 소유상황)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-d270f6ec6b65dadcf53d"
+      ],
+      "detail_path": "data/issues/issue-3fc2a9d8aa8a7428da59.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · NH투자증권",
+      "published_at": null,
+      "published_date": "2026-10-06",
+      "fetched_at": "2026-11-02T23:47:11.275040+00:00",
+      "matched_keywords": [
+        "주요주주",
+        "소유상황"
+      ],
+      "matched_topic_ids": [
+        "strategy",
+        "performance"
+      ]
     }
   ]
 }

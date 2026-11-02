@@ -1,0 +1,40 @@
+{
+  "issue_id": "demo-issue-ai",
+  "title": "가상 B증권, AI 업무 도우미 시범 도입",
+  "company": "가상 B증권",
+  "topic_id": "digital",
+  "topic": "디지털·AI·신사업",
+  "priority": "high",
+  "report_status": "no_history",
+  "why_now": "AI 서비스의 적용 범위와 실행 단계를 비교하는 가상 사례입니다.",
+  "bullets": [
+    "가상 사실: 가상 B증권의 AI 업무 도우미 시험 대상이 두 부서로 구체화됐다는 수정 시나리오입니다. 전사 도입 완료를 의미하지 않습니다.",
+    "검토 관점: AI 서비스의 적용 범위와 실행 단계를 비교하는 가상 사례입니다.",
+    "등록된 실제 보고 이력이 없습니다. 담당자의 최종 판단이 필요합니다."
+  ],
+  "evidence_ids": [
+    "demo-version-038b8ed23c6eea6d82a9"
+  ],
+  "detail_path": "data/issues/demo-issue-ai.json",
+  "is_demo": true,
+  "analysis_status": "demo_rules",
+  "evidence_confidence": "fictional",
+  "schema_version": "1.0",
+  "generation_id": "demo-c656d8032d064ae6b666",
+  "change_summary": "같은 가상 기사의 수정 버전을 보존했습니다. 실제 기보고 대비 변화는 아닙니다.",
+  "last_report": null,
+  "evidence": [
+    {
+      "evidence_id": "demo-version-038b8ed23c6eea6d82a9",
+      "title": "가상 B증권, AI 업무 도우미 시범 도입",
+      "published_at": "2026-11-02T02:00:00+09:00",
+      "source_updated_at": "2026-11-02T10:00:00+09:00",
+      "content_level": "full_text",
+      "content_text": "가상 B증권의 AI 업무 도우미 시험 대상이 두 부서로 구체화됐다는 수정 시나리오입니다. 전사 도입 완료를 의미하지 않습니다.",
+      "source_name": "가상 시나리오",
+      "source_url": null,
+      "fixture_ref": "tests/fixtures/demo_articles.json",
+      "is_demo": true
+    }
+  ]
+}

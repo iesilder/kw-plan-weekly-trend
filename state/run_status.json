@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "generation_id": "demo-c656d8032d064ae6b666",
+  "published_generation_id": "demo-c656d8032d064ae6b666",
+  "is_demo": true,
+  "last_run_at": "2026-11-02T23:06:08.981739+09:00",
+  "article_count": 7,
+  "version_count": 8,
+  "run_count": 3,
+  "issue_count": 6,
+  "duplicate_count": 9,
+  "analysis_mode": "demo_rules",
+  "collection_mode": "fixture",
+  "interests_count": 0,
+  "report_count": 0,
+  "real_collection_enabled": false,
+  "ai_enabled": false,
+  "schedule_enabled": false
+}

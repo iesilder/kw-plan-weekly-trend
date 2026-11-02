@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "topics": [
+    {
+      "id": "performance",
+      "name": "실적·자본·주주정책",
+      "enabled": true
+    },
+    {
+      "id": "digital",
+      "name": "디지털·AI·신사업",
+      "enabled": true
+    },
+    {
+      "id": "expansion",
+      "name": "제휴·인수·해외사업",
+      "enabled": true
+    },
+    {
+      "id": "strategy",
+      "name": "조직·경영전략",
+      "enabled": true
+    },
+    {
+      "id": "risk",
+      "name": "규제·위험·운영",
+      "enabled": true
+    }
+  ]
+}

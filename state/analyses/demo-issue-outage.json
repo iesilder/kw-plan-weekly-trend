@@ -1,0 +1,40 @@
+{
+  "issue_id": "demo-issue-outage",
+  "title": "가상 E증권, 주문 서비스 장애 복구",
+  "company": "가상 E증권",
+  "topic_id": "risk",
+  "topic": "규제·위험·운영",
+  "priority": "high",
+  "report_status": "no_history",
+  "why_now": "운영 위험과 고객 영향, 후속 대응을 점검하는 가상 사례입니다.",
+  "bullets": [
+    "가상 사실: 가상 E증권의 주문 서비스 장애가 복구됐으며 원인 조사가 진행 중이라는 연습용 시나리오입니다.",
+    "검토 관점: 운영 위험과 고객 영향, 후속 대응을 점검하는 가상 사례입니다.",
+    "등록된 실제 보고 이력이 없습니다. 담당자의 최종 판단이 필요합니다."
+  ],
+  "evidence_ids": [
+    "demo-version-6af49ff7ed70ba43456a"
+  ],
+  "detail_path": "data/issues/demo-issue-outage.json",
+  "is_demo": true,
+  "analysis_status": "demo_rules",
+  "evidence_confidence": "fictional",
+  "schema_version": "1.0",
+  "generation_id": "demo-c656d8032d064ae6b666",
+  "change_summary": "가상 자료 간 중복을 정리했습니다. 등록된 실제 보고 이력은 없습니다.",
+  "last_report": null,
+  "evidence": [
+    {
+      "evidence_id": "demo-version-6af49ff7ed70ba43456a",
+      "title": "가상 E증권, 주문 서비스 장애 복구",
+      "published_at": "2026-11-02T05:00:00+09:00",
+      "source_updated_at": "2026-11-02T05:00:00+09:00",
+      "content_level": "full_text",
+      "content_text": "가상 E증권의 주문 서비스 장애가 복구됐으며 원인 조사가 진행 중이라는 연습용 시나리오입니다.",
+      "source_name": "가상 시나리오",
+      "source_url": null,
+      "fixture_ref": "tests/fixtures/demo_articles.json",
+      "is_demo": true
+    }
+  ]
+}

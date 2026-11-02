@@ -1,0 +1,142 @@
+{
+  "schema_version": "1.0",
+  "generation_id": "demo-c656d8032d064ae6b666",
+  "generated_at": "2026-11-02T23:06:08.981739+09:00",
+  "report_week": "2026-W45",
+  "is_demo": true,
+  "candidates": [
+    {
+      "issue_id": "demo-issue-ai",
+      "title": "가상 B증권, AI 업무 도우미 시범 도입",
+      "company": "가상 B증권",
+      "topic_id": "digital",
+      "topic": "디지털·AI·신사업",
+      "priority": "high",
+      "report_status": "no_history",
+      "why_now": "AI 서비스의 적용 범위와 실행 단계를 비교하는 가상 사례입니다.",
+      "bullets": [
+        "가상 사실: 가상 B증권의 AI 업무 도우미 시험 대상이 두 부서로 구체화됐다는 수정 시나리오입니다. 전사 도입 완료를 의미하지 않습니다.",
+        "검토 관점: AI 서비스의 적용 범위와 실행 단계를 비교하는 가상 사례입니다.",
+        "등록된 실제 보고 이력이 없습니다. 담당자의 최종 판단이 필요합니다."
+      ],
+      "evidence_ids": [
+        "demo-version-038b8ed23c6eea6d82a9"
+      ],
+      "detail_path": "data/issues/demo-issue-ai.json",
+      "is_demo": true,
+      "analysis_status": "demo_rules",
+      "evidence_confidence": "fictional"
+    },
+    {
+      "issue_id": "demo-issue-capital",
+      "title": "가상 A증권, 자본 배분 계획 공개",
+      "company": "가상 A증권",
+      "topic_id": "performance",
+      "topic": "실적·자본·주주정책",
+      "priority": "high",
+      "report_status": "no_history",
+      "why_now": "자본 배분과 주주정책 변화를 검토하는 가상 사례입니다.",
+      "bullets": [
+        "가상 사실: 가상 A증권이 배당과 신규 사업 투자의 배분 원칙을 공개했다는 연습용 시나리오입니다.",
+        "검토 관점: 자본 배분과 주주정책 변화를 검토하는 가상 사례입니다.",
+        "등록된 실제 보고 이력이 없습니다. 담당자의 최종 판단이 필요합니다."
+      ],
+      "evidence_ids": [
+        "demo-version-092612f31efa7ac7cbd1",
+        "demo-version-2d2065bf0b0d68cd4fc5"
+      ],
+      "detail_path": "data/issues/demo-issue-capital.json",
+      "is_demo": true,
+      "analysis_status": "demo_rules",
+      "evidence_confidence": "fictional"
+    },
+    {
+      "issue_id": "demo-issue-outage",
+      "title": "가상 E증권, 주문 서비스 장애 복구",
+      "company": "가상 E증권",
+      "topic_id": "risk",
+      "topic": "규제·위험·운영",
+      "priority": "high",
+      "report_status": "no_history",
+      "why_now": "운영 위험과 고객 영향, 후속 대응을 점검하는 가상 사례입니다.",
+      "bullets": [
+        "가상 사실: 가상 E증권의 주문 서비스 장애가 복구됐으며 원인 조사가 진행 중이라는 연습용 시나리오입니다.",
+        "검토 관점: 운영 위험과 고객 영향, 후속 대응을 점검하는 가상 사례입니다.",
+        "등록된 실제 보고 이력이 없습니다. 담당자의 최종 판단이 필요합니다."
+      ],
+      "evidence_ids": [
+        "demo-version-6af49ff7ed70ba43456a"
+      ],
+      "detail_path": "data/issues/demo-issue-outage.json",
+      "is_demo": true,
+      "analysis_status": "demo_rules",
+      "evidence_confidence": "fictional"
+    },
+    {
+      "issue_id": "demo-issue-policy",
+      "title": "가상 A증권, 내부통제 점검 계획 발표",
+      "company": "가상 A증권",
+      "topic_id": "risk",
+      "topic": "규제·위험·운영",
+      "priority": "high",
+      "report_status": "no_history",
+      "why_now": "운영 위험과 고객 영향, 후속 대응을 점검하는 가상 사례입니다.",
+      "bullets": [
+        "가상 사실: 가상 A증권이 내부통제 자체 점검을 계획했으며 결과는 아직 없다는 별개 사건의 연습용 시나리오입니다.",
+        "검토 관점: 운영 위험과 고객 영향, 후속 대응을 점검하는 가상 사례입니다.",
+        "등록된 실제 보고 이력이 없습니다. 담당자의 최종 판단이 필요합니다."
+      ],
+      "evidence_ids": [
+        "demo-version-60eee0da8491326d1b27"
+      ],
+      "detail_path": "data/issues/demo-issue-policy.json",
+      "is_demo": true,
+      "analysis_status": "demo_rules",
+      "evidence_confidence": "fictional"
+    },
+    {
+      "issue_id": "demo-issue-org",
+      "title": "가상 D증권, 신사업 조직 통합 계획",
+      "company": "가상 D증권",
+      "topic_id": "strategy",
+      "topic": "조직·경영전략",
+      "priority": "medium",
+      "report_status": "no_history",
+      "why_now": "조직과 자원 배분의 변화를 점검하는 가상 사례입니다.",
+      "bullets": [
+        "가상 사실: 가상 D증권이 신사업 조직을 통합하는 계획을 발표했다는 연습용 시나리오입니다.",
+        "검토 관점: 조직과 자원 배분의 변화를 점검하는 가상 사례입니다.",
+        "등록된 실제 보고 이력이 없습니다. 담당자의 최종 판단이 필요합니다."
+      ],
+      "evidence_ids": [
+        "demo-version-e0550333e7b05c0a6de8"
+      ],
+      "detail_path": "data/issues/demo-issue-org.json",
+      "is_demo": true,
+      "analysis_status": "demo_rules",
+      "evidence_confidence": "fictional"
+    },
+    {
+      "issue_id": "demo-issue-partner",
+      "title": "가상 C증권, 해외 플랫폼과 제휴 검토",
+      "company": "가상 C증권",
+      "topic_id": "expansion",
+      "topic": "제휴·인수·해외사업",
+      "priority": "medium",
+      "report_status": "no_history",
+      "why_now": "제휴를 통한 고객 접점 확장을 검토하는 가상 사례입니다.",
+      "bullets": [
+        "가상 사실: 가상 C증권이 해외 플랫폼과 업무협약을 논의 중이며 계약 체결은 미정이라는 연습용 시나리오입니다.",
+        "검토 관점: 제휴를 통한 고객 접점 확장을 검토하는 가상 사례입니다.",
+        "등록된 실제 보고 이력이 없습니다. 담당자의 최종 판단이 필요합니다."
+      ],
+      "evidence_ids": [
+        "demo-version-c9e775552c60ee900e96"
+      ],
+      "detail_path": "data/issues/demo-issue-partner.json",
+      "is_demo": true,
+      "analysis_status": "demo_rules",
+      "evidence_confidence": "fictional"
+    }
+  ]
+}

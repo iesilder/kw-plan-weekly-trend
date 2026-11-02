@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0",
+  "is_demo": true,
+  "description": "모든 회사·사건은 가상입니다. 실제 기사 수집, AI 분석 또는 실제 보고가 아닙니다.",
+  "articles": [
+    {
+      "uri": "demo://fixture/capital",
+      "issue_id": "demo-issue-capital",
+      "topic_id": "performance",
+      "company": "가상 A증권",
+      "title": "가상 A증권, 자본 배분 계획 공개",
+      "published_at": "2026-11-02T01:00:00+09:00",
+      "source_updated_at": "2026-11-02T01:00:00+09:00",
+      "content_text": "가상 A증권이 배당과 신규 사업 투자의 배분 원칙을 공개했다는 연습용 시나리오입니다."
+    },
+    {
+      "uri": "demo://fixture/ai",
+      "issue_id": "demo-issue-ai",
+      "topic_id": "digital",
+      "company": "가상 B증권",
+      "title": "가상 B증권, AI 업무 도우미 시범 도입",
+      "published_at": "2026-11-02T02:00:00+09:00",
+      "source_updated_at": "2026-11-02T02:00:00+09:00",
+      "content_text": "가상 B증권이 일부 부서에서 AI 업무 도우미를 시험하는 단계라는 연습용 시나리오입니다."
+    },
+    {
+      "uri": "demo://fixture/partner",
+      "issue_id": "demo-issue-partner",
+      "topic_id": "expansion",
+      "company": "가상 C증권",
+      "title": "가상 C증권, 해외 플랫폼과 제휴 검토",
+      "published_at": "2026-11-02T03:00:00+09:00",
+      "source_updated_at": "2026-11-02T03:00:00+09:00",
+      "content_text": "가상 C증권이 해외 플랫폼과 업무협약을 논의 중이며 계약 체결은 미정이라는 연습용 시나리오입니다."
+    },
+    {
+      "uri": "demo://fixture/org",
+      "issue_id": "demo-issue-org",
+      "topic_id": "strategy",
+      "company": "가상 D증권",
+      "title": "가상 D증권, 신사업 조직 통합 계획",
+      "published_at": "2026-11-02T04:00:00+09:00",
+      "source_updated_at": "2026-11-02T04:00:00+09:00",
+      "content_text": "가상 D증권이 신사업 조직을 통합하는 계획을 발표했다는 연습용 시나리오입니다."
+    },
+    {
+      "uri": "demo://fixture/outage",
+      "issue_id": "demo-issue-outage",
+      "topic_id": "risk",
+      "company": "가상 E증권",
+      "title": "가상 E증권, 주문 서비스 장애 복구",
+      "published_at": "2026-11-02T05:00:00+09:00",
+      "source_updated_at": "2026-11-02T05:00:00+09:00",
+      "content_text": "가상 E증권의 주문 서비스 장애가 복구됐으며 원인 조사가 진행 중이라는 연습용 시나리오입니다."
+    },
+    {
+      "uri": "demo://fixture/policy",
+      "issue_id": "demo-issue-policy",
+      "topic_id": "risk",
+      "company": "가상 A증권",
+      "title": "가상 A증권, 내부통제 점검 계획 발표",
+      "published_at": "2026-11-02T06:00:00+09:00",
+      "source_updated_at": "2026-11-02T06:00:00+09:00",
+      "content_text": "가상 A증권이 내부통제 자체 점검을 계획했으며 결과는 아직 없다는 별개 사건의 연습용 시나리오입니다."
+    },
+    {
+      "uri": "demo://fixture/capital-secondary",
+      "issue_id": "demo-issue-capital",
+      "topic_id": "performance",
+      "company": "가상 A증권",
+      "title": "가상 A증권 자본 배분 계획의 추가 설명",
+      "published_at": "2026-11-02T01:00:00+09:00",
+      "source_updated_at": "2026-11-02T01:00:00+09:00",
+      "content_text": "가상 A증권이 배당과 신규 사업 투자의 배분 원칙을 공개했다는 연습용 시나리오입니다."
+    },
+    {
+      "uri": "demo://fixture/ai",
+      "issue_id": "demo-issue-ai",
+      "topic_id": "digital",
+      "company": "가상 B증권",
+      "title": "가상 B증권, AI 업무 도우미 시범 도입",
+      "published_at": "2026-11-02T02:00:00+09:00",
+      "source_updated_at": "2026-11-02T10:00:00+09:00",
+      "content_text": "가상 B증권의 AI 업무 도우미 시험 대상이 두 부서로 구체화됐다는 수정 시나리오입니다. 전사 도입 완료를 의미하지 않습니다."
+    },
+    {
+      "uri": "demo://fixture/capital?utm_source=duplicate",
+      "issue_id": "demo-issue-capital",
+      "topic_id": "performance",
+      "company": "가상 A증권",
+      "title": "가상 A증권, 자본 배분 계획 공개",
+      "published_at": "2026-11-02T01:00:00+09:00",
+      "source_updated_at": "2026-11-02T01:00:00+09:00",
+      "content_text": "가상 A증권이 배당과 신규 사업 투자의 배분 원칙을 공개했다는 연습용 시나리오입니다."
+    }
+  ]
+}

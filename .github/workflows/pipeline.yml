@@ -1,0 +1,94 @@
+name: Manual demo and Pages
+
+# Intentionally no schedule, push, live sources, or AI credentials.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: weekly-trend-publish
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    outputs:
+      data_sha: ${{ steps.persist.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Remember starting revision
+        id: base
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Verify core behavior
+        run: |
+          python -m unittest discover -s tests -v
+          node --check site/app.js
+      - name: Process fictional articles only
+        run: |
+          python -m weekly_trend demo --root .
+          python -m weekly_trend verify --root .
+      - name: Persist validated database and mart
+        id: persist
+        env:
+          START_SHA: ${{ steps.base.outputs.sha }}
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          if [ "$(git rev-parse origin/main)" != "$START_SHA" ]; then
+            echo 'Main changed during this run. No overwrite or deployment performed.' >&2
+            exit 1
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/raw.sqlite3 state site/data
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: refresh fictional demo snapshot'
+            git push origin HEAD:main
+          fi
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Record the saved snapshot
+        run: python scripts/write_run_summary.py
+      - name: Package the website only
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Reject obsolete deployment
+        env:
+          DATA_SHA: ${{ needs.build.outputs.data_sha }}
+        run: |
+          if [ "$(git rev-parse HEAD)" != "$DATA_SHA" ]; then
+            echo 'A newer main revision exists. Run a new manual workflow.' >&2
+            exit 1
+          fi
+      - name: Deploy the verified artifact
+        id: deployment
+        uses: actions/deploy-pages@v4
+

@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "status": "initial_proposal",
+  "description": "향후 실제 수집을 위한 관찰 대상 초안입니다. 데모는 실제 회사에 가상 사실을 부여하지 않습니다.",
+  "companies": [
+    {
+      "id": "company-1",
+      "name": "미래에셋증권",
+      "enabled": true
+    },
+    {
+      "id": "company-2",
+      "name": "한국투자증권",
+      "enabled": true
+    },
+    {
+      "id": "company-3",
+      "name": "NH투자증권",
+      "enabled": true
+    },
+    {
+      "id": "company-4",
+      "name": "삼성증권",
+      "enabled": true
+    },
+    {
+      "id": "company-5",
+      "name": "KB증권",
+      "enabled": true
+    },
+    {
+      "id": "company-6",
+      "name": "신한투자증권",
+      "enabled": true
+    },
+    {
+      "id": "company-7",
+      "name": "하나증권",
+      "enabled": true
+    },
+    {
+      "id": "company-8",
+      "name": "메리츠증권",
+      "enabled": true
+    },
+    {
+      "id": "company-9",
+      "name": "토스증권",
+      "enabled": true
+    },
+    {
+      "id": "company-10",
+      "name": "카카오페이증권",
+      "enabled": true
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "mode": "demo",
+  "real_collection_enabled": false,
+  "ai_enabled": false,
+  "schedule_enabled": false,
+  "planned_collection_frequency": "daily_not_enabled",
+  "timezone": "Asia/Seoul"
+}

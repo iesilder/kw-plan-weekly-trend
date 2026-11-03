@@ -173,15 +173,17 @@
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-03T04:57:40.597603+00:00",
-    "completed_at": "2026-11-03T04:57:40.597603+00:00",
-    "status": "cached",
-    "error_code": null,
-    "request_count": 0,
-    "eligible_count": 6,
+    "attempted_at": "2026-11-03T05:52:54.431596+00:00",
+    "completed_at": "2026-11-03T05:52:56.211636+00:00",
+    "status": "failed",
+    "error_code": "invalid_output",
+    "request_count": 1,
+    "eligible_count": 7,
     "completed_count": 0,
     "cached_count": 6,
-    "failed_count": 0,
-    "fingerprints": []
+    "failed_count": 1,
+    "fingerprints": [
+      "3954153e90ce44d8e838f8eda257e9ca8c0f369e1f3eba93fb03458fe6ad3d46"
+    ]
   }
 }

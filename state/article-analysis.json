@@ -1,47 +1,170 @@
 {
   "schema_version": "1.0",
-  "entries": {},
+  "entries": {
+    "issue-8cda78e7eb4a64c526cd": {
+      "metadata_fingerprint": "39ce988cf438271e5fa6f5dacc2b3b38c84184bdddcaaa63defb3640f6ef77bf",
+      "input_fingerprint": "d3909ac4792a329f3a286cfe9bf4cf90783c0fb2260fc08cc4c3ae7f733f119f",
+      "evidence_ids": [
+        "version-42e8ddadcc22cab2da7a"
+      ],
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442601",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "body_hash": "9f19597b90f688a344fe0460082a6583ce5d62ba5d9a45b9882d1b84ccf91d06",
+      "body_fetched_at": "2026-11-03T05:52:56.282619+00:00",
+      "truncated": false,
+      "prompt_version": "article-brief-v2",
+      "analyzed_at": "2026-11-03T05:53:11.148152+00:00",
+      "result": {
+        "key_change": {
+          "text": "카카오페이증권이 첫 기업인수목적회사(SPAC)인 카카오페이증권제1호기업인수목적 주식을 설립하며 기업금융(IB) 사업을 확대한다.",
+          "evidence_ids": [
+            "p2",
+            "p3"
+          ]
+        },
+        "facts": [
+          {
+            "text": "카카오페이증권은 '카카오페이증권제1호기업인수목적 주식회사'를 설립하였다.",
+            "evidence_ids": [
+              "p3"
+            ]
+          },
+          {
+            "text": "이번 스팩 설립은 지난 7월 투자매매업(인수업 포함) 본인가를 취득한 데 따른 후속 행보이다.",
+            "evidence_ids": [
+              "p3"
+            ]
+          },
+          {
+            "text": "신호철 카카오페이증권 대표는 지난 7월 간담회에서 향후 6~12개월간 기업공개(IPO) 공모주 주관·청약 업무와 스타트업 모험자본 투자에 집중하겠다고 밝혔다.",
+            "evidence_ids": [
+              "p6"
+            ]
+          }
+        ],
+        "stage": "추진·협약",
+        "why_candidate": "투자매매업 본인가 취득 이후 기업금융(IB) 사업 영역을 본격적으로 넓히고 그룹 내 스타트업 네트워크를 연계한 유망 기업 발굴 및 상장 지원 생태계를 구축하기 위한 전략으로 판단됨.",
+        "evidence": [
+          {
+            "id": "p2",
+            "quote": ") 전병훈 기자 = 카카오페이증권이 첫 기업인수목적회사(SPAC·스팩)를 설립하며 기업금융(IB) 사업 확대에 나섰다."
+          },
+          {
+            "id": "p3",
+            "quote": "이증권제1호기업인수목적 주식회사'를 설립했다. 지난 7월 투자매매업(인수업 포함)본인가를 취득한 데 따른 후속 행보다."
+          },
+          {
+            "id": "p6",
+            "quote": "자간담회에서 향후 6~12개월간 기업공개(IPO) 공모주 주관·청약 업무와 스타트업 모험자본 투자에 집중하겠다고 밝혔다"
+          }
+        ]
+      }
+    },
+    "issue-ec88113fec2c699faaf5": {
+      "metadata_fingerprint": "12fe4f7b0bd349d8391d4a384eaf407ef4fa26ac1870a1a66bb82ea503a92a80",
+      "input_fingerprint": "f4907dd2639148a8cf56febfa75ac093bdc4f985be7ca804f212f7cc935ac0c6",
+      "evidence_ids": [
+        "version-6ebad5d35dba7d5a4507"
+      ],
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442565",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "body_hash": "4a2f12f5f3c3104be0fae7ad9a611c43f522c4880b37babd07eff19b6c023a8b",
+      "body_fetched_at": "2026-11-03T05:52:56.282619+00:00",
+      "truncated": false,
+      "prompt_version": "article-brief-v2",
+      "analyzed_at": "2026-11-03T05:53:11.148173+00:00",
+      "result": {
+        "key_change": {
+          "text": "금융위원회가 바이낸스의 대규모 해킹 사고 여파에 대응하여 국내 가상자산사업자를 대상으로 긴급 점검 회의를 개최했다.",
+          "evidence_ids": [
+            "p1",
+            "p2"
+          ]
+        },
+        "facts": [
+          {
+            "text": "금융위원회는 2일 유영준 디지털금융정책관 주재로 금융감독원, 금융보안원, 디지털자산거래소공동협의체(DAXA), 주요 가상자산사업자와 긴급회의를 개최했다.",
+            "evidence_ids": [
+              "p2"
+            ]
+          },
+          {
+            "text": "바이낸스는 지난달 30일 핫월렛에서 약 63억 달러(한화 약 8조 원) 규모의 가상자산 무단 출고 해킹 사고가 발생했다고 발표했다.",
+            "evidence_ids": [
+              "p4"
+            ]
+          },
+          {
+            "text": "금융위는 거래소들에 콜드월렛 자산 보관 비중 상향, 준비금 추가 적립, 입출고 상시 모니터링 강화 등을 주문했다.",
+            "evidence_ids": [
+              "p8"
+            ]
+          }
+        ],
+        "stage": "점검·조사",
+        "why_candidate": "글로벌 대형 가상자산 거래소 해킹 사고가 국내 시장에 미칠 잠재적 영향을 파악하고, 국내 사업자들의 전산 시스템 접근 통제 및 자체 보안 대응 체계를 선제적으로 점검하기 위한 것으로 판단됨.",
+        "evidence": [
+          {
+            "id": "p1",
+            "quote": "바이낸스의 대규모 해킹 사고와 관련해 국내 가상자산사업자를 대상으로 긴급 점검에 나섰다."
+          },
+          {
+            "id": "p2",
+            "quote": "금융위원회는 2일 유영준 디지털금융정책관 주재로 금융감독원, 금융보안원, 디지털자산거래소공"
+          },
+          {
+            "id": "p4",
+            "quote": "서 바이낸스는 지난달 30일 핫월렛에서 약 63억 달러(한화 약 8조 원) 규모의 가상자산"
+          },
+          {
+            "id": "p8",
+            "quote": "을 추가 적립할 것을 주문했다. 또한 입출고 상시 모니터링을 강화하고 관련 대응 인력을 추"
+          }
+        ]
+      }
+    }
+  },
   "checks": {
     "issue-193dc2f5a4e04bf16e42": {
-      "metadata_fingerprint": "ec05345f2de0976ad01264802ede37082a00cb50e08db40c167311a06fb11813",
-      "checked_at": "2026-11-03T04:57:40.672650+00:00",
-      "reason_code": "invalid_output",
+      "metadata_fingerprint": "495dee8b85aabb6623acddc1e62a9e7fffca52ec6a1a7d6e039ba24d5690332b",
+      "checked_at": "2026-11-03T05:52:56.282619+00:00",
+      "reason_code": "output_evidence_mismatch",
       "status": "failed"
     },
     "issue-8cda78e7eb4a64c526cd": {
-      "metadata_fingerprint": "34e7e0957b607134ece1ab086df346b548002df504e81e45c5fe0489cceda0bd",
-      "checked_at": "2026-11-03T04:57:40.672650+00:00",
-      "reason_code": "invalid_output",
-      "status": "failed"
+      "metadata_fingerprint": "39ce988cf438271e5fa6f5dacc2b3b38c84184bdddcaaa63defb3640f6ef77bf",
+      "checked_at": "2026-11-03T05:52:56.282619+00:00",
+      "reason_code": null,
+      "status": "completed"
     },
     "issue-a7a9b220314dfbd5acef": {
-      "metadata_fingerprint": "a8a58e5df97cc4a1946edf78642d3bfd7726e85dca77441979d9f9c492f516cf",
-      "checked_at": "2026-11-03T04:57:40.672650+00:00",
-      "reason_code": "invalid_output",
+      "metadata_fingerprint": "675f4535071ecfa1f8ad6bc8b8a2b0e7617deafb08fb3aa8c1a7de5353303d36",
+      "checked_at": "2026-11-03T05:52:56.282619+00:00",
+      "reason_code": "output_evidence_mismatch",
       "status": "failed"
     },
     "issue-a99980f5c72b33d80750": {
-      "metadata_fingerprint": "ca02bf8e91df9b547a092e8558a58665de338bb53becdd588a81790023242d78",
-      "checked_at": "2026-11-03T04:57:40.672650+00:00",
-      "reason_code": "invalid_output",
+      "metadata_fingerprint": "5989dec3820ab0964ae00cd490a4b2d93cbb9d77702512c6dc84d09c19f8ea0f",
+      "checked_at": "2026-11-03T05:52:56.282619+00:00",
+      "reason_code": "output_evidence_mismatch",
       "status": "failed"
     },
     "issue-ec88113fec2c699faaf5": {
-      "metadata_fingerprint": "7f73e15f4e912c06cdef060bce177109de4acea84686a3361e1d8cfd8ff02835",
-      "checked_at": "2026-11-03T04:57:40.672650+00:00",
-      "reason_code": "invalid_output",
-      "status": "failed"
+      "metadata_fingerprint": "12fe4f7b0bd349d8391d4a384eaf407ef4fa26ac1870a1a66bb82ea503a92a80",
+      "checked_at": "2026-11-03T05:52:56.282619+00:00",
+      "reason_code": null,
+      "status": "completed"
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-03T04:57:40.672650+00:00",
-    "completed_at": "2026-11-03T04:57:59.742440+00:00",
-    "status": "failed",
-    "error_code": "invalid_output",
+    "attempted_at": "2026-11-03T05:52:56.282619+00:00",
+    "completed_at": "2026-11-03T05:53:11.148184+00:00",
+    "status": "partial_success",
+    "error_code": "partial_invalid_output",
     "request_count": 1,
     "fetch_count": 5,
-    "completed_count": 0,
+    "completed_count": 2,
     "cached_count": 0,
-    "failed_count": 5
+    "failed_count": 3
   }
 }

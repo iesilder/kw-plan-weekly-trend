@@ -1,34 +1,34 @@
 {
   "schema_version": "1.0",
   "generation_id": "live-dcff2231972dd25eeea6",
-  "generated_at": "2026-11-03T05:01:06.592491+00:00",
+  "generated_at": "2026-11-03T05:52:56.212899+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "metadata-review-v2",
   "policy_version": "public-metadata-inference-v2",
   "auto_analysis_enabled": false,
   "last_attempt": {
-    "attempted_at": "2026-11-03T04:57:40.597603+00:00",
-    "completed_at": "2026-11-03T04:57:40.597603+00:00",
-    "status": "cached",
-    "error_code": null,
-    "request_count": 0,
-    "eligible_count": 6,
+    "attempted_at": "2026-11-03T05:52:54.431596+00:00",
+    "completed_at": "2026-11-03T05:52:56.211636+00:00",
+    "status": "failed",
+    "error_code": "invalid_output",
+    "request_count": 1,
+    "eligible_count": 7,
     "completed_count": 0,
     "cached_count": 6,
-    "failed_count": 0
+    "failed_count": 1
   },
   "counts": {
     "blocked": 0,
     "completed": 6,
     "stale": 0,
-    "failed": 0,
-    "not_analyzed": 1,
+    "failed": 1,
+    "not_analyzed": 0,
     "eligible": 7
   },
   "items": {
     "issue-b37f533f8536327de29d": {
-      "status": "not_analyzed",
+      "status": "failed",
       "reason_code": null,
       "input_fingerprint": "3954153e90ce44d8e838f8eda257e9ca8c0f369e1f3eba93fb03458fe6ad3d46",
       "input_evidence_ids": [
@@ -36,7 +36,7 @@
       ],
       "result_fingerprint": null,
       "analyzed_at": null,
-      "error_code": null,
+      "error_code": "invalid_output",
       "result": null
     },
     "issue-ec88113fec2c699faaf5": {

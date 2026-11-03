@@ -21,7 +21,7 @@ class PipelineTests(unittest.TestCase):
             shutil.copytree(PROJECT / directory, self.root / directory)
         # Production enables collection; these tests deliberately exercise offline demo mode.
         settings = read_json(self.root / "config/pipeline.json")
-        settings.update(mode="demo", real_collection_enabled=False)
+        settings.update(mode="demo", real_collection_enabled=False, schedule_enabled=False, planned_collection_frequency="manual")
         write_json(self.root / "config/pipeline.json", settings)
 
     def rows(self, query):
@@ -127,6 +127,14 @@ class PipelineTests(unittest.TestCase):
         write_json(self.root / "reports/history.json", {"reports": [{"status": "delivered"}]})
         with self.assertRaises(ValueError):
             run_demo(self.root)
+
+    def test_demo_never_enables_a_real_schedule_or_accepts_nonboolean_flags(self):
+        path = self.root / "config/pipeline.json"
+        settings = read_json(path)
+        for flag in [True, "false", 0, None]:
+            write_json(path, {**settings, "schedule_enabled": flag})
+            with self.assertRaises(ValueError):
+                run_demo(self.root)
 
     def test_state_missing_or_stale_cannot_pass_verification(self):
         run_demo(self.root)

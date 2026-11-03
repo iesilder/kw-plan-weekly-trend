@@ -17,7 +17,8 @@ def main():
             shutil.copytree(REPO / name, root / name)
         settings_path = root / "config/pipeline.json"
         settings = json.loads(settings_path.read_text(encoding="utf-8"))
-        settings.update(mode="demo", real_collection_enabled=False)
+        settings.update(mode="demo", real_collection_enabled=False, schedule_enabled=False,
+                        planned_collection_frequency="manual")
         settings_path.write_text(json.dumps(settings), encoding="utf-8")
 
         def execute(command):

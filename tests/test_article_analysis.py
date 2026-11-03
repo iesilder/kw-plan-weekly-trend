@@ -11,6 +11,8 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
+from analysis_fixture import install_analysis_fixture
+
 from weekly_trend import ai, article_analysis as articles
 from weekly_trend.article_sources import ArticleError
 
@@ -45,6 +47,8 @@ class ArticleAnalysisTests(unittest.TestCase):
         self.root = Path(temporary.name)
         for folder in ["config", "site/data", "reports", "state", "data"]:
             shutil.copytree(ROOT / folder, self.root / folder)
+        install_analysis_fixture(self.root, seed_store=True)
+        ai.prepare(self.root, now=NOW)
         write(self.root / "state/article-analysis.json", articles.empty_state())
         (self.root / "site/data/article-analysis.json").unlink(missing_ok=True)
         self.fetches, self.calls = [], []

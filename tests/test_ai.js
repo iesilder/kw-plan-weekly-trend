@@ -34,7 +34,7 @@ test("blocked source cannot carry AI result or be marked completed",()=>{const{d
 test("stale analysis exposes state but never claims current completion",()=>{const{data,latest}=sample();complete(data);data.items[A].status="stale";data.items[A].input_fingerprint="2".repeat(64);data.counts.completed=0;data.counts.stale=1;const v=AI.validateSidecar(data,latest);assert.equal(AI.summary(v).label,"재분석 대상 있음");assert.equal(v.counts.completed,0);assert(AI.itemMessage(v.items[A]).includes("이전 제안은 표시하지 않으며"));});
 test("completed result requires matching fingerprint, analysis time, and supported output",()=>{for(const change of [d=>d.items[A].result_fingerprint="9".repeat(64),d=>d.items[A].analyzed_at=null,d=>d.items[A].result.suggested_topic_id="invented",d=>d.items[A].result.relevance="high",d=>d.items[A].result.duplicate_issue_ids=[A]]){const{data,latest}=sample();complete(data);change(data);assert.throws(()=>AI.validateSidecar(data,latest));}});
 test("AI output is preserved as text data, never interpreted HTML",()=>{const{data,latest}=sample();complete(data);const marker='<img src=x onerror="alert(1)">';data.items[A].result.rationale=marker;const v=AI.validateSidecar(data,latest);assert.equal(v.items[A].result.rationale,marker);assert.equal(Object.keys(v.items[A].result).length,5);});
-test("invalid analysis and run dates are rejected",()=>{for(const change of [d=>d.generated_at="2026-02-30T00:00:00Z",d=>d.last_attempt={...attempt(),completed_at:"2026-11-02T00:00:00Z"},d=>d.auto_analysis_enabled=true]){const{data,latest}=sample();change(data);assert.throws(()=>AI.validateSidecar(data,latest));}});
+test("invalid analysis and run dates are rejected",()=>{for(const change of [d=>d.generated_at="2026-02-30T00:00:00Z",d=>d.last_attempt={...attempt(),completed_at:"2026-11-02T00:00:00Z"},d=>d.auto_analysis_enabled="true"]){const{data,latest}=sample();change(data);assert.throws(()=>AI.validateSidecar(data,latest));}});
 
 test("completed duplicates only refer to current eligible DART sources",()=>{const{data,latest}=sample();complete(data);data.items[A].result.duplicate_issue_ids=[B];assert.doesNotThrow(()=>AI.validateSidecar(data,latest));data.items[A].result.duplicate_issue_ids=[C];assert.throws(()=>AI.validateSidecar(data,latest));});
 test("hidden stale result may retain archived duplicate IDs and unchanged primary hash",()=>{const{data,latest}=sample();complete(data);data.items[A].status="stale";data.items[A].result.duplicate_issue_ids=["issue-"+"d".repeat(20)];data.counts.completed=0;data.counts.stale=1;const v=AI.validateSidecar(data,latest);assert.equal(v.items[A].status,"stale");assert.equal(v.counts.completed,0);});
@@ -82,4 +82,9 @@ test("DART exclusions coexist with cached news title advice without implying tra
 test("a DART exclusion cannot masquerade as a pending AI input",()=>{
   const{data,latest}=sample();data.items[A].reason_code="dart_not_sent";assert.throws(()=>AI.validateSidecar(data,latest));
   assert.match(AI.itemMessage({status:"not_analyzed",reason_code:null,error_code:null}),/DART 공시는 AI에 전송하지 않습니다/);
+});
+
+test("automatic analysis is a boolean setting and does not imply execution success",()=>{
+  for(const flag of [true,false]){const{data,latest}=sample();data.auto_analysis_enabled=flag;const validated=AI.validateSidecar(data,latest);assert.equal(validated.auto_analysis_enabled,flag);assert.equal(validated.counts.completed,0);assert.equal(AI.summary(validated).actualAnalysisExists,false);assert.equal(AI.summary(validated).label,flag?"자동 실행 대기":"수동 실행 준비");}
+  for(const flag of [1,0,null,"false",undefined]){const{data,latest}=sample();data.auto_analysis_enabled=flag;assert.throws(()=>AI.validateSidecar(data,latest));}
 });

@@ -1,0 +1,118 @@
+name: Daily collection, news AI and Pages
+
+on:
+  schedule:
+    # 23:00 UTC is 08:00 the following day in Korea.
+    - cron: '0 23 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: weekly-trend-publish
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    outputs:
+      data_sha: ${{ steps.persist.outputs.sha }}
+      artifact_name: ${{ steps.base.outputs.artifact_name }}
+      collection_failed: ${{ steps.daily.outputs.collection_failed }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: '3.12'
+      - name: Remember starting revision
+        id: base
+        run: |
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "artifact_name=github-pages-daily-${{ github.run_id }}-${{ github.run_attempt }}" >> "$GITHUB_OUTPUT"
+      - name: Verify offline behavior
+        run: |
+          python -m unittest discover -s tests -v
+          node --check site/app.js
+          node --check site/review.js
+          node --check site/ai.js
+          node --check site/article.js
+          node --test tests/test_review.js tests/test_ai.js tests/test_article.js
+      - name: Collect, then analyze news only
+        id: daily
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          # Existing Free, billing-unlinked project approved for daily news analysis.
+          AI_FREE_PROJECT_CONFIRMED: 'true'
+        run: python scripts/run_daily.py --root .
+      - name: Verify the publishable snapshot
+        run: python -m weekly_trend verify --root .
+      - name: Persist validated collection and analysis
+        id: persist
+        env:
+          START_SHA: ${{ steps.base.outputs.sha }}
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          if [ "$(git rev-parse origin/main)" != "$START_SHA" ]; then
+            echo 'Main changed during this run. No overwrite or deployment performed.' >&2
+            exit 1
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/raw.sqlite3 data/daily-run.json state site/data
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: save daily collection and news analysis'
+            git push origin HEAD:main
+          fi
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Record saved counts
+        run: |
+          python scripts/write_run_summary.py
+          python scripts/write_ai_summary.py
+      - name: Package the website only
+        uses: actions/upload-pages-artifact@v5.0.0
+        with:
+          name: ${{ steps.base.outputs.artifact_name }}
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: main
+      - name: Reject obsolete deployment
+        env:
+          DATA_SHA: ${{ needs.build.outputs.data_sha }}
+        run: |
+          if [ "$(git rev-parse HEAD)" != "$DATA_SHA" ]; then
+            echo 'A newer main revision exists. No obsolete deployment performed.' >&2
+            exit 1
+          fi
+      - name: Deploy the verified artifact
+        id: deployment
+        uses: actions/deploy-pages@v5.0.1
+        with:
+          artifact_name: ${{ needs.build.outputs.artifact_name }}
+      - name: Surface total collection failure after preserving the snapshot
+        if: needs.build.outputs.collection_failed == 'true'
+        run: |
+          echo 'All collection sources failed. The verified snapshot and failure status were preserved.' >&2
+          exit 1

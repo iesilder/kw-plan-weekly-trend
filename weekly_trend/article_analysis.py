@@ -53,8 +53,8 @@ def load_config(root):
     for key in ("schema_version", "provider", "model"):
         if value[key] != DEFAULT_CONFIG[key]:
             raise ValueError("Unsupported article model configuration")
-    if value["manual_only"] is not True or not re.fullmatch(r"[a-zA-Z0-9_-]{1,80}", value["prompt_version"]):
-        raise ValueError("Article briefs must remain explicit manual operations")
+    if type(value["manual_only"]) is not bool or not re.fullmatch(r"[a-zA-Z0-9_-]{1,80}", value["prompt_version"]):
+        raise ValueError("Article scheduling must be explicit")
     for key, limit in [("max_articles_per_run", 5), ("max_output_tokens", 12288),
                        ("max_input_chars_per_article", 10000), ("cache_hours", 24), ("timeout_seconds", 45)]:
         if type(value[key]) is not int or not 1 <= value[key] <= limit:
@@ -153,7 +153,11 @@ def load_state(root):
     for issue_id, check in value["checks"].items():
         if not ai.ISSUE_ID.fullmatch(issue_id):
             raise ValueError("Invalid article fetch identity")
-        ai._keys(check, {"metadata_fingerprint", "checked_at", "reason_code", "status"})
+        optional = {key for key in ("input_fingerprint", "body_hash") if key in check}
+        ai._keys(check, {"metadata_fingerprint", "checked_at", "reason_code", "status"} | optional)
+        for key in optional:
+            if not isinstance(check[key], str) or not ai.FINGERPRINT.fullmatch(check[key]):
+                raise ValueError("Invalid quarantined article fingerprint")
         if not ai.FINGERPRINT.fullmatch(check["metadata_fingerprint"]) or check["status"] not in {"pending", "unavailable", "failed", "completed"}:
             raise ValueError("Invalid article fetch check")
         ai._valid_time(check["checked_at"])
@@ -199,7 +203,8 @@ def _inputs(root, latest, details, config):
                      title=row["title"], published_date=ai._date(row))
         entry["metadata_fingerprint"] = _hash({"issue_id": issue_id, "title": row["title"], "published_date": ai._date(row),
             "source_url": entry["source_url"], "source_id": source["id"], "evidence_ids": entry["evidence_ids"],
-            "source_adapter": source["adapter"], "allowed_hosts": source.get("allowed_hosts"), "config": config, "instruction": load_prompt(root)})
+            # Scheduling changes must not invalidate successful content caches.
+            "source_adapter": source["adapter"], "allowed_hosts": source.get("allowed_hosts"), "config": {**config, "manual_only": True}, "instruction": load_prompt(root)})
     return inputs
 
 
@@ -229,7 +234,7 @@ def _public(root, latest, details, state, now=None):
     counts["eligible"] = len(items) - counts["not_applicable"]
     return {"schema_version": "1.0", "generation_id": latest["generation_id"], "generated_at": ai._stamp(now),
             "provider": config["provider"], "model": config["model"], "prompt_version": config["prompt_version"],
-            "auto_analysis_enabled": False, "counts": counts, "last_attempt": state["last_attempt"], "items": items}, inputs
+            "auto_analysis_enabled": not config["manual_only"], "counts": counts, "last_attempt": state["last_attempt"], "items": items}, inputs
 
 
 def _write(path, value):
@@ -391,17 +396,26 @@ def _parse(response, batch):
         raise ai.AIError("output_invalid_shape") from None
 
 
-def run(root, environ=None, fetcher=None, transport=None, now=None):
+def _validation_failure(check, data):
+    code = check.get("reason_code") or ""
+    return (check.get("status") == "failed" and check.get("metadata_fingerprint") == data["metadata_fingerprint"] and
+            (code == "invalid_output" or code.startswith("output_")))
+
+
+def run(root, environ=None, fetcher=None, transport=None, now=None, automatic=False):
     root = Path(root)
     stamp = ai._stamp(now)
     moment = ai._valid_time(stamp)
     config = load_config(root)
+    if type(automatic) is not bool or (automatic and config["manual_only"]):
+        raise ValueError("Automatic article analysis is not enabled")
     state = load_state(root)
     latest, details = ai._snapshot(root)
     public, inputs = _public(root, latest, details, state, now)
     eligible = {key: value for key, value in inputs.items() if not value["reason"]}
     pending = []
     cached = []
+    suppressed = []
     for issue_id, data in eligible.items():
         entry = state["entries"].get(issue_id)
         prior_check = state["checks"].get(issue_id, {})
@@ -409,9 +423,32 @@ def run(root, environ=None, fetcher=None, transport=None, now=None):
                 timedelta(0) <= moment - ai._valid_time(entry["body_fetched_at"]) < timedelta(hours=config["cache_hours"]) and
                 (prior_check.get("metadata_fingerprint") != data["metadata_fingerprint"] or prior_check.get("status") == "completed")):
             cached.append(issue_id)
+        elif (automatic and _validation_failure(prior_check, data) and
+              timedelta(0) <= moment - ai._valid_time(prior_check["checked_at"]) < timedelta(hours=config["cache_hours"])):
+            suppressed.append(issue_id)
         else:
             pending.append(issue_id)
-    pending.sort(key=lambda key: (eligible[key]["published_date"], key))
+    if automatic:
+        def pending_order(issue_id):
+            data = eligible[issue_id]
+            entry = state["entries"].get(issue_id)
+            prior = state["checks"].get(issue_id, {})
+            same_check = prior.get("metadata_fingerprint") == data["metadata_fingerprint"]
+            same_entry = entry and entry["metadata_fingerprint"] == data["metadata_fingerprint"]
+            if same_check and (prior.get("status") == "unavailable" or
+                               (prior.get("status") == "failed" and not _validation_failure(prior, data))):
+                return (1, prior["checked_at"], data["published_date"], issue_id)
+            if same_check and _validation_failure(prior, data):
+                return (2, prior["checked_at"], data["published_date"], issue_id)
+            if same_entry:
+                return (2, entry["body_fetched_at"], data["published_date"], issue_id)
+            # New or changed material is processed before the bounded daily
+            # rechecks of already summarized articles; otherwise old successes
+            # would consume every fetch slot after the 24-hour TTL expires.
+            return (0, data["published_date"], data["published_date"], issue_id)
+        pending.sort(key=pending_order)
+    else:
+        pending.sort(key=lambda key: (eligible[key]["published_date"], key))
     selected = pending[:config["max_articles_per_run"]]
     attempt = {"attempted_at": stamp, "completed_at": stamp, "status": "cached", "error_code": None,
                "request_count": 0, "fetch_count": 0, "completed_count": 0, "cached_count": len(cached), "failed_count": 0}
@@ -422,12 +459,18 @@ def run(root, environ=None, fetcher=None, transport=None, now=None):
         error = "free_project_not_confirmed" if env.get("AI_FREE_PROJECT_CONFIRMED") != "true" else "missing_api_key"
         attempt.update(status="blocked", error_code=error)
         for issue_id in selected:
+            if automatic and _validation_failure(state["checks"].get(issue_id, {}), eligible[issue_id]):
+                # Credentials can be restored later; a temporary configuration
+                # problem must not turn a quarantined invalid input into pending.
+                suppressed.append(issue_id)
+                continue
             state["checks"][issue_id] = {"metadata_fingerprint": eligible[issue_id]["metadata_fingerprint"], "checked_at": stamp, "reason_code": error, "status": "pending"}
     elif selected:
         batch = []
         provenance = {}
         for issue_id in selected:
             data = eligible[issue_id]
+            previous_failure = state["checks"].get(issue_id, {})
             attempt["fetch_count"] += 1
             try:
                 body = (fetcher or fetch_article)(data["source_url"], data["source"])
@@ -446,6 +489,14 @@ def run(root, environ=None, fetcher=None, transport=None, now=None):
                 if not paragraphs:
                     raise ArticleError("body_too_short")
                 fingerprint = _hash({"metadata": data["metadata_fingerprint"], "body_hash": body["content_hash"], "paragraphs": paragraphs, "truncated": truncated})
+                if (automatic and _validation_failure(previous_failure, data) and
+                        previous_failure.get("input_fingerprint") in (None, fingerprint)):
+                    # Legacy failures lack a body hash. Establish a baseline
+                    # without sending the same invalid article blindly again.
+                    state["checks"][issue_id] = {**previous_failure, "checked_at": stamp,
+                        "input_fingerprint": fingerprint, "body_hash": body["content_hash"]}
+                    suppressed.append(issue_id)
+                    continue
                 old = state["entries"].get(issue_id)
                 if old and old["input_fingerprint"] == fingerprint:
                     old.update(body_fetched_at=stamp)
@@ -458,7 +509,12 @@ def run(root, environ=None, fetcher=None, transport=None, now=None):
                     "body_hash": body["content_hash"], "body_fetched_at": stamp, "truncated": truncated, "prompt_version": config["prompt_version"]}
             except (ArticleError, ValueError, OSError) as error:
                 code = error.code if isinstance(error, ArticleError) else "network_error"
-                state["checks"][issue_id] = {"metadata_fingerprint": data["metadata_fingerprint"], "checked_at": stamp, "reason_code": code, "status": "unavailable"}
+                if automatic and _validation_failure(previous_failure, data):
+                    # A temporary fetch error must not erase an invalid-input
+                    # quarantine and cause another API request on the next day.
+                    state["checks"][issue_id] = {**previous_failure, "checked_at": stamp}
+                else:
+                    state["checks"][issue_id] = {"metadata_fingerprint": data["metadata_fingerprint"], "checked_at": stamp, "reason_code": code, "status": "unavailable"}
                 attempt["failed_count"] += 1
         if batch:
             attempt["request_count"] = 1
@@ -476,16 +532,18 @@ def run(root, environ=None, fetcher=None, transport=None, now=None):
                 if errors:
                     attempt["error_code"] = "partial_invalid_output" if results else "invalid_output"
                 for issue_id, code in errors.items():
-                    state["checks"][issue_id] = {"metadata_fingerprint": eligible[issue_id]["metadata_fingerprint"], "checked_at": stamp, "reason_code": code, "status": "failed"}
+                    state["checks"][issue_id] = {"metadata_fingerprint": eligible[issue_id]["metadata_fingerprint"], "checked_at": stamp, "reason_code": code, "status": "failed",
+                        "input_fingerprint": provenance[issue_id]["input_fingerprint"], "body_hash": provenance[issue_id]["body_hash"]}
             except Exception as error:
                 code = error.code if isinstance(error, ai.AIError) else "network_error"
                 attempt.update(error_code=code, failed_count=attempt["failed_count"] + len(batch))
                 for row in batch:
-                    state["checks"][row["issue_id"]] = {"metadata_fingerprint": eligible[row["issue_id"]]["metadata_fingerprint"], "checked_at": stamp, "reason_code": code, "status": "failed"}
+                    state["checks"][row["issue_id"]] = {"metadata_fingerprint": eligible[row["issue_id"]]["metadata_fingerprint"], "checked_at": stamp, "reason_code": code, "status": "failed",
+                        "input_fingerprint": provenance[row["issue_id"]]["input_fingerprint"], "body_hash": provenance[row["issue_id"]]["body_hash"]}
         attempt["status"] = ("partial_success" if attempt["failed_count"] or len(pending) > len(selected) else "success") if attempt["completed_count"] or attempt["cached_count"] else "failed"
     attempt["completed_at"] = ai._stamp(now)
     state["last_attempt"] = attempt
     public, _ = _public(root, latest, details, state, now)
     _persist(root, state, public)
     check(root)
-    return {"ok": True, "last_attempt": attempt, "counts": public["counts"]}
+    return {"ok": True, "suppressed_count": len(suppressed), "last_attempt": attempt, "counts": public["counts"]}

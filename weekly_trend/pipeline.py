@@ -40,7 +40,7 @@ def load_inputs(root):
     if read_json(root / "reports/history.json")["reports"]:
         raise ValueError("Phase 1 starts without delivered reports")
     settings = read_json(root / "config/pipeline.json")
-    if any(settings[key] for key in ("real_collection_enabled", "ai_enabled", "schedule_enabled")):
+    if any(settings.get(key) is not False for key in ("real_collection_enabled", "ai_enabled", "schedule_enabled")):
         raise ValueError("Real collection, AI and schedules must stay disabled")
     return {item["id"]: item["name"] for item in topics}
 

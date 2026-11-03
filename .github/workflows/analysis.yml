@@ -1,6 +1,6 @@
 name: Manual AI assistance and Pages
 
-# Explicit manual inference. Fetch public article bodies only in this workflow; no schedule or report decisions.
+# Explicit manual retries and news inference. Daily orchestration is in daily.yml; no report decisions.
 on:
   workflow_dispatch:
     inputs:

@@ -6,8 +6,8 @@ from pathlib import Path
 status = json.loads(Path('site/data/status.json').read_text(encoding='utf-8'))
 demo = status.get('is_demo') is True
 lines = ['## Fictional demo snapshot' if demo else '## Public metadata collection', '',
-         'AI calls and schedules are disabled.', '', '| Item | Value |', '| --- | --- |']
-for key in ('generation_id', 'article_count', 'version_count', 'issue_count', 'run_count',
+         'Collection stores metadata only. News AI and daily scheduling have separate status.', '', '| Item | Value |', '| --- | --- |']
+for key in ('last_run_at', 'last_successful_run_at', 'generation_id', 'article_count', 'version_count', 'issue_count', 'run_count',
             'inserted_versions', 'duplicate_count', 'collection_status', 'publication_status',
             'archived_article_count', 'total_article_count', 'report_count', 'interests_count'):
     if key in status:

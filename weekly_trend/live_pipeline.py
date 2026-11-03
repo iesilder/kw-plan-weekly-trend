@@ -46,6 +46,20 @@ def _source_with_classification_context(source, rules, companies, topics):
     return source
 
 
+def _schedule_metadata(settings):
+    enabled = settings.get("schedule_enabled")
+    frequency = settings.get("planned_collection_frequency")
+    zone = settings.get("timezone", "Asia/Seoul")
+    if type(enabled) is not bool or zone != "Asia/Seoul":
+        raise ValueError("Collection schedule must use a boolean flag and Asia/Seoul timezone")
+    if enabled:
+        if frequency != "daily_0800_kst":
+            raise ValueError("Enabled collection schedule must declare daily 08:00 KST")
+    elif frequency not in (None, "manual", "daily_not_enabled"):
+        raise ValueError("Disabled collection schedule cannot claim an active daily frequency")
+    return {"schedule_enabled": enabled, "planned_collection_frequency": frequency or "manual", "timezone": zone}
+
+
 def load_live_inputs(root):
     topics = read_json(root / "config/topics.json")["topics"]
     if len(topics) != 5 or {item["id"] for item in topics} != TOPIC_IDS or any(not item.get("enabled", True) for item in topics):
@@ -70,9 +84,9 @@ def load_live_inputs(root):
     if read_json(root / "config/interests.json")["interests"] or read_json(root / "reports/history.json")["reports"]:
         raise ValueError("Executive interests and registered reports must remain empty in this phase")
     settings = read_json(root / "config/pipeline.json")
-    if (settings.get("real_collection_enabled") is not True or settings.get("ai_enabled") is not False
-            or settings.get("schedule_enabled") is not False):
-        raise ValueError("Live collection must be explicitly enabled; AI and schedules must remain disabled")
+    if settings.get("real_collection_enabled") is not True or settings.get("ai_enabled") is not False:
+        raise ValueError("Live collection must be explicitly enabled; raw collection must not run AI")
+    _schedule_metadata(settings)
     days, hours = settings.get("initial_lookback_days", 30), settings.get("overlap_hours", 48)
     if days != 30 or hours != 48:
         raise ValueError("This phase uses an initial 30-day window and a 48-hour overlap")
@@ -356,7 +370,7 @@ def run_collection(root, collector=None, now=None):
                       "publication_status": "updated" if succeeded else "filtered" if policy_filtered else "retained" if retained else "unavailable",
                       "policy_filtered": policy_filtered,
                       "interests_count": 0, "report_count": 0, "real_collection_enabled": True,
-                      "ai_enabled": False, "schedule_enabled": settings.get("schedule_enabled", False),
+                      "ai_enabled": False, **_schedule_metadata(settings),
                       "initial_lookback_days": 30, "overlap_hours": 48, "coverage_note": COVERAGE_NOTE,
                       "sources": [_public_source(item) for item in source_states]}
             validate_snapshot(db, topics, latest, details, history)
@@ -398,12 +412,12 @@ def validate_snapshot(db, topics, latest, details, history):
 
 
 def validate_status(db, latest, status):
+    _schedule_metadata(status)
     expected_counts = counts(db)
     if any(status.get(key) != value for key, value in expected_counts.items()):
         raise ValueError("Live SQLite/status count mismatch")
     if (status.get("schema_version") != "1.0" or status.get("is_demo") is not False or
             status.get("real_collection_enabled") is not True or status.get("ai_enabled") is not False or
-            status.get("schedule_enabled") is not False or
             status.get("analysis_mode") != "pending_ai" or status.get("collection_mode") != "public_metadata"):
         raise ValueError("Live status must not claim a demo or AI analysis")
     if status.get("generation_id") != latest["generation_id"] or status.get("published_generation_id") != latest["generation_id"]:

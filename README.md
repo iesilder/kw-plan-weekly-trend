@@ -1,10 +1,12 @@
-# 주간 경쟁사 동향 · 3단계 보고 후보 검토
+# 주간 경쟁사 동향 · 4단계 수동 AI 검토 보조
 
 [사이트 열기](https://iesilder.github.io/kw-plan-weekly-trend/) · [수동 수집 워크플로](https://github.com/iesilder/kw-plan-weekly-trend/actions/workflows/pipeline.yml)
 
-기존 경쟁사 10곳의 DART 실적 공시와 기사·보도자료 RSS 메타데이터를 수동 수집해 SQLite에 보존합니다. 뉴스는 경쟁사 13곳, 관련 금융그룹, 증권업에 영향을 주는 정책·사업 변화를 5개 주제로 분류합니다. **AI 호출과 정기 실행은 연결하지 않았습니다.** 경영진 관심사와 등록된 실제 보고 이력은 빈 값입니다.
+기존 경쟁사 10곳의 DART 실적 공시와 기사·보도자료 RSS 메타데이터를 수동 수집해 SQLite에 보존합니다. 뉴스는 경쟁사 13곳, 관련 금융그룹, 증권업에 영향을 주는 정책·사업 변화를 5개 주제로 분류합니다. **실제 수집은 수동으로 운영하며, AI 검토 보조도 별도 수동 실행으로만 연결합니다. 정기 실행은 꺼두었습니다.** 경영진 관심사와 등록된 실제 보고 이력은 빈 값입니다.
 
 수집 자료를 **채택·보류·제외**하고 선택한 기간의 채택 자료를 주간 후보 목록으로 모아 복사하거나 CSV로 내보낼 수 있습니다. 제목이 비슷한 자료는 중복 검토 후보로 제안하며 원문을 합치지 않습니다. 선택은 브라우저에 임시 저장되고, **GitHub에 저장** 안내를 따라 별도 수동 워크플로에서 저장소에 보관할 수 있습니다. 후보 선정은 실제 보고 완료가 아닙니다. [사용 방법과 저장 범위](docs/review.md)
+
+DART의 회사명·공시 유형·접수일을 바탕으로 AI가 분류와 확인할 항목을 제안합니다. 기사 본문이나 실적 수치를 분석하지 않으며, 연합인포맥스·뉴스와이어는 외부 AI 입력에서 제외합니다. `GEMINI_API_KEY` 등록과 Free 프로젝트 확인 후 별도 수동 실행이 필요합니다. [설정과 이용 범위](docs/ai.md)
 
 ## 수집·저장 범위
 
@@ -28,7 +30,7 @@
 3. `deploy`가 같은 검증 결과를 Pages에 배포합니다. `github-pages`의 주소를 엽니다.
 4. 같은 워크플로를 다시 실행해 기존 데이터와 실행 이력이 유지되는지 확인합니다. 변경이 없는 같은 입력은 버전을 추가하지 않습니다. 두 실행 사이 새 공시나 정정이 생기면 건수가 증가할 수 있습니다.
 
-배포 워크플로의 유일한 시작 조건은 `workflow_dispatch`입니다. **Collection checks**는 코드 변경/PR에 오프라인 테스트만 실행합니다. API 키·PAT 등록은 필요 없으며 GitHub 제공 토큰으로 같은 저장소와 Pages에만 기록합니다.
+배포 워크플로의 유일한 시작 조건은 `workflow_dispatch`입니다. **Collection checks**는 코드 변경/PR에 오프라인 테스트만 실행합니다. 수집에는 API 키·PAT 등록이 필요 없으며 GitHub 제공 토큰으로 같은 저장소와 Pages에만 기록합니다.
 
 일부 출처 실패는 성공한 자료와 이전 자료를 보존하고 화면에 표시합니다. 전체 수집 실패도 무결성 검증을 통과한 이전 자료와 실패 상태를 보존하며 워크플로는 실패로 표시합니다. 수집 범위가 바뀐 경우에는 기존 자료 중 새 범위에 맞는 항목만 다시 게시하고 실패 사실을 명시합니다. DB/마트 검증 실패 또는 실행 중 main 변경 시에는 강제 덮어쓰기·배포하지 않습니다.
 
@@ -41,7 +43,8 @@ python -m unittest discover -s tests -v
 python scripts/check_repeatability.py
 node --check site/app.js
 node --check site/review.js
-node --test tests/test_review.js
+node --check site/ai.js
+node --test tests/test_review.js tests/test_ai.js
 python -m weekly_trend collect --root .
 python -m weekly_trend verify --root .
 ```
@@ -84,4 +87,4 @@ python -m weekly_trend verify --root .
 같은 색의 투명도를 사용해 상태와 표면을 구분합니다.
 
 
-[개발 범위](docs/scope.md) · [후보 검토 사용법](docs/review.md) · [분류 기준과 수정 위치](docs/classification.md) · [출처·저장 기준](docs/sources.md) · [검증 기록](docs/verification.md)
+[AI 설정과 범위](docs/ai.md) · [개발 범위](docs/scope.md) · [후보 검토 사용법](docs/review.md) · [분류 기준과 수정 위치](docs/classification.md) · [출처·저장 기준](docs/sources.md) · [검증 기록](docs/verification.md)

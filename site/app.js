@@ -11,6 +11,8 @@
   const $ = id => document.getElementById(id);
   const state = { latest: null, status: null, topic: "", selected: null, detail: null, request: 0, loadRequest: 0 };
   const Review = window.WeeklyReview;
+  const AI = window.WeeklyAI;
+  const aiState = {data:null,loading:true,warning:""};
   const reviewState = { canonical: null, draft: null, ready: false, problem: "", storageWarning: "", localInvalid: false, duplicates: {}, detailCache: new Map(), weeklyRequest: 0, weeklyRecords: [], weeklyRange: null, memoryMode: null, unsavedStorage: false };
   let toastTimer;
 
@@ -102,14 +104,14 @@
   function renderMode() {
     const demo = state.latest.is_demo;
     const values = {
-      "mode-badge": demo ? "DEMO" : "PHASE 03",
+      "mode-badge": demo ? "DEMO" : "PHASE 04",
       "nav-caption": demo ? "검토할 이슈" : "수집 주제",
       "all-topic-label": demo ? "전체 이슈" : "전체 자료",
       "page-heading": demo ? "이번 주, 살펴볼 변화" : "이번 주, 보고할 변화",
       "page-intro": demo ? "경쟁사의 움직임을 모으고, 보고할 이유를 확인합니다." : "수집한 자료를 검토하고 주간 보고 후보를 고릅니다.",
       "notice-title": demo ? "가상 데이터 · 실제 기사/AI 분석 아님" : "공개 자료 수집 · 담당자 검토",
-      "notice-description": demo ? "수집부터 화면까지의 연결을 확인하는 1단계 데모입니다. 모든 회사와 사건은 가상입니다." : "제목 기준으로 분류한 자료입니다. 원문을 확인한 뒤 채택·보류·제외를 선택하세요. AI 분석과 정기 실행은 연결되어 있지 않습니다.",
-      "phase-label": demo ? "PHASE 01" : "PHASE 03",
+      "notice-description": demo ? "수집부터 화면까지의 연결을 확인하는 1단계 데모입니다. 모든 회사와 사건은 가상입니다." : "제목 기준으로 분류한 자료입니다. 원문을 확인한 뒤 채택·보류·제외를 선택하세요. AI 보조 제안은 별도로 표시하고 최종 선택은 담당자가 결정합니다. 정기 실행은 꺼져 있습니다.",
+      "phase-label": demo ? "PHASE 01" : "PHASE 04",
       "issue-count-label": demo ? "검토 후보" : "수집 자료",
       "article-count-label": demo ? "원자료" : "현재 범위 자료",
       "version-count-label": demo ? "보존한 자료 버전" : "현재 범위 자료 버전",
@@ -123,7 +125,7 @@
     Object.entries(values).forEach(([id, value]) => { $(id).textContent = value; });
     $("mode-notice").setAttribute("aria-label", demo ? "데모 안내" : "수집 자료 안내");
     $("execution-mode").textContent = state.status.schedule_enabled === true ? "정기 실행 연결됨" : "수동 실행 모드";
-    $("connection-status").textContent = `${state.status.schedule_enabled === true ? "정기 수집 켜짐" : "정기 수집 꺼짐"} · AI 미연결`;
+    $("connection-status").textContent = `${state.status.schedule_enabled === true ? "정기 수집 켜짐" : "정기 수집 꺼짐"} · AI 상태 확인 중`;
     $("candidate-list").setAttribute("aria-label", demo ? "보고 후보 목록" : "수집 자료 목록");
     const sort = $("sort-order");
     const previous = sort.value;
@@ -276,7 +278,7 @@
     const demo = detail.is_demo;
     panel.replaceChildren();
     const kicker = el("div", "detail-kicker");
-    kicker.append(el("span", "", demo ? "ISSUE BRIEF" : "SOURCE RECORD"), el("span", "", demo ? "가상 데이터" : "AI 분석 미연결"));
+    kicker.append(el("span", "", demo ? "ISSUE BRIEF" : "SOURCE RECORD"), el("span", "", demo ? "가상 데이터" : "원자료 · AI 제안 별도"));
     const meta = el("div", "detail-meta");
     meta.append(el("span", "", detail.company), el("span", "", "등록된 보고 이력 없음"));
     panel.append(kicker, el("div", "detail-topic", topicName(detail.topic_id) || detail.topic), el("h3", "detail-title", detail.title), meta);
@@ -297,8 +299,8 @@
       const labels = classificationLabels(detail);
       if (labels) analysis.append(labels);
       else analysis.append(el("p", "classification-note", "제목에서 별도 태그나 단계를 분류하지 않았습니다."));
-      analysis.append(el("p", "classification-note", "태그와 단계는 제목에 나타난 표현을 기준으로 합니다. 실제 추진·승인·완료 여부를 확인한 사실이 아닙니다."), el("p", "report-note", "AI 분석 미연결 상태입니다. 중요도·보고할 이유·요약·보고 초안·기보고 대비 비교는 제공하지 않습니다. 최근 경영진 관심사와 실제 보고 이력은 미등록 상태입니다."));
-      panel.append(analysis);
+      analysis.append(el("p", "classification-note", "태그와 단계는 제목에 나타난 표현을 기준으로 합니다. 실제 추진·승인·완료 여부를 확인한 사실이 아닙니다."), el("p", "report-note", "수집 단계의 제목 분류입니다. AI 제안이 있으면 아래에 별도로 표시하며, 원문 요약·실적 수치·보고 초안·기보고 대비 비교는 제공하지 않습니다. 경영진 관심사와 실제 보고 이력은 미등록 상태입니다."));
+      panel.append(analysis, renderAIDetail(detail));
     }
     const evidenceSection = detailSection(demo ? "03" : "02", demo ? "확인한 근거" : "출처와 저장 범위");
     if (demo && detail.change_summary) evidenceSection.append(el("p", "change-note", detail.change_summary));
@@ -424,6 +426,99 @@
       reviewState.unsavedStorage = true;
       reviewState.storageWarning = "브라우저 저장소를 사용할 수 없습니다. 새로고침 전에 임시선택 백업이나 GitHub 저장을 완료해주세요.";
     }
+  }
+
+  function initializeAI(result) {
+    aiState.data = null;
+    aiState.loading = false;
+    aiState.warning = "";
+    if (state.latest?.is_demo) { aiState.warning = "가상 데모에는 실제 AI 분석 결과를 연결하지 않습니다."; return; }
+    try {
+      if (!AI) throw new Error("AI 보조 화면 파일을 불러오지 못했습니다.");
+      if (result.error) throw new Error("저장된 AI 보조 자료를 불러오지 못했습니다.");
+      aiState.data = AI.validateSidecar(result.value,state.latest);
+    } catch(error) { aiState.warning = `${error.message} 수집 자료와 검토 선택 기능은 계속 사용할 수 있습니다.`; }
+  }
+
+  function renderAISummary() {
+    const counts = $("ai-counts");
+    counts.replaceChildren();
+    $("ai-warning").textContent = aiState.warning;
+    $("ai-warning").hidden = !aiState.warning;
+    const scheduleText = state.status?.schedule_enabled === true ? "정기 수집 켜짐" : "정기 수집 꺼짐";
+    if (!aiState.data) {
+      $("ai-readiness").textContent = aiState.loading ? "확인 중" : "상태 확인 불가";
+      $("ai-summary-note").textContent = aiState.loading ? "저장된 분석 상태를 확인하고 있습니다. 이 화면에서 AI를 호출하지 않습니다." : "유효한 AI 결과를 확인하지 못해 제안을 표시하지 않습니다.";
+      $("ai-last-run").textContent = aiState.loading ? "실제 분석 이력 확인 중" : "실제 분석 이력: 확인할 수 없음";
+      $("connection-status").textContent = `${scheduleText} · AI ${aiState.loading ? "상태 확인 중" : "상태 확인 필요"}`;
+      return;
+    }
+    const data = aiState.data;
+    const status = AI.summary(data);
+    $("ai-readiness").textContent = status.label;
+    $("ai-summary-note").textContent = "수동 실행한 AI 제안을 별도로 표시합니다. 담당자의 채택·보류·제외와 기존 주제 분류는 자동으로 변경하지 않습니다.";
+    for (const [label,value] of [["분석 가능",data.counts.eligible],["현재 결과",data.counts.completed],["재분석 필요",data.counts.stale],["아직 미분석",data.counts.not_analyzed],["이용 제한",data.counts.blocked],["분석 실패",data.counts.failed],["키·설정 확인 필요",status.keyRequiredCount === null ? "미확인" : status.keyRequiredCount]]) {
+      const count = el("div", "ai-count");
+      count.append(el("span", "", label),el("strong", "", typeof value === "number" ? `${value}건` : value));
+      counts.append(count);
+    }
+    $("ai-last-run").textContent = status.lastAnalysisAt ? `최근 실제 분석 ${formatDate(status.lastAnalysisAt,true)} · 한국 시간 기준` : "아직 실제 AI 분석 이력이 없습니다. 준비 상태를 분석 완료로 집계하지 않습니다.";
+    $("connection-status").textContent = `${scheduleText} · AI 수동 보조`;
+    const notes = [];
+    if (!data.last_attempt) notes.push("첫 수동 실행 전에는 API 키와 무료 프로젝트 설정 여부를 확인하지 않습니다.");
+    if (status.keyRequiredCount > 0) notes.push("GitHub 설정 방법을 확인한 뒤 수동 AI 실행을 다시 진행하세요. 이 사이트에 비밀키를 입력하지 않습니다.");
+    if (data.counts.blocked) notes.push("연합인포맥스는 AI 이용 금지, 뉴스와이어는 AI 이용 범위 미확인으로 제외합니다. 현재는 허용된 DART 공시의 사실 메타데이터만 대상으로 합니다.");
+    if (data.last_attempt && ["failed","partial_success"].includes(data.last_attempt.status)) notes.push("최근 실행에 실패 항목이 있습니다. GitHub 실행 기록을 확인해주세요.");
+    $("ai-warning").textContent = notes.join(" ");
+    $("ai-warning").hidden = !notes.length;
+  }
+
+  function renderAIDetail(detail) {
+    const section = el("section", "ai-detail");
+    const header = el("div", "ai-detail-head");
+    header.append(el("h4", "", "AI 검토 보조"));
+    section.append(header);
+    if (!aiState.data) {
+      header.append(el("span", "ai-state-label", aiState.loading ? "확인 중" : "결과 표시 안 함"));
+      section.append(el("p", "ai-detail-message", aiState.loading ? "저장된 AI 분석 상태를 확인하고 있습니다." : aiState.warning || "현재 자료에 대한 AI 보조 결과를 확인할 수 없습니다."));
+      return section;
+    }
+    const item = aiState.data.items[detail.issue_id];
+    if (!item) {
+      header.append(el("span", "ai-state-label", "결과 없음"));
+      section.append(el("p", "ai-detail-message", "현재 자료와 연결되는 AI 보조 결과가 없습니다."));
+      return section;
+    }
+    header.append(el("span", "ai-state-label", AI.statusLabels[item.status]));
+    section.append(el("p", "ai-detail-message", AI.itemMessage(item)));
+    if (item.status !== "completed") return section;
+    const suggestion = item.result;
+    const fields = el("dl", "ai-detail-fields");
+    for (const [label,value] of [["제안 주제",topicName(suggestion.suggested_topic_id)],["관련성",AI.relevanceLabels[suggestion.relevance]],["검토 근거",suggestion.rationale]]) fields.append(el("dt","",label),el("dd","",value));
+    section.append(fields);
+    const checks = el("div", "ai-checkpoints");
+    checks.append(el("h5", "", "원문에서 확인할 사항"));
+    if (suggestion.check_points.length) {
+      const list = el("ul");
+      suggestion.check_points.forEach(text => list.append(el("li", "", text)));
+      checks.append(list);
+    } else checks.append(el("p", "ai-detail-message", "별도로 제안된 확인 사항은 없습니다. 원문 확인을 마쳤다는 의미는 아닙니다."));
+    section.append(checks);
+    if (suggestion.duplicate_issue_ids.length) {
+      const duplicates = el("div", "ai-duplicates");
+      duplicates.append(el("h5", "", "AI가 제안한 중복 검토 대상"),el("p", "ai-advisory-note", "같은 사건인지 담당자가 확인하세요. 원문을 합치거나 검토 상태를 함께 변경하지 않습니다."));
+      suggestion.duplicate_issue_ids.forEach(id => {
+        const target = state.latest.candidates.find(candidate => candidate.issue_id === id);
+        if (!target) return;
+        const button = el("button", "duplicate-link", target.title);
+        button.type = "button";
+        button.addEventListener("click", () => openCandidate(id));
+        duplicates.append(button);
+      });
+      section.append(duplicates);
+    }
+    section.append(el("p", "ai-advisory-note", "AI 제안은 참고용입니다. 보고 후보 채택 여부와 원문 사실 확인은 담당자가 결정합니다. 이 내용은 주간 후보 복사·CSV에 자동으로 포함되지 않습니다."),el("p", "ai-provenance", `분석 ${formatDate(item.analyzed_at,true)} · ${aiState.data.model} · ${aiState.data.prompt_version}`));
+    return section;
   }
 
   function initializeReviews(result) {
@@ -706,6 +801,8 @@
     reviewState.ready = false;
     reviewState.weeklyRequest++;
     reviewState.detailCache.clear();
+    aiState.data = null; aiState.loading = true; aiState.warning = "";
+    renderAISummary();
     renderReviewSummary();
     renderWeekly();
     $("error-banner").hidden = true;
@@ -716,6 +813,7 @@
     $("detail-panel").replaceChildren(emptyList("자료를 갱신하고 있습니다", "이전 선택을 정리하고 최신 마트를 확인합니다."));
     $("visible-count").textContent = "불러오는 중";
     $("reload-data").disabled = true;
+    const aiResult = getJSON("data/ai-analysis.json").then(value => ({value})).catch(error => ({error}));
     try {
       const [latest, status, history, reviewsResult] = await Promise.all([getJSON("data/latest.json"), getJSON("data/status.json"), getJSON("data/report-history.json"), getJSON("data/reviews.json").then(value => ({value})).catch(error => ({error}))]);
       if (loadRequest !== state.loadRequest) return;
@@ -732,8 +830,14 @@
       state.status = status;
       initializeReviews(reviewsResult);
       renderSummary();
+      renderAISummary();
       renderCandidates();
       renderWeekly();
+      aiResult.then(result => {
+        if (loadRequest !== state.loadRequest || !state.latest) return;
+        initializeAI(result); renderAISummary();
+        if (state.detail) renderDetail(state.detail);
+      });
       if (!latest.candidates.length) {
         if (latest.is_demo) {
           $("candidate-list").replaceChildren(emptyList("데모 후보가 생성되지 않았습니다", "GitHub Actions의 실행 결과를 확인해주세요."));
@@ -742,7 +846,7 @@
           const unavailable = status.publication_status === "unavailable";
           const filtered = status.publication_status === "filtered";
           $("candidate-list").replaceChildren(emptyList(filtered ? "변경된 수집 범위에 맞는 기존 자료가 없습니다" : unavailable ? "게시 가능한 수집 결과가 없습니다" : "수집 조건을 통과한 자료가 없습니다", filtered ? "이번 수집은 실패했습니다. 출처별 수집 상태와 실행 기록을 확인해주세요." : unavailable ? "출처별 수집 상태와 실행 기록을 확인해주세요." : "현재 피드 범위와 회사·주제 조건에 해당하는 자료가 없습니다. 출처별 상태를 확인해주세요."));
-          $("detail-panel").replaceChildren(emptyList("분석 결과가 아닙니다", "빈 수집 목록은 ‘보고할 이슈 없음’을 의미하지 않습니다. AI 분석은 아직 연결되지 않았습니다."));
+          $("detail-panel").replaceChildren(emptyList("분석 결과가 아닙니다", "빈 수집 목록은 ‘보고할 이슈 없음’을 의미하지 않습니다. 출처별 수집 상태를 확인해주세요."));
         }
       }
     } catch (error) {
@@ -752,6 +856,8 @@
       reviewState.ready = false;
       reviewState.problem = "자료 갱신에 실패했습니다. 선택 이력과 주간 목록을 확인하려면 다시 불러오세요.";
       renderReviewSummary(); renderWeekly();
+      aiState.data = null; aiState.loading = false; aiState.warning = "수집 자료를 불러오지 못해 AI 결과의 대상과 버전을 확인할 수 없습니다.";
+      renderAISummary();
       metric("issue-count", "—", "건");
       metric("article-count", "—", "건");
       metric("version-count", "—", "개");

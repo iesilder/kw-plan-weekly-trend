@@ -4,11 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0B1D39">
-  <meta name="description" content="공개 출처의 경쟁사 동향을 검토하고 주간 보고 후보를 선정합니다. AI 분석과 정기 실행은 연결되어 있지 않습니다.">
+  <meta name="description" content="공개 출처의 경쟁사 동향을 검토하고 주간 보고 후보를 선정합니다. 수동 AI 검토 보조와 담당자의 선택을 구분하며 정기 실행은 꺼져 있습니다.">
   <title>WEEKLY · 주간 경쟁사 동향</title>
-  <link rel="stylesheet" href="styles.css?v=phase3-review">
-  <script src="review.js?v=phase3-review" defer></script>
-  <script src="app.js?v=phase3-review" defer></script>
+  <link rel="stylesheet" href="styles.css?v=phase4-ai">
+  <script src="review.js?v=phase4-ai" defer></script>
+  <script src="ai.js?v=phase4-ai" defer></script>
+  <script src="app.js?v=phase4-ai" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">본문 바로가기</a>
@@ -25,15 +26,22 @@
       <button type="button" class="topic-button" data-topic="risk" aria-pressed="false"><span class="nav-glyph" aria-hidden="true">○</span><span id="topic-label-risk">정책·인허가·리스크</span><span class="nav-count" data-count="risk">—</span></button>
     </nav>
     <div class="sidebar-section"><a class="history-link" href="#weekly-review"><span>주간 보고 후보</span><span id="sidebar-accepted">0건 ↗</span></a><p class="nav-caption">업무 기준</p><div class="setting-row"><span>경영진 관심사</span><span class="setting-value">미등록</span></div><button type="button" id="history-open" class="history-link"><span>실제 보고 이력</span><span>0건 <span aria-hidden="true">↗</span></span></button></div>
-    <div class="sidebar-bottom"><span class="status-dot" aria-hidden="true"></span><div><strong id="execution-mode">실행 상태 확인 중</strong><p id="connection-status">AI 분석 미연결</p></div></div>
+    <div class="sidebar-bottom"><span class="status-dot" aria-hidden="true"></span><div><strong id="execution-mode">실행 상태 확인 중</strong><p id="connection-status">AI 상태 확인 중</p></div></div>
   </aside>
   <main id="main" class="main">
     <div class="topline"><span>경영기획 / 주간 브리핑</span><a href="https://github.com/iesilder/kw-plan-weekly-trend/actions" target="_blank" rel="noopener noreferrer">실행 기록 <span aria-hidden="true">↗</span></a></div>
     <header class="masthead"><div><div class="eyebrow">WEEKLY INTELLIGENCE <span id="week-label">WEEKLY SOURCES</span></div><h1 id="page-heading">이번 주, 수집된 자료</h1><p class="intro" id="page-intro">공개 출처의 자료를 모아 원문과 수집 상태를 확인합니다.</p></div><div class="edition"><span>BRIEFING</span><strong id="week-number">—</strong><span id="edition-year">자료 확인 중</span></div></header>
-    <section class="demo-notice" id="mode-notice" aria-label="자료 안내"><span class="demo-icon" aria-hidden="true">i</span><p><strong id="notice-title">자료와 수집 상태를 확인하고 있습니다</strong><span id="notice-description">AI 분석은 연결되어 있지 않습니다. 실제 보고 이력과 경영진 관심사는 비어 있습니다.</span></p><span class="phase-label" id="phase-label">PHASE 02</span></section>
+    <section class="demo-notice" id="mode-notice" aria-label="자료 안내"><span class="demo-icon" aria-hidden="true">i</span><p><strong id="notice-title">자료와 수집 상태를 확인하고 있습니다</strong><span id="notice-description">분석 상태를 확인하고 있습니다. 실제 보고 이력과 경영진 관심사는 비어 있습니다.</span></p><span class="phase-label" id="phase-label">PHASE 04</span></section>
     <div id="error-banner" class="error-banner" role="alert" hidden></div>
     <section class="overview" aria-label="처리 현황"><div class="metric"><span id="issue-count-label">수집 자료</span><strong id="issue-count">—<small>건</small></strong></div><div class="metric"><span id="article-count-label">현재 범위 자료</span><strong id="article-count">—<small>건</small></strong></div><div class="metric"><span id="version-count-label">현재 범위 자료 버전</span><strong id="version-count">—<small>개</small></strong></div><div class="metric metric-run"><span><span id="last-run-label">마지막 실행</span> <b id="run-count">—회</b></span><strong id="last-run">확인 중</strong><small>한국 시간 기준</small></div></section>
     <details id="source-status-panel" class="source-status-panel" hidden><summary><span>출처별 수집 상태</span><span id="source-status-summary">확인 중</span></summary><p class="source-status-note">각 출처의 제공 범위 안에서만 수집합니다. 실패·미분류·필터 제외 내역은 아래 상태에서 확인하세요.</p><div id="source-status-list" class="source-status-list"></div></details>
+    <section id="ai-assistance" class="ai-assistance" aria-labelledby="ai-heading">
+      <div class="ai-summary-head"><div><div class="eyebrow">ANALYSIS ASSIST</div><h2 id="ai-heading">AI 검토 보조 <span id="ai-readiness" class="ai-state-label">확인 중</span></h2></div><div class="ai-entry-links"><a class="secondary-button" href="https://github.com/iesilder/kw-plan-weekly-trend/actions/workflows/analysis.yml" target="_blank" rel="noopener noreferrer">수동 AI 실행 ↗</a><a class="ai-setup-link" href="https://github.com/iesilder/kw-plan-weekly-trend/blob/main/docs/ai.md" target="_blank" rel="noopener noreferrer">설정 방법 ↗</a></div></div>
+      <p id="ai-summary-note" class="ai-summary-note">저장된 분석 상태를 확인하고 있습니다.</p>
+      <div id="ai-counts" class="ai-counts" aria-label="AI 검토 보조 처리 현황"></div>
+      <p id="ai-last-run" class="ai-last-run">실제 분석 이력 확인 중</p>
+      <p id="ai-warning" class="ai-warning" role="status" hidden></p>
+    </section>
     <section class="review-workspace" aria-labelledby="review-heading">
       <div class="review-top"><div><span class="eyebrow">REVIEW DESK</span><h2 id="review-heading">보고할 자료를 골라보세요</h2><p>채택한 자료는 아래 주간 후보 목록에 모입니다. 실제 보고 완료 이력과는 별개입니다.</p></div><a class="secondary-button" href="#weekly-review">주간 후보 보기 ↓</a></div>
       <div id="review-counters" class="review-counters" aria-label="검토 현황"></div>

@@ -40,7 +40,8 @@ jobs:
           python -m unittest discover -s tests -v
           node --check site/app.js
           node --check site/review.js
-          node --test tests/test_review.js
+          node --check site/ai.js
+          node --test tests/test_review.js tests/test_ai.js
       - name: Collect permitted public metadata
         id: collect
         continue-on-error: true

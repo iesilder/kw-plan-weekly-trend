@@ -208,6 +208,8 @@ def run_demo(root, fixture_path=None):
         write_json(state_stage / "run_status.json", status)
         for issue_id, detail in details.items():
             write_json(state_stage / "analyses" / f"{issue_id}.json", detail)
+        from .ai import stage_analysis
+        stage_analysis(root, latest, details, state_stage, mart_stage)
         # Everything has been validated before replacing tracked artifacts. Backups allow
         # rollback on an ordinary filesystem failure; no publication occurs until git push.
         destinations = [(stage_db, db_path), (state_stage, root / "state"),

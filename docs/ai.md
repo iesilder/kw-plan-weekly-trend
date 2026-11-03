@@ -1,0 +1,60 @@
+# 4단계 · 수동 AI 검토 보조
+
+AI는 DART 실적 공시의 **회사명·정규화한 공시 유형·접수일**을 받아 주제 적합성, 검토 이유와 원문에서 확인할 항목을 제안합니다. 현재 수집 기준이나 사람이 채택·보류·제외한 선택은 바꾸지 않습니다. 실적 수치 분석, 기사 본문 요약, 중요도 자동 순위, 실제 보고 이력 비교는 아직 지원하지 않습니다.
+
+별도의 `Manual AI assistance and Pages` 워크플로에서만 호출합니다. 수집 워크플로, 코드 변경 검사와 정기 실행에서는 호출하지 않습니다. `config/pipeline.json`의 `ai_enabled: false`는 수집 과정에서 AI를 자동 실행하지 않는다는 뜻입니다.
+
+## 처음 설정할 때
+
+1. [Google AI Studio API 키](https://aistudio.google.com/api-keys)에서 API 키를 만듭니다. 약관을 확인하고 해당 프로젝트가 **Free**, **Cloud Billing 미연결**인지 확인합니다. 결제 연결·유료 전환은 하지 않습니다.
+2. 저장소의 **Settings → Secrets and variables → Actions → New repository secret**에서 이름 `GEMINI_API_KEY`, 값에 API 키를 등록합니다. 키를 채팅·코드·JSON·웹 화면에 붙여넣지 않습니다.
+3. [AI 수동 실행 화면](https://github.com/iesilder/kw-plan-weekly-trend/actions/workflows/analysis.yml)의 **Run workflow → main**을 선택합니다. 무료 프로젝트와 공개 데이터 이용조건을 확인했을 때만 `free_project_confirmed`를 체크하고 실행합니다.
+4. 실행 요약과 사이트의 **AI 검토 보조** 상태를 확인합니다. 워크플로의 초록색 표시는 검증·상태 저장·배포 성공입니다. API 키 누락이나 무료 한도 초과로 대기 상태만 저장했을 수도 있으므로 **실제 분석 완료 건수와 마지막 시도 상태**를 함께 확인합니다.
+5. 같은 워크플로를 한 번 더 실행합니다. 입력이 같으면 저장한 AI 결과를 재사용합니다. 두 번째 실행의 요청 수가 0인지 확인합니다. 새 자료가 생기거나 설정이 바뀌면 재분석할 수 있습니다.
+
+API 키만으로 코드가 결제 연결 여부를 알아낼 수는 없습니다. 무료 여부 확인란은 사용자의 확인 기록이며 과금을 막는 공급자 설정을 대신하지 않습니다. 유료 프로젝트의 키를 사용하지 않아야 합니다.
+
+## 제공자와 비용 조건
+
+2026-11-03 확인 기준으로 `gemini-3.5-flash-lite`의 Standard 호출은 무료 구간의 입력·출력 토큰이 무료입니다. 프로젝트별 실제 사용 가능 여부와 한도는 AI Studio에서 확인해야 합니다. 자동 유료 전환, 다른 모델로 대체, 검색 도구, 원문 URL 조회, 별도 Batch API 호출은 구현하지 않습니다.
+
+- 공급자: Gemini API, 고정 모델 `gemini-3.5-flash-lite`.
+- 통신: Interactions API의 HTTPS POST, API 키는 `x-goog-api-key` 헤더로만 전달.
+- 입력: 최대 5건을 요청 1회로 처리. 본문·RSS 설명문·이미지·내부 관심사·보고 이력·검토 선택·원문 URL은 전송하지 않음.
+- 출력: 제한된 JSON을 파싱하고 ID·주제·허용 필드·길이를 검사. 원응답, 키, 오류 응답 본문은 저장하지 않음.
+- 실패: 키 누락, 무료 프로젝트 미확인, 한도 초과, 인증 실패, 형식 오류는 대기 또는 실패 코드로 저장. 원자료와 이전 정상 결과는 보존.
+- 캐시: 입력·근거 버전·모델·지시문·주제·정책의 지문이 같으면 재호출하지 않음. 단순 재수집 시각 변경은 새로운 분석 근거가 아님.
+
+무료 Gemini 입력과 출력은 제품 개선·기계학습 및 사람 검토에 사용될 수 있습니다. `store:false`는 다시 조회할 수 있는 interaction 저장을 끄며, 무료 서비스의 데이터 이용조건을 취소하지 않습니다. 이 때문에 입력은 아래에서 허용한 공개 사실형 메타데이터로 제한합니다.
+
+공식 근거: [모델](https://ai.google.dev/gemini-api/docs/models/gemini-3.5-flash-lite), [가격](https://ai.google.dev/gemini-api/docs/pricing#gemini-3.5-flash-lite), [결제](https://ai.google.dev/gemini-api/docs/billing), [무료 서비스 약관](https://ai.google.dev/gemini-api/terms), [Interactions API](https://ai.google.dev/api/interactions-api). [GitHub Models](https://docs.github.com/en/github-models)는 2026-07-30 종료 안내에 따라 사용하지 않습니다.
+
+## 출처별 AI 입력 경계
+
+| 출처 | 기존 공개 목록 | 이번 AI 입력 |
+|---|---|---|
+| DART 실적 공시 | 회사명·공시명·접수일·원문 링크 유지 | 검증된 회사명, 프로그램이 표준화한 실적 서식명, 접수일만 허용 |
+| 연합인포맥스 RSS | 허용된 제목·출처·발행일·링크 유지 | AI 학습 및 활용 금지 표시를 확인하여 제외 |
+| 뉴스와이어 RSS | 허용된 메타데이터 유지 | 외부 AI 처리까지 허용되는지 확인되지 않아 제외 |
+
+DART 입력은 이미 수집한 사실형 식별정보만 정규화한 것입니다. DART 공시 본문 전체의 AI 이용허락을 확인했다는 뜻이 아니며, OpenDART API의 이용허락을 기존 HTML 수집 경로에 전용하지 않습니다. 원문 제목을 그대로 전달하지 않고 기존 `earnings_form()`의 제한된 서식 이름을 사용합니다. 숫자 실적·원인·증감률은 확보하지 않았으므로 AI가 확정할 근거가 없습니다.
+
+연합인포맥스의 [공식 기사 권리 표시](https://news.einfomax.co.kr/news/articleView.html?idxno=4436646)에는 AI 학습 및 활용 금지가 명시되어 있습니다. RSS 표시 허용과 외부 AI 이용을 구분합니다. 뉴스와이어 [약관 제4조](https://www.newswire.co.kr/?xd=37)의 제한 재배포 조건을 외부 AI 분석의 포괄적 허락으로 해석하지 않습니다. 수집 근거는 [sources.md](sources.md)를 참고합니다.
+
+향후 본문 후보로 [금융위원회 토큰증권 하위법규 입법예고](https://m.korea.kr/briefing/pressReleaseView.do?newsId=156783954)의 HTML 텍스트와 공공누리 제1유형 표시를 확인했습니다. **현재 수집·AI 입력에는 추가하지 않았습니다.** 적용 시 개별 문서의 표시·출처·기관·날짜를 다시 확인해야 합니다. 사진·첨부·연락처까지 포함하는 허락이 아닙니다. 정책브리핑 RSS는 [2026-07-01 중단](https://www.korea.kr/etc/noticeView.do?newsId=132038885)되어 기존 RSS처럼 연결할 수 없습니다.
+
+## 저장과 화면
+
+| 파일 | 역할 |
+|---|---|
+| `config/ai.json` | 제공자·모델·수동 호출 상한·입력 정책 |
+| `weekly_trend/ai.py` | 출처 검사, 입력 정규화, API 호출, 응답 검증과 캐시 |
+| `scripts/analyze.py` | 준비·검증·명시적 수동 실행 |
+| `state/ai-analysis.json` | 이전 결과와 시도 상태의 영속 저장 |
+| `site/data/ai-analysis.json` | 현재 자료 세대에 맞춘 화면 데이터 |
+| `site/ai.js` | 화면 데이터 검사와 상태 문구 |
+| `.github/workflows/analysis.yml` | 비밀키를 사용하는 수동 실행·저장·Pages 배포 |
+
+AI의 주제·관련성·중복 제안은 원분류와 별도로 표시합니다. 동일 사건 여부는 사람이 원문을 확인해야 하며 자동으로 합치지 않습니다. AI 결과가 있더라도 보고가 완료된 것은 아닙니다. 근거가 바뀐 예전 결과는 현재 분석 완료로 표시하지 않습니다. AI 데이터가 없거나 검증에 실패해도 기사 목록과 사람의 검토 기능은 사용할 수 있습니다.
+
+`python scripts/analyze.py --root . --prepare`는 네트워크 없이 현재 대상 상태를 만들고, `--check`는 상태를 검사합니다. `--run`만 위의 키와 무료 프로젝트 확인을 충족할 때 외부 API를 호출합니다. 테스트의 가상 응답은 운영 결과로 저장하지 않습니다.

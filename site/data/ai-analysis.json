@@ -1,0 +1,83 @@
+{
+  "schema_version": "1.0",
+  "generation_id": "live-749aa75074693e989f6e",
+  "generated_at": "2026-11-03T02:22:46.189440+00:00",
+  "provider": "google_gemini",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "metadata-review-v1",
+  "policy_version": "dart-factual-metadata-v1",
+  "auto_analysis_enabled": false,
+  "last_attempt": null,
+  "counts": {
+    "blocked": 5,
+    "completed": 0,
+    "stale": 0,
+    "failed": 0,
+    "not_analyzed": 1,
+    "eligible": 1
+  },
+  "items": {
+    "issue-ec88113fec2c699faaf5": {
+      "status": "blocked",
+      "reason_code": "source_ai_prohibited",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
+    "issue-a99980f5c72b33d80750": {
+      "status": "blocked",
+      "reason_code": "source_ai_prohibited",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
+    "issue-a7a9b220314dfbd5acef": {
+      "status": "blocked",
+      "reason_code": "source_ai_prohibited",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
+    "issue-193dc2f5a4e04bf16e42": {
+      "status": "blocked",
+      "reason_code": "source_ai_prohibited",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
+    "issue-8cda78e7eb4a64c526cd": {
+      "status": "blocked",
+      "reason_code": "source_ai_prohibited",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
+    "issue-b4acf9726e522360746c": {
+      "status": "not_analyzed",
+      "reason_code": null,
+      "input_fingerprint": "484e47b1bff91a1ff0ecc5eb00e22cb3f3632b85c1eb56f823eb349670878e10",
+      "input_evidence_ids": [
+        "version-c5450646d7d2c39e4f2a"
+      ],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    }
+  }
+}

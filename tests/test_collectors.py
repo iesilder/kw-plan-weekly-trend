@@ -107,6 +107,68 @@ class CollectorTests(unittest.TestCase):
         self.assertEqual(result["fetched_count"], 1)
         self.assertNotIn("hidden-body", str(result))
 
+    def test_einfomax_naive_publication_keeps_only_valid_calendar_date(self):
+        source = {**SOURCE, "adapter": "einfomax_rss", "url": "https://news.einfomax.co.kr/rss/S1N2.xml",
+                  "allowed_hosts": ["news.einfomax.co.kr"]}
+        body = b'''<rss><channel><item><title>Example Securities AI strategy</title>
+        <link>https://news.einfomax.co.kr/news/articleView.html?idxno=1234567</link>
+        <pubDate>2026-11-03 09:02:16</pubDate><description>NEVER RETAIN ARTICLE BODY</description>
+        </item></channel></rss>'''
+        for value, expected in (("2026-11-03 09:02:16", "2026-11-03"),
+                                ("2026-11-03 09:02:16.0", "2026-11-03"),
+                                ("2026-11-03", "2026-11-03"),
+                                ("2024-02-29 09:02:16", "2024-02-29"),
+                                ("2026-02-29 09:02:16", None),
+                                ("2026-11-03 25:02:16", None), ("not a date", None), ("", None)):
+            with self.subTest(value=value):
+                result, _ = self.collect(body.replace(b"2026-11-03 09:02:16", value.encode()), source)
+                self.assertEqual(result["status"], "success")
+                record = result["records"][0]
+                self.assertIsNone(record["published_at"])
+                self.assertEqual(record.get("published_date"), expected)
+                self.assertEqual(record["uri"], "https://news.einfomax.co.kr/news/articleView.html?idxno=1234567")
+                self.assertEqual(record["content_text"], "")
+                self.assertNotIn("ARTICLE BODY", str(result))
+
+    def test_newswire_preserves_known_offset_and_normalizes_article_identity(self):
+        source = {**SOURCE, "adapter": "newswire_rss", "url": "https://api.newswire.co.kr/rss/industry/203",
+                  "allowed_hosts": ["api.newswire.co.kr", "www.newswire.co.kr"]}
+        body = b'''<rss><channel><item><title>Example Securities dividend</title>
+        <link>https://www.newswire.co.kr/newsRead.php?no=1234567&amp;sourceType=rss</link>
+        <pubDate>Thu, 29 Oct 2026 10:55:26 +0900</pubDate><description>NEVER RETAIN ARTICLE BODY</description>
+        </item></channel></rss>'''
+        for link in ("https://www.newswire.co.kr/newsRead.php?no=1234567&amp;sourceType=rss",
+                     "https://www.newswire.co.kr/newsRead.php?sourceType=other&amp;no=1234567",
+                     "https://www.newswire.co.kr/newsRead.php?no=1234567"):
+            variant = body.replace(b"https://www.newswire.co.kr/newsRead.php?no=1234567&amp;sourceType=rss", link.encode())
+            result, _ = self.collect(variant, source)
+            self.assertEqual(result["status"], "success")
+            record = result["records"][0]
+            self.assertEqual(record["uri"], "https://www.newswire.co.kr/newsRead.php?no=1234567")
+            self.assertEqual(record["published_at"], "2026-10-29T01:55:26+00:00")
+            self.assertIsNone(record.get("published_date"))
+            self.assertNotIn("ARTICLE BODY", str(result))
+        # This identity rule is scoped to Newswire, not to arbitrary publishers.
+        result, _ = self.collect(body, {**source, "adapter": "generic_rss"})
+        self.assertIn("sourceType=rss", result["records"][0]["uri"])
+
+    def test_newswire_invalid_identity_and_unsafe_links_are_not_normalized(self):
+        source = {**SOURCE, "adapter": "newswire_rss", "url": "https://api.newswire.co.kr/rss/industry/203",
+                  "allowed_hosts": ["api.newswire.co.kr", "www.newswire.co.kr"]}
+        for link in ("https://www.newswire.co.kr/newsRead.php?no=wrong",
+                     "https://www.newswire.co.kr/newsRead.php?no=123&amp;no=456",
+                     "https://www.newswire.co.kr/newsRead.php?no=123&amp;no=",
+                     "https://www.newswire.co.kr/other.php?no=123",
+                     "https://api.newswire.co.kr/newsRead.php?no=123",
+                     "http://www.newswire.co.kr/newsRead.php?no=123",
+                     "https://user:password@www.newswire.co.kr/newsRead.php?no=123",
+                     "https://www.newswire.co.kr:8443/newsRead.php?no=123"):
+            with self.subTest(link=link):
+                body = f"<rss><channel><item><title>Title</title><link>{link}</link></item></channel></rss>".encode()
+                result, _ = self.collect(body, source)
+                self.assertEqual(result["error_code"], "no_valid_items")
+                self.assertEqual(result["records"], [])
+
     def test_not_modified_preserves_validators_and_returns_no_records(self):
         previous = {"etag": '"version1"', "last_modified": "Mon, 02 Nov 2026 00:00:00 GMT"}
         with patch("weekly_trend.collectors.build_opener") as factory:

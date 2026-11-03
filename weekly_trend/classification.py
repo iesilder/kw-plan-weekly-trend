@@ -15,6 +15,66 @@ TOPIC_KEYWORDS = {
 }
 EXCLUDED_PRODUCT_FORMS = ("투자설명서", "일괄신고추가서류", "증권발행실적보고서", "파생결합증권", "파생결합사채")
 OWNERSHIP_FORMS = ("임원주요주주특정증권등소유상황보고서", "주식등의대량보유상황보고서")
+DART_POLICY_VERSION = "dart-earnings-v1"
+
+
+def source_policy(source):
+    """DART has a narrower policy than news even if a config field is omitted."""
+    is_dart = source.get("adapter") in {"dart_html", "dart_rss"} or source.get("type") == "dart_html"
+    if is_dart:
+        content_filter = source.get("content_filter", "earnings_only")
+        if content_filter != "earnings_only":
+            raise ValueError("DART sources must use earnings_only")
+        version = source.get("content_policy_version", DART_POLICY_VERSION)
+    else:
+        content_filter = source.get("content_filter", "topics")
+        if content_filter != "topics":
+            raise ValueError("News sources must use the five-topic filter")
+        version = source.get("content_policy_version", "news-topics-v1")
+    if not isinstance(version, str) or not re.fullmatch(r"[a-zA-Z0-9_-]{1,100}", version):
+        raise ValueError("Invalid content policy version")
+    return content_filter, version
+
+
+def earnings_form(title):
+    """Recognize complete DART form labels, not a keyword somewhere in a title."""
+    compact = re.sub(r"\s+", "", title)
+    compact = re.sub(r"^(?:\[(?:기재정정|첨부정정|정정|첨부추가)\])+", "", compact)
+    if re.fullmatch(r"(?:연결재무제표기준|별도재무제표기준|개별재무제표기준|연결|별도)?영업(?:\(잠정\))?실적(?:\(공정공시\))?", compact):
+        return "영업(잠정)실적" if "(잠정)" in compact else "영업실적"
+    periodic = re.fullmatch(r"(사업|반기|분기)보고서(?:\(\d{4}\.\d{2}(?:\.\d{2})?\))?", compact)
+    if periodic:
+        return periodic[1] + "보고서"
+    audit = re.fullmatch(r"(연결)?감사보고서(?:제출)?(?:\(\d{4}\.\d{2}(?:\.\d{2})?\))?", compact)
+    if audit:
+        return (audit[1] or "") + "감사보고서"
+    if re.fullmatch(r"매출액또는손익구조(?:(?:30%\(대규모법인은15%\)|30%|15%)이상)?변경(?:\(자율공시\))?", compact):
+        return "매출액또는손익구조변경"
+    return None
+
+
+def classify_for_source(title, source, companies, topics):
+    """Apply a source's allowed form policy before the general news topic rules."""
+    content_filter, _ = source_policy(source)
+    if content_filter == "earnings_only":
+        form = earnings_form(title)
+        if not form or source.get("scope") != "company":
+            return None
+        company = next((item for item in companies if item["id"] == source.get("company_id") and item.get("enabled", True)), None)
+        if company is None:
+            return None
+        return {"company": company["name"], "company_ids": [company["id"]], "companies": [company["name"]],
+                "topic_id": "performance", "topic": topics["performance"],
+                "matched_keywords": [form], "matched_topic_ids": ["performance"]}
+    if source.get("scope") == "company":
+        company = next(item for item in companies if item["id"] == source["company_id"])
+        return classify(company["name"] + " " + title, [company], topics)
+    route = classify(title, companies, topics)
+    if route is None and source.get("scope") == "industry" and any(word in title for word in ("증권", "금융투자", "자본시장", "증선위", "금융회사")):
+        route = classify("증권업권공통 " + title, [{"id": "industry", "name": "증권업권공통"}], topics)
+        if route:
+            route.update(company="증권업권 공통", company_ids=[], companies=[])
+    return route
 
 
 class _TextParser(HTMLParser):
@@ -90,9 +150,24 @@ def classify(title, companies, topics):
                    [company["name"], *company.get("aliases", [])])]
     if not matches:
         return None
-    topic_hits = {topic: [word for word in words if _matches(title, word)]
+    compact_title = re.sub(r"\s+", "", title)
+    customer_dividend = re.search(r"(?:배당.{0,20}(?:고객|가입자|투자자)|(?:고객|가입자|투자자).{0,20}배당)", compact_title) is not None
+    def relevant_keyword(word):
+        if customer_dividend and word in {"배당", "실적"}:
+            return False
+        if word == "인수":
+            # Underwriting authorization is not a corporate acquisition.
+            return _matches(title.replace("인수업", ""), word)
+        return _matches(title, word)
+    topic_hits = {topic: [word for word in words if relevant_keyword(word)]
                   for topic, words in TOPIC_KEYWORDS.items() if topic in topics}
     topic_hits = {topic: words for topic, words in topic_hits.items() if words}
+    ib_business = any(word in compact_title.casefold() for word in ("ib사업", "투자은행사업"))
+    new_ib_business = ib_business and (any(word in compact_title for word in ("신규", "본격화", "진출")) or
+                                      ("첫" in compact_title and "설립" in compact_title))
+    if new_ib_business:
+        business_word = "IB사업" if "ib사업" in compact_title.casefold() else "투자은행사업"
+        topic_hits["digital"] = [business_word, *[word for word in ("신규", "본격화", "진출", "첫", "설립") if word in compact_title]]
     compact_title = re.sub(r"[^가-힣a-zA-Z0-9]", "", title)
     ownership_form = any(form in compact_title for form in OWNERSHIP_FORMS)
     if ownership_form:

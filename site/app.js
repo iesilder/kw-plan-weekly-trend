@@ -81,7 +81,8 @@
       "notice-description": demo ? "수집부터 화면까지의 연결을 확인하는 1단계 데모입니다. 모든 회사와 사건은 가상입니다." : "제목 기준으로 주제를 분류했습니다. 우선순위·선정 이유·보고 초안은 생성하지 않았으며 원문 확인이 필요합니다.",
       "phase-label": demo ? "PHASE 01" : "PHASE 02",
       "issue-count-label": demo ? "검토 후보" : "수집 자료",
-      "article-count-label": demo ? "원자료" : "보관한 자료",
+      "article-count-label": demo ? "원자료" : "현재 범위 자료",
+      "version-count-label": demo ? "보존한 자료 버전" : "현재 범위 자료 버전",
       "last-run-label": demo ? "마지막 데모 실행" : "마지막 수집 시도",
       "list-heading": demo ? "보고 후보" : "수집 자료",
       "review-note": demo ? "최종 보고는 담당자가 결정합니다" : "제목 기준 주제 분류 · 원문 확인 필요",
@@ -135,10 +136,12 @@
     const unchanged = sources.filter(source => source.status === "not_modified").length;
     const success = sources.filter(source => source.status === "success").length;
     const publication = state.status.publication_status;
-    $("source-status-summary").textContent = `성공 ${success} · 304 ${unchanged} · 실패 ${failed}${publication === "retained" ? " · 이전 자료 유지" : publication === "unavailable" ? " · 게시 자료 없음" : ""}`;
-    panel.open = failed > 0 || publication === "unavailable";
+    $("source-status-summary").textContent = `성공 ${success} · 304 ${unchanged} · 실패 ${failed}${publication === "filtered" ? " · 기존 자료에 변경된 수집 범위 적용" : publication === "retained" ? " · 이전 자료 유지" : publication === "unavailable" ? " · 게시 자료 없음" : ""}`;
+    panel.open = failed > 0 || publication === "unavailable" || publication === "filtered";
+    if (publication === "filtered") list.append(el("p", "source-alert", `수집 실패 · 기존 자료에 변경된 수집 범위 적용. 이번 수집은 성공하지 않았으며, 기존에 보관한 자료에서 현재 범위에 해당하는 항목만 게시했습니다. 새로 수집된 자료가 아닙니다. 최근 성공 실행: ${formatDate(state.status.last_successful_run_at, true)}.`));
     if (publication === "retained") list.append(el("p", "source-alert", `현재 화면은 마지막으로 게시한 자료를 유지합니다. 현재 자료 생성: ${formatDate(state.latest.generated_at, true)}. 최근 성공 실행: ${formatDate(state.status.last_successful_run_at, true)}.`));
     if (publication === "unavailable") list.append(el("p", "source-alert", "아직 게시할 수 있는 수집 결과가 없습니다. 아래 실패 내역을 확인해주세요. 이 상태는 ‘보고할 이슈 없음’을 뜻하지 않습니다."));
+    if (Number(state.status.archived_article_count) > 0) list.append(el("p", "source-coverage", `현재 범위 자료 ${state.status.article_count ?? "—"}건을 표시합니다. 범위에서 제외된 보관 자료 ${state.status.archived_article_count}건은 목록과 현재 집계에 포함하지 않습니다.`));
     if (!sources.length) list.append(el("p", "source-alert", "출처별 수집 상태가 제공되지 않았습니다. 실행 기록을 확인해주세요."));
     const statusNames = { success: "수집 성공", not_modified: "변경 없음 · 304", failed: "수집 실패" };
     sources.forEach(source => {
@@ -146,7 +149,8 @@
       const heading = el("div", "source-status-heading");
       heading.append(el("h3", "", source.source_name || source.source_id || "출처 미확인"), el("span", `source-state${source.status === "failed" ? " failed" : ""}`, statusNames[source.status] || "상태 미확인"));
       const dates = el("p", "source-status-meta", `최근 시도 ${formatDate(source.last_attempt_at, true)} · 최근 성공 ${source.last_success_at ? formatDate(source.last_success_at, true) : "성공 이력 없음"}`);
-      const counts = el("p", "source-status-meta", `피드 항목 ${source.fetched_count ?? "—"}건 · 조건 통과 ${source.accepted_count ?? "—"}건 · 조건 제외 ${source.outside_scope_count ?? "—"}건 · 기간 제외 ${source.outside_window_count ?? "—"}건 · 유효성 제외 ${source.rejected_count ?? "—"}건 · 중복 ${source.duplicate_count ?? "—"}건 · 새 버전 ${source.inserted_versions ?? "—"}개`);
+      const conditionExcluded = source.outside_scope_count == null && source.outside_content_filter_count == null ? "—" : Number(source.outside_scope_count || 0) + Number(source.outside_content_filter_count || 0);
+      const counts = el("p", "source-status-meta", `피드 항목 ${source.fetched_count ?? "—"}건 · 조건 통과 ${source.accepted_count ?? "—"}건 · 조건 제외 ${conditionExcluded}건 · 기간 제외 ${source.outside_window_count ?? "—"}건 · 유효성 제외 ${source.rejected_count ?? "—"}건 · 중복 ${source.duplicate_count ?? "—"}건 · 새 버전 ${source.inserted_versions ?? "—"}개`);
       row.append(heading, dates, counts);
       if (source.status === "failed") row.append(el("p", "source-error", [source.error_code, source.error_message || "자세한 내용은 실행 기록을 확인해주세요."].filter(Boolean).join(" · ")));
       if (source.status === "not_modified") row.append(el("p", "source-coverage", "HTTP 304: 출처가 피드 변경 없음으로 응답했습니다. 기존에 저장한 자료를 유지합니다."));
@@ -372,7 +376,8 @@
           showError("데모에 필요한 후보가 없습니다. 정상적인 ‘보고할 이슈 없음’ 상태가 아닙니다.");
         } else {
           const unavailable = status.publication_status === "unavailable";
-          $("candidate-list").replaceChildren(emptyList(unavailable ? "게시 가능한 수집 결과가 없습니다" : "수집 조건을 통과한 자료가 없습니다", unavailable ? "출처별 수집 상태와 실행 기록을 확인해주세요." : "현재 피드 범위와 회사·주제 조건에 해당하는 자료가 없습니다. 출처별 상태를 확인해주세요."));
+          const filtered = status.publication_status === "filtered";
+          $("candidate-list").replaceChildren(emptyList(filtered ? "변경된 수집 범위에 맞는 기존 자료가 없습니다" : unavailable ? "게시 가능한 수집 결과가 없습니다" : "수집 조건을 통과한 자료가 없습니다", filtered ? "이번 수집은 실패했습니다. 출처별 수집 상태와 실행 기록을 확인해주세요." : unavailable ? "출처별 수집 상태와 실행 기록을 확인해주세요." : "현재 피드 범위와 회사·주제 조건에 해당하는 자료가 없습니다. 출처별 상태를 확인해주세요."));
           $("detail-panel").replaceChildren(emptyList("분석 결과가 아닙니다", "빈 수집 목록은 ‘보고할 이슈 없음’을 의미하지 않습니다. AI 분석은 아직 연결되지 않았습니다."));
         }
       }

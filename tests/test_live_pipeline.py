@@ -7,7 +7,7 @@ import sqlite3
 import tempfile
 import unittest
 
-from weekly_trend.classification import classify, safe_https_url
+from weekly_trend.classification import classify, earnings_form, safe_https_url
 from weekly_trend.live_pipeline import run_collection
 from weekly_trend.pipeline import read_json, run_demo, verify, write_json
 
@@ -60,6 +60,131 @@ class LivePipelineTests(unittest.TestCase):
 
     def detail(self, index=0):
         return read_json(self.root / "site" / self.latest()["candidates"][index]["detail_path"])
+
+    def dart_source(self, **changes):
+        return source(type="dart_html", adapter="dart_html", content_filter="earnings_only",
+                      content_policy_version="dart-earnings-v1", **changes)
+
+    def test_dart_complete_earnings_form_allowlist_and_non_announcements(self):
+        allowed = ["영업(잠정)실적(공정공시)", "연결재무제표기준영업(잠정)실적(공정공시)",
+                   "별도재무제표기준영업(잠정)실적(공정공시)", "[기재정정] 영업(잠정)실적(공정공시)",
+                   "사업보고서 (2025.12)", "[기재정정]반기보고서(2026.06)", "분기보고서 (2026.09)",
+                   "감사보고서", "연결감사보고서", "감사보고서제출", "연결감사보고서(2025.12)",
+                   "매출액또는손익구조30%(대규모법인은15%)이상변경", "매출액또는손익구조변경"]
+        denied = ["임원ㆍ주요주주특정증권등소유상황보고서", "주식등의대량보유상황보고서",
+                  "계열금융회사의약관에의한금융거래", "자기주식취득결정", "현금ㆍ현물배당결정",
+                  "특수관계인으로부터주식의취득", "결산실적공시예고", "기업설명회(IR)개최(안내공시)",
+                  "영업실적등에대한전망(공정공시)", "장래사업ㆍ경영계획(공정공시)",
+                  "영업(잠정)실적(공정공시)예고", "사업보고서제출기한연장신고서", "감사보고서제출예정",
+                  "증권발행실적보고서", "투자설명서", "주요사항보고서(영업양수결정)",
+                  "실적발표예정", "사업보고서관련보도해명", "[기재정정]결산실적공시예고"]
+        for title in allowed:
+            self.assertIsNotNone(earnings_form(title), title)
+        for title in denied:
+            self.assertIsNone(earnings_form(title), title)
+        self.sources([self.dart_source()])
+        result = self.run_records([record(uri=f"https://news.example.com/{i}", title=title)
+                                   for i, title in enumerate(allowed + denied)])
+        self.assertEqual(result["article_count"], len(allowed))
+        self.assertEqual(result["sources"][0]["outside_content_filter_count"], len(denied))
+        self.assertEqual({item["topic_id"] for item in self.latest()["candidates"]}, {"performance"})
+        self.assertTrue(verify(self.root)["ok"])
+
+    def test_news_still_uses_five_topics_with_underwriting_and_customer_dividend_exclusions(self):
+        self.sources([source(scope="general")])
+        titles = ["미래에셋증권 영업이익 실적 발표", "삼성증권 AI 서비스 출시", "NH투자증권 해외 제휴 확대",
+                  "한국투자증권 임원 인사 조직 개편", "KB증권 내부통제 운영 개선",
+                  "카카오페이증권, 인수업 인가 후 첫 스팩 설립…IB 사업 본격화",
+                  "신한투자증권, 올해 9월까지 배당 수령 고객 143만명…", "신한투자증권 고객 배당 실적 증가",
+                  "카카오페이증권 인수업 인가 획득"]
+        result = self.run_records([record(uri=f"https://news.example.com/news-{i}", title=title) for i, title in enumerate(titles)])
+        self.assertEqual(result["article_count"], 6)
+        self.assertEqual({item["topic_id"] for item in self.latest()["candidates"]}, {"performance", "digital", "expansion", "strategy", "risk"})
+        underwriting = next(item for item in self.latest()["candidates"] if "스팩" in item["title"])
+        self.assertEqual(underwriting["topic_id"], "digital")
+        self.assertNotIn("expansion", underwriting["matched_topic_ids"])
+
+    def test_legacy_articles_are_archived_on_policy_change_even_when_all_sources_fail(self):
+        titles = ["영업(잠정)실적(공정공시)", "임원ㆍ주요주주특정증권등소유상황보고서", "계열금융회사의약관에의한금융거래"]
+        self.run_records([record(uri=f"https://news.example.com/old-{i}", title=title) for i, title in enumerate(titles)])
+        versions = self.rows("SELECT * FROM live_article_versions ORDER BY version_id")
+        # Simulate the pre-policy schema and old source state, without editing any
+        # actual project database or losing the earlier collection history.
+        with closing(sqlite3.connect(self.root / "data/raw.sqlite3")) as db:
+            db.execute("DROP TABLE live_article_policy")
+            state = json.loads(db.execute("SELECT state_json FROM live_source_state").fetchone()[0])
+            for key in list(state):
+                if "policy" in key or key in {"content_filter", "completed_content_filter"}:
+                    state.pop(key)
+            db.execute("UPDATE live_source_state SET state_json=?", (json.dumps(state),))
+            db.commit()
+        self.sources([self.dart_source()])
+        result = run_collection(self.root, collector=lambda *a, **kw: {"status": "failed", "error_code": "timeout"}, now=NOW + timedelta(days=1))
+        self.assertFalse(result["collection_ok"])
+        self.assertEqual(result["publication_status"], "filtered")
+        self.assertTrue(result["policy_filtered"])
+        self.assertEqual((result["article_count"], result["archived_article_count"], result["total_article_count"]), (1, 2, 3))
+        self.assertEqual((result["version_count"], result["total_version_count"]), (1, 3))
+        self.assertEqual(versions, self.rows("SELECT * FROM live_article_versions ORDER BY version_id"))
+        self.assertEqual([item["title"] for item in self.latest()["candidates"]], [titles[0]])
+        self.assertEqual(len(list((self.root / "site/data/issues").glob("*.json"))), 1)
+        self.assertTrue(verify(self.root)["ok"])
+        again = run_collection(self.root, collector=lambda *a, **kw: {"status": "failed", "error_code": "timeout"}, now=NOW + timedelta(days=2))
+        self.assertEqual(again["publication_status"], "retained")
+        self.assertEqual(again["article_count"], 1)
+        self.assertTrue(verify(self.root)["ok"])
+
+    def test_policy_change_backfills_30_days_once_without_inventing_source_revisions(self):
+        old = record(title="영업(잠정)실적(공정공시)", published_at="2026-10-20T00:00:00Z")
+        self.run_records([old])
+        version = self.rows("SELECT version_id FROM live_article_versions")[0][0]
+        self.sources([self.dart_source()])
+        calls = []
+        def collect(src, **kw):
+            calls.append((src, kw["previous_state"]))
+            return success([old])
+        first = run_collection(self.root, collector=collect, now=NOW + timedelta(days=1))
+        self.assertEqual(datetime.fromisoformat(calls[0][0]["collection_start"]), NOW + timedelta(days=1) - timedelta(days=30))
+        self.assertIsNone(calls[0][1]["etag"])
+        self.assertEqual(first["inserted_versions"], 0)
+        self.assertEqual(first["version_count"], 1)
+        self.assertEqual(version, self.rows("SELECT version_id FROM live_article_versions")[0][0])
+        self.assertFalse(first["sources"][0]["policy_backfill_pending"])
+        run_collection(self.root, collector=collect, now=NOW + timedelta(days=2))
+        self.assertEqual(datetime.fromisoformat(calls[1][0]["collection_start"]), NOW + timedelta(days=1) - timedelta(hours=48))
+        self.assertTrue(verify(self.root)["ok"])
+
+    def test_policy_backfill_survives_failure_truncation_and_unexpected_304(self):
+        self.run_records([record(title="영업(잠정)실적(공정공시)")])
+        self.sources([self.dart_source()])
+        starts = []
+        responses = [{"status": "failed", "error_code": "timeout"},
+                     success([], truncated=True, total_count=500),
+                     {"status": "not_modified", "records": [], "fetched_count": 0}, success([]), success([])]
+        def collect(src, **kw):
+            starts.append(src["collection_start"])
+            return responses.pop(0)
+        for day in range(1, 5):
+            result = run_collection(self.root, collector=collect, now=NOW + timedelta(days=day))
+            self.assertEqual(result["sources"][0]["policy_backfill_pending"], day < 4)
+        run_collection(self.root, collector=collect, now=NOW + timedelta(days=5))
+        self.assertEqual(len(set(starts[:4])), 1)
+        self.assertEqual(datetime.fromisoformat(starts[0]), NOW + timedelta(days=1) - timedelta(days=30))
+        self.assertEqual(datetime.fromisoformat(starts[4]), NOW + timedelta(days=4) - timedelta(hours=48))
+        self.assertTrue(verify(self.root)["ok"])
+
+    def test_verification_rejects_old_or_manually_reactivated_archived_scope(self):
+        self.run_records([record(title="현금ㆍ현물배당결정")])
+        self.sources([self.dart_source()])
+        with self.assertRaises(ValueError):
+            verify(self.root)
+        self.run_records([])
+        self.assertEqual(self.latest()["candidates"], [])
+        with closing(sqlite3.connect(self.root / "data/raw.sqlite3")) as db:
+            db.execute("UPDATE live_article_policy SET active=1")
+            db.commit()
+        with self.assertRaises(ValueError):
+            verify(self.root)
 
     def test_repeat_is_idempotent_and_identity_parameters_survive(self):
         records = [record(), record(uri="https://news.example.com/article?id=1&utm_source=x#top"),

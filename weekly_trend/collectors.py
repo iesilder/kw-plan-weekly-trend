@@ -200,6 +200,22 @@ def _date(value):
         return None
 
 
+def _date_without_timezone(value):
+    """Retain an explicitly supplied calendar date without inventing its offset."""
+    if not value or len(value) > 100:
+        return None
+    try:
+        parsed = datetime.fromisoformat(value.strip().replace("Z", "+00:00"))
+    except ValueError:
+        try:
+            parsed = parsedate_to_datetime(value.strip())
+        except (TypeError, ValueError, OverflowError):
+            return None
+    if parsed.tzinfo is not None and parsed.utcoffset() is not None:
+        return None
+    return parsed.date().isoformat()
+
+
 def _local(tag):
     return tag.rsplit("}", 1)[-1]
 
@@ -229,6 +245,16 @@ def _article_url(value, source):
         if parts.hostname != "www.fsc.go.kr" or not re.fullmatch(r"/no010101/\d+", parts.path):
             raise CollectionError("unsafe_url", "Invalid FSC article link")
         url = urlunsplit((parts.scheme, parts.netloc, parts.path, "", ""))
+    elif source.get("adapter") == "newswire_rss":
+        safe = validate_url(url, {str(host).lower() for host in source["allowed_hosts"]})
+        parts = urlsplit(safe)
+        identifiers = parse_qs(parts.query, keep_blank_values=True).get("no", [])
+        if (parts.hostname != "www.newswire.co.kr" or parts.path != "/newsRead.php"
+                or len(identifiers) != 1 or not re.fullmatch(r"[0-9]+", identifiers[0])):
+            raise CollectionError("unsafe_url", "Invalid Newswire article link")
+        # The publisher's numeric article ID identifies this resource; the RSS
+        # sourceType parameter only describes how a reader reached it.
+        url = "https://www.newswire.co.kr/newsRead.php?" + urlencode({"no": identifiers[0]})
     return validate_url(url, {str(host).lower() for host in source["allowed_hosts"]})
 
 
@@ -240,7 +266,10 @@ def _record(source, title, link, published="", updated="", published_date=None):
         uri = _article_url(link, source)
     except (CollectionError, ValueError):
         return None
-    record = {"uri": uri, "title": title, "published_at": _date(published),
+    published_at = _date(published)
+    if not published_date and published_at is None:
+        published_date = _date_without_timezone(published)
+    record = {"uri": uri, "title": title, "published_at": published_at,
               "source_updated_at": _date(updated), "source_id": source["id"],
               "source_name": source["name"], "content_text": "", "content_level": "metadata_only",
               "retention_basis": source["retention_basis"], "retention_url": source["retention_url"]}

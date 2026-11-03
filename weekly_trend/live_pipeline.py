@@ -10,8 +10,9 @@ from contextlib import closing
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from .classification import classify, plain_title, safe_https_url
-from .live_storage import connect, counts, current_records, ingest, previous_sources, save_source, timestamp
+from .classification import classify_for_source, plain_title, safe_https_url, source_policy
+from .live_storage import (apply_policies, connect, counts, current_records, ingest,
+                           previous_sources, save_source, timestamp, validate_policies)
 from .pipeline import TOPIC_IDS, read_json, write_json
 from .storage import canonical_url, digest
 
@@ -54,6 +55,9 @@ def load_live_inputs(root):
             raise ValueError("Source retention basis and allowed_hosts are required")
         if source.get("scope") == "company" and source.get("company_id") not in company_ids:
             raise ValueError("Company source must refer to a configured company")
+        content_filter, _ = source_policy(source)
+        if content_filter == "earnings_only" and source.get("scope") != "company":
+            raise ValueError("DART earnings sources require a verified company issuer")
     return {item["id"]: item["name"] for item in topics}, companies, sources, settings
 
 
@@ -78,17 +82,9 @@ def normalize_record(record, source, topics, companies, start, now):
         return None, "outside_window"
     if known_times and max(known_times) > now + timedelta(days=1):
         raise ValueError("Publication timestamp is implausibly in the future")
-    if source.get("scope") == "company":
-        company = next(item for item in companies if item["id"] == source["company_id"])
-        route = classify(company["name"] + " " + title, [company], topics)
-    else:
-        route = classify(title, companies, topics)
-    if route is None and source.get("scope") == "industry" and any(word in title for word in ("증권", "금융투자", "자본시장", "증선위", "금융회사")):
-        route = classify("증권업권공통 " + title, [{"id": "industry", "name": "증권업권공통"}], topics)
-        if route:
-            route.update(company="증권업권 공통", company_ids=[], companies=[])
+    route = classify_for_source(title, source, companies, topics)
     if route is None:
-        return None, "outside_scope"
+        return None, "outside_content_filter" if source_policy(source)[0] == "earnings_only" else "outside_scope"
     return {"uri": uri, "title": title, "published_at": published,
             "source_updated_at": updated, "published_date": published_date,
             "source_id": source["id"], "source_name": plain_title(source["name"]),
@@ -105,6 +101,9 @@ def build_snapshot(db, topics, now):
         issue_id = "issue-" + digest(item["uri"])
         reason = ("제목의 회사·업권 정보와 주제 키워드(" + ", ".join(item["matched_keywords"]) +
                   ")를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.")
+        if item["content_filter"] == "earnings_only":
+            reason = ("공시 서식명(" + ", ".join(item["matched_keywords"]) +
+                      ")이 잠정·실제 실적 수집 범위에 해당합니다. 본문·실적 수치·중요도는 아직 분석하지 않았습니다.")
         candidate = {"issue_id": issue_id, "title": item["title"], "company": item["company"],
                      "company_ids": item["company_ids"], "companies": item["companies"],
                      "topic_id": item["topic_id"], "topic": topics[item["topic_id"]],
@@ -115,6 +114,7 @@ def build_snapshot(db, topics, now):
                      "source_name": item["source_name"], "published_at": item["published_at"],
                      "published_date": item["published_date"], "fetched_at": item["fetched_at"],
                      "matched_keywords": item["matched_keywords"], "matched_topic_ids": item["matched_topic_ids"]}
+        candidate.update(content_filter=item["content_filter"], content_policy_version=item["content_policy_version"])
         versions = db.execute("SELECT COUNT(*) FROM live_article_versions WHERE article_id=?", (item["article_id"],)).fetchone()[0]
         evidence = {key: item[key] for key in ("title", "published_at", "published_date", "source_updated_at",
                     "fetched_at", "content_level", "content_text", "source_id", "source_name", "retention_basis", "retention_url")}
@@ -137,25 +137,43 @@ def _public_source(state):
 
 
 def _collect_one(collector, source, previous, topics, companies, now):
+    content_filter, policy_version = source_policy(source)
+    backfill = (previous.get("completed_content_policy_version") != policy_version or
+                previous.get("completed_content_filter") != content_filter)
     start = (datetime.fromisoformat(previous["next_collection_start"]) if previous.get("next_collection_start") else
              datetime.fromisoformat(previous["last_success_at"]) - timedelta(hours=48)
              if previous.get("last_success_at") else now - timedelta(days=30))
+    if backfill:
+        start = (datetime.fromisoformat(previous["policy_backfill_start"])
+                 if previous.get("content_policy_version") == policy_version and previous.get("policy_backfill_start")
+                 else now - timedelta(days=30))
     stamp = timestamp(now.isoformat())
     state = {"source_id": source["id"], "source_name": plain_title(source["name"]),
              "status": "failed", "last_attempt_at": stamp, "last_success_at": previous.get("last_success_at"),
              "fetched_count": 0, "accepted_count": 0, "inserted_versions": 0, "duplicate_count": 0,
-             "rejected_count": 0, "outside_scope_count": 0, "outside_window_count": 0,
+             "rejected_count": 0, "outside_scope_count": 0, "outside_window_count": 0, "outside_content_filter_count": 0,
              "error_code": None, "error_message": None, "coverage_start": timestamp(start.isoformat()),
              "coverage_end": stamp, "coverage_note": COVERAGE_NOTE,
              "truncated": False, "total_count": None,
              "coverage_watermark_at": previous.get("coverage_watermark_at"),
              "next_collection_start": timestamp(start.isoformat()),
-             "etag": previous.get("etag"), "last_modified": previous.get("last_modified")}
+             "etag": None if backfill else previous.get("etag"),
+             "last_modified": None if backfill else previous.get("last_modified"),
+             "content_filter": content_filter, "content_policy_version": policy_version,
+             "completed_content_policy_version": previous.get("completed_content_policy_version"),
+             "completed_content_filter": previous.get("completed_content_filter"),
+             "policy_backfill_pending": backfill,
+             "policy_backfill_start": timestamp(start.isoformat()) if backfill else None}
+    request_previous = {**previous, "etag": None, "last_modified": None} if backfill else previous
     try:
-        result = collector({**source, "collection_start": state["coverage_start"], "collection_end": stamp}, now=now, previous_state=previous or None)
+        result = collector({**source, "collection_start": state["coverage_start"], "collection_end": stamp}, now=now, previous_state=request_previous or None)
     except Exception:
         result = {"status": "failed", "error_code": "collector_exception"}
     if not isinstance(result, dict) or result.get("status") not in {"success", "not_modified", "failed"}:
+        result = {"status": "failed", "error_code": "invalid_response"}
+    if backfill and result["status"] == "not_modified":
+        # A newly widened lookback must receive the representation, not reuse a
+        # validator established under an older filter or shorter collection window.
         result = {"status": "failed", "error_code": "invalid_response"}
     if result["status"] == "failed":
         code = result.get("error_code", "collector_exception")
@@ -191,6 +209,10 @@ def _collect_one(collector, source, previous, topics, companies, now):
     else:
         state["coverage_watermark_at"] = stamp
         state["next_collection_start"] = timestamp((now - timedelta(hours=48)).isoformat())
+        state["completed_content_policy_version"] = policy_version
+        state["completed_content_filter"] = content_filter
+        state["policy_backfill_pending"] = False
+        state["policy_backfill_start"] = None
     for key in ("etag", "last_modified"):
         value = result.get(key)
         if result["status"] == "success":
@@ -241,6 +263,7 @@ def run_collection(root, collector=None, now=None):
         db = connect(stage_db)
         try:
             old_sources = previous_sources(db)
+            policy_changed = apply_policies(db, sources, companies, topics)
             run_id = db.execute("INSERT INTO live_collection_runs(started_at,finished_at,status) VALUES(?,?,'running')", (stamp, stamp)).lastrowid
             source_states = []
             for source in sources:
@@ -249,17 +272,21 @@ def run_collection(root, collector=None, now=None):
                     state["inserted_versions"], state["duplicate_count"] = ingest(db, records, stamp)
                 save_source(db, run_id, state)
                 source_states.append(state)
+            apply_policies(db, sources, companies, topics)
+            validate_policies(db, sources, companies, topics)
             succeeded = sum(item["status"] != "failed" for item in source_states)
             outcome = "success" if succeeded == len(sources) else "partial_success" if succeeded else "failed"
             totals = {key: sum(item[key] for item in source_states) for key in ("fetched_count", "accepted_count", "inserted_versions", "duplicate_count")}
             db.execute("""UPDATE live_collection_runs SET status=?,fetched_count=?,accepted_count=?,inserted_versions=?,duplicate_count=?
                 WHERE run_id=?""", (outcome, *totals.values(), run_id))
+            policy_filtered = bool(policy_changed and not succeeded)
+            db.execute("UPDATE live_collection_runs SET policy_filtered=? WHERE run_id=?", (int(policy_filtered), run_id))
             db.commit()
             retained = False
             old_latest_path = root / "site/data/latest.json"
             old_status_path = root / "site/data/status.json"
             previous_published = (old_status_path.exists() and read_json(old_status_path).get("published_at") is not None)
-            if not succeeded and previous_published and old_latest_path.exists() and read_json(old_latest_path).get("is_demo") is False:
+            if not succeeded and not policy_filtered and previous_published and old_latest_path.exists() and read_json(old_latest_path).get("is_demo") is False:
                 # Verify the prior published snapshot against unchanged live article state.
                 latest, details, history = _read_snapshot(root)
                 validate_snapshot(db, topics, latest, details, history)
@@ -271,11 +298,12 @@ def run_collection(root, collector=None, now=None):
             status = {"schema_version": "1.0", "generation_id": generation, "published_generation_id": generation,
                       "run_generation_id": "run-" + digest(stamp + str(run_id)), "is_demo": False,
                       "last_run_at": stamp, "last_successful_run_at": successful_run,
-                      "published_at": latest["generated_at"] if succeeded or retained else None,
+                      "published_at": latest["generated_at"] if succeeded or retained or policy_filtered else None,
                       **counts(db), "issue_count": len(latest["candidates"]), **totals,
                       "analysis_mode": "pending_ai", "collection_mode": "public_metadata",
                       "collection_ok": bool(succeeded), "collection_status": outcome,
-                      "publication_status": "retained" if retained else "updated" if succeeded else "unavailable",
+                      "publication_status": "updated" if succeeded else "filtered" if policy_filtered else "retained" if retained else "unavailable",
+                      "policy_filtered": policy_filtered,
                       "interests_count": 0, "report_count": 0, "real_collection_enabled": True,
                       "ai_enabled": False, "schedule_enabled": settings.get("schedule_enabled", False),
                       "initial_lookback_days": 30, "overlap_hours": 48, "coverage_note": COVERAGE_NOTE,
@@ -338,7 +366,9 @@ def validate_status(db, latest, status):
     latest_success = db.execute("SELECT MAX(finished_at) FROM live_collection_runs WHERE status IN ('success','partial_success')").fetchone()[0]
     if status.get("last_successful_run_at") != latest_success:
         raise ValueError("Last successful run differs from SQLite")
-    publication = "updated" if status["collection_ok"] else "retained" if latest_success else "unavailable"
+    if status.get("policy_filtered") != bool(run["policy_filtered"]):
+        raise ValueError("Policy filtering status differs from SQLite")
+    publication = "updated" if status["collection_ok"] else "filtered" if run["policy_filtered"] else "retained" if latest_success else "unavailable"
     if status.get("publication_status") != publication:
         raise ValueError("Publication status must distinguish preserved and unavailable data")
     expected_published_at = latest["generated_at"] if publication != "unavailable" else None
@@ -351,7 +381,7 @@ def validate_status(db, latest, status):
 
 def verify_live(root):
     root = Path(root).resolve()
-    topics, _, _, _ = load_live_inputs(root)
+    topics, companies, sources, _ = load_live_inputs(root)
     latest, details, history = _read_snapshot(root)
     status = read_json(root / "site/data/status.json")
     path = root / "data/raw.sqlite3"
@@ -359,6 +389,7 @@ def verify_live(root):
         raise ValueError("SQLite store is missing")
     with closing(sqlite3.connect(f"{path.as_uri()}?mode=ro", uri=True)) as db:
         db.row_factory = sqlite3.Row
+        validate_policies(db, sources, companies, topics)
         validate_snapshot(db, topics, latest, details, history)
         validate_status(db, latest, status)
     if read_json(root / "state/run_status.json") != status:

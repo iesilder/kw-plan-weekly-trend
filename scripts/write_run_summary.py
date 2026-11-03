@@ -9,7 +9,7 @@ lines = ['## Fictional demo snapshot' if demo else '## Public metadata collectio
          'AI calls and schedules are disabled.', '', '| Item | Value |', '| --- | --- |']
 for key in ('generation_id', 'article_count', 'version_count', 'issue_count', 'run_count',
             'inserted_versions', 'duplicate_count', 'collection_status', 'publication_status',
-            'report_count', 'interests_count'):
+            'archived_article_count', 'total_article_count', 'report_count', 'interests_count'):
     if key in status:
         lines.append(f'| {key} | {status[key]} |')
 if not demo:
@@ -19,7 +19,7 @@ if not demo:
         cells = [source.get('source_name', source.get('source_id', '')), source.get('status', ''),
                  source.get('fetched_count', 0), source.get('accepted_count', 0), source.get('last_success_at') or 'none']
         lines.append('| ' + ' | '.join(str(value).replace('|', '\\|').replace('\n', ' ') for value in cells) + ' |')
-    lines += ['', 'Only factual disclosure identifiers and source links are retained. No article bodies or attachments.',
+    lines += ['', 'Only permitted disclosure/news metadata and original source links are retained. No descriptions, article bodies, images or attachments.',
               'Unchanged inputs must not create new article versions. New or corrected live filings may legitimately change counts.']
 summary = '\n'.join(lines) + '\n'
 print(summary)

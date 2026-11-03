@@ -23,7 +23,9 @@
       "max_pages": 3,
       "initial_lookback_days": 30,
       "overlap_hours": 48,
-      "coverage_note": "회사별 공개 공시목록. 최초 최근 30일, 이후 마지막 성공 범위에 48시간을 겹쳐 조회. 최대 3페이지·300건; 잘린 범위는 상태에 표시. 제목만으로 주제를 분류하므로 본문에만 있는 내용은 놓칠 수 있습니다."
+      "coverage_note": "잠정실적 및 사업·반기·분기·감사보고서 등 실적 공시만 대상. 실적 예고·임원지분·계열거래 등은 제외. 정책 변경 후 최초 최근 30일을 재확인하며, 이후 48시간 겹침 조회.",
+      "content_filter": "earnings_only",
+      "content_policy_version": "dart-earnings-v1"
     },
     {
       "id": "dart-company-2",
@@ -47,7 +49,9 @@
       "max_pages": 3,
       "initial_lookback_days": 30,
       "overlap_hours": 48,
-      "coverage_note": "회사별 공개 공시목록. 최초 최근 30일, 이후 마지막 성공 범위에 48시간을 겹쳐 조회. 최대 3페이지·300건; 잘린 범위는 상태에 표시. 제목만으로 주제를 분류하므로 본문에만 있는 내용은 놓칠 수 있습니다."
+      "coverage_note": "잠정실적 및 사업·반기·분기·감사보고서 등 실적 공시만 대상. 실적 예고·임원지분·계열거래 등은 제외. 정책 변경 후 최초 최근 30일을 재확인하며, 이후 48시간 겹침 조회.",
+      "content_filter": "earnings_only",
+      "content_policy_version": "dart-earnings-v1"
     },
     {
       "id": "dart-company-3",
@@ -71,7 +75,9 @@
       "max_pages": 3,
       "initial_lookback_days": 30,
       "overlap_hours": 48,
-      "coverage_note": "회사별 공개 공시목록. 최초 최근 30일, 이후 마지막 성공 범위에 48시간을 겹쳐 조회. 최대 3페이지·300건; 잘린 범위는 상태에 표시. 제목만으로 주제를 분류하므로 본문에만 있는 내용은 놓칠 수 있습니다."
+      "coverage_note": "잠정실적 및 사업·반기·분기·감사보고서 등 실적 공시만 대상. 실적 예고·임원지분·계열거래 등은 제외. 정책 변경 후 최초 최근 30일을 재확인하며, 이후 48시간 겹침 조회.",
+      "content_filter": "earnings_only",
+      "content_policy_version": "dart-earnings-v1"
     },
     {
       "id": "dart-company-4",
@@ -95,7 +101,9 @@
       "max_pages": 3,
       "initial_lookback_days": 30,
       "overlap_hours": 48,
-      "coverage_note": "회사별 공개 공시목록. 최초 최근 30일, 이후 마지막 성공 범위에 48시간을 겹쳐 조회. 최대 3페이지·300건; 잘린 범위는 상태에 표시. 제목만으로 주제를 분류하므로 본문에만 있는 내용은 놓칠 수 있습니다."
+      "coverage_note": "잠정실적 및 사업·반기·분기·감사보고서 등 실적 공시만 대상. 실적 예고·임원지분·계열거래 등은 제외. 정책 변경 후 최초 최근 30일을 재확인하며, 이후 48시간 겹침 조회.",
+      "content_filter": "earnings_only",
+      "content_policy_version": "dart-earnings-v1"
     },
     {
       "id": "dart-company-5",
@@ -119,7 +127,9 @@
       "max_pages": 3,
       "initial_lookback_days": 30,
       "overlap_hours": 48,
-      "coverage_note": "회사별 공개 공시목록. 최초 최근 30일, 이후 마지막 성공 범위에 48시간을 겹쳐 조회. 최대 3페이지·300건; 잘린 범위는 상태에 표시. 제목만으로 주제를 분류하므로 본문에만 있는 내용은 놓칠 수 있습니다."
+      "coverage_note": "잠정실적 및 사업·반기·분기·감사보고서 등 실적 공시만 대상. 실적 예고·임원지분·계열거래 등은 제외. 정책 변경 후 최초 최근 30일을 재확인하며, 이후 48시간 겹침 조회.",
+      "content_filter": "earnings_only",
+      "content_policy_version": "dart-earnings-v1"
     },
     {
       "id": "dart-company-6",
@@ -143,7 +153,9 @@
       "max_pages": 3,
       "initial_lookback_days": 30,
       "overlap_hours": 48,
-      "coverage_note": "회사별 공개 공시목록. 최초 최근 30일, 이후 마지막 성공 범위에 48시간을 겹쳐 조회. 최대 3페이지·300건; 잘린 범위는 상태에 표시. 제목만으로 주제를 분류하므로 본문에만 있는 내용은 놓칠 수 있습니다."
+      "coverage_note": "잠정실적 및 사업·반기·분기·감사보고서 등 실적 공시만 대상. 실적 예고·임원지분·계열거래 등은 제외. 정책 변경 후 최초 최근 30일을 재확인하며, 이후 48시간 겹침 조회.",
+      "content_filter": "earnings_only",
+      "content_policy_version": "dart-earnings-v1"
     },
     {
       "id": "dart-company-7",
@@ -167,7 +179,9 @@
       "max_pages": 3,
       "initial_lookback_days": 30,
       "overlap_hours": 48,
-      "coverage_note": "회사별 공개 공시목록. 최초 최근 30일, 이후 마지막 성공 범위에 48시간을 겹쳐 조회. 최대 3페이지·300건; 잘린 범위는 상태에 표시. 제목만으로 주제를 분류하므로 본문에만 있는 내용은 놓칠 수 있습니다."
+      "coverage_note": "잠정실적 및 사업·반기·분기·감사보고서 등 실적 공시만 대상. 실적 예고·임원지분·계열거래 등은 제외. 정책 변경 후 최초 최근 30일을 재확인하며, 이후 48시간 겹침 조회.",
+      "content_filter": "earnings_only",
+      "content_policy_version": "dart-earnings-v1"
     },
     {
       "id": "dart-company-8",
@@ -191,7 +205,9 @@
       "max_pages": 3,
       "initial_lookback_days": 30,
       "overlap_hours": 48,
-      "coverage_note": "회사별 공개 공시목록. 최초 최근 30일, 이후 마지막 성공 범위에 48시간을 겹쳐 조회. 최대 3페이지·300건; 잘린 범위는 상태에 표시. 제목만으로 주제를 분류하므로 본문에만 있는 내용은 놓칠 수 있습니다."
+      "coverage_note": "잠정실적 및 사업·반기·분기·감사보고서 등 실적 공시만 대상. 실적 예고·임원지분·계열거래 등은 제외. 정책 변경 후 최초 최근 30일을 재확인하며, 이후 48시간 겹침 조회.",
+      "content_filter": "earnings_only",
+      "content_policy_version": "dart-earnings-v1"
     },
     {
       "id": "dart-company-9",
@@ -215,7 +231,9 @@
       "max_pages": 3,
       "initial_lookback_days": 30,
       "overlap_hours": 48,
-      "coverage_note": "회사별 공개 공시목록. 최초 최근 30일, 이후 마지막 성공 범위에 48시간을 겹쳐 조회. 최대 3페이지·300건; 잘린 범위는 상태에 표시. 제목만으로 주제를 분류하므로 본문에만 있는 내용은 놓칠 수 있습니다."
+      "coverage_note": "잠정실적 및 사업·반기·분기·감사보고서 등 실적 공시만 대상. 실적 예고·임원지분·계열거래 등은 제외. 정책 변경 후 최초 최근 30일을 재확인하며, 이후 48시간 겹침 조회.",
+      "content_filter": "earnings_only",
+      "content_policy_version": "dart-earnings-v1"
     },
     {
       "id": "dart-company-10",
@@ -239,18 +257,78 @@
       "max_pages": 3,
       "initial_lookback_days": 30,
       "overlap_hours": 48,
-      "coverage_note": "회사별 공개 공시목록. 최초 최근 30일, 이후 마지막 성공 범위에 48시간을 겹쳐 조회. 최대 3페이지·300건; 잘린 범위는 상태에 표시. 제목만으로 주제를 분류하므로 본문에만 있는 내용은 놓칠 수 있습니다."
+      "coverage_note": "잠정실적 및 사업·반기·분기·감사보고서 등 실적 공시만 대상. 실적 예고·임원지분·계열거래 등은 제외. 정책 변경 후 최초 최근 30일을 재확인하며, 이후 48시간 겹침 조회.",
+      "content_filter": "earnings_only",
+      "content_policy_version": "dart-earnings-v1"
+    },
+    {
+      "enabled": true,
+      "type": "rss",
+      "scope": "competitors",
+      "retention": "metadata_only",
+      "policy_status": "verified",
+      "content_policy_version": "news-metadata-v1",
+      "initial_lookback_days": 30,
+      "overlap_hours": 48,
+      "id": "einfomax-s1n2",
+      "name": "연합인포맥스(기사) · 증권",
+      "adapter": "einfomax_rss",
+      "url": "https://news.einfomax.co.kr/rss/S1N2.xml",
+      "allowed_hosts": [
+        "news.einfomax.co.kr"
+      ],
+      "retention_basis": "공식 RSS 안내의 외부 사이트 제목·링크 표시 용도를 기준으로 제목·출처·발행일·원문 링크만 보존합니다. description·본문·이미지·요약은 저장하지 않습니다. 본문 재배포나 데이터 재판매 허가를 의미하지 않습니다.",
+      "retention_url": "https://news.einfomax.co.kr/rssIndex.html",
+      "coverage_note": "제공되는 최신 20건 RSS 중 경쟁사·5개 주제에 해당하는 제목만 수집. 초기 30일 이내라도 피드에서 사라진 과거 기사는 복원하지 못합니다. 시간대 없는 발행값은 날짜만 보존합니다."
+    },
+    {
+      "enabled": true,
+      "type": "rss",
+      "scope": "competitors",
+      "retention": "metadata_only",
+      "policy_status": "verified",
+      "content_policy_version": "news-metadata-v1",
+      "initial_lookback_days": 30,
+      "overlap_hours": 48,
+      "id": "einfomax-s1n7",
+      "name": "연합인포맥스(기사) · IB·기업",
+      "adapter": "einfomax_rss",
+      "url": "https://news.einfomax.co.kr/rss/S1N7.xml",
+      "allowed_hosts": [
+        "news.einfomax.co.kr"
+      ],
+      "retention_basis": "공식 RSS 안내의 외부 사이트 제목·링크 표시 용도를 기준으로 제목·출처·발행일·원문 링크만 보존합니다. description·본문·이미지·요약은 저장하지 않습니다. 본문 재배포나 데이터 재판매 허가를 의미하지 않습니다.",
+      "retention_url": "https://news.einfomax.co.kr/rssIndex.html",
+      "coverage_note": "제공되는 최신 20건 RSS 중 경쟁사·5개 주제에 해당하는 제목만 수집. 초기 30일 이내라도 피드에서 사라진 과거 기사는 복원하지 못합니다. 시간대 없는 발행값은 날짜만 보존합니다."
+    },
+    {
+      "enabled": true,
+      "type": "rss",
+      "scope": "competitors",
+      "retention": "metadata_only",
+      "policy_status": "verified",
+      "content_policy_version": "news-metadata-v1",
+      "initial_lookback_days": 30,
+      "overlap_hours": 48,
+      "id": "newswire-securities",
+      "name": "뉴스와이어(보도자료) · 증권",
+      "adapter": "newswire_rss",
+      "url": "https://api.newswire.co.kr/rss/industry/203",
+      "allowed_hosts": [
+        "api.newswire.co.kr",
+        "www.newswire.co.kr"
+      ],
+      "retention_basis": "공식 RSS 안내가 설명하는 웹사이트 표시 용도로 보도자료 제목·출처·발행일·원문 링크만 보존합니다. description·본문·이미지·요약은 저장하지 않습니다. 전문 재배포·상업적 판매 허가로 확대하지 않으며 수정·삭제 요청에 대응합니다.",
+      "retention_url": "https://www.newswire.co.kr/?nd=31",
+      "terms_url": "https://www.newswire.co.kr/?xd=37",
+      "coverage_note": "독립 취재 기사가 아닌 기업 배포 보도자료입니다. 현재 RSS의 최신 15건만 확인하므로 모든 경쟁사 기사와 해당 기간 전체 자료를 보장하지 않습니다."
     }
   ],
-  "note": "2단계: DART 공개목록의 사실형 공시 식별정보만 사용. 기사 본문·첨부·이미지·외부 언론사 RSS는 보존하지 않습니다.",
+  "note": "DART는 잠정·실제 실적 공시만, 기사·보도자료 RSS는 경쟁사와 5개 주제에 맞는 제목·날짜·출처·원문 링크만 보존합니다. 본문·설명문·첨부·이미지·원본 RSS 응답은 저장하지 않습니다.",
   "deferred_sources": [
     {
       "name": "금융위원회",
       "reason": "RSS 503, HTML 자료별 재사용 조건 미확인"
-    },
-    {
-      "name": "뉴스와이어·연합인포맥스",
-      "reason": "공개 영구 재저장 범위에 관한 명시적 이용조건 미확인"
     },
     {
       "name": "OpenDART API",

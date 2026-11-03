@@ -7,10 +7,12 @@
 })(typeof globalThis === "object" ? globalThis : this, function () {
   "use strict";
   const TOPICS = new Set(["performance", "digital", "expansion", "strategy", "risk"]);
+  const POLICIES = new Set(["dart-factual-metadata-v1", "public-metadata-inference-v2"]);
+  const NEWS_SOURCES = new Set(["연합인포맥스(기사) · 증권", "연합인포맥스(기사) · IB·기업", "뉴스와이어(보도자료) · 증권"]);
   const STATUSES = new Set(["blocked", "not_analyzed", "completed", "stale", "failed"]);
   const RELEVANCE = Object.freeze({relevant:"검토 대상에 해당", uncertain:"판단 유보 · 원문 확인", out_of_scope:"검토 범위 밖으로 제안"});
-  const STATUS_LABELS = Object.freeze({blocked:"AI 이용 제한", not_analyzed:"아직 분석하지 않음", completed:"AI 제안 · 담당자 확인 필요", stale:"자료 변경 · 재분석 필요", failed:"분석 실패"});
-  const REASONS = Object.freeze({source_ai_prohibited:"이 출처는 AI 이용이 금지되어 분석 대상으로 보내지 않습니다.", rights_unconfirmed:"AI 이용 범위가 확인되지 않은 출처여서 분석을 보류합니다.", source_not_eligible:"현재 승인된 AI 입력 범위에 해당하지 않습니다.", not_live_metadata:"실제 공개 메타데이터가 아니므로 분석하지 않습니다.", invalid_factual_metadata:"허용된 사실 메타데이터를 확인하지 못해 분석하지 않습니다."});
+  const STATUS_LABELS = Object.freeze({blocked:"AI 입력 제외", not_analyzed:"아직 분석하지 않음", completed:"AI 제안 · 담당자 확인 필요", stale:"자료 변경 · 재분석 필요", failed:"분석 실패"});
+  const REASONS = Object.freeze({source_ai_prohibited:"이전 분석 기준에서 제외한 자료입니다. 최신 코드로 수동 실행하면 현재 입력 기준을 다시 적용합니다.", rights_unconfirmed:"이전 분석 기준에서 보류한 자료입니다. 최신 코드로 수동 실행하면 현재 입력 기준을 다시 적용합니다.", source_not_eligible:"설정된 공개 메타데이터 입력 범위에 해당하지 않습니다.", not_live_metadata:"실제 공개 메타데이터가 아니므로 분석하지 않습니다.", invalid_factual_metadata:"현재 자료의 제목·날짜·근거 정보를 확인하지 못해 분석하지 않습니다."});
   const KEY_CODES = new Set(["missing_api_key", "free_project_not_confirmed"]);
   const HASH = /^[a-f0-9]{64}$/;
   const ID = /^issue-[a-f0-9]{20}$/;
@@ -30,7 +32,13 @@
   }
   function array(value, check, max = 1000) { return Array.isArray(value) && value.length <= max && value.every(check); }
   function sameIds(a,b) { return [...a].sort().join("|") === [...b].sort().join("|"); }
-  function allowedSource(item) { return item.is_demo === false && item.content_filter === "earnings_only" && typeof item.source_name === "string" && item.source_name.startsWith("DART · "); }
+  function allowedSource(item, policyVersion) {
+    if (!plainObject(item) || item.is_demo !== false || typeof item.source_name !== "string" ||
+        (item.evidence_confidence !== undefined && item.evidence_confidence !== "metadata_only") ||
+        ["content_text", "body", "article_body"].some(key => item[key] !== undefined && item[key] !== null && item[key] !== "")) return false;
+    if (item.content_filter === "earnings_only" && item.source_name.startsWith("DART · ")) return true;
+    return policyVersion === "public-metadata-inference-v2" && item.content_filter === "topics" && NEWS_SOURCES.has(item.source_name);
+  }
   function validateResult(result, issueId, allIds) {
     if (!plainObject(result) || !TOPICS.has(result.suggested_topic_id) || !Object.hasOwn(RELEVANCE,result.relevance) || !string(result.rationale,300) || !result.rationale.trim() || !array(result.check_points,text => string(text,150) && !!text.trim(),3) || !array(result.duplicate_issue_ids,id => ID.test(id) && id !== issueId && (!allIds || allIds.has(id)),4) || new Set(result.duplicate_issue_ids).size !== result.duplicate_issue_ids.length) fail("AI 제안의 필수 항목이나 참조 자료를 확인할 수 없습니다.");
     return {suggested_topic_id:result.suggested_topic_id,relevance:result.relevance,rationale:result.rationale,check_points:[...result.check_points],duplicate_issue_ids:[...result.duplicate_issue_ids]};
@@ -38,10 +46,10 @@
   function validateSidecar(value, latest) {
     if (!plainObject(value) || value.schema_version !== "1.0" || !latest || latest.is_demo !== false || !Array.isArray(latest.candidates)) fail("AI 보조 자료의 형식을 확인할 수 없습니다.");
     if (value.generation_id !== latest.generation_id) fail("AI 보조 자료와 현재 수집 자료의 버전이 다릅니다. 최신 자료에 대한 결과로 표시하지 않습니다.");
-    if (!instant(value.generated_at) || value.provider !== "google_gemini" || !string(value.model,100) || !value.model || !string(value.prompt_version,100) || !value.prompt_version || !string(value.policy_version,100) || !value.policy_version || value.auto_analysis_enabled !== false || !plainObject(value.items) || !plainObject(value.counts)) fail("AI 보조 자료의 실행 설정이나 생성 정보를 확인할 수 없습니다.");
+    if (!instant(value.generated_at) || value.provider !== "google_gemini" || !string(value.model,100) || !value.model || !string(value.prompt_version,100) || !value.prompt_version || !POLICIES.has(value.policy_version) || value.auto_analysis_enabled !== false || !plainObject(value.items) || !plainObject(value.counts)) fail("AI 보조 자료의 실행 설정이나 생성 정보를 확인할 수 없습니다.");
     const candidates = new Map(latest.candidates.map(item => [item.issue_id,item]));
     const allIds = new Set(candidates.keys());
-    const eligibleIds = new Set(latest.candidates.filter(item => allowedSource(item) && value.items[item.issue_id]?.status !== "blocked").map(item => item.issue_id));
+    const eligibleIds = new Set(latest.candidates.filter(item => allowedSource(item,value.policy_version) && value.items[item.issue_id]?.status !== "blocked").map(item => item.issue_id));
     if (allIds.size !== latest.candidates.length || !sameIds(Object.keys(value.items),[...allIds])) fail("AI 보조 자료의 대상 목록이 현재 수집 자료와 다릅니다.");
     const result = {schema_version:"1.0",generation_id:value.generation_id,generated_at:value.generated_at,provider:value.provider,model:value.model,prompt_version:value.prompt_version,policy_version:value.policy_version,auto_analysis_enabled:false,last_attempt:null,counts:{eligible:0,blocked:0,completed:0,stale:0,failed:0,not_analyzed:0},items:{}};
     for (const [issueId, item] of Object.entries(value.items)) {
@@ -52,7 +60,7 @@
         if (!item.reason_code || item.input_evidence_ids.length || item.input_fingerprint !== null || item.result_fingerprint !== null || item.analyzed_at !== null || item.result !== null) fail("이용 제한 자료에 분석 결과가 포함되어 있습니다.");
         result.counts.blocked++;
       } else {
-        if (!allowedSource(candidate) || item.reason_code !== null || !HASH.test(item.input_fingerprint || "") || !array(candidate.evidence_ids,id => typeof id === "string") || !sameIds(item.input_evidence_ids,candidate.evidence_ids)) fail("AI 입력 범위나 현재 자료의 근거 버전이 일치하지 않습니다.");
+        if (!allowedSource(candidate,value.policy_version) || item.reason_code !== null || !HASH.test(item.input_fingerprint || "") || !array(candidate.evidence_ids,id => typeof id === "string") || !sameIds(item.input_evidence_ids,candidate.evidence_ids)) fail("AI 입력 범위나 현재 자료의 근거 버전이 일치하지 않습니다.");
         result.counts.eligible++;
         result.counts[item.status]++;
         if (item.status === "completed" || item.status === "stale") {
@@ -94,8 +102,8 @@
     if (item.status === "stale") return "분석 후 자료 또는 분석 기준이 바뀌었습니다. 이전 제안은 표시하지 않으며 수동 재분석이 필요합니다.";
     if (KEY_CODES.has(item.error_code)) return item.error_code === "missing_api_key" ? "아직 분석하지 않았습니다. GitHub에 API 키를 등록한 뒤 수동으로 실행해주세요." : "아직 분석하지 않았습니다. 무료 프로젝트 확인 설정을 마친 뒤 수동으로 실행해주세요.";
     if (item.status === "failed") return "분석에 실패했습니다. 기존 수집 자료와 담당자의 선택은 유지됩니다. GitHub 실행 기록을 확인해주세요.";
-    if (item.status === "not_analyzed") return "아직 실제 AI 분석 결과가 없습니다. 허용된 공시 서식의 사실 메타데이터만 수동 분석 대상으로 사용할 수 있습니다.";
-    return "공시 서식·회사·접수일 등 허용된 사실 메타데이터에 대한 제안입니다. 공시 본문이나 실적 수치를 분석한 결과가 아닙니다.";
+    if (item.status === "not_analyzed") return "아직 실제 AI 분석 결과가 없습니다. 기사 제목 또는 공시 서식·회사·날짜를 바탕으로 수동 분석합니다. 본문은 입력에 포함되지 않습니다.";
+    return "기사 제목 또는 공시 서식·회사·날짜에 근거한 제안입니다. 기사·공시 본문을 읽거나 실적 수치를 분석한 결과가 아닙니다.";
   }
   return Object.freeze({validateSidecar,summary,lastAnalysisAt,keyRequiredCount,itemMessage,statusLabels:STATUS_LABELS,relevanceLabels:RELEVANCE});
 });

@@ -456,8 +456,8 @@
     const data = aiState.data;
     const status = AI.summary(data);
     $("ai-readiness").textContent = status.label;
-    $("ai-summary-note").textContent = "수동 실행한 AI 제안을 별도로 표시합니다. 담당자의 채택·보류·제외와 기존 주제 분류는 자동으로 변경하지 않습니다.";
-    for (const [label,value] of [["분석 가능",data.counts.eligible],["현재 결과",data.counts.completed],["재분석 필요",data.counts.stale],["아직 미분석",data.counts.not_analyzed],["이용 제한",data.counts.blocked],["분석 실패",data.counts.failed],["키·설정 확인 필요",status.keyRequiredCount === null ? "미확인" : status.keyRequiredCount]]) {
+    $("ai-summary-note").textContent = "기사 제목과 공시 서식 등 공개 메타데이터를 수동 분석합니다. 본문 요약은 제공하지 않으며 담당자의 채택·보류·제외와 기존 분류는 자동으로 변경하지 않습니다.";
+    for (const [label,value] of [["분석 가능",data.counts.eligible],["현재 결과",data.counts.completed],["재분석 필요",data.counts.stale],["아직 미분석",data.counts.not_analyzed],["입력 제외",data.counts.blocked],["분석 실패",data.counts.failed],["키·설정 확인 필요",status.keyRequiredCount === null ? "미확인" : status.keyRequiredCount]]) {
       const count = el("div", "ai-count");
       count.append(el("span", "", label),el("strong", "", typeof value === "number" ? `${value}건` : value));
       counts.append(count);
@@ -467,7 +467,7 @@
     const notes = [];
     if (!data.last_attempt) notes.push("첫 수동 실행 전에는 API 키와 무료 프로젝트 설정 여부를 확인하지 않습니다.");
     if (status.keyRequiredCount > 0) notes.push("GitHub 설정 방법을 확인한 뒤 수동 AI 실행을 다시 진행하세요. 이 사이트에 비밀키를 입력하지 않습니다.");
-    if (data.counts.blocked) notes.push("연합인포맥스는 AI 이용 금지, 뉴스와이어는 AI 이용 범위 미확인으로 제외합니다. 현재는 허용된 DART 공시의 사실 메타데이터만 대상으로 합니다.");
+    if (data.counts.blocked) notes.push("입력에서 제외된 자료의 상세 사유를 확인하세요. 최신 기준은 출처명만으로 기사를 일괄 제외하지 않습니다.");
     if (data.last_attempt && ["failed","partial_success"].includes(data.last_attempt.status)) notes.push("최근 실행에 실패 항목이 있습니다. GitHub 실행 기록을 확인해주세요.");
     $("ai-warning").textContent = notes.join(" ");
     $("ai-warning").hidden = !notes.length;

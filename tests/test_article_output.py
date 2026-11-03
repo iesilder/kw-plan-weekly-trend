@@ -56,7 +56,7 @@ class ArticleOutputTests(unittest.TestCase):
         bad["key_change"]["evidence_ids"] = ["p99"]
         valid, errors = articles._parse(response([item(A), bad]), self.batch())
         self.assertEqual(set(valid), {A})
-        self.assertEqual(errors[B], "output_evidence_mismatch")
+        self.assertEqual(errors[B], "output_evidence_unknown")
         valid, errors = articles._parse(response([item(A), {"issue_id": B}]), self.batch())
         self.assertEqual(set(valid), {A})
         self.assertEqual(errors[B], "output_invalid_shape")
@@ -83,6 +83,46 @@ class ArticleOutputTests(unittest.TestCase):
         props = articles.response_schema()["properties"]["items"]["items"]["properties"]
         self.assertNotIn("evidence", props)
         self.assertIn("evidence_ids", props["key_change"]["properties"])
+
+    def test_five_valid_paragraphs_are_not_rejected_by_a_global_four_reference_limit(self):
+        paragraphs = [{"id": f"p{i}", "text": "정책 변화와 사업 추진에 관한 기사 내용이며 검토가 필요한 상세 사실을 설명한다."} for i in range(1, 6)]
+        result = {"issue_id": A, "key_change": {"text": "정책 변화와 사업 추진을 설명한다.", "evidence_ids": ["p1", "p2"]},
+                  "facts": [{"text": "검토에 필요한 상세 사실을 설명한다.", "evidence_ids": [f"p{i}"]} for i in range(3, 6)],
+                  "stage": "추진·협약", "why_candidate": "사업 추진 관점에서 검토할 수 있습니다."}
+        valid, errors = articles._parse(response([result]), [{"issue_id": A, "paragraphs": paragraphs}])
+        self.assertFalse(errors)
+        self.assertEqual(len(valid[A]["evidence"]), 5)
+        self.assertLessEqual(sum(len(row["quote"]) for row in valid[A]["evidence"]), 200)
+
+    def test_twenty_union_references_are_supported_but_each_claim_remains_bounded(self):
+        paragraphs = [{"id": f"p{i}", "text": "검토 대상의 정책 변화와 사업 추진 사실을 설명하는 충분한 길이의 원문 문단입니다."} for i in range(1, 21)]
+        claims = [{"text": "정책 변화와 사업 추진 사실을 설명한다.", "evidence_ids": [f"p{i}" for i in range(start, start + 4)]} for start in range(1, 21, 4)]
+        value = {"issue_id": A, "key_change": claims[0], "facts": claims[1:], "stage": "불명", "why_candidate": "사업 변화 관점에서 검토할 수 있습니다."}
+        batch = [{"issue_id": A, "paragraphs": paragraphs}]
+        valid, errors = articles._parse(response([value]), batch)
+        self.assertFalse(errors)
+        self.assertEqual(len(valid[A]["evidence"]), 20)
+        self.assertLessEqual(sum(len(row["quote"]) for row in valid[A]["evidence"]), 200)
+        value["key_change"]["evidence_ids"].append("p5")
+        valid, errors = articles._parse(response([value]), batch)
+        self.assertFalse(valid)
+        self.assertEqual(errors[A], "output_reference_limit")
+
+    def test_duplicate_reference_is_normalized_without_changing_facts(self):
+        value = item(A)
+        value["key_change"]["evidence_ids"] = ["p1", "p1"]
+        valid, errors = articles._parse(response([value]), self.batch())
+        self.assertFalse(errors.get(A))
+        self.assertEqual(valid[A]["key_change"]["evidence_ids"], ["p1"])
+        self.assertEqual(valid[A]["key_change"]["text"], value["key_change"]["text"])
+
+    def test_schema_references_are_selected_from_supplied_paragraph_ids(self):
+        batch = [{"issue_id": A, "paragraphs": [*P, {"id": "p9", "text": "짧음"}]}]
+        schema = articles.response_schema(batch)
+        enum = schema["properties"]["items"]["items"]["properties"]["key_change"]["properties"]["evidence_ids"]["items"]["enum"]
+        self.assertEqual(enum, ["p1", "p2"])
+        self.assertNotIn("p999", enum)
+        self.assertNotIn("p01", enum)
 
 
 if __name__ == "__main__":

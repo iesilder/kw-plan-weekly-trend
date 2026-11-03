@@ -96,8 +96,22 @@ test("partial success retains four valid briefs and a separately failed item",()
   assert.deepEqual(data,before);
 });
 test("item-specific output errors use safe explanatory messages without raw responses",()=>{
-  for(const code of ["output_number_mismatch","output_evidence_mismatch","output_invalid_shape","output_missing_item","output_duplicate_item","output_quote_invalid"]){
+  for(const code of ["output_number_mismatch","output_evidence_mismatch","output_reference_limit","output_evidence_unknown","output_evidence_missing","output_invalid_shape","output_missing_item","output_duplicate_item","output_quote_invalid"]){
     const message=Article.itemMessage({status:"failed",reason_code:code});assert.match(message,/이 자료|요약/);assert.doesNotMatch(message,new RegExp(code));
   }
   const marker="untrusted-provider-response-credential";assert.doesNotMatch(Article.itemMessage({status:"failed",reason_code:marker}),new RegExp(marker));
+});
+test("five separate claims may reference twenty paragraphs within a shared quote budget",()=>{
+  const{data,latest}=fixture();complete(data);const brief=data.items[A].result;
+  brief.evidence=Array.from({length:20},(_,index)=>({id:`p${index+1}`,quote:"가".repeat(10)}));
+  brief.key_change.evidence_ids=["p1","p2","p3","p4"];
+  brief.facts=Array.from({length:4},(_,index)=>({text:`본문 주요 사실 ${index+1}`,evidence_ids:Array.from({length:4},(_,ref)=>`p${5+index*4+ref}`)}));
+  data.prompt_version="article-brief-v2";
+  const validated=Article.validateSidecar(data,latest);
+  assert.equal(validated.items[A].result.evidence.length,20);
+  assert.equal(validated.items[A].result.evidence.reduce((total,row)=>total+row.quote.length,0),200);
+  assert.deepEqual(validated.items[A].result.facts[3].evidence_ids,["p17","p18","p19","p20"]);
+  const tooMany=clone(brief);tooMany.evidence.push({id:"p21",quote:"나"});assert.throws(()=>Article.validateResult(tooMany));
+  const tooLong=clone(brief);tooLong.evidence[0].quote+="나";assert.throws(()=>Article.validateResult(tooLong));
+  const tooManyPerClaim=clone(brief);tooManyPerClaim.key_change.evidence_ids.push("p5");assert.throws(()=>Article.validateResult(tooManyPerClaim));
 });

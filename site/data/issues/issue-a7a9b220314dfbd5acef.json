@@ -1,0 +1,60 @@
+{
+  "issue_id": "issue-a7a9b220314dfbd5acef",
+  "title": "증권 결제주기 T+1 단축 내후년…주요국보다 빠른 전환 추진(종합)",
+  "company": "증권업권 관련",
+  "company_ids": [],
+  "companies": [],
+  "topic_id": "risk",
+  "topic": "정책·인허가·리스크",
+  "priority": "unranked",
+  "report_status": "no_history",
+  "why_now": "제목의 회사·업권 정보와 주제 키워드(결제주기, T+1)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+  "bullets": [],
+  "evidence_ids": [
+    "version-d186b5f800ee576eb345"
+  ],
+  "detail_path": "data/issues/issue-a7a9b220314dfbd5acef.json",
+  "is_demo": false,
+  "analysis_status": "pending_ai",
+  "evidence_confidence": "metadata_only",
+  "source_name": "연합인포맥스(기사) · 증권",
+  "published_at": null,
+  "published_date": "2026-11-02",
+  "fetched_at": "2026-11-03T01:20:04.366921+00:00",
+  "matched_keywords": [
+    "결제주기",
+    "T+1"
+  ],
+  "matched_topic_ids": [
+    "risk"
+  ],
+  "tags": [
+    "시장인프라"
+  ],
+  "event_stage": "계획·추진",
+  "classification_rules_version": "news-events-v2",
+  "content_filter": "topics",
+  "content_policy_version": "news-events-v2_52ce6f3968839698",
+  "schema_version": "1.0",
+  "generation_id": "live-868597c12ee8ee266e22",
+  "change_summary": "본문·기보고 대비 변화는 분석하지 않았습니다.",
+  "last_report": null,
+  "evidence": [
+    {
+      "title": "증권 결제주기 T+1 단축 내후년…주요국보다 빠른 전환 추진(종합)",
+      "published_at": null,
+      "published_date": "2026-11-02",
+      "source_updated_at": null,
+      "fetched_at": "2026-11-03T01:20:04.366921+00:00",
+      "content_level": "metadata_only",
+      "content_text": "",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "retention_basis": "공식 RSS 안내의 외부 사이트 제목·링크 표시 용도를 기준으로 제목·출처·발행일·원문 링크만 보존합니다. description·본문·이미지·요약은 저장하지 않습니다. 본문 재배포나 데이터 재판매 허가를 의미하지 않습니다.",
+      "retention_url": "https://news.einfomax.co.kr/rssIndex.html",
+      "evidence_id": "version-d186b5f800ee576eb345",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442518",
+      "is_demo": false
+    }
+  ]
+}

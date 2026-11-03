@@ -31,10 +31,15 @@
   "matched_topic_ids": [
     "performance"
   ],
+  "tags": [
+    "실적"
+  ],
+  "event_stage": "실적 공시",
+  "classification_rules_version": "dart-earnings-v1",
   "content_filter": "earnings_only",
-  "content_policy_version": "dart-earnings-v1",
+  "content_policy_version": "dart-earnings-v1_29b30dfd84014527",
   "schema_version": "1.0",
-  "generation_id": "live-9bd43eb3e3287bee9e04",
+  "generation_id": "live-868597c12ee8ee266e22",
   "change_summary": "본문·기보고 대비 변화는 분석하지 않았습니다.",
   "last_report": null,
   "evidence": [

@@ -1,8 +1,163 @@
 {
   "schema_version": "1.0",
   "is_demo": false,
-  "generation_id": "live-9bd43eb3e3287bee9e04",
+  "generation_id": "live-868597c12ee8ee266e22",
   "issues": [
+    {
+      "issue_id": "issue-ec88113fec2c699faaf5",
+      "title": "금융위, '바이낸스 해킹' 여파에 가상자산거래소 긴급 점검",
+      "company": "금융위원회",
+      "company_ids": [],
+      "companies": [
+        "금융위원회"
+      ],
+      "topic_id": "risk",
+      "topic": "정책·인허가·리스크",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(해킹, 점검)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-6ebad5d35dba7d5a4507"
+      ],
+      "detail_path": "data/issues/issue-ec88113fec2c699faaf5.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "published_at": null,
+      "published_date": "2026-11-02",
+      "fetched_at": "2026-11-03T01:20:04.366921+00:00",
+      "matched_keywords": [
+        "해킹",
+        "점검"
+      ],
+      "matched_topic_ids": [
+        "digital",
+        "risk"
+      ],
+      "tags": [
+        "디지털자산",
+        "리스크"
+      ],
+      "event_stage": "점검·조사",
+      "classification_rules_version": "news-events-v2",
+      "content_filter": "topics",
+      "content_policy_version": "news-events-v2_52ce6f3968839698"
+    },
+    {
+      "issue_id": "issue-a99980f5c72b33d80750",
+      "title": "증권시장 결제주기 T+1 단축 내후년 도입…주요국보다 빠른 전환 추진",
+      "company": "증권업권 관련",
+      "company_ids": [],
+      "companies": [],
+      "topic_id": "risk",
+      "topic": "정책·인허가·리스크",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(결제주기, T+1)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-00420f96778c5d8a0d0d"
+      ],
+      "detail_path": "data/issues/issue-a99980f5c72b33d80750.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "published_at": null,
+      "published_date": "2026-11-02",
+      "fetched_at": "2026-11-03T01:20:04.366921+00:00",
+      "matched_keywords": [
+        "결제주기",
+        "T+1"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ],
+      "tags": [
+        "시장인프라"
+      ],
+      "event_stage": "계획·추진",
+      "classification_rules_version": "news-events-v2",
+      "content_filter": "topics",
+      "content_policy_version": "news-events-v2_52ce6f3968839698"
+    },
+    {
+      "issue_id": "issue-a7a9b220314dfbd5acef",
+      "title": "증권 결제주기 T+1 단축 내후년…주요국보다 빠른 전환 추진(종합)",
+      "company": "증권업권 관련",
+      "company_ids": [],
+      "companies": [],
+      "topic_id": "risk",
+      "topic": "정책·인허가·리스크",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(결제주기, T+1)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-d186b5f800ee576eb345"
+      ],
+      "detail_path": "data/issues/issue-a7a9b220314dfbd5acef.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "published_at": null,
+      "published_date": "2026-11-02",
+      "fetched_at": "2026-11-03T01:20:04.366921+00:00",
+      "matched_keywords": [
+        "결제주기",
+        "T+1"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ],
+      "tags": [
+        "시장인프라"
+      ],
+      "event_stage": "계획·추진",
+      "classification_rules_version": "news-events-v2",
+      "content_filter": "topics",
+      "content_policy_version": "news-events-v2_52ce6f3968839698"
+    },
+    {
+      "issue_id": "issue-193dc2f5a4e04bf16e42",
+      "title": "금감원, '핀플루언서 ETF 광고' 전방위 점검 나섰다",
+      "company": "금융감독원",
+      "company_ids": [],
+      "companies": [
+        "금융감독원"
+      ],
+      "topic_id": "risk",
+      "topic": "정책·인허가·리스크",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(점검)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-464a766f9624c9627a95"
+      ],
+      "detail_path": "data/issues/issue-193dc2f5a4e04bf16e42.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "published_at": null,
+      "published_date": "2026-11-02",
+      "fetched_at": "2026-11-03T01:20:04.366921+00:00",
+      "matched_keywords": [
+        "점검"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ],
+      "tags": [],
+      "event_stage": "점검·조사",
+      "classification_rules_version": "news-events-v2",
+      "content_filter": "topics",
+      "content_policy_version": "news-events-v2_52ce6f3968839698"
+    },
     {
       "issue_id": "issue-8cda78e7eb4a64c526cd",
       "title": "카카오페이증권, 인수업 인가 후 첫 스팩 설립…IB 사업 본격화",
@@ -14,10 +169,10 @@
         "카카오페이증권"
       ],
       "topic_id": "digital",
-      "topic": "디지털·AI·신사업",
+      "topic": "신사업·상품·고객전략",
       "priority": "unranked",
       "report_status": "no_history",
-      "why_now": "제목의 회사·업권 정보와 주제 키워드(IB사업, 본격화, 첫, 설립)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(IB사업)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
       "bullets": [],
       "evidence_ids": [
         "version-42e8ddadcc22cab2da7a"
@@ -31,16 +186,19 @@
       "published_date": "2026-11-02",
       "fetched_at": "2026-11-03T00:29:46.082736+00:00",
       "matched_keywords": [
-        "IB사업",
-        "본격화",
-        "첫",
-        "설립"
+        "IB사업"
       ],
       "matched_topic_ids": [
         "digital"
       ],
+      "tags": [
+        "신사업",
+        "인허가"
+      ],
+      "event_stage": "출시·사업 개시",
+      "classification_rules_version": "news-events-v2",
       "content_filter": "topics",
-      "content_policy_version": "news-metadata-v1"
+      "content_policy_version": "news-events-v2_52ce6f3968839698"
     },
     {
       "issue_id": "issue-b4acf9726e522360746c",
@@ -75,8 +233,13 @@
       "matched_topic_ids": [
         "performance"
       ],
+      "tags": [
+        "실적"
+      ],
+      "event_stage": "실적 공시",
+      "classification_rules_version": "dart-earnings-v1",
       "content_filter": "earnings_only",
-      "content_policy_version": "dart-earnings-v1"
+      "content_policy_version": "dart-earnings-v1_29b30dfd84014527"
     }
   ]
 }

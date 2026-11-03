@@ -10,7 +10,8 @@ from contextlib import closing
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from .classification import classify_for_source, plain_title, safe_https_url, source_policy
+from .classification import (classify_for_source, load_classification_rules,
+                             plain_title, safe_https_url, source_policy)
 from .live_storage import (apply_policies, connect, counts, current_records, ingest,
                            previous_sources, save_source, timestamp, validate_policies)
 from .pipeline import TOPIC_IDS, read_json, write_json
@@ -24,13 +25,48 @@ ERROR_MESSAGES = {
 }
 
 
+def _source_with_classification_context(source, rules, companies, topics):
+    """Give new collection and stored-history routing the same effective policy."""
+    source = {**{key: value for key, value in source.items() if not key.startswith("_")},
+              "_classification_rules": rules}
+    content_filter, configured_version = source_policy(source)
+    relevant_companies = (companies if content_filter != "earnings_only" else
+                          [item for item in companies if item["id"] == source.get("company_id")])
+    policy = {"configured_version": configured_version, "content_filter": content_filter,
+              "scope": source.get("scope"), "company_id": source.get("company_id"),
+              "companies": sorted([{"id": item["id"], "name": item["name"],
+                                    "enabled": item.get("enabled", True),
+                                    "aliases": sorted(item.get("aliases", []))}
+                                   for item in relevant_companies], key=lambda item: item["id"]),
+              "topics": ({"performance": topics["performance"]} if content_filter == "earnings_only" else topics)}
+    if content_filter != "earnings_only":
+        policy["rules"] = rules
+    fingerprint = digest(json.dumps(policy, ensure_ascii=False, sort_keys=True, separators=(",", ":")))[:16]
+    source["_effective_content_policy_version"] = configured_version[:80] + "_" + fingerprint
+    return source
+
+
 def load_live_inputs(root):
     topics = read_json(root / "config/topics.json")["topics"]
     if len(topics) != 5 or {item["id"] for item in topics} != TOPIC_IDS or any(not item.get("enabled", True) for item in topics):
         raise ValueError("Exactly the five agreed topics must remain enabled")
+    if any(not isinstance(item.get("name"), str) or not item["name"].strip() for item in topics):
+        raise ValueError("Topic display names must be nonempty text")
     companies = read_json(root / "config/companies.json")["companies"]
-    if len(companies) != 10 or len({item["id"] for item in companies}) != 10:
-        raise ValueError("The ten configured companies must remain present")
+    company_ids = [item.get("id") for item in companies]
+    if (len(companies) != 13
+            or any(not isinstance(value, str) or not re.fullmatch(r"[a-zA-Z0-9_-]{1,100}", value) for value in company_ids)
+            or len(set(company_ids)) != 13
+            or not {f"company-{number}" for number in range(1, 11)} <= set(company_ids)
+            or any(not isinstance(item.get("name"), str) or not item["name"].strip() for item in companies)
+            or len({item["name"] for item in companies}) != 13):
+        raise ValueError("Thirteen unique companies must preserve the original ten company IDs")
+    for company in companies:
+        if (not isinstance(company.get("enabled", True), bool) or not isinstance(company.get("aliases", []), list)
+                or any(not isinstance(alias, str) or not alias.strip() for alias in company.get("aliases", []))):
+            raise ValueError("Company aliases and enabled flags must be valid")
+    rules = load_classification_rules(root / "config/classification_rules.json")
+    topic_names = {item["id"]: item["name"] for item in topics}
     if read_json(root / "config/interests.json")["interests"] or read_json(root / "reports/history.json")["reports"]:
         raise ValueError("Executive interests and registered reports must remain empty in this phase")
     settings = read_json(root / "config/pipeline.json")
@@ -58,7 +94,8 @@ def load_live_inputs(root):
         content_filter, _ = source_policy(source)
         if content_filter == "earnings_only" and source.get("scope") != "company":
             raise ValueError("DART earnings sources require a verified company issuer")
-    return {item["id"]: item["name"] for item in topics}, companies, sources, settings
+    sources = [_source_with_classification_context(source, rules, companies, topic_names) for source in sources]
+    return topic_names, companies, sources, settings
 
 
 def normalize_record(record, source, topics, companies, start, now):
@@ -113,7 +150,9 @@ def build_snapshot(db, topics, now):
                      "analysis_status": "pending_ai", "evidence_confidence": "metadata_only",
                      "source_name": item["source_name"], "published_at": item["published_at"],
                      "published_date": item["published_date"], "fetched_at": item["fetched_at"],
-                     "matched_keywords": item["matched_keywords"], "matched_topic_ids": item["matched_topic_ids"]}
+                     "matched_keywords": item["matched_keywords"], "matched_topic_ids": item["matched_topic_ids"],
+                     "tags": item.get("tags", []), "event_stage": item.get("event_stage"),
+                     "classification_rules_version": item.get("classification_rules_version")}
         candidate.update(content_filter=item["content_filter"], content_policy_version=item["content_policy_version"])
         versions = db.execute("SELECT COUNT(*) FROM live_article_versions WHERE article_id=?", (item["article_id"],)).fetchone()[0]
         evidence = {key: item[key] for key in ("title", "published_at", "published_date", "source_updated_at",
@@ -127,13 +166,16 @@ def build_snapshot(db, topics, now):
     candidates.sort(key=lambda item: (item["published_at"] or item["published_date"] or "", item["fetched_at"], item["issue_id"]), reverse=True)
     iso = datetime.fromisoformat(now).astimezone(timezone(timedelta(hours=9))).isocalendar()
     latest = {"schema_version": "1.0", "generation_id": generation, "generated_at": now,
-              "report_week": f"{iso.year}-W{iso.week:02d}", "is_demo": False, "candidates": candidates}
+              "report_week": f"{iso.year}-W{iso.week:02d}", "is_demo": False,
+              "topics": [{"id": topic_id, "name": name} for topic_id, name in topics.items()],
+              "candidates": candidates}
     history = {"schema_version": "1.0", "generation_id": generation, "is_demo": False, "reports": []}
     return latest, details, history
 
 
 def _public_source(state):
-    return {key: value for key, value in state.items() if key not in {"etag", "last_modified"}}
+    return {key: value for key, value in state.items()
+            if key not in {"etag", "last_modified"} and not key.startswith("_")}
 
 
 def _collect_one(collector, source, previous, topics, companies, now):
@@ -264,6 +306,16 @@ def run_collection(root, collector=None, now=None):
         try:
             old_sources = previous_sources(db)
             policy_changed = apply_policies(db, sources, companies, topics)
+            old_latest_path = root / "site/data/latest.json"
+            old_status_path = root / "site/data/status.json"
+            previous_published = (old_status_path.exists() and read_json(old_status_path).get("published_at") is not None)
+            # An empty earlier snapshot has no article policy rows to change,
+            # but configured topic labels still need to migrate on a failed fetch.
+            if previous_published and old_latest_path.exists():
+                old_latest = read_json(old_latest_path)
+                if (old_latest.get("is_demo") is False and old_latest.get("topics") !=
+                        [{"id": topic_id, "name": name} for topic_id, name in topics.items()]):
+                    policy_changed = True
             run_id = db.execute("INSERT INTO live_collection_runs(started_at,finished_at,status) VALUES(?,?,'running')", (stamp, stamp)).lastrowid
             source_states = []
             for source in sources:
@@ -283,9 +335,6 @@ def run_collection(root, collector=None, now=None):
             db.execute("UPDATE live_collection_runs SET policy_filtered=? WHERE run_id=?", (int(policy_filtered), run_id))
             db.commit()
             retained = False
-            old_latest_path = root / "site/data/latest.json"
-            old_status_path = root / "site/data/status.json"
-            previous_published = (old_status_path.exists() and read_json(old_status_path).get("published_at") is not None)
             if not succeeded and not policy_filtered and previous_published and old_latest_path.exists() and read_json(old_latest_path).get("is_demo") is False:
                 # Verify the prior published snapshot against unchanged live article state.
                 latest, details, history = _read_snapshot(root)

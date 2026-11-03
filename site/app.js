@@ -3,10 +3,10 @@
 (() => {
   const topicNames = {
     performance: "실적·자본·주주정책",
-    digital: "디지털·AI·신사업",
+    digital: "신사업·상품·고객전략",
     expansion: "제휴·인수·해외사업",
     strategy: "조직·경영전략",
-    risk: "규제·위험·운영"
+    risk: "정책·인허가·리스크"
   };
   const $ = id => document.getElementById(id);
   const state = { latest: null, status: null, topic: "", selected: null, detail: null, request: 0, loadRequest: 0 };
@@ -17,6 +17,34 @@
     if (className) node.className = className;
     if (text !== undefined && text !== null) node.textContent = String(text);
     return node;
+  }
+
+  function topicName(id) {
+    if (!Object.hasOwn(topicNames, id)) return null;
+    const topics = state.latest?.topics;
+    const configured = Array.isArray(topics) ? topics.find(topic => topic && topic.id === id) : null;
+    const label = configured?.name ?? configured?.label;
+    return typeof label === "string" && label.trim() ? label.trim() : topicNames[id];
+  }
+
+  function recordTags(record) {
+    return [...new Set((Array.isArray(record.tags) ? record.tags : []).filter(tag => typeof tag === "string" && tag.trim()).map(tag => tag.trim()))];
+  }
+
+  function eventStage(record) {
+    return typeof record.event_stage === "string" && record.event_stage.trim() ? record.event_stage.trim() : null;
+  }
+
+  function classificationLabels(record) {
+    const tags = recordTags(record);
+    const stage = eventStage(record);
+    if (!tags.length && !stage) return null;
+    const labels = el("div", "classification-labels");
+    labels.setAttribute("aria-label", "제목 기준 태그와 단계");
+    labels.append(el("span", "classification-caption", "제목 기준"));
+    tags.forEach(tag => labels.append(el("span", "classification-tag", tag)));
+    if (stage) labels.append(el("span", "event-stage", `단계: ${stage}`));
+    return labels;
   }
 
   function formatDate(value, includeTime = false) {
@@ -78,7 +106,7 @@
       "page-heading": demo ? "이번 주, 살펴볼 변화" : "이번 주, 수집된 자료",
       "page-intro": demo ? "경쟁사의 움직임을 모으고, 보고할 이유를 확인합니다." : "공개 출처의 자료를 모아 원문과 수집 상태를 확인합니다.",
       "notice-title": demo ? "가상 데이터 · 실제 기사/AI 분석 아님" : "공개 자료 수집 · AI 분석 미연결",
-      "notice-description": demo ? "수집부터 화면까지의 연결을 확인하는 1단계 데모입니다. 모든 회사와 사건은 가상입니다." : "제목 기준으로 주제를 분류했습니다. 우선순위·선정 이유·보고 초안은 생성하지 않았으며 원문 확인이 필요합니다.",
+      "notice-description": demo ? "수집부터 화면까지의 연결을 확인하는 1단계 데모입니다. 모든 회사와 사건은 가상입니다." : "제목 기준으로 주제·태그·단계를 분류했습니다. 단계는 확정된 진행 사실이 아니며, 우선순위·보고 초안은 생성하지 않았습니다. 원문을 확인해주세요.",
       "phase-label": demo ? "PHASE 01" : "PHASE 02",
       "issue-count-label": demo ? "검토 후보" : "수집 자료",
       "article-count-label": demo ? "원자료" : "현재 범위 자료",
@@ -104,6 +132,7 @@
   function renderSummary() {
     const { latest, status } = state;
     renderMode();
+    Object.keys(topicNames).forEach(id => { $("topic-label-" + id).textContent = topicName(id); });
     metric("issue-count", latest.candidates.length, "건");
     metric("article-count", status.article_count ?? "—", "건");
     metric("version-count", status.version_count ?? "—", "개");
@@ -122,6 +151,11 @@
     companySelect.replaceChildren(new Option("모든 회사", ""));
     [...new Set(latest.candidates.flatMap(item => Array.isArray(item.companies) && item.companies.length ? item.companies : [item.company]))].filter(company => typeof company === "string" && company).sort((a,b) => a.localeCompare(b,"ko")).forEach(company => companySelect.add(new Option(company, company)));
     if ([...companySelect.options].some(option => option.value === previousCompany)) companySelect.value = previousCompany;
+    const tagSelect = $("tag-filter");
+    const previousTag = tagSelect.value;
+    tagSelect.replaceChildren(new Option("모든 태그", ""));
+    [...new Set(latest.candidates.flatMap(recordTags))].sort((a,b) => a.localeCompare(b,"ko")).forEach(tag => tagSelect.add(new Option(tag, tag)));
+    if ([...tagSelect.options].some(option => option.value === previousTag)) tagSelect.value = previousTag;
     renderSourceStatus();
   }
 
@@ -164,7 +198,8 @@
     if (!state.latest) return [];
     const query = $("search").value.trim().toLocaleLowerCase("ko");
     const company = $("company-filter").value;
-    const result = state.latest.candidates.filter(item => (!state.topic || item.topic_id === state.topic) && (!company || item.company === company || (Array.isArray(item.companies) && item.companies.includes(company))) && (!query || [item.title, item.company, item.topic, item.source_name, ...(Array.isArray(item.companies) ? item.companies : []), ...(state.latest.is_demo ? [item.why_now, ...(item.bullets || [])] : [])].join(" ").toLocaleLowerCase("ko").includes(query)));
+    const tag = $("tag-filter").value;
+    const result = state.latest.candidates.filter(item => (!state.topic || item.topic_id === state.topic) && (!company || item.company === company || (Array.isArray(item.companies) && item.companies.includes(company))) && (!tag || recordTags(item).includes(tag)) && (!query || [item.title, item.company, topicName(item.topic_id), item.source_name, ...recordTags(item), eventStage(item), ...(Array.isArray(item.companies) ? item.companies : []), ...(state.latest.is_demo ? [item.why_now, ...(item.bullets || [])] : [])].join(" ").toLocaleLowerCase("ko").includes(query)));
     const time = item => Date.parse(item.published_at || item.published_date || item.fetched_at || "") || 0;
     return result.sort((a,b) => {
       const titleOrder = a.title.localeCompare(b.title,"ko");
@@ -181,14 +216,14 @@
     const list = $("candidate-list");
     list.replaceChildren();
     $("visible-count").textContent = `${items.length}건`;
-    $("active-topic-label").textContent = topicNames[state.topic] || (demo ? "전체 이슈" : "전체 자료");
+    $("active-topic-label").textContent = topicName(state.topic) || (demo ? "전체 이슈" : "전체 자료");
     document.querySelectorAll(".topic-button").forEach(button => {
       const active = button.dataset.topic === state.topic;
       button.classList.toggle("active", active);
       button.setAttribute("aria-pressed", String(active));
     });
     if (!items.length) {
-      list.append(emptyList("조건에 맞는 자료가 없습니다", "검색어나 주제·회사 필터를 바꿔보세요."));
+      list.append(emptyList("조건에 맞는 자료가 없습니다", "검색어나 주제·회사·태그 필터를 바꿔보세요."));
       state.selected = null;
       state.detail = null;
       state.request++;
@@ -205,11 +240,14 @@
       const top = el("div", "candidate-top");
       top.append(el("span", `priority ${demo && item.priority === "high" ? "high" : ""}`, demo ? (item.priority === "high" ? "우선 검토" : "일반 검토") : "분석 대기"), el("span", "company-name", item.company));
       const bottom = el("div", "candidate-bottom");
-      bottom.append(el("span", "", item.topic || topicNames[item.topic_id]), el("span", "", demo ? "가상 시나리오" : (item.source_name || "공개 출처")));
+      bottom.append(el("span", "", topicName(item.topic_id)), el("span", "", demo ? "가상 시나리오" : (item.source_name || "공개 출처")));
       if (!demo && (item.published_at || item.published_date)) bottom.append(el("span", "", formatDate(item.published_at || item.published_date)));
       const arrow = el("span", "candidate-arrow", "↗");
       arrow.setAttribute("aria-hidden", "true");
-      button.append(top, el("h3", "", item.title), el("p", "candidate-reason", demo ? item.why_now : "제목 기준 주제 분류 · 원문 확인 필요"), bottom, arrow);
+      button.append(top, el("h3", "", item.title), el("p", "candidate-reason", demo ? item.why_now : "제목 기준 분류 · 단계는 원문 확인 필요"));
+      const labels = classificationLabels(item);
+      if (labels) button.append(labels);
+      button.append(bottom, arrow);
       button.addEventListener("click", () => selectIssue(item));
       list.append(button);
     });
@@ -232,7 +270,7 @@
     kicker.append(el("span", "", demo ? "ISSUE BRIEF" : "SOURCE RECORD"), el("span", "", demo ? "가상 데이터" : "AI 분석 미연결"));
     const meta = el("div", "detail-meta");
     meta.append(el("span", "", detail.company), el("span", "", "등록된 보고 이력 없음"));
-    panel.append(kicker, el("div", "detail-topic", detail.topic), el("h3", "detail-title", detail.title), meta);
+    panel.append(kicker, el("div", "detail-topic", topicName(detail.topic_id) || detail.topic), el("h3", "detail-title", detail.title), meta);
     if (demo) {
       const why = detailSection("01", "왜 살펴봐야 하나요");
       why.append(el("p", "reason-box", detail.why_now));
@@ -243,8 +281,13 @@
       draft.append(bullets, el("p", "report-note", "등록된 실제 보고 이력이 없어 기보고 대비 비교는 제공하지 않습니다. 이 초안은 실제 보고 완료를 의미하지 않습니다."));
       panel.append(why, draft);
     } else {
-      const analysis = detailSection("01", "분석 연결 전 수집 자료");
-      analysis.append(el("p", "reason-box", "제목 기준 주제 분류만 적용했습니다. AI 분석은 미연결 상태이며, 중요도와 이번 주 보고할 이유는 판단하지 않았습니다."), el("p", "report-note", "원문 확인이 필요합니다. 요약·보고 초안·기보고 대비 비교는 제공하지 않습니다. 최근 경영진 관심사와 실제 보고 이력은 미등록 상태입니다."));
+      const analysis = detailSection("01", "제목 기준 분류");
+      analysis.querySelector("h4").append(el("span", "draft-label", "원문 확인 필요"));
+      analysis.append(el("p", "reason-box", detail.why_now || "제목의 표현을 기준으로 주제를 분류했습니다. 분류 근거의 상세 내용은 제공되지 않았습니다."));
+      const labels = classificationLabels(detail);
+      if (labels) analysis.append(labels);
+      else analysis.append(el("p", "classification-note", "제목에서 별도 태그나 단계를 분류하지 않았습니다."));
+      analysis.append(el("p", "classification-note", "태그와 단계는 제목에 나타난 표현을 기준으로 합니다. 실제 추진·승인·완료 여부를 확인한 사실이 아닙니다."), el("p", "report-note", "AI 분석 미연결 상태입니다. 중요도·보고할 이유·요약·보고 초안·기보고 대비 비교는 제공하지 않습니다. 최근 경영진 관심사와 실제 보고 이력은 미등록 상태입니다."));
       panel.append(analysis);
     }
     const evidenceSection = detailSection(demo ? "03" : "02", demo ? "확인한 근거" : "출처와 저장 범위");
@@ -409,11 +452,13 @@
   }));
   $("search").addEventListener("input", renderCandidates);
   $("company-filter").addEventListener("change", renderCandidates);
+  $("tag-filter").addEventListener("change", renderCandidates);
   $("sort-order").addEventListener("change", renderCandidates);
   $("reset-filters").addEventListener("click", () => {
     state.topic = "";
     $("search").value = "";
     $("company-filter").value = "";
+    $("tag-filter").value = "";
     $("sort-order").value = state.latest?.is_demo ? "priority" : "recent";
     if (state.latest) renderCandidates();
   });

@@ -350,3 +350,24 @@ h2{font-size:16px}
   .source-status-list{padding:0 14px}
   .source-status-meta,.source-coverage{font-size:9px}
 }
+
+/* Title-based tags describe classification, not confirmed event progress. */
+.classification-labels{display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin-top:11px;min-width:0}
+.classification-caption{font-size:8px;color:var(--text-secondary);margin-right:2px}
+.classification-tag,.event-stage{font-size:9px;line-height:1.6;border-radius:3px;padding:2px 6px;max-width:100%;overflow-wrap:anywhere}
+.classification-tag{background:var(--surface-subtle);color:var(--text-accent);border:1px solid var(--border)}
+.event-stage{color:var(--text-accent);border:1px solid var(--border-strong)}
+.classification-note{font-size:10px;line-height:1.8;color:var(--text-secondary);margin:12px 0 0}
+.candidate.selected .classification-caption{color:var(--text-on-dark)}
+.candidate.selected .classification-tag{background:var(--surface-accent);color:var(--text-accent);border-color:var(--light-blue)}
+.candidate.selected .event-stage{color:var(--text-on-dark);border-color:var(--light-blue)}
+@media(max-width:980px){
+  .toolbar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto}
+  .search-box{grid-column:1/-1}
+  .select-label{min-width:0}
+  .select-label select{width:100%;max-width:none}
+}
+@media(max-width:650px){
+  .toolbar{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .reset-button{justify-self:end;padding-right:0}
+}

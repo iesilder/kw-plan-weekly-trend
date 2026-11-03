@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "status": "active",
-  "description": "기존 10개 경쟁사를 그대로 관찰합니다. 실제 수집 범위는 출처별 상태에서 확인합니다.",
+  "description": "증권사 13곳을 관찰합니다. 관련 금융그룹·당국·시장 인프라·외부 협력사는 분류 규칙의 증권·금융 관련 조건을 적용합니다. 출처 연결 여부는 출처별 상태에서 확인합니다.",
   "companies": [
     {
       "id": "company-1",
@@ -16,7 +16,10 @@
     {
       "id": "company-3",
       "name": "NH투자증권",
-      "enabled": true
+      "enabled": true,
+      "aliases": [
+        "엔에이치투자증권"
+      ]
     },
     {
       "id": "company-4",
@@ -26,7 +29,10 @@
     {
       "id": "company-5",
       "name": "KB증권",
-      "enabled": true
+      "enabled": true,
+      "aliases": [
+        "케이비증권"
+      ]
     },
     {
       "id": "company-6",
@@ -51,6 +57,28 @@
     {
       "id": "company-10",
       "name": "카카오페이증권",
+      "enabled": true
+    },
+    {
+      "id": "company-11",
+      "name": "다올투자증권",
+      "aliases": [
+        "다올증권"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "company-12",
+      "name": "교보증권",
+      "aliases": [],
+      "enabled": true
+    },
+    {
+      "id": "company-13",
+      "name": "한화투자증권",
+      "aliases": [
+        "한화증권"
+      ],
       "enabled": true
     }
   ]

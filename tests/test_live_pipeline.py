@@ -7,9 +7,11 @@ import sqlite3
 import tempfile
 import unittest
 
-from weekly_trend.classification import classify, earnings_form, safe_https_url
-from weekly_trend.live_pipeline import run_collection
+from weekly_trend.classification import classify, classify_for_source, earnings_form, safe_https_url, source_policy
+from weekly_trend.live_pipeline import load_live_inputs, run_collection
+from weekly_trend.live_storage import connect as connect_live, ingest, json_text, timestamp
 from weekly_trend.pipeline import read_json, run_demo, verify, write_json
+from weekly_trend.storage import digest
 
 PROJECT = Path(__file__).resolve().parents[1]
 NOW = datetime(2026, 11, 2, 6, 0, tzinfo=timezone.utc)
@@ -65,6 +67,28 @@ class LivePipelineTests(unittest.TestCase):
         return source(type="dart_html", adapter="dart_html", content_filter="earnings_only",
                       content_policy_version="dart-earnings-v1", **changes)
 
+    def seed_legacy_metadata(self, records):
+        """Model previously accepted metadata without weakening today's filters."""
+        self.run_records([])
+        origin = source()
+        with closing(connect_live(self.root / "data/raw.sqlite3")) as db:
+            payloads = []
+            route = {"company": "미래에셋증권", "company_ids": ["company-1"], "companies": ["미래에셋증권"],
+                     "topic_id": "performance", "topic": "이전 주제", "matched_keywords": ["이전 규칙"],
+                     "matched_topic_ids": ["performance"]}
+            for value in records:
+                payload = {**value, "published_at": timestamp(value.get("published_at")),
+                           "source_updated_at": timestamp(value.get("source_updated_at")),
+                           "published_date": value.get("published_date"), "source_id": origin["id"],
+                           "source_name": origin["name"], "retention_basis": origin["retention_basis"],
+                           "retention_url": origin["retention_url"], **route}
+                payloads.append(payload)
+            ingest(db, payloads, timestamp(NOW.isoformat()))
+            for payload in payloads:
+                db.execute("INSERT INTO live_article_policy VALUES(?,?,?,?,?,?)",
+                           ("article-" + digest(payload["uri"]), 1, "topics", "legacy-news-v0", None, json_text(route)))
+            db.commit()
+
     def test_dart_complete_earnings_form_allowlist_and_non_announcements(self):
         allowed = ["영업(잠정)실적(공정공시)", "연결재무제표기준영업(잠정)실적(공정공시)",
                    "별도재무제표기준영업(잠정)실적(공정공시)", "[기재정정] 영업(잠정)실적(공정공시)",
@@ -90,23 +114,25 @@ class LivePipelineTests(unittest.TestCase):
         self.assertEqual({item["topic_id"] for item in self.latest()["candidates"]}, {"performance"})
         self.assertTrue(verify(self.root)["ok"])
 
-    def test_news_still_uses_five_topics_with_underwriting_and_customer_dividend_exclusions(self):
+    def test_news_uses_five_topics_and_distinguishes_new_business_from_permission(self):
         self.sources([source(scope="general")])
         titles = ["미래에셋증권 영업이익 실적 발표", "삼성증권 AI 서비스 출시", "NH투자증권 해외 제휴 확대",
                   "한국투자증권 임원 인사 조직 개편", "KB증권 내부통제 운영 개선",
-                  "카카오페이증권, 인수업 인가 후 첫 스팩 설립…IB 사업 본격화",
-                  "신한투자증권, 올해 9월까지 배당 수령 고객 143만명…", "신한투자증권 고객 배당 실적 증가",
+                  "카카오페이증권 인수업 인가 후 신규 IB 플랫폼 출시",
+                  "신한투자증권 배당 수령 고객 집계 발표", "신한투자증권 고객 배당 실적 증가",
                   "카카오페이증권 인수업 인가 획득"]
         result = self.run_records([record(uri=f"https://news.example.com/news-{i}", title=title) for i, title in enumerate(titles)])
-        self.assertEqual(result["article_count"], 6)
+        self.assertEqual(result["article_count"], 7)
         self.assertEqual({item["topic_id"] for item in self.latest()["candidates"]}, {"performance", "digital", "expansion", "strategy", "risk"})
-        underwriting = next(item for item in self.latest()["candidates"] if "스팩" in item["title"])
+        underwriting = next(item for item in self.latest()["candidates"] if "플랫폼" in item["title"])
         self.assertEqual(underwriting["topic_id"], "digital")
         self.assertNotIn("expansion", underwriting["matched_topic_ids"])
+        permission = next(item for item in self.latest()["candidates"] if "인가 획득" in item["title"])
+        self.assertEqual(permission["topic_id"], "risk")
 
     def test_legacy_articles_are_archived_on_policy_change_even_when_all_sources_fail(self):
         titles = ["영업(잠정)실적(공정공시)", "임원ㆍ주요주주특정증권등소유상황보고서", "계열금융회사의약관에의한금융거래"]
-        self.run_records([record(uri=f"https://news.example.com/old-{i}", title=title) for i, title in enumerate(titles)])
+        self.seed_legacy_metadata([record(uri=f"https://news.example.com/old-{i}", title=title) for i, title in enumerate(titles)])
         versions = self.rows("SELECT * FROM live_article_versions ORDER BY version_id")
         # Simulate the pre-policy schema and old source state, without editing any
         # actual project database or losing the earlier collection history.
@@ -136,7 +162,7 @@ class LivePipelineTests(unittest.TestCase):
 
     def test_policy_change_backfills_30_days_once_without_inventing_source_revisions(self):
         old = record(title="영업(잠정)실적(공정공시)", published_at="2026-10-20T00:00:00Z")
-        self.run_records([old])
+        self.seed_legacy_metadata([old])
         version = self.rows("SELECT version_id FROM live_article_versions")[0][0]
         self.sources([self.dart_source()])
         calls = []
@@ -155,7 +181,7 @@ class LivePipelineTests(unittest.TestCase):
         self.assertTrue(verify(self.root)["ok"])
 
     def test_policy_backfill_survives_failure_truncation_and_unexpected_304(self):
-        self.run_records([record(title="영업(잠정)실적(공정공시)")])
+        self.seed_legacy_metadata([record(title="영업(잠정)실적(공정공시)")])
         self.sources([self.dart_source()])
         starts = []
         responses = [{"status": "failed", "error_code": "timeout"},
@@ -174,7 +200,7 @@ class LivePipelineTests(unittest.TestCase):
         self.assertTrue(verify(self.root)["ok"])
 
     def test_verification_rejects_old_or_manually_reactivated_archived_scope(self):
-        self.run_records([record(title="현금ㆍ현물배당결정")])
+        self.seed_legacy_metadata([record(title="현금ㆍ현물배당결정")])
         self.sources([self.dart_source()])
         with self.assertRaises(ValueError):
             verify(self.root)
@@ -211,11 +237,11 @@ class LivePipelineTests(unittest.TestCase):
         self.assertTrue(verify(self.root)["ok"])
 
     def test_live_never_publishes_body_ai_priority_or_fabricated_dates(self):
-        result = self.run_records([record(title='<b>미래에셋증권</b> AI 서비스<script>alert(1)</script>',
+        result = self.run_records([record(title='<b>미래에셋증권</b> AI 서비스 출시<script>alert(1)</script>',
                          content_text="기사 본문은 보존하면 안 됩니다", content_level="full_text",
                          published_at=None, published_date="2026-11-01")])
         candidate, detail = self.latest()["candidates"][0], self.detail()
-        self.assertEqual(candidate["title"], "미래에셋증권 AI 서비스")
+        self.assertEqual(candidate["title"], "미래에셋증권 AI 서비스 출시")
         self.assertEqual(candidate["priority"], "unranked")
         self.assertEqual(candidate["analysis_status"], "pending_ai")
         self.assertEqual(candidate["bullets"], [])
@@ -294,7 +320,7 @@ class LivePipelineTests(unittest.TestCase):
                       record(uri="https://news.example.com/gift", title="미래에셋증권 경품 이벤트 실시")])
         self.assertEqual(result["article_count"], 1)
         self.assertEqual(result["sources"][0]["outside_scope_count"], 2)
-        self.sources([source()])
+        self.sources([source(scope="general"), self.dart_source(source_id="test-dart")])
         result = self.run_records([record(uri="https://news.example.com/filing", title="분기보고서")])
         self.assertEqual(result["article_count"], 2)
         self.assertEqual({item["company"] for item in self.latest()["candidates"]}, {"미래에셋증권"})
@@ -304,27 +330,26 @@ class LivePipelineTests(unittest.TestCase):
         self.assertEqual(self.latest()["candidates"][0]["company"], "미래에셋증권")
         self.assertEqual(self.latest()["candidates"][0]["company_ids"], ["company-1"])
 
-    def test_dart_product_forms_are_excluded_but_relevant_filings_route(self):
+    def test_dart_product_forms_and_non_earnings_filings_stay_outside_scope(self):
         topics = {item["id"]: item["name"] for item in read_json(self.root / "config/topics.json")["topics"]}
         companies = read_json(self.root / "config/companies.json")["companies"]
         for name in ("증권발행실적보고서", "투자설명서", "일괄신고추가서류", "파생결합증권 투자 실적", "파생결합사채 발행실적"):
             self.assertIsNone(classify("미래에셋증권 " + name, companies, topics), name)
-        for title, topic in (("영업(잠정)실적(공정공시)", "performance"), ("주요사항보고서(자기주식취득결정)", "performance"),
-                             ("특수관계인으로부터주식의취득", "expansion"), ("계열금융회사의약관에의한금융거래", "risk")):
-            self.assertEqual(classify("미래에셋증권 " + title, companies, topics)["topic_id"], topic)
+        self.assertEqual(classify_for_source("영업(잠정)실적(공정공시)", self.dart_source(), companies, topics)["topic_id"], "performance")
+        for title in ("주요사항보고서(자기주식취득결정)", "특수관계인으로부터주식의취득", "계열금융회사의약관에의한금융거래"):
+            self.assertIsNone(classify_for_source(title, self.dart_source(), companies, topics))
 
-    def test_known_ownership_forms_are_not_executive_appointment_strategy(self):
+    def test_known_ownership_forms_are_excluded_from_news_and_not_strategy(self):
         topics = {item["id"]: item["name"] for item in read_json(self.root / "config/topics.json")["topics"]}
         companies = read_json(self.root / "config/companies.json")["companies"]
         for title in ("임원ㆍ주요주주특정증권등소유상황보고서", "[기재정정]임원·주요주주 특정증권등 소유상황보고서",
                       "주식등의대량보유상황보고서(일반)"):
             route = classify("미래에셋증권 " + title, companies, topics)
-            self.assertEqual(route["topic_id"], "performance", title)
-            self.assertTrue(set(route["matched_keywords"]) <= {"주요주주", "소유상황", "대량보유"})
+            self.assertIsNone(route, title)
         self.assertEqual(classify("미래에셋증권 임원 인사 및 조직 개편", companies, topics)["topic_id"], "strategy")
-        self.run_records([record(title="임원ㆍ주요주주특정증권등소유상황보고서")])
-        self.assertEqual(self.latest()["candidates"][0]["topic_id"], "performance")
-        self.assertEqual(self.latest()["candidates"][0]["analysis_status"], "pending_ai")
+        result = self.run_records([record(title="임원ㆍ주요주주특정증권등소유상황보고서")])
+        self.assertEqual(self.latest()["candidates"], [])
+        self.assertEqual(result["analysis_mode"], "pending_ai")
 
     def test_initial_window_overlap_unknown_date_and_feed_coverage_are_explicit(self):
         calls = []
@@ -429,6 +454,144 @@ class LivePipelineTests(unittest.TestCase):
     def test_report_week_uses_korean_monday_boundary(self):
         self.run_records([record()], NOW - timedelta(hours=14))
         self.assertEqual(self.latest()["report_week"], "2026-W45")
+
+    def test_news_scope_includes_added_companies_related_group_and_industry_changes(self):
+        self.sources([source(scope="competitors_and_industry", content_policy_version="news-events-v2")])
+        titles = ["다올투자증권 AI 업무 플랫폼 도입", "교보증권 해외 자회사 설립 추진",
+                  "한화투자증권 자본 확충 결정", "금융위 증권사 내부통제 가이드라인 개정 추진",
+                  "KB금융 증권사업 경영전략 재편 추진"]
+        articles = [record(uri=f"https://news.example.com/synthetic-{index}", title=title)
+                    for index, title in enumerate(titles)]
+        first = self.run_records(articles)
+        repeated = self.run_records(articles, NOW + timedelta(hours=1))
+        self.assertEqual((first["article_count"], repeated["article_count"]), (5, 5))
+        self.assertEqual(repeated["inserted_versions"], 0)
+        self.assertEqual(repeated["duplicate_count"], 5)
+        candidates = {item["title"]: item for item in self.latest()["candidates"]}
+        for index, company_id in enumerate(("company-11", "company-12", "company-13")):
+            self.assertEqual(candidates[titles[index]]["company_ids"], [company_id])
+        self.assertEqual(candidates[titles[3]]["company_ids"], [])
+        self.assertEqual(candidates[titles[4]]["company_ids"], [])
+        self.assertIn("AI", candidates[titles[0]]["tags"])
+        for candidate in candidates.values():
+            self.assertIsInstance(candidate["event_stage"], str)
+            self.assertIsInstance(candidate["tags"], list)
+            self.assertEqual(candidate["analysis_status"], "pending_ai")
+            self.assertEqual(candidate["priority"], "unranked")
+            detail = read_json(self.root / "site" / candidate["detail_path"])
+            self.assertEqual(detail["tags"], candidate["tags"])
+            self.assertEqual(detail["event_stage"], candidate["event_stage"])
+            self.assertEqual(detail["classification_rules_version"], "news-events-v2")
+            self.assertEqual(detail["evidence"][0]["content_text"], "")
+        self.assertEqual(self.latest()["topics"], [{"id": item["id"], "name": item["name"]}
+                         for item in read_json(self.root / "config/topics.json")["topics"]])
+        self.assertFalse(repeated["ai_enabled"])
+        self.assertEqual((repeated["report_count"], repeated["interests_count"]), (0, 0))
+        self.assertTrue(verify(self.root)["ok"])
+
+    def test_rules_edit_reclassifies_on_failure_and_backfills_without_metadata_revision(self):
+        self.sources([source(scope="competitors_and_industry", content_policy_version="news-events-v2")])
+        article = record(title="미래에셋증권 합성전환 AI 업무 플랫폼 도입", published_at="2026-10-20T00:00:00Z")
+        first = self.run_records([article])
+        versions = self.rows("SELECT * FROM live_article_versions ORDER BY version_id")
+        rules_path = self.root / "config/classification_rules.json"
+        rules = read_json(rules_path)
+        rules["tag_keywords"]["합성분류태그"] = ["합성전환"]
+        write_json(rules_path, rules)  # No manual version bump: fingerprint must notice.
+        topics_path = self.root / "config/topics.json"
+        topics = read_json(topics_path)
+        next(item for item in topics["topics"] if item["id"] == "digital")["name"] = "테스트 디지털 주제"
+        write_json(topics_path, topics)
+        calls = []
+        def failed(src, **kwargs):
+            calls.append((src, kwargs.get("previous_state")))
+            return {"status": "failed", "error_code": "timeout"}
+        changed = run_collection(self.root, collector=failed, now=NOW + timedelta(days=1))
+        self.assertEqual(changed["publication_status"], "filtered")
+        self.assertFalse(changed["collection_ok"])
+        self.assertNotEqual(first["sources"][0]["content_policy_version"], changed["sources"][0]["content_policy_version"])
+        self.assertTrue(changed["sources"][0]["policy_backfill_pending"])
+        self.assertEqual(datetime.fromisoformat(calls[0][0]["collection_start"]), NOW + timedelta(days=1) - timedelta(days=30))
+        self.assertIsNone(calls[0][1]["etag"])
+        self.assertIn("합성분류태그", self.latest()["candidates"][0]["tags"])
+        self.assertEqual(self.latest()["candidates"][0]["topic"], "테스트 디지털 주제")
+        self.assertEqual(versions, self.rows("SELECT * FROM live_article_versions ORDER BY version_id"))
+        self.assertNotIn("_classification_rules", json.dumps(changed))
+        self.assertTrue(verify(self.root)["ok"])
+        repeated_failure = run_collection(self.root, collector=failed, now=NOW + timedelta(days=2))
+        self.assertEqual(repeated_failure["publication_status"], "retained")
+        self.assertEqual(calls[0][0]["collection_start"], calls[1][0]["collection_start"])
+        resumed = self.run_records([article], NOW + timedelta(days=3))
+        self.assertEqual(resumed["inserted_versions"], 0)
+        self.assertEqual(resumed["duplicate_count"], 1)
+        self.assertFalse(resumed["sources"][0]["policy_backfill_pending"])
+        self.assertEqual(versions, self.rows("SELECT * FROM live_article_versions ORDER BY version_id"))
+        self.assertTrue(verify(self.root)["ok"])
+
+    def test_policy_fingerprint_covers_rules_company_alias_activity_scope_and_labels(self):
+        self.sources([source("news", scope="competitors_and_industry", content_policy_version="news-events-v2"),
+                      self.dart_source(source_id="dart")])
+        def versions():
+            return {item["id"]: source_policy(item)[1] for item in load_live_inputs(self.root)[2]}
+        original = versions()
+        self.assertEqual(original, versions())
+        rules_path = self.root / "config/classification_rules.json"
+        rules = read_json(rules_path)
+        rules["tag_keywords"]["합성태그"] = ["합성키워드"]
+        write_json(rules_path, rules)
+        altered = versions()
+        self.assertNotEqual(original["news"], altered["news"])
+        self.assertEqual(original["dart"], altered["dart"])
+        company_path = self.root / "config/companies.json"
+        companies = read_json(company_path)
+        newcomer = next(item for item in companies["companies"] if item["id"] == "company-13")
+        newcomer.setdefault("aliases", []).append("합성증권별칭")
+        write_json(company_path, companies)
+        with_alias = versions()
+        self.assertNotEqual(altered["news"], with_alias["news"])
+        self.assertEqual(altered["dart"], with_alias["dart"])
+        newcomer["enabled"] = False
+        write_json(company_path, companies)
+        inactive = versions()
+        self.assertNotEqual(with_alias["news"], inactive["news"])
+        self.assertEqual(with_alias["dart"], inactive["dart"])
+        sources = read_json(self.root / "config/sources.json")
+        sources["sources"][0]["scope"] = "general"
+        write_json(self.root / "config/sources.json", sources)
+        scoped = versions()
+        self.assertNotEqual(inactive["news"], scoped["news"])
+        topics_path = self.root / "config/topics.json"
+        topics = read_json(topics_path)
+        next(item for item in topics["topics"] if item["id"] == "performance")["name"] = "합성 실적 주제"
+        write_json(topics_path, topics)
+        renamed = versions()
+        self.assertNotEqual(scoped["news"], renamed["news"])
+        self.assertNotEqual(scoped["dart"], renamed["dart"])
+
+    def test_company_ids_remain_unique_and_original_ten_cannot_be_removed(self):
+        self.run_records([record()])
+        before = (self.root / "data/raw.sqlite3").read_bytes()
+        path = self.root / "config/companies.json"
+        original = read_json(path)
+        for replacement in ("company-2", "company-999"):
+            config = json.loads(json.dumps(original))
+            config["companies"][0]["id"] = replacement
+            write_json(path, config)
+            with self.assertRaises(ValueError):
+                self.run_records([record()])
+            self.assertEqual(before, (self.root / "data/raw.sqlite3").read_bytes())
+
+    def test_empty_published_snapshot_updates_topic_labels_on_failed_collection(self):
+        self.run_records([])
+        path = self.root / "config/topics.json"
+        topics = read_json(path)
+        topics["topics"][0]["name"] = "변경된 합성 주제"
+        write_json(path, topics)
+        result = run_collection(self.root, collector=lambda *args, **kw: {"status": "failed", "error_code": "timeout"}, now=NOW + timedelta(days=1))
+        self.assertEqual(result["publication_status"], "filtered")
+        self.assertEqual(self.latest()["topics"][0]["name"], "변경된 합성 주제")
+        self.assertEqual(self.latest()["candidates"], [])
+        self.assertTrue(verify(self.root)["ok"])
         self.assertTrue(verify(self.root)["ok"])
 
     def test_verifier_rejects_missing_state_modified_metadata_and_false_success(self):

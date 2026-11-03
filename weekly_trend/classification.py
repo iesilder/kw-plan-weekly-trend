@@ -2,19 +2,73 @@
 
 import html
 import ipaddress
+import json
+from pathlib import Path
 import re
 from html.parser import HTMLParser
 from urllib.parse import urlsplit
 
-TOPIC_KEYWORDS = {
-    "performance": ("실적", "순이익", "영업이익", "매출", "배당", "자사주", "자기주식", "주식소각", "주주환원", "주주정책", "증자", "감자", "자본", "기업가치", "밸류업", "사업보고서", "분기보고서", "반기보고서"),
-    "digital": ("인공지능", "디지털", "신사업", "생성형", "핀테크", "토큰증권", "블록체인", "로보어드바이저", "마이데이터", "ai", "sto"),
-    "expansion": ("제휴", "인수", "합병", "해외", "협약", "파트너십", "글로벌", "현지법인", "주식의취득", "출자증권취득", "m&a"),
-    "strategy": ("조직", "경영전략", "전략", "대표이사", "최고경영자", "사장", "임원", "인사", "사업재편", "경영계획", "ceo"),
-    "risk": ("규제", "위험", "리스크", "운영", "제재", "과징금", "징계", "내부통제", "불완전판매", "전산장애", "접속장애", "시스템장애", "보안", "정보유출", "해킹", "검사", "사고", "소송", "준법", "금융사고", "계열금융회사의약관에의한금융거래"),
-}
-EXCLUDED_PRODUCT_FORMS = ("투자설명서", "일괄신고추가서류", "증권발행실적보고서", "파생결합증권", "파생결합사채")
-OWNERSHIP_FORMS = ("임원주요주주특정증권등소유상황보고서", "주식등의대량보유상황보고서")
+TOPIC_IDS = {"performance", "digital", "expansion", "strategy", "risk"}
+RULES_PATH = Path(__file__).resolve().parents[1] / "config" / "classification_rules.json"
+
+
+def validate_classification_rules(rules):
+    """Validate the editable lists; no expression language or executable rules."""
+    if not isinstance(rules, dict) or rules.get("schema_version") != "1.0":
+        raise ValueError("Unsupported classification rule schema")
+    if not isinstance(rules.get("version"), str) or not re.fullmatch(r"[a-zA-Z0-9_-]{1,100}", rules["version"]):
+        raise ValueError("Invalid classification rule version")
+    if set(rules.get("topic_keywords", {})) != TOPIC_IDS:
+        raise ValueError("Classification rules must retain exactly the five topic IDs")
+    def words(values):
+        if not isinstance(values, list) or any(not isinstance(item, str) or not item.strip() or len(item) > 200 for item in values):
+            raise ValueError("Classification keywords must be lists of short, nonempty strings")
+    for section in ("topic_keywords", "tag_keywords", "signals", "exclusions"):
+        if not isinstance(rules.get(section), dict):
+            raise ValueError("Missing classification rule section: " + section)
+        for name, values in rules[section].items():
+            if not isinstance(name, str) or not name:
+                raise ValueError("Rule labels must be nonempty strings")
+            words(values)
+    stages = rules.get("event_stages")
+    if not isinstance(stages, list) or not stages:
+        raise ValueError("Event stages are required")
+    for stage in stages:
+        if not isinstance(stage, dict) or not isinstance(stage.get("name"), str) or not stage["name"]:
+            raise ValueError("Invalid event stage")
+        words(stage.get("keywords"))
+    scope = rules.get("subject_scope")
+    if not isinstance(scope, dict):
+        raise ValueError("Subject scope is required")
+    for key in ("related_groups", "authorities", "market_infrastructure"):
+        if not isinstance(scope.get(key), list):
+            raise ValueError("Missing subject list: " + key)
+        for subject in scope[key]:
+            if not isinstance(subject, dict) or not isinstance(subject.get("name"), str) or not subject["name"]:
+                raise ValueError("Invalid subject entry")
+            words(subject.get("aliases"))
+    for key in ("group_context_terms", "sector_terms", "external_contact_terms", "external_action_terms"):
+        words(scope.get(key))
+    for key in ("foreign_authority_terms", "domestic_securities_terms"):
+        if key in scope:
+            words(scope[key])
+    required_signals = {"permission_terms", "permission_completion_terms", "interim_bodies", "interim_decisions",
+                        "policy_terms", "organization_terms", "organization_change_terms", "partnership_terms",
+                        "new_service_terms", "new_service_actions", "performance_actions", "risk_events",
+                        "historical_transition_terms"}
+    required_exclusions = {"filing_forms", "promotion_terms", "stock_commentary_terms", "forecast_terms",
+                           "individual_product_terms", "individual_product_actions", "strategic_product_terms"}
+    if not required_signals <= rules["signals"].keys() or not required_exclusions <= rules["exclusions"].keys():
+        raise ValueError("Required signal or exclusion lists are missing")
+    return rules
+
+
+def load_classification_rules(path=None):
+    # Read on every explicit load so editing the same path never reuses stale rules.
+    with Path(path or RULES_PATH).open(encoding="utf-8") as handle:
+        return validate_classification_rules(json.load(handle))
+
+
 DART_POLICY_VERSION = "dart-earnings-v1"
 
 
@@ -33,7 +87,10 @@ def source_policy(source):
         version = source.get("content_policy_version", "news-topics-v1")
     if not isinstance(version, str) or not re.fullmatch(r"[a-zA-Z0-9_-]{1,100}", version):
         raise ValueError("Invalid content policy version")
-    return content_filter, version
+    effective = source.get("_effective_content_policy_version", version)
+    if not isinstance(effective, str) or not re.fullmatch(r"[a-zA-Z0-9_-]{1,100}", effective):
+        raise ValueError("Invalid effective content policy version")
+    return content_filter, effective
 
 
 def earnings_form(title):
@@ -54,7 +111,7 @@ def earnings_form(title):
 
 
 def classify_for_source(title, source, companies, topics):
-    """Apply a source's allowed form policy before the general news topic rules."""
+    """Keep DART's form gate independent of the news event rules."""
     content_filter, _ = source_policy(source)
     if content_filter == "earnings_only":
         form = earnings_form(title)
@@ -65,15 +122,17 @@ def classify_for_source(title, source, companies, topics):
             return None
         return {"company": company["name"], "company_ids": [company["id"]], "companies": [company["name"]],
                 "topic_id": "performance", "topic": topics["performance"],
-                "matched_keywords": [form], "matched_topic_ids": ["performance"]}
+                "matched_keywords": [form], "matched_topic_ids": ["performance"],
+                "tags": ["실적"], "event_stage": "실적 공시", "classification_rules_version": DART_POLICY_VERSION}
+    rules = source.get("_classification_rules")
     if source.get("scope") == "company":
-        company = next(item for item in companies if item["id"] == source["company_id"])
-        return classify(company["name"] + " " + title, [company], topics)
-    route = classify(title, companies, topics)
-    if route is None and source.get("scope") == "industry" and any(word in title for word in ("증권", "금융투자", "자본시장", "증선위", "금융회사")):
-        route = classify("증권업권공통 " + title, [{"id": "industry", "name": "증권업권공통"}], topics)
-        if route:
-            route.update(company="증권업권 공통", company_ids=[], companies=[])
+        company = next((item for item in companies if item["id"] == source.get("company_id") and item.get("enabled", True)), None)
+        if company is None:
+            return None
+        return classify(company["name"] + " " + title, [company], topics, rules=rules)
+    route = classify(title, companies, topics, rules=rules)
+    if route and source.get("scope") == "competitors" and route["subject_scope"] != "securities_company":
+        return None
     return route
 
 
@@ -137,49 +196,160 @@ def safe_https_url(value, allowed_domains=None):
 
 def _matches(title, keyword):
     if keyword.isascii():
-        return re.search(r"(?<![a-z0-9])" + re.escape(keyword) + r"(?![a-z0-9])", title.casefold()) is not None
-    return keyword.casefold() in title.casefold()
+        return re.search(r"(?<![a-z0-9])" + re.escape(keyword.casefold()) + r"(?![a-z0-9])", title.casefold()) is not None
+    return re.sub(r"\s+", "", keyword).casefold() in re.sub(r"\s+", "", title).casefold()
 
 
-def classify(title, companies, topics):
-    """Return routing hints only when a configured company and topic occur in title."""
-    if any(form in title.replace(" ", "") for form in EXCLUDED_PRODUCT_FORMS):
+def _hits(title, words):
+    return [word for word in words if _matches(title, word)]
+
+
+def _any(title, words):
+    return any(_matches(title, word) for word in words)
+
+
+def _subjects(title, companies, rules):
+    matched = [company for company in companies if company.get("enabled", True) and
+               _any(title, [company["name"], *company.get("aliases", [])])]
+    if matched:
+        return {"company": " · ".join(item["name"] for item in matched),
+                "company_ids": [item["id"] for item in matched],
+                "companies": [item["name"] for item in matched], "subject_scope": "securities_company"}
+    scope = rules["subject_scope"]
+    if (_any(title, scope.get("foreign_authority_terms", [])) and
+            not _any(title, scope.get("domestic_securities_terms", []))):
         return None
-    matches = [company for company in companies if company.get("enabled", True) and
-               any(_matches(title.replace(" ", ""), name.replace(" ", "")) for name in
-                   [company["name"], *company.get("aliases", [])])]
-    if not matches:
+    for field, context, kind in (("related_groups", "group_context_terms", "financial_group"),
+                                 ("authorities", "sector_terms", "authority"),
+                                 ("market_infrastructure", "sector_terms", "market_infrastructure")):
+        matched = [item for item in scope[field] if _any(title, [item["name"], *item["aliases"]])]
+        if matched and _any(title, scope[context]):
+            names = [item["name"] for item in matched]
+            return {"company": " · ".join(names), "company_ids": [], "companies": names, "subject_scope": kind}
+    if _any(title, scope["external_contact_terms"]) and _any(title, scope["external_action_terms"]):
+        return {"company": "증권업권 관련", "company_ids": [], "companies": [], "subject_scope": "sector_contact"}
+    return None
+
+
+def _current_action(title, rules):
+    # Explicit 'after approval' wording makes the following action current. Tags
+    # still use the whole title, but historical licensing must not override launch.
+    endings = [match.end() for term in rules["signals"]["historical_transition_terms"]
+               for match in re.finditer(r"\s*".join(re.escape(char) for char in term), title, re.IGNORECASE)]
+    return title[max(endings):] if endings else title
+
+
+def _excluded(title, rules):
+    exclusions = rules["exclusions"]
+    form = re.sub(r"[^가-힣a-zA-Z0-9]", "", title)
+    if any(re.sub(r"[^가-힣a-zA-Z0-9]", "", term) in form for term in exclusions["filing_forms"]):
+        return True
+    if _any(title, exclusions["promotion_terms"] + exclusions["stock_commentary_terms"]):
+        return True
+    service_change = (_any(title, rules["signals"]["new_service_terms"]) and
+                      _any(title, rules["signals"]["new_service_actions"]))
+    if _any(title, exclusions["forecast_terms"]) and not service_change:
+        return True
+    if (_any(title, exclusions.get("research_terms", [])) and
+            _any(title, exclusions.get("third_party_terms", [])) and not service_change):
+        return True
+    return (_any(title, exclusions["individual_product_terms"]) and
+            _any(title, exclusions["individual_product_actions"]) and
+            not _any(title, exclusions["strategic_product_terms"]))
+
+
+def _event_stage(title, rules, primary=None):
+    signals = rules["signals"]
+    permission = _any(title, signals["permission_terms"])
+    if permission and _any(title, signals.get("permission_noncompletion_terms", [])):
+        return "미승인"
+    tentative = any(_any(title, stage["keywords"]) for stage in rules["event_stages"]
+                    if stage["name"] in {"검토", "계획·추진"})
+    if permission and _any(title, signals.get("permission_rejection_terms", [])) and not tentative:
+        return "불허·반려"
+    # Tentative and denied actions must never turn into completed announcements.
+    early = {"부인", "중단·철회", "검토", "계획·추진", "신청"}
+    for stage in rules["event_stages"]:
+        if stage["name"] in early and _any(title, stage["keywords"]):
+            return stage["name"]
+    if permission and _any(title, signals.get("permission_uncertain_terms", [])):
         return None
-    compact_title = re.sub(r"\s+", "", title)
-    customer_dividend = re.search(r"(?:배당.{0,20}(?:고객|가입자|투자자)|(?:고객|가입자|투자자).{0,20}배당)", compact_title) is not None
-    def relevant_keyword(word):
-        if customer_dividend and word in {"배당", "실적"}:
-            return False
-        if word == "인수":
-            # Underwriting authorization is not a corporate acquisition.
-            return _matches(title.replace("인수업", ""), word)
-        return _matches(title, word)
-    topic_hits = {topic: [word for word in words if relevant_keyword(word)]
-                  for topic, words in TOPIC_KEYWORDS.items() if topic in topics}
-    topic_hits = {topic: words for topic, words in topic_hits.items() if words}
-    ib_business = any(word in compact_title.casefold() for word in ("ib사업", "투자은행사업"))
-    new_ib_business = ib_business and (any(word in compact_title for word in ("신규", "본격화", "진출")) or
-                                      ("첫" in compact_title and "설립" in compact_title))
-    if new_ib_business:
-        business_word = "IB사업" if "ib사업" in compact_title.casefold() else "투자은행사업"
-        topic_hits["digital"] = [business_word, *[word for word in ("신규", "본격화", "진출", "첫", "설립") if word in compact_title]]
-    compact_title = re.sub(r"[^가-힣a-zA-Z0-9]", "", title)
-    ownership_form = any(form in compact_title for form in OWNERSHIP_FORMS)
-    if ownership_form:
-        # These statutory labels describe holdings, not an executive appointment.
-        # Only the visible form name is used; no disclosure body is interpreted.
-        topic_hits["performance"] = [word for word in ("주요주주", "소유상황", "대량보유") if word in compact_title]
-    if not topic_hits:
+    if permission and _any(title, signals.get("permission_rejection_terms", [])):
+        return "불허·반려"
+    if permission and _any(title, ["보류", "유보"]):
+        return "보류"
+    if permission and _any(title, signals.get("permission_discussion_terms", [])):
+        return "쟁점·논의"
+    if permission and _any(title, signals["interim_bodies"]) and _any(title, signals["interim_decisions"]):
+        return "심사 통과"
+    if permission and _any(title, ["예비", "인가안", "안건", "심사", "심의", "상정"]):
+        return "심사"
+    if permission and (_any(title, signals["permission_completion_terms"]) or
+                       re.search(r"(?:인가|허가|승인|등록)(?:\s*(?:완료|결정|확정|획득|취득))?\s*$", title)):
+        return "인가·승인"
+    if _any(title, signals.get("inspection_terms", [])):
+        return "점검·조사"
+    if primary == "strategy" and _any(title, signals["organization_terms"]) and _any(title, signals["organization_change_terms"]):
+        return "조직 변경"
+    for stage in rules["event_stages"]:
+        if stage["name"] not in early and _any(title, stage["keywords"]):
+            return stage["name"]
+    # Explicit financial amounts are an outcome even without the word 'announced'.
+    if _any(title, ["영업이익", "순이익", "매출", "매출액"]) and re.search(r"\d[\d,.]*\s*(?:조|억|만)?\s*원", title):
+        return "성과"
+    if _any(title, signals["policy_terms"]) and _any(title, ["방향", "주요내용", "공개"]):
+        return "정책 발표"
+    return None
+
+
+def classify(title, companies, topics, rules=None):
+    """Route only titles with a relevant subject, topic and observable change."""
+    rules = validate_classification_rules(rules) if rules is not None else load_classification_rules()
+    if _excluded(title, rules):
         return None
-    # The tie-break is a stable display routing rule, not an importance judgment.
-    topic_id = "performance" if ownership_form else max(topic_hits, key=lambda topic: len(topic_hits[topic]))
-    return {"company": " · ".join(item["name"] for item in matches),
-            "company_ids": [item["id"] for item in matches],
-            "companies": [item["name"] for item in matches],
-            "topic_id": topic_id, "topic": topics[topic_id],
-            "matched_keywords": topic_hits[topic_id], "matched_topic_ids": list(topic_hits)}
+    subject = _subjects(title, companies, rules)
+    if subject is None:
+        return None
+    action = _current_action(title, rules)
+    # '인수업' is securities underwriting, never an M&A event on its own.
+    matching_action = action.replace("인수업", "증권업무")
+    customer_dividend = re.search(r"(?:배당.{0,20}(?:고객|가입자|투자자)|(?:고객|가입자|투자자).{0,20}배당)",
+                                  re.sub(r"\s+", "", title)) is not None
+    hits = {topic: _hits(matching_action, words) for topic, words in rules["topic_keywords"].items() if topic in topics}
+    if customer_dividend:
+        hits["performance"] = [word for word in hits.get("performance", []) if word not in {"배당", "실적"}]
+    hits = {topic: values for topic, values in hits.items() if values}
+    signals = rules["signals"]
+    if not hits:
+        return None
+    if _any(action, signals["permission_terms"] + signals["policy_terms"] + signals["risk_events"]):
+        primary = "risk"
+    elif _any(action, signals["organization_terms"]) and _any(action, signals["organization_change_terms"]):
+        primary = "strategy"
+    elif subject["subject_scope"] == "financial_group" and _any(action, ["증권", "자회사"]) and _any(action, ["장내매수", "지분확대", "주식매수", "자본", "증자"]):
+        primary = "performance"
+    elif _any(action, signals["partnership_terms"]):
+        primary = "expansion"
+    elif _any(action, signals["new_service_terms"]) and (_any(action, signals["new_service_actions"]) or _any(action, ["누적", "완판", "발행액", "돌파"])):
+        primary = "digital"
+    elif "expansion" in hits and _any(matching_action, ["인수", "합병", "M&A", "해외", "현지법인", "사무소", "지분투자"]):
+        primary = "expansion"
+    else:
+        # Stable display routing only; this is not a ranking of news importance.
+        primary = next((topic for topic in ("performance", "digital", "strategy", "expansion", "risk") if topic in hits), None)
+    if primary not in topics:
+        return None
+    stage = _event_stage(matching_action, rules, primary)
+    if stage is None:
+        return None
+    if primary not in hits:
+        # A named signal may be narrower than its configurable topic keywords.
+        evidence_words = signals["permission_terms"] + signals["policy_terms"] if primary == "risk" else signals["new_service_terms"]
+        hits[primary] = _hits(action, evidence_words)
+    tags = [name for name, words in rules["tag_keywords"].items()
+            if _any(title.replace("인수업", "증권업무"), words)]
+    if customer_dividend:
+        tags = [tag for tag in tags if tag != "주주정책"]
+    return {**subject, "topic_id": primary, "topic": topics[primary],
+            "matched_keywords": hits[primary], "matched_topic_ids": list(hits),
+            "tags": tags, "event_stage": stage, "classification_rules_version": rules["version"]}

@@ -10,6 +10,8 @@
   };
   const $ = id => document.getElementById(id);
   const state = { latest: null, status: null, topic: "", selected: null, detail: null, request: 0, loadRequest: 0 };
+  const Review = window.WeeklyReview;
+  const reviewState = { canonical: null, draft: null, ready: false, problem: "", storageWarning: "", localInvalid: false, duplicates: {}, detailCache: new Map(), weeklyRequest: 0, weeklyRecords: [], weeklyRange: null, memoryMode: null, unsavedStorage: false };
   let toastTimer;
 
   function el(tag, className, text) {
@@ -100,14 +102,14 @@
   function renderMode() {
     const demo = state.latest.is_demo;
     const values = {
-      "mode-badge": demo ? "DEMO" : "PHASE 02",
+      "mode-badge": demo ? "DEMO" : "PHASE 03",
       "nav-caption": demo ? "검토할 이슈" : "수집 주제",
       "all-topic-label": demo ? "전체 이슈" : "전체 자료",
-      "page-heading": demo ? "이번 주, 살펴볼 변화" : "이번 주, 수집된 자료",
-      "page-intro": demo ? "경쟁사의 움직임을 모으고, 보고할 이유를 확인합니다." : "공개 출처의 자료를 모아 원문과 수집 상태를 확인합니다.",
-      "notice-title": demo ? "가상 데이터 · 실제 기사/AI 분석 아님" : "공개 자료 수집 · AI 분석 미연결",
-      "notice-description": demo ? "수집부터 화면까지의 연결을 확인하는 1단계 데모입니다. 모든 회사와 사건은 가상입니다." : "제목 기준으로 주제·태그·단계를 분류했습니다. 단계는 확정된 진행 사실이 아니며, 우선순위·보고 초안은 생성하지 않았습니다. 원문을 확인해주세요.",
-      "phase-label": demo ? "PHASE 01" : "PHASE 02",
+      "page-heading": demo ? "이번 주, 살펴볼 변화" : "이번 주, 보고할 변화",
+      "page-intro": demo ? "경쟁사의 움직임을 모으고, 보고할 이유를 확인합니다." : "수집한 자료를 검토하고 주간 보고 후보를 고릅니다.",
+      "notice-title": demo ? "가상 데이터 · 실제 기사/AI 분석 아님" : "공개 자료 수집 · 담당자 검토",
+      "notice-description": demo ? "수집부터 화면까지의 연결을 확인하는 1단계 데모입니다. 모든 회사와 사건은 가상입니다." : "제목 기준으로 분류한 자료입니다. 원문을 확인한 뒤 채택·보류·제외를 선택하세요. AI 분석과 정기 실행은 연결되어 있지 않습니다.",
+      "phase-label": demo ? "PHASE 01" : "PHASE 03",
       "issue-count-label": demo ? "검토 후보" : "수집 자료",
       "article-count-label": demo ? "원자료" : "현재 범위 자료",
       "version-count-label": demo ? "보존한 자료 버전" : "현재 범위 자료 버전",
@@ -115,8 +117,8 @@
       "list-heading": demo ? "보고 후보" : "수집 자료",
       "review-note": demo ? "최종 보고는 담당자가 결정합니다" : "제목 기준 주제 분류 · 원문 확인 필요",
       "list-kind": demo ? "DEMO SCENARIOS" : "COLLECTED SOURCES",
-      "data-flow": demo ? "가상 시나리오 → 원자료 → 마트 → 화면" : "공개 출처 → 메타데이터 → 화면",
-      "history-explanation": demo ? "데모 초안 생성이나 복사는 실제 보고로 기록되지 않습니다." : "자료 확인이나 복사는 실제 보고로 기록되지 않습니다."
+      "data-flow": demo ? "가상 시나리오 → 원자료 → 마트 → 화면" : "공개 출처 → 자료 검토 → 주간 후보",
+      "history-explanation": demo ? "데모 초안 생성이나 복사는 실제 보고로 기록되지 않습니다." : "채택·보류·제외 및 복사·내보내기는 실제 보고 완료로 기록되지 않습니다."
     };
     Object.entries(values).forEach(([id, value]) => { $(id).textContent = value; });
     $("mode-notice").setAttribute("aria-label", demo ? "데모 안내" : "수집 자료 안내");
@@ -199,7 +201,8 @@
     const query = $("search").value.trim().toLocaleLowerCase("ko");
     const company = $("company-filter").value;
     const tag = $("tag-filter").value;
-    const result = state.latest.candidates.filter(item => (!state.topic || item.topic_id === state.topic) && (!company || item.company === company || (Array.isArray(item.companies) && item.companies.includes(company))) && (!tag || recordTags(item).includes(tag)) && (!query || [item.title, item.company, topicName(item.topic_id), item.source_name, ...recordTags(item), eventStage(item), ...(Array.isArray(item.companies) ? item.companies : []), ...(state.latest.is_demo ? [item.why_now, ...(item.bullets || [])] : [])].join(" ").toLocaleLowerCase("ko").includes(query)));
+    const reviewFilter = $("review-filter").value;
+    const result = state.latest.candidates.filter(item => (!reviewFilter || (reviewFilter === "duplicates" ? (reviewState.duplicates[item.issue_id] || []).length > 0 : reviewStatus(item.issue_id) === reviewFilter)) && (!state.topic || item.topic_id === state.topic) && (!company || item.company === company || (Array.isArray(item.companies) && item.companies.includes(company))) && (!tag || recordTags(item).includes(tag)) && (!query || [item.title, item.company, topicName(item.topic_id), item.source_name, ...recordTags(item), eventStage(item), ...(Array.isArray(item.companies) ? item.companies : []), ...(state.latest.is_demo ? [item.why_now, ...(item.bullets || [])] : [])].join(" ").toLocaleLowerCase("ko").includes(query)));
     const time = item => Date.parse(item.published_at || item.published_date || item.fetched_at || "") || 0;
     return result.sort((a,b) => {
       const titleOrder = a.title.localeCompare(b.title,"ko");
@@ -223,7 +226,7 @@
       button.setAttribute("aria-pressed", String(active));
     });
     if (!items.length) {
-      list.append(emptyList("조건에 맞는 자료가 없습니다", "검색어나 주제·회사·태그 필터를 바꿔보세요."));
+      list.append(emptyList("조건에 맞는 자료가 없습니다", "검색어나 주제·회사·태그·검토 상태 필터를 바꿔보세요."));
       state.selected = null;
       state.detail = null;
       state.request++;
@@ -239,6 +242,12 @@
       button.setAttribute("aria-controls", "detail-panel");
       const top = el("div", "candidate-top");
       top.append(el("span", `priority ${demo && item.priority === "high" ? "high" : ""}`, demo ? (item.priority === "high" ? "우선 검토" : "일반 검토") : "분석 대기"), el("span", "company-name", item.company));
+      if (!demo) {
+        top.firstChild.remove();
+        top.prepend(reviewBadge(item.issue_id));
+        const related = reviewState.duplicates[item.issue_id] || [];
+        if (related.length) top.append(el("span", "duplicate-badge", `중복 후보 ${related.length}`));
+      }
       const bottom = el("div", "candidate-bottom");
       bottom.append(el("span", "", topicName(item.topic_id)), el("span", "", demo ? "가상 시나리오" : (item.source_name || "공개 출처")));
       if (!demo && (item.published_at || item.published_date)) bottom.append(el("span", "", formatDate(item.published_at || item.published_date)));
@@ -271,6 +280,7 @@
     const meta = el("div", "detail-meta");
     meta.append(el("span", "", detail.company), el("span", "", "등록된 보고 이력 없음"));
     panel.append(kicker, el("div", "detail-topic", topicName(detail.topic_id) || detail.topic), el("h3", "detail-title", detail.title), meta);
+    if (!demo) panel.append(reviewControls(detail));
     if (demo) {
       const why = detailSection("01", "왜 살펴봐야 하나요");
       why.append(el("p", "reason-box", detail.why_now));
@@ -341,7 +351,7 @@
     panel.replaceChildren(emptyList("상세 자료를 불러오고 있습니다", "출처와 저장된 자료를 확인합니다."));
     try {
       if (typeof item.detail_path !== "string" || !/^data\/issues\/[A-Za-z0-9_-]+\.json$/.test(item.detail_path)) throw new Error("상세 경로가 올바르지 않습니다.");
-      const detail = await getJSON(item.detail_path);
+      const detail = await getIssueDetail(item);
       if (request !== state.request) return;
       if (detail.is_demo !== state.latest.is_demo || detail.issue_id !== item.issue_id || detail.generation_id !== state.latest.generation_id) throw new Error("목록과 상세의 생성 버전이 다릅니다. 자료를 다시 불러와 주세요.");
       if (!Array.isArray(detail.bullets) || !Array.isArray(detail.evidence)) throw new Error("상세 자료의 형식이 올바르지 않습니다.");
@@ -382,6 +392,310 @@
     }
   }
 
+  function localReviewKey() {
+    return `weekly-trend:iesilder/kw-plan-weekly-trend:review:${state.latest?.is_demo ? "demo" : "live"}:v1`;
+  }
+
+  function reviewStatus(id) {
+    return reviewState.ready ? Review.getStatus(reviewState.canonical, reviewState.draft, id) : "unreviewed";
+  }
+
+  function reviewBadge(id) {
+    const status = reviewStatus(id);
+    return el("span", `review-badge review-${status}`, reviewState.ready ? Review.statusLabels[status] : "선택 확인 중");
+  }
+
+  function draftProblem() {
+    if (!reviewState.ready) return reviewState.problem || "선택 이력을 불러오는 중입니다.";
+    if (reviewState.localInvalid) return "브라우저의 임시선택 형식을 읽지 못했습니다. 백업이 있다면 가져오거나 임시선택을 버린 뒤 다시 선택하세요.";
+    if (Review.hasConflict(reviewState.canonical, reviewState.draft)) return "GitHub의 선택 이력이 다른 버전으로 바뀌었습니다. 임시선택은 보존했습니다. 백업한 뒤 임시선택을 버리고 최신 선택에서 다시 검토하세요.";
+    const active = new Set(state.latest.candidates.map(item => item.issue_id));
+    if (Object.keys(reviewState.draft.changes).some(id => !active.has(id))) return "임시선택에 현재 수집 범위에서 제외된 자료가 있습니다. 백업 후 임시선택을 버리고 현재 자료를 다시 선택하세요.";
+    return "";
+  }
+
+  function saveLocalDraft() {
+    try {
+      if (Object.keys(reviewState.draft.changes).length) localStorage.setItem(localReviewKey(), JSON.stringify(reviewState.draft));
+      else localStorage.removeItem(localReviewKey());
+      reviewState.storageWarning = "";
+      reviewState.unsavedStorage = false;
+    } catch {
+      reviewState.unsavedStorage = true;
+      reviewState.storageWarning = "브라우저 저장소를 사용할 수 없습니다. 새로고침 전에 임시선택 백업이나 GitHub 저장을 완료해주세요.";
+    }
+  }
+
+  function initializeReviews(result) {
+    reviewState.ready = false;
+    reviewState.problem = "";
+    reviewState.storageWarning = "";
+    reviewState.localInvalid = false;
+    reviewState.duplicates = {};
+    try {
+      if (!Review) throw new Error("검토 기능 파일을 불러오지 못했습니다. 새로고침해주세요.");
+      if (state.latest.is_demo) throw new Error("가상 데모 자료는 실제 보고 후보로 저장하지 않습니다.");
+      if (result.error) throw new Error(`GitHub 선택 이력을 불러오지 못했습니다. ${result.error.message}`);
+      reviewState.canonical = Review.validateCanonical(result.value);
+      let local = null;
+      let storageUnavailable = false;
+      try { local = localStorage.getItem(localReviewKey()); }
+      catch { storageUnavailable = true; reviewState.storageWarning = "브라우저 임시 저장소에 접근할 수 없습니다. 선택 후 백업이나 GitHub 저장을 해주세요."; }
+      const memoryOnly = reviewState.unsavedStorage && reviewState.memoryMode === localReviewKey() && reviewState.draft;
+      if (memoryOnly) reviewState.storageWarning = "브라우저에 기록하지 못한 임시선택을 현재 화면에 보존하고 있습니다. 새로고침 전에 백업이나 GitHub 저장을 완료해주세요.";
+      try { reviewState.draft = memoryOnly ? Review.validateDraft(reviewState.draft) : local ? Review.validateDraft(JSON.parse(local)) : storageUnavailable && reviewState.memoryMode === localReviewKey() && reviewState.draft ? Review.validateDraft(reviewState.draft) : Review.createDraft(reviewState.canonical); }
+      catch { reviewState.localInvalid = true; reviewState.draft = Review.createDraft(reviewState.canonical); }
+      reviewState.memoryMode = localReviewKey();
+      const reconciled = Review.reconcileDraft(reviewState.canonical, reviewState.draft);
+      reviewState.draft = reconciled.draft;
+      reviewState.ready = true;
+      reviewState.duplicates = Review.findDuplicateCandidates(state.latest.candidates);
+      if (reconciled.acknowledged && !reviewState.localInvalid) saveLocalDraft();
+      if (!$("week-start").value || !$("week-end").value) setWeekRange(Review.weekRange());
+    } catch (error) { reviewState.problem = error.message; }
+    renderReviewSummary();
+  }
+
+  function renderReviewSummary() {
+    const counters = $("review-counters");
+    counters.replaceChildren();
+    const labels = { unreviewed: "미검토", accepted: "채택", held: "보류", excluded: "제외" };
+    for (const [status, label] of Object.entries(labels)) {
+      const count = reviewState.ready ? state.latest.candidates.filter(item => reviewStatus(item.issue_id) === status).length : "—";
+      const button = el("button", `review-counter review-counter-${status}`);
+      button.type = "button";
+      button.disabled = !reviewState.ready;
+      button.append(el("span", "", label), el("strong", "", count));
+      button.setAttribute("aria-label", `${label} ${count}건 보기`);
+      button.addEventListener("click", () => { $("review-filter").value = status; renderCandidates(); $("list-heading").scrollIntoView({behavior:"smooth", block:"start"}); });
+      counters.append(button);
+    }
+    const count = reviewState.ready ? Object.keys(reviewState.draft.changes).length : 0;
+    const problem = draftProblem();
+    $("review-storage-status").textContent = reviewState.ready ? `GitHub 저장 버전 ${reviewState.canonical.revision} · ${count ? `이 브라우저의 미저장 변경 ${count}건` : "GitHub에 저장된 선택과 일치"}` : (reviewState.problem || "선택 이력을 불러오는 중입니다.");
+    $("review-alert").textContent = [problem, reviewState.storageWarning].filter(Boolean).join(" ");
+    $("review-alert").hidden = !problem && !reviewState.storageWarning;
+    $("review-save").disabled = !reviewState.ready || !!problem || !count;
+    $("review-backup").disabled = !reviewState.ready || reviewState.localInvalid || !count;
+    $("review-import").disabled = !reviewState.ready;
+    $("review-discard").hidden = !reviewState.ready || (!count && !reviewState.localInvalid);
+
+  }
+
+  function reviewControls(detail) {
+    const box = el("section", "review-controls");
+    const title = el("div", "review-controls-title");
+    title.append(el("h4", "", "보고 후보 선택"), reviewBadge(detail.issue_id));
+    box.append(title);
+    const options = el("div", "review-options");
+    options.setAttribute("aria-label", "이 자료의 검토 상태");
+    for (const [status, label] of Object.entries({accepted:"채택",held:"보류",excluded:"제외",unreviewed:"미검토로 되돌리기"})) {
+      const button = el("button", `review-option review-option-${status}`, label);
+      button.type = "button";
+      button.dataset.reviewStatus = status;
+      button.setAttribute("aria-pressed", String(reviewStatus(detail.issue_id) === status));
+      button.disabled = !reviewState.ready || !!draftProblem();
+      button.addEventListener("click", () => changeDecision(detail.issue_id, status));
+      options.append(button);
+    }
+    box.append(options, el("p", "", "선택은 브라우저에 임시 저장됩니다. 다른 기기에서도 보려면 ‘GitHub에 저장’을 완료하세요."));
+    const related = reviewState.duplicates[detail.issue_id] || [];
+    if (related.length) {
+      const duplicateBox = el("div", "duplicate-review");
+      duplicateBox.append(el("h4", "", `같은 사건인지 확인할 자료 ${related.length}건`), el("p", "", "제목이 비슷한 중복 후보입니다. 자동 병합하거나 선택을 함께 변경하지 않습니다."));
+      related.forEach(match => {
+        const item = state.latest.candidates.find(candidate => candidate.issue_id === match.issue_id);
+        if (!item) return;
+        const button = el("button", "duplicate-link", item.title);
+        button.type = "button";
+        button.addEventListener("click", () => openCandidate(item.issue_id));
+        duplicateBox.append(button, el("small", "", match.reason));
+      });
+      box.append(duplicateBox);
+    }
+    return box;
+  }
+
+  function changeDecision(id, status) {
+    if (draftProblem()) { toast(draftProblem()); return; }
+    try {
+      reviewState.draft = Review.setDecision(reviewState.canonical, reviewState.draft, id, status);
+      saveLocalDraft();
+      renderReviewSummary();
+      const detail = state.detail;
+      renderCandidates();
+      if (detail && state.selected === detail.issue_id) renderDetail(detail);
+      renderWeekly();
+      toast(`${Review.statusLabels[status]} 상태로 변경했습니다. ${reviewState.storageWarning ? "브라우저 저장이 불가능해 백업이 필요합니다." : "브라우저 임시선택에 반영했습니다."}`);
+    } catch (error) { toast(error.message); }
+  }
+
+  function openCandidate(id) {
+    const item = state.latest?.candidates.find(candidate => candidate.issue_id === id);
+    if (!item) return;
+    state.topic = "";
+    ["search", "company-filter", "tag-filter", "review-filter"].forEach(key => { $(key).value = ""; });
+    state.selected = id;
+    renderCandidates();
+    selectIssue(item);
+    $("detail-panel").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+
+  async function getIssueDetail(item) {
+    if (typeof item.detail_path !== "string" || !/^data\/issues\/[A-Za-z0-9_-]+\.json$/.test(item.detail_path)) throw new Error("상세 경로가 올바르지 않습니다.");
+    const generation = state.latest.generation_id;
+    const key = `${generation}:${item.issue_id}`;
+    if (reviewState.detailCache.has(key)) return reviewState.detailCache.get(key);
+    const promise = getJSON(item.detail_path).then(detail => {
+      if (detail.issue_id !== item.issue_id || detail.generation_id !== generation || detail.is_demo !== item.is_demo || !Array.isArray(detail.evidence)) throw new Error("목록과 상세의 생성 버전이 다릅니다. 자료를 다시 불러와 주세요.");
+      if (!detail.is_demo && detail.evidence.some(record => record.content_level !== "metadata_only")) throw new Error("공개 저장 범위를 확인할 수 없습니다.");
+      return detail;
+    }).catch(error => { reviewState.detailCache.delete(key); throw error; });
+    reviewState.detailCache.set(key, promise);
+    return promise;
+  }
+
+  function setWeekRange(range) {
+    $("week-start").value = range.start;
+    $("week-end").value = range.end;
+  }
+
+  function selectedRange() {
+    const start = $("week-start").value;
+    const end = $("week-end").value;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(start) || !/^\d{4}-\d{2}-\d{2}$/.test(end) || Review.kstDate(start) !== start || Review.kstDate(end) !== end || start > end) throw new Error("시작일과 종료일을 확인해주세요. 종료일은 시작일보다 빠를 수 없습니다.");
+    return {start,end};
+  }
+
+  async function renderWeekly() {
+    const request = ++reviewState.weeklyRequest;
+    const list = $("weekly-list");
+    $("weekly-copy").disabled = true;
+    $("weekly-csv").disabled = true;
+    reviewState.weeklyRecords = [];
+    reviewState.weeklyRange = null;
+    $("sidebar-accepted").textContent = "—";
+    if (!reviewState.ready) {
+      $("weekly-count").textContent = "—";
+      list.replaceChildren(el("p", "weekly-empty", reviewState.problem || "선택 이력을 불러오는 중입니다."));
+      return;
+    }
+    try {
+      const range = selectedRange();
+      const accepted = state.latest.candidates.filter(item => reviewStatus(item.issue_id) === "accepted");
+      const selected = accepted.filter(item => Review.inDateRange(item, range.start, range.end));
+      const missingDate = accepted.filter(item => !Review.publicationDate(item)).length;
+      $("weekly-count").textContent = `${selected.length}건`;
+      $("weekly-note").textContent = `발행·접수일 ${formatDate(range.start)} ~ ${formatDate(range.end)} · 한국 시간 기준. 검색·필터와 독립된 채택 목록입니다.${missingDate ? ` 발행일 미확인 채택 자료 ${missingDate}건은 기간 목록에서 제외했습니다.` : ""}${draftProblem() ? " 저장 충돌이 있는 임시선택을 포함하므로 먼저 선택 상태를 확인해주세요." : ""}`;
+      if (!selected.length) {
+        $("sidebar-accepted").textContent = "0건 ↗";
+        list.replaceChildren(el("p", "weekly-empty", accepted.length ? "선택한 기간에 채택한 자료가 없습니다. 기간을 바꾸거나 다른 자료를 채택하세요." : "아직 채택한 자료가 없습니다. 위에서 원문을 확인하고 ‘채택’을 눌러보세요."));
+        return;
+      }
+      list.replaceChildren(el("p", "weekly-empty", "채택한 자료의 원문 링크를 확인하고 있습니다…"));
+      const details = await Promise.all(selected.map(getIssueDetail));
+      if (request !== reviewState.weeklyRequest) return;
+      const records = details.map((detail,index) => ({...selected[index], evidence:detail.evidence, topic:topicName(detail.topic_id) || detail.topic}));
+      const missingLinks = records.filter(record => !record.evidence.length || record.evidence.some(evidence => !safeSourceURL(evidence.source_url))).length;
+      list.replaceChildren();
+      for (const id of Object.keys(topicNames)) {
+        const topicRecords = records.filter(record => record.topic_id === id);
+        if (!topicRecords.length) continue;
+        const group = el("section", "weekly-topic");
+        group.append(el("h3", "", `${topicName(id)} · ${topicRecords.length}건`));
+        const companies = [...new Set(topicRecords.map(record => record.company))].sort((a,b) => a.localeCompare(b,"ko"));
+        companies.forEach(company => {
+          const companyGroup = el("div", "weekly-company");
+          companyGroup.append(el("h4", "", company));
+          topicRecords.filter(record => record.company === company).sort((a,b) => (Review.publicationDate(b) || "").localeCompare(Review.publicationDate(a) || "") || a.title.localeCompare(b.title,"ko")).forEach(record => {
+            const row = el("article", "weekly-item");
+            const title = el("button", "weekly-item-title", record.title);
+            title.type = "button";
+            title.addEventListener("click", () => openCandidate(record.issue_id));
+            row.append(title, el("p", "weekly-item-meta", `${formatDate(Review.publicationDate(record))} · ${record.source_name || "출처 미확인"}`));
+            const urls = [...new Set(record.evidence.map(evidence => safeSourceURL(evidence.source_url)).filter(Boolean))];
+            urls.forEach((url,index) => {
+              const link = el("a", "weekly-source-link", `원문${urls.length > 1 ? ` ${index+1}` : ""} ↗`);
+              link.href = url; link.target = "_blank"; link.rel = "noopener noreferrer";
+              row.append(link);
+            });
+            if (!urls.length) row.append(el("span", "source-error", "유효한 원문 링크 없음"));
+            if ((reviewState.duplicates[record.issue_id] || []).some(match => records.some(other => other.issue_id === match.issue_id))) row.append(el("span", "weekly-duplicate-note", "채택 목록에 중복 후보가 있습니다 · 개별 원문 유지"));
+            companyGroup.append(row);
+          });
+          group.append(companyGroup);
+        });
+        list.append(group);
+      }
+      reviewState.weeklyRecords = records;
+      reviewState.weeklyRange = range;
+      $("sidebar-accepted").textContent = `${records.length}건 ↗`;
+      if (missingLinks) $("weekly-note").textContent += ` 원문 링크를 확인할 수 없는 자료 ${missingLinks}건이 있어 복사·내보내기를 중지했습니다. 자료를 다시 불러오거나 해당 자료의 채택을 해제하세요.`;
+      $("weekly-copy").disabled = !!draftProblem() || missingLinks > 0;
+      $("weekly-csv").disabled = !!draftProblem() || missingLinks > 0;
+    } catch(error) {
+      if (request !== reviewState.weeklyRequest) return;
+      $("weekly-count").textContent = "확인 필요";
+      list.replaceChildren(el("p", "weekly-empty", error.message));
+    }
+  }
+
+  async function copyText(text, title, notice) {
+    try {
+      if (!navigator.clipboard || !window.isSecureContext) throw new Error("fallback");
+      await navigator.clipboard.writeText(text);
+      toast(`${title} 내용을 복사했습니다.`);
+    } catch {
+      $("copy-heading").textContent = title;
+      $("copy-text-label").textContent = title;
+      $("copy-disclaimer").textContent = notice;
+      $("copy-text").value = text;
+      $("copy-dialog").showModal();
+      $("copy-text").focus(); $("copy-text").select();
+    }
+  }
+
+  function downloadText(text, filename, type) {
+    const url = URL.createObjectURL(new Blob([text], {type}));
+    const link = document.createElement("a");
+    link.href = url; link.download = filename;
+    document.body.append(link); link.click(); link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  function openSaveDialog() {
+    try {
+      if (draftProblem()) throw new Error(draftProblem());
+      const patch = Review.serializePatch(reviewState.canonical, reviewState.draft);
+      Review.validatePatch(patch, state.latest.candidates.map(item => item.issue_id));
+      $("review-patch").value = JSON.stringify(patch,null,2);
+      $("review-save-dialog").showModal();
+    } catch(error) { toast(error.message); }
+  }
+
+  function importDraft() {
+    try {
+      if (!reviewState.ready) throw new Error("먼저 GitHub 선택 이력을 불러오세요.");
+      const text = $("review-import-text").value;
+      if (text.length > 65536) throw new Error("백업 내용이 너무 큽니다.");
+      const patch = Review.validatePatch(JSON.parse(text), state.latest.candidates.map(item => item.issue_id));
+      const imported = Review.draftFromPatch(patch);
+      const reconciled = Review.reconcileDraft(reviewState.canonical, imported);
+      if (reconciled.conflict) throw new Error("백업의 저장 버전과 현재 GitHub 버전이 다릅니다. 내용을 확인한 뒤 현재 화면에서 다시 선택해주세요.");
+      reviewState.draft = reconciled.draft;
+      reviewState.localInvalid = false;
+      saveLocalDraft();
+      renderReviewSummary(); renderCandidates();
+      if (state.detail) renderDetail(state.detail);
+      renderWeekly();
+      $("review-import-dialog").close();
+      toast("백업을 브라우저 임시선택으로 가져왔습니다. GitHub 저장은 별도입니다.");
+    } catch(error) {
+      $("review-import-error").textContent = error instanceof SyntaxError ? "JSON 형식을 읽을 수 없습니다. 백업 파일 내용을 그대로 붙여넣으세요." : error.message;
+      $("review-import-error").hidden = false;
+    }
+  }
+
   async function loadData() {
     const loadRequest = ++state.loadRequest;
     state.request++;
@@ -389,6 +703,11 @@
     state.detail = null;
     state.latest = null;
     state.status = null;
+    reviewState.ready = false;
+    reviewState.weeklyRequest++;
+    reviewState.detailCache.clear();
+    renderReviewSummary();
+    renderWeekly();
     $("error-banner").hidden = true;
     $("source-status-panel").hidden = true;
     $("candidate-list").setAttribute("aria-busy", "true");
@@ -398,7 +717,7 @@
     $("visible-count").textContent = "불러오는 중";
     $("reload-data").disabled = true;
     try {
-      const [latest, status, history] = await Promise.all([getJSON("data/latest.json"), getJSON("data/status.json"), getJSON("data/report-history.json")]);
+      const [latest, status, history, reviewsResult] = await Promise.all([getJSON("data/latest.json"), getJSON("data/status.json"), getJSON("data/report-history.json"), getJSON("data/reviews.json").then(value => ({value})).catch(error => ({error}))]);
       if (loadRequest !== state.loadRequest) return;
       if (typeof latest.is_demo !== "boolean" || status.is_demo !== latest.is_demo || history.is_demo !== latest.is_demo) throw new Error("목록·상태·보고 이력의 자료 모드가 일치하지 않습니다.");
       if (!Array.isArray(latest.candidates) || !latest.generation_id || !Array.isArray(history.reports)) throw new Error("마트의 필수 항목이 없거나 형식이 올바르지 않습니다.");
@@ -411,8 +730,10 @@
       state.detail = null;
       state.latest = latest;
       state.status = status;
+      initializeReviews(reviewsResult);
       renderSummary();
       renderCandidates();
+      renderWeekly();
       if (!latest.candidates.length) {
         if (latest.is_demo) {
           $("candidate-list").replaceChildren(emptyList("데모 후보가 생성되지 않았습니다", "GitHub Actions의 실행 결과를 확인해주세요."));
@@ -428,6 +749,9 @@
       if (loadRequest !== state.loadRequest) return;
       state.latest = null;
       state.status = null;
+      reviewState.ready = false;
+      reviewState.problem = "자료 갱신에 실패했습니다. 선택 이력과 주간 목록을 확인하려면 다시 불러오세요.";
+      renderReviewSummary(); renderWeekly();
       metric("issue-count", "—", "건");
       metric("article-count", "—", "건");
       metric("version-count", "—", "개");
@@ -454,11 +778,13 @@
   $("company-filter").addEventListener("change", renderCandidates);
   $("tag-filter").addEventListener("change", renderCandidates);
   $("sort-order").addEventListener("change", renderCandidates);
+  $("review-filter").addEventListener("change", renderCandidates);
   $("reset-filters").addEventListener("click", () => {
     state.topic = "";
     $("search").value = "";
     $("company-filter").value = "";
     $("tag-filter").value = "";
+    $("review-filter").value = "";
     $("sort-order").value = state.latest?.is_demo ? "priority" : "recent";
     if (state.latest) renderCandidates();
   });
@@ -467,6 +793,44 @@
   $("history-mobile").addEventListener("click", () => $("history-dialog").showModal());
   $("history-close").addEventListener("click", () => $("history-dialog").close());
   $("copy-close").addEventListener("click", () => $("copy-dialog").close());
-  for (const dialog of [$("history-dialog"), $("copy-dialog")]) dialog.addEventListener("click", event => { if (event.target === dialog) { const bounds = dialog.getBoundingClientRect(); if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close(); } });
+  for (const dialog of [$("history-dialog"), $("copy-dialog"), $("review-save-dialog"), $("review-import-dialog")]) dialog.addEventListener("click", event => { if (event.target === dialog) { const bounds = dialog.getBoundingClientRect(); if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close(); } });
+  $("review-save").addEventListener("click", openSaveDialog);
+  $("review-save-close").addEventListener("click", () => $("review-save-dialog").close());
+  $("review-patch-copy").addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText($("review-patch").value); toast("저장 내용을 복사했습니다. GitHub의 review_patch 칸에 붙여넣으세요."); }
+    catch { $("review-patch").focus(); $("review-patch").select(); toast("저장 내용을 선택했습니다. 직접 복사해주세요."); }
+  });
+  $("review-backup").addEventListener("click", () => {
+    try {
+      const draft = Review.validateDraft(reviewState.draft);
+      const patch = {schema_version:"1.0",base_revision:draft.base_revision,changes:Object.entries(draft.changes).map(([issue_id,status]) => ({issue_id,status}))};
+      downloadText(JSON.stringify(patch,null,2), `weekly-review-backup-v${draft.base_revision}.json`, "application/json;charset=utf-8");
+      toast("임시선택 백업을 내려받았습니다. GitHub에는 아직 저장되지 않았습니다.");
+    } catch(error) { toast(error.message); }
+  });
+  $("review-import").addEventListener("click", () => { $("review-import-text").value = ""; $("review-import-error").hidden = true; $("review-import-dialog").showModal(); });
+  $("review-import-close").addEventListener("click", () => $("review-import-dialog").close());
+  $("review-import-apply").addEventListener("click", importDraft);
+  $("review-discard").addEventListener("click", () => {
+    if (!reviewState.ready) return;
+    reviewState.draft = Review.createDraft(reviewState.canonical);
+    reviewState.localInvalid = false;
+    saveLocalDraft(); renderReviewSummary(); renderCandidates();
+    if (state.detail) renderDetail(state.detail);
+    renderWeekly(); toast("브라우저 임시선택을 버리고 GitHub에 저장된 선택을 표시합니다.");
+  });
+  ["week-start","week-end"].forEach(id => $(id).addEventListener("change", renderWeekly));
+  $("week-current").addEventListener("click", () => { setWeekRange(Review.weekRange()); renderWeekly(); });
+  for (const [id, offset] of [["week-prev",-7],["week-next",7]]) $(id).addEventListener("click", () => {
+    try { const date = new Date(`${selectedRange().start}T00:00:00Z`); date.setUTCDate(date.getUTCDate()+offset); setWeekRange(Review.weekRange(date.toISOString().slice(0,10))); renderWeekly(); }
+    catch(error) { toast(error.message); }
+  });
+  $("weekly-copy").addEventListener("click", () => { if (reviewState.weeklyRecords.length && !draftProblem()) copyText(Review.buildText(reviewState.weeklyRecords,reviewState.weeklyRange), "주간 보고 후보 목록", "채택한 자료의 제목·출처·URL·날짜이며 실제 보고 완료 이력에 저장되지 않습니다."); });
+  $("weekly-csv").addEventListener("click", () => {
+    if (!reviewState.weeklyRecords.length || draftProblem()) return;
+    const {start,end} = reviewState.weeklyRange;
+    downloadText(Review.buildCSV(reviewState.weeklyRecords,reviewState.weeklyRange), `weekly-candidates-${start}-${end}.csv`, "text/csv;charset=utf-8");
+    toast("주간 후보 CSV를 내려받았습니다. 실제 보고 완료로 기록되지 않습니다.");
+  });
   loadData();
 })();

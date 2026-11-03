@@ -1,8 +1,10 @@
-# 주간 경쟁사 동향 · 2단계 실제 수집
+# 주간 경쟁사 동향 · 3단계 보고 후보 검토
 
 [사이트 열기](https://iesilder.github.io/kw-plan-weekly-trend/) · [수동 수집 워크플로](https://github.com/iesilder/kw-plan-weekly-trend/actions/workflows/pipeline.yml)
 
 기존 경쟁사 10곳의 DART 실적 공시와 기사·보도자료 RSS 메타데이터를 수동 수집해 SQLite에 보존합니다. 뉴스는 경쟁사 13곳, 관련 금융그룹, 증권업에 영향을 주는 정책·사업 변화를 5개 주제로 분류합니다. **AI 호출과 정기 실행은 연결하지 않았습니다.** 경영진 관심사와 등록된 실제 보고 이력은 빈 값입니다.
+
+수집 자료를 **채택·보류·제외**하고 선택한 기간의 채택 자료를 주간 후보 목록으로 모아 복사하거나 CSV로 내보낼 수 있습니다. 제목이 비슷한 자료는 중복 검토 후보로 제안하며 원문을 합치지 않습니다. 선택은 브라우저에 임시 저장되고, **GitHub에 저장** 안내를 따라 별도 수동 워크플로에서 저장소에 보관할 수 있습니다. 후보 선정은 실제 보고 완료가 아닙니다. [사용 방법과 저장 범위](docs/review.md)
 
 ## 수집·저장 범위
 
@@ -38,6 +40,8 @@
 python -m unittest discover -s tests -v
 python scripts/check_repeatability.py
 node --check site/app.js
+node --check site/review.js
+node --test tests/test_review.js
 python -m weekly_trend collect --root .
 python -m weekly_trend verify --root .
 ```
@@ -56,6 +60,9 @@ python -m weekly_trend verify --root .
 | `weekly_trend/classification.py` | 설정 규칙을 읽고 제목의 대상·주제·변화를 판단 |
 | `weekly_trend/live_storage.py` | 실제 자료 전용 SQLite 테이블과 이력 |
 | `weekly_trend/live_pipeline.py` | 수집·상태·마트·무결성 검증 |
+| `site/review.js` | 검토 상태·주간 기간·중복 후보·복사/CSV |
+| `weekly_trend/reviews.py` | 검토 선택 검증·변경 충돌 방지·저장 |
+| `reports/reviews.json` | GitHub에 저장된 검토 선택. 실제 보고 이력과 분리 |
 | `data/raw.sqlite3` | 원자료 메타데이터와 실행 이력. 기존 가상 테이블도 보존 |
 | `state/`, `site/data/` | 미분석 상태, 출처별 성공/실패, 화면 JSON |
 | `reports/history.json` | 빈 실제 보고 이력 |
@@ -77,4 +84,4 @@ python -m weekly_trend verify --root .
 같은 색의 투명도를 사용해 상태와 표면을 구분합니다.
 
 
-[개발 범위](docs/scope.md) · [분류 기준과 수정 위치](docs/classification.md) · [출처·저장 기준](docs/sources.md) · [검증 기록](docs/verification.md)
+[개발 범위](docs/scope.md) · [후보 검토 사용법](docs/review.md) · [분류 기준과 수정 위치](docs/classification.md) · [출처·저장 기준](docs/sources.md) · [검증 기록](docs/verification.md)

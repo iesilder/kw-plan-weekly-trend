@@ -288,6 +288,8 @@ def _replace(stage, destinations):
 
 def run_collection(root, collector=None, now=None):
     root = Path(root).resolve()
+    from .reviews import load_reviews
+    reviews = load_reviews(root)
     topics, companies, sources, settings = load_live_inputs(root)
     if collector is None:
         from .collectors import collect_source
@@ -365,6 +367,7 @@ def run_collection(root, collector=None, now=None):
         write_json(mart / "latest.json", latest)
         write_json(mart / "status.json", status)
         write_json(mart / "report-history.json", history)
+        write_json(mart / "reviews.json", reviews)
         write_json(state_path / "issues.json", {"schema_version": "1.0", "is_demo": False,
                    "generation_id": generation, "issues": latest["candidates"]})
         write_json(state_path / "run_status.json", status)
@@ -430,6 +433,8 @@ def validate_status(db, latest, status):
 
 def verify_live(root):
     root = Path(root).resolve()
+    from .reviews import validate_mirror
+    validate_mirror(root)
     topics, companies, sources, _ = load_live_inputs(root)
     latest, details, history = _read_snapshot(root)
     status = read_json(root / "site/data/status.json")

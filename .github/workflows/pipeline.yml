@@ -39,6 +39,8 @@ jobs:
         run: |
           python -m unittest discover -s tests -v
           node --check site/app.js
+          node --check site/review.js
+          node --test tests/test_review.js
       - name: Collect permitted public metadata
         id: collect
         continue-on-error: true

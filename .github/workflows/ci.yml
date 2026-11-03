@@ -32,7 +32,11 @@ jobs:
       - name: Core behavior tests
         run: python -m unittest discover -s tests -v
       - name: JavaScript syntax
-        run: node --check site/app.js
+        run: |
+          node --check site/app.js
+          node --check site/review.js
+      - name: Review selection and duplicate-candidate tests
+        run: node --test tests/test_review.js
       - name: Independent-process persistence check
         run: python scripts/check_repeatability.py
 

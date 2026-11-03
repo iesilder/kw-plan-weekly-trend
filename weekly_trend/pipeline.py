@@ -174,6 +174,8 @@ def validate_mart(db, latest, details, status, history):
 
 def run_demo(root, fixture_path=None):
     root = Path(root).resolve()
+    from .reviews import load_reviews
+    reviews = load_reviews(root)
     topics = load_inputs(root)
     fixture = read_json(fixture_path or root / "tests/fixtures/demo_articles.json")
     validate_fixture(fixture)
@@ -197,6 +199,7 @@ def run_demo(root, fixture_path=None):
         write_json(mart_stage / "latest.json", latest)
         write_json(mart_stage / "status.json", status)
         write_json(mart_stage / "report-history.json", history)
+        write_json(mart_stage / "reviews.json", reviews)
         for issue_id, detail in details.items():
             write_json(mart_stage / "issues" / f"{issue_id}.json", detail)
         state_stage = stage / "state"

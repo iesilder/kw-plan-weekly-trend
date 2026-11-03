@@ -27,6 +27,9 @@
     invalid_output:"AI 요약의 형식이나 원문 근거를 확인하지 못해 결과를 표시하지 않습니다.",
     output_number_mismatch:"요약에 원문에서 확인되지 않는 수치가 포함되어 이 자료의 결과를 표시하지 않습니다.",
     output_evidence_mismatch:"요약의 주장과 참조 문단을 연결하지 못해 이 자료의 결과를 표시하지 않습니다.",
+    output_reference_limit:"요약의 참조 문단 수가 허용 범위를 넘어 이 자료의 결과를 표시하지 않습니다.",
+    output_evidence_unknown:"요약이 확보한 본문에 없는 문단을 참조하여 이 자료의 결과를 표시하지 않습니다.",
+    output_evidence_missing:"요약에 필요한 참조 문단 정보가 없어 이 자료의 결과를 표시하지 않습니다.",
     output_invalid_shape:"이 자료의 AI 응답 형식을 확인하지 못해 요약을 표시하지 않습니다.",
     output_missing_item:"AI 응답에 이 자료의 요약이 없어 결과를 표시하지 않습니다.",
     output_duplicate_item:"AI 응답에서 이 자료가 중복되어 결과를 확인할 수 없습니다.",
@@ -63,7 +66,7 @@
     } catch { return null; }
   }
   function validateResult(value) {
-    if (!object(value) || !STAGES.has(value.stage) || !text(value.why_candidate,240) || !array(value.evidence, row=>object(row)&&PARAGRAPH.test(row.id)&&text(row.quote,80),4) || !value.evidence.length) fail("본문 요약의 원문 근거 형식을 확인할 수 없습니다.");
+    if (!object(value) || !STAGES.has(value.stage) || !text(value.why_candidate,240) || !array(value.evidence, row=>object(row)&&PARAGRAPH.test(row.id)&&text(row.quote,80),20) || !value.evidence.length) fail("본문 요약의 원문 근거 형식을 확인할 수 없습니다.");
     const ids = new Set(value.evidence.map(row=>row.id));
     if (ids.size!==value.evidence.length || value.evidence.reduce((sum,row)=>sum+row.quote.length,0)>200) fail("본문 요약의 인용 범위나 문단 번호가 올바르지 않습니다.");
     function claim(row,max) {

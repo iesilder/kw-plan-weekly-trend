@@ -99,8 +99,8 @@ def load_config(root):
     for field in ("schema_version", "provider", "model", "policy_version"):
         if config[field] != DEFAULT_CONFIG[field]:
             raise ValueError("Unsupported AI provider, model, or metadata policy")
-    if config["manual_only"] is not True or not isinstance(config["prompt_version"], str) or not re.fullmatch(r"[a-zA-Z0-9_-]{1,80}", config["prompt_version"]):
-        raise ValueError("AI must remain manual with a versioned prompt")
+    if type(config["manual_only"]) is not bool or not isinstance(config["prompt_version"], str) or not re.fullmatch(r"[a-zA-Z0-9_-]{1,80}", config["prompt_version"]):
+        raise ValueError("AI scheduling must be explicit with a versioned prompt")
     for field, maximum in [("max_items_per_run", 10), ("max_requests_per_run", 1), ("max_output_tokens", 4096), ("timeout_seconds", 45)]:
         if type(config[field]) is not int or not 1 <= config[field] <= maximum:
             raise ValueError("AI request limits exceed the supported manual budget")
@@ -141,9 +141,16 @@ def empty_state():
 
 
 def validate_state(state):
-    _keys(state, {"schema_version", "entries", "last_attempt"})
+    _keys(state, {"schema_version", "entries", "last_attempt"} | ({"failures"} if "failures" in state else set()))
     if state["schema_version"] != "1.0" or not isinstance(state["entries"], dict):
         raise ValueError("Invalid AI state")
+    if not isinstance(state.get("failures", {}), dict):
+        raise ValueError("Invalid AI failure quarantine")
+    for fingerprint, failure in state.get("failures", {}).items():
+        _keys(failure, {"issue_id", "error_code", "failed_at"})
+        if not FINGERPRINT.fullmatch(fingerprint) or not ISSUE_ID.fullmatch(failure["issue_id"]) or failure["error_code"] != "invalid_output":
+            raise ValueError("Invalid AI failure identity")
+        _valid_time(failure["failed_at"])
     for fingerprint, entry in state["entries"].items():
         if not FINGERPRINT.fullmatch(fingerprint):
             raise ValueError("Invalid AI cache fingerprint")
@@ -292,6 +299,11 @@ def build_public(root, latest, details, state=None, now=None):
             chosen = current or (previous[0] if previous else None)
             if chosen:
                 item.update(status="completed" if current else "stale", result=copy.deepcopy(chosen["result"]), result_fingerprint=chosen["input_fingerprint"], analyzed_at=chosen["analyzed_at"])
+            failure = state.get("failures", {}).get(data["fingerprint"])
+            if not current and failure:
+                item["error_code"] = failure["error_code"]
+                if not chosen:
+                    item["status"] = "failed"
             if not current and attempt and data["fingerprint"] in attempt["fingerprints"] and attempt["error_code"]:
                 item["error_code"] = attempt["error_code"]
                 if not chosen and attempt["status"] == "failed":
@@ -301,7 +313,7 @@ def build_public(root, latest, details, state=None, now=None):
     counts["eligible"] = len(items) - counts["blocked"]
     public = {"schema_version": "1.0", "generation_id": latest["generation_id"], "generated_at": _stamp(now),
               **{key: config[key] for key in ("provider", "model", "prompt_version", "policy_version")},
-              "auto_analysis_enabled": False, "last_attempt": {key: value for key, value in attempt.items() if key != "fingerprints"} if attempt else None,
+              "auto_analysis_enabled": not config["manual_only"], "last_attempt": {key: value for key, value in attempt.items() if key != "fingerprints"} if attempt else None,
               "counts": counts, "items": items}
     return state, public, inputs, topics
 
@@ -458,14 +470,26 @@ def parse_response(response, batch):
         raise AIError("invalid_output") from None
 
 
-def run(root, environ=None, transport=None, now=None):
+def run(root, environ=None, transport=None, now=None, automatic=False):
     root = Path(root)
     config = load_config(root)
+    if type(automatic) is not bool or (automatic and config["manual_only"]):
+        raise ValueError("Automatic AI analysis is not enabled")
     latest, details = _snapshot(root)
     state, public, inputs, topics = build_public(root, latest, details, now=now)
     eligible = [item for item in inputs.values() if item["reason"] is None]
     cached = [item for item in eligible if _cache_current(state["entries"].get(item["fingerprint"]), item, inputs)]
     pending = [item for item in eligible if not _cache_current(state["entries"].get(item["fingerprint"]), item, inputs)]
+    # Older states only retained the latest failure; migrate its fingerprints
+    # before overwriting that attempt with the next scheduled result.
+    previous = state.get("last_attempt") or {}
+    if previous.get("error_code") == "invalid_output":
+        for item in pending:
+            if item["fingerprint"] in previous.get("fingerprints", []):
+                state.setdefault("failures", {}).setdefault(item["fingerprint"], {
+                    "issue_id": item["input"]["issue_id"], "error_code": "invalid_output", "failed_at": previous["completed_at"]})
+    suppressed = [item for item in pending if automatic and item["fingerprint"] in state.get("failures", {})]
+    pending = [item for item in pending if item not in suppressed]
     pending.sort(key=lambda item: (item["input"]["published_date"], item["input"]["issue_id"]))
     batch = pending[:config["max_items_per_run"]]
     stamp = _stamp(now)
@@ -494,9 +518,14 @@ def run(root, environ=None, transport=None, now=None):
                             "input_evidence_ids": item["evidence_ids"], **{field: config[field] for field in ("provider", "model", "prompt_version", "policy_version")},
                             "analyzed_at": completed_at, "result": results[issue_id],
                             "duplicate_context": {target: inputs[target]["fingerprint"] for target in results[issue_id]["duplicate_issue_ids"]}}
+                        state.get("failures", {}).pop(item["fingerprint"], None)
                     attempt.update(status="partial_success" if len(pending) > len(batch) else "success", completed_count=len(batch), completed_at=completed_at)
                 except AIError as error:
                     attempt.update(status="failed", error_code=error.code, failed_count=len(batch), completed_at=_stamp(now))
+                    if error.code == "invalid_output":
+                        for item in batch:
+                            state.setdefault("failures", {})[item["fingerprint"]] = {
+                                "issue_id": item["input"]["issue_id"], "error_code": error.code, "failed_at": attempt["completed_at"]}
                 except Exception:
                     # Never echo an unexpected transport exception: it may contain
                     # a provider response, request body, or credential.
@@ -504,4 +533,4 @@ def run(root, environ=None, transport=None, now=None):
     state["last_attempt"] = attempt
     state, public, _, _ = build_public(root, latest, details, state=state, now=now)
     _persist(root, state, public)
-    return {"ok": True, "mode": "manual", "generation_id": public["generation_id"], "last_attempt": public["last_attempt"], "counts": public["counts"]}
+    return {"ok": True, "mode": "automatic" if automatic else "manual", "suppressed_count": len(suppressed), "generation_id": public["generation_id"], "last_attempt": public["last_attempt"], "counts": public["counts"]}

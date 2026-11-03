@@ -9,6 +9,8 @@ import unittest
 import urllib.error
 from unittest.mock import patch
 
+from analysis_fixture import install_analysis_fixture
+
 from weekly_trend import ai
 
 PROJECT = Path(__file__).resolve().parents[1]
@@ -43,7 +45,7 @@ class AITests(unittest.TestCase):
         self.root = Path(temporary.name)
         for folder in ("config", "reports", "site/data"):
             shutil.copytree(PROJECT / folder, self.root / folder)
-        (self.root / "site/data/ai-analysis.json").unlink(missing_ok=True)
+        install_analysis_fixture(self.root)
         # Core cache/error tests use one real RSS item plus the DART entries,
         # which must remain available for human review but never be AI input.
         self.full_latest = read_json(self.root / "site/data/latest.json")
@@ -167,8 +169,17 @@ class AITests(unittest.TestCase):
 
     def test_dart_archive_is_retained_but_hidden_and_existing_news_fingerprints_do_not_change(self):
         self.enable_news()
-        original_state = read_json(PROJECT / "state/ai-analysis.json")
-        previous_public = read_json(PROJECT / "site/data/ai-analysis.json")
+        self.run_good()
+        original_state = ai.load_state(self.root)
+        previous_public = self.public()
+        # Synthetic legacy DART cache proves archival preservation without
+        # copying any real API response from the changing production snapshot.
+        dart = self.dart_candidates[0]
+        legacy = copy.deepcopy(next(iter(original_state["entries"].values())))
+        legacy_hash = "d" * 64
+        legacy.update(issue_id=dart["issue_id"], input_fingerprint=legacy_hash,
+                      input_evidence_ids=sorted(dart["evidence_ids"]), duplicate_context={})
+        original_state["entries"][legacy_hash] = legacy
         write_json(self.root / "state/ai-analysis.json", original_state)
         ai.prepare(self.root, now=NOW)
         self.assertEqual(ai.load_state(self.root), original_state)
@@ -485,7 +496,7 @@ class AITests(unittest.TestCase):
 
     def test_config_rejects_paid_fallback_and_raised_budgets(self):
         original = read_json(self.root / "config/ai.json")
-        for changes in [{"model": "some-paid-fallback"}, {"max_requests_per_run": 2}, {"max_items_per_run": 11}, {"max_output_tokens": 4097}, {"timeout_seconds": 46}, {"manual_only": False}, {"max_output_tokens": True}]:
+        for changes in [{"model": "some-paid-fallback"}, {"max_requests_per_run": 2}, {"max_items_per_run": 11}, {"max_output_tokens": 4097}, {"timeout_seconds": 46}, {"manual_only": "false"}, {"max_output_tokens": True}]:
             write_json(self.root / "config/ai.json", {**original, **changes})
             with self.assertRaises(ValueError):
                 ai.prepare(self.root, now=NOW)

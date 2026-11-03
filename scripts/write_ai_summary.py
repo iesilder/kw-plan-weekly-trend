@@ -10,7 +10,7 @@ def main():
     data = json.loads(Path("site/data/ai-analysis.json").read_text(encoding="utf-8"))
     counts = data["counts"]
     attempt = data.get("last_attempt") or {}
-    lines = ["## 수동 AI 검토 보조", "",
+    lines = ["## 기사 AI 검토 보조", "",
              "워크플로 성공은 상태 저장·배포 성공입니다. 실제 AI 완료 건수는 아래에서 확인합니다.", "",
              "| 항목 | 값 |", "|---|---|",
              f"| 분석 대상 | {counts['eligible']} |",

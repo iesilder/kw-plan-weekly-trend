@@ -6,6 +6,7 @@ import shutil
 import sqlite3
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from weekly_trend.classification import classify, classify_for_source, earnings_form, safe_https_url, source_policy
 from weekly_trend.live_pipeline import load_live_inputs, run_collection
@@ -422,7 +423,7 @@ class LivePipelineTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.run_records([record()])
 
-    def test_schedule_is_rejected_before_collection_or_mutation(self):
+    def test_undeclared_schedule_is_rejected_before_collection_or_mutation(self):
         self.run_records([record()])
         before = (self.root / "data/raw.sqlite3").read_bytes()
         path = self.root / "config/pipeline.json"
@@ -437,6 +438,54 @@ class LivePipelineTests(unittest.TestCase):
         write_json(status_path, {**status, "schedule_enabled": True})
         with self.assertRaises(ValueError):
             verify(self.root)
+
+    def test_declared_daily_schedule_preserves_raw_ai_boundary_and_run_evidence(self):
+        path = self.root / "config/pipeline.json"
+        settings = read_json(path)
+        write_json(path, {**settings, "schedule_enabled": True,
+                          "planned_collection_frequency": "daily_0800_kst", "timezone": "Asia/Seoul"})
+        with patch("weekly_trend.ai.request_once", side_effect=AssertionError("collection must not call AI")), \
+                patch("weekly_trend.article_analysis.fetch_article", side_effect=AssertionError("collection must not fetch bodies")):
+            result = self.run_records([record()])
+        self.assertTrue(result["schedule_enabled"])
+        self.assertFalse(result["ai_enabled"])
+        self.assertEqual(result["planned_collection_frequency"], "daily_0800_kst")
+        self.assertEqual(result["timezone"], "Asia/Seoul")
+        self.assertEqual(result["last_successful_run_at"], NOW.isoformat(timespec="microseconds"))
+        self.assertTrue(verify(self.root)["ok"])
+        status_path = self.root / "site/data/status.json"
+        status = read_json(status_path)
+        write_json(status_path, {**status, "planned_collection_frequency": "hourly"})
+        with self.assertRaises(ValueError):
+            verify(self.root)
+
+    def test_schedule_configuration_rejects_wrong_time_zone_and_nonboolean_flags(self):
+        self.run_records([record()])
+        before = (self.root / "data/raw.sqlite3").read_bytes()
+        path = self.root / "config/pipeline.json"
+        settings = read_json(path)
+        for changes in [
+            {"schedule_enabled": "true"}, {"schedule_enabled": 1}, {"schedule_enabled": None},
+            {"schedule_enabled": True, "planned_collection_frequency": "daily_0800_kst", "timezone": "UTC"},
+            {"schedule_enabled": True, "planned_collection_frequency": "daily_0900_kst", "timezone": "Asia/Seoul"},
+            {"schedule_enabled": False, "planned_collection_frequency": "daily_0800_kst", "timezone": "Asia/Seoul"},
+        ]:
+            write_json(path, {**settings, **changes})
+            with self.assertRaises(ValueError):
+                self.run_records([record()])
+            self.assertEqual(before, (self.root / "data/raw.sqlite3").read_bytes())
+
+    def test_old_manual_snapshot_can_be_verified_after_schedule_is_configured(self):
+        self.run_records([record()])
+        for path in (self.root / "site/data/status.json", self.root / "state/run_status.json"):
+            status = read_json(path)
+            status.pop("planned_collection_frequency", None)
+            status.pop("timezone", None)
+            write_json(path, status)
+        config_path = self.root / "config/pipeline.json"
+        write_json(config_path, {**read_json(config_path), "schedule_enabled": True,
+                                 "planned_collection_frequency": "daily_0800_kst", "timezone": "Asia/Seoul"})
+        self.assertTrue(verify(self.root)["ok"])
 
     def test_future_date_only_rejected_using_korean_calendar_day(self):
         # 18:00 UTC is the following calendar day in Korea: Nov 4 is tolerated,

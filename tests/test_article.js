@@ -66,7 +66,7 @@ test("untrusted AI text remains text data and unknown body fields are never retu
 });
 test("invalid attempts and automatic analysis cannot claim completed operation",()=>{
   const good={attempted_at:STAMP,completed_at:STAMP,status:"success",error_code:null,request_count:1,fetch_count:1,completed_count:1,cached_count:0,failed_count:0};
-  for(const change of [d=>d.auto_analysis_enabled=true,d=>d.prompt_version="unrecognized",d=>d.model="different",d=>d.generated_at="yesterday",d=>d.last_attempt={...good,request_count:2},d=>d.last_attempt={...good,fetch_count:6},d=>d.last_attempt={...good,completed_at:"2026-11-02T05:00:00Z"}]){const{data,latest}=fixture();change(data);assert.throws(()=>Article.validateSidecar(data,latest));}
+  for(const change of [d=>d.auto_analysis_enabled="true",d=>d.prompt_version="unrecognized",d=>d.model="different",d=>d.generated_at="yesterday",d=>d.last_attempt={...good,request_count:2},d=>d.last_attempt={...good,fetch_count:6},d=>d.last_attempt={...good,completed_at:"2026-11-02T05:00:00Z"}]){const{data,latest}=fixture();change(data);assert.throws(()=>Article.validateSidecar(data,latest));}
 });
 test("DART exclusion and truncated articles are described honestly",()=>{
   const{data}=fixture();assert.match(Article.itemMessage(data.items[B]),/DART 공시는 AI에 전송하지 않으며/);complete(data);data.items[A].truncated=true;assert.match(Article.itemMessage(data.items[A]),/일부를 분석/);assert.match(Article.itemMessage({status:"unavailable",reason_code:"network_error"}),/제목 분석과 원문 링크/);
@@ -131,4 +131,10 @@ test("DART never receives a completed body summary under the new bullet prompt",
   complete(data);Object.assign(data.items[B],clone(data.items[A]),{evidence_ids:[E2],source_name:latest.candidates[1].source_name});
   data.counts={eligible:2,completed:2,stale:0,unavailable:0,pending:0,not_applicable:0,failed:0};
   assert.throws(()=>Article.validateSidecar(data,latest));
+});
+
+test("automatic body analysis preserves pending or failed states without inventing results",()=>{
+  for(const flag of [true,false]){const{data,latest}=fixture();data.auto_analysis_enabled=flag;const validated=Article.validateSidecar(data,latest);assert.equal(validated.auto_analysis_enabled,flag);assert.equal(validated.counts.completed,0);assert.equal(validated.items[A].result,null);assert.equal(Article.summary(validated).lastAnalysisAt,null);assert.equal(Article.summary(validated).label,flag?"자동 본문 분석 대기":"본문 분석 대기");}
+  for(const flag of [1,0,null,"false",undefined]){const{data,latest}=fixture();data.auto_analysis_enabled=flag;assert.throws(()=>Article.validateSidecar(data,latest));}
+  const{data,latest}=fixture();data.auto_analysis_enabled=true;data.items[A].status="failed";data.items[A].reason_code="rate_limited";data.counts.pending=0;data.counts.failed=1;const validated=Article.validateSidecar(data,latest);assert.equal(Article.summary(validated).label,"일부 분석 실패");assert.equal(validated.items[A].result,null);
 });

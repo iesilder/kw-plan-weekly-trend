@@ -3,7 +3,7 @@
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "article-bullets-v1",
-  "manual_only": true,
+  "manual_only": false,
   "max_articles_per_run": 5,
   "max_output_tokens": 12288,
   "max_input_chars_per_article": 10000,

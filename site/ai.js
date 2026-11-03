@@ -1,4 +1,4 @@
-/* Validate the manual AI sidecar independently from source records and human choices. */
+/* Validate the AI sidecar independently from source records and human choices. */
 (function (root, factory) {
   "use strict";
   const api = factory();
@@ -46,12 +46,12 @@
   function validateSidecar(value, latest) {
     if (!plainObject(value) || value.schema_version !== "1.0" || !latest || latest.is_demo !== false || !Array.isArray(latest.candidates)) fail("AI 보조 자료의 형식을 확인할 수 없습니다.");
     if (value.generation_id !== latest.generation_id) fail("AI 보조 자료와 현재 수집 자료의 버전이 다릅니다. 최신 자료에 대한 결과로 표시하지 않습니다.");
-    if (!instant(value.generated_at) || value.provider !== "google_gemini" || !string(value.model,100) || !value.model || !string(value.prompt_version,100) || !value.prompt_version || !POLICIES.has(value.policy_version) || value.auto_analysis_enabled !== false || !plainObject(value.items) || !plainObject(value.counts)) fail("AI 보조 자료의 실행 설정이나 생성 정보를 확인할 수 없습니다.");
+    if (!instant(value.generated_at) || value.provider !== "google_gemini" || !string(value.model,100) || !value.model || !string(value.prompt_version,100) || !value.prompt_version || !POLICIES.has(value.policy_version) || typeof value.auto_analysis_enabled !== "boolean" || !plainObject(value.items) || !plainObject(value.counts)) fail("AI 보조 자료의 실행 설정이나 생성 정보를 확인할 수 없습니다.");
     const candidates = new Map(latest.candidates.map(item => [item.issue_id,item]));
     const allIds = new Set(candidates.keys());
     const eligibleIds = new Set(latest.candidates.filter(item => allowedSource(item,value.policy_version) && value.items[item.issue_id]?.status !== "blocked").map(item => item.issue_id));
     if (allIds.size !== latest.candidates.length || !sameIds(Object.keys(value.items),[...allIds])) fail("AI 보조 자료의 대상 목록이 현재 수집 자료와 다릅니다.");
-    const result = {schema_version:"1.0",generation_id:value.generation_id,generated_at:value.generated_at,provider:value.provider,model:value.model,prompt_version:value.prompt_version,policy_version:value.policy_version,auto_analysis_enabled:false,last_attempt:null,counts:{eligible:0,blocked:0,completed:0,stale:0,failed:0,not_analyzed:0},items:{}};
+    const result = {schema_version:"1.0",generation_id:value.generation_id,generated_at:value.generated_at,provider:value.provider,model:value.model,prompt_version:value.prompt_version,policy_version:value.policy_version,auto_analysis_enabled:value.auto_analysis_enabled,last_attempt:null,counts:{eligible:0,blocked:0,completed:0,stale:0,failed:0,not_analyzed:0},items:{}};
     for (const [issueId, item] of Object.entries(value.items)) {
       if (!ID.test(issueId) || !plainObject(item) || !STATUSES.has(item.status) || !(item.reason_code === null || Object.hasOwn(REASONS,item.reason_code)) || !(item.error_code === null || string(item.error_code,100))) fail("개별 AI 처리 상태의 형식이 올바르지 않습니다.");
       const candidate = candidates.get(issueId);
@@ -89,7 +89,7 @@
   function summary(data) {
     const keyCount = keyRequiredCount(data);
     const time = lastAnalysisAt(data);
-    let label = "수동 실행 준비";
+    let label = data.auto_analysis_enabled ? "자동 실행 대기" : "수동 실행 준비";
     if (keyCount > 0) label = data.last_attempt.error_code === "free_project_not_confirmed" ? "무료 프로젝트 확인 필요" : "API 키 등록 필요";
     else if (data.counts.stale) label = "재분석 대상 있음";
     else if (data.counts.failed || data.last_attempt?.status === "failed" || data.last_attempt?.status === "partial_success") label = "실행 결과 확인 필요";
@@ -99,10 +99,10 @@
   }
   function itemMessage(item) {
     if (item.status === "blocked") return REASONS[item.reason_code] || "현재 AI 이용 범위에서 제외했습니다.";
-    if (item.status === "stale") return "분석 후 자료 또는 분석 기준이 바뀌었습니다. 이전 제안은 표시하지 않으며 수동 재분석이 필요합니다.";
-    if (KEY_CODES.has(item.error_code)) return item.error_code === "missing_api_key" ? "아직 분석하지 않았습니다. GitHub에 API 키를 등록한 뒤 수동으로 실행해주세요." : "아직 분석하지 않았습니다. 무료 프로젝트 확인 설정을 마친 뒤 수동으로 실행해주세요.";
+    if (item.status === "stale") return "분석 후 자료 또는 분석 기준이 바뀌었습니다. 이전 제안은 표시하지 않으며 다음 자동 실행 또는 수동 실행에서 재분석합니다.";
+    if (KEY_CODES.has(item.error_code)) return item.error_code === "missing_api_key" ? "아직 분석하지 않았습니다. GitHub의 API 키를 등록한 뒤 다음 자동 실행 또는 수동 실행을 진행하세요." : "아직 분석하지 않았습니다. 무료 프로젝트 설정을 확인한 뒤 다음 자동 실행 또는 수동 실행을 진행하세요.";
     if (item.status === "failed") return "분석에 실패했습니다. 기존 수집 자료와 담당자의 선택은 유지됩니다. GitHub 실행 기록을 확인해주세요.";
-    if (item.status === "not_analyzed") return "아직 실제 AI 분석 결과가 없습니다. 기사·보도자료의 제목·출처·날짜를 바탕으로 수동 분석합니다. DART 공시는 AI에 전송하지 않습니다.";
+    if (item.status === "not_analyzed") return "아직 실제 AI 분석 결과가 없습니다. 기사·보도자료의 제목·출처·날짜를 바탕으로 분석합니다. DART 공시는 AI에 전송하지 않습니다.";
     return "기사·보도자료 제목의 관련성과 검토 이유에 대한 제안입니다. 기사 본문 요약은 아래 별도 영역에서 확인하세요. DART 공시는 AI에 전송하지 않습니다.";
   }
   return Object.freeze({validateSidecar,summary,lastAnalysisAt,keyRequiredCount,itemMessage,statusLabels:STATUS_LABELS,relevanceLabels:RELEVANCE});

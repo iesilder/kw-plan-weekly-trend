@@ -18,8 +18,8 @@
   const REASONS = Object.freeze({
     not_article:"기사·보도자료 본문만 요약합니다. DART 공시는 AI에 전송하지 않으며 공시 목록과 원문 링크는 유지합니다.",
     dart_not_sent:"DART 공시는 AI에 전송하거나 요약하지 않습니다. 공시 목록과 원문 링크는 그대로 확인할 수 있습니다.",
-    missing_api_key:"본문 분석을 아직 실행하지 않았습니다. GitHub의 API 키 설정을 확인한 뒤 수동 AI 실행을 진행하세요.",
-    free_project_not_confirmed:"본문 분석을 아직 실행하지 않았습니다. 무료 프로젝트 확인 후 수동 AI 실행을 진행하세요.",
+    missing_api_key:"본문 분석을 아직 실행하지 않았습니다. GitHub의 API 키를 확인한 뒤 다음 자동 실행 또는 수동 실행을 진행하세요.",
+    free_project_not_confirmed:"본문 분석을 아직 실행하지 않았습니다. 무료 프로젝트 설정을 확인한 뒤 다음 자동 실행 또는 수동 실행을 진행하세요.",
     http_forbidden:"출처가 본문 요청을 허용하지 않아 요약하지 못했습니다. 기존 제목 분석과 원문 링크를 이용할 수 있습니다.",
     access_restricted:"로그인·유료 구독 등 접근 제한이 확인되어 본문을 분석하지 않았습니다. 기존 제목 분석과 원문 링크를 이용하세요.",
     body_not_found:"기사 본문 영역을 확인하지 못했습니다. 제목 분석을 유지하며 본문을 읽은 요약은 표시하지 않습니다.",
@@ -80,10 +80,10 @@
   function validateSidecar(value, latest) {
     if (!object(value) || value.schema_version!=="1.0" || !latest || latest.is_demo!==false || !Array.isArray(latest.candidates)) fail("본문 요약 자료의 형식을 확인할 수 없습니다.");
     if (value.generation_id!==latest.generation_id) fail("본문 요약과 현재 수집 자료의 버전이 다릅니다.");
-    if (!instant(value.generated_at) || value.provider!=="google_gemini" || value.model!=="gemini-3.5-flash-lite" || !PROMPT_VERSIONS.has(value.prompt_version) || value.auto_analysis_enabled!==false || !object(value.items) || !object(value.counts)) fail("본문 요약의 생성 정보나 실행 설정이 올바르지 않습니다.");
+    if (!instant(value.generated_at) || value.provider!=="google_gemini" || value.model!=="gemini-3.5-flash-lite" || !PROMPT_VERSIONS.has(value.prompt_version) || typeof value.auto_analysis_enabled!=="boolean" || !object(value.items) || !object(value.counts)) fail("본문 요약의 생성 정보나 실행 설정이 올바르지 않습니다.");
     const candidates = new Map(latest.candidates.map(item=>[item.issue_id,item]));
     if (candidates.size!==latest.candidates.length || !same([...candidates.keys()],Object.keys(value.items))) fail("본문 요약의 대상 목록이 현재 수집 자료와 다릅니다.");
-    const result = {schema_version:"1.0",generation_id:value.generation_id,generated_at:value.generated_at,provider:value.provider,model:value.model,prompt_version:value.prompt_version,auto_analysis_enabled:false,counts:{eligible:0,completed:0,stale:0,unavailable:0,pending:0,not_applicable:0,failed:0},last_attempt:null,items:{}};
+    const result = {schema_version:"1.0",generation_id:value.generation_id,generated_at:value.generated_at,provider:value.provider,model:value.model,prompt_version:value.prompt_version,auto_analysis_enabled:value.auto_analysis_enabled,counts:{eligible:0,completed:0,stale:0,unavailable:0,pending:0,not_applicable:0,failed:0},last_attempt:null,items:{}};
     for (const [id,item] of Object.entries(value.items)) {
       const candidate = candidates.get(id);
       if (!ISSUE.test(id) || !object(item) || !STATUSES.has(item.status) || !(item.reason_code===null||text(item.reason_code,100)) || !array(item.evidence_ids,value=>typeof value==="string"&&VERSION.test(value)) || new Set(item.evidence_ids).size!==item.evidence_ids.length || !array(candidate.evidence_ids,id=>typeof id==="string") || !same(item.evidence_ids,candidate.evidence_ids) || typeof item.truncated!=="boolean") fail("개별 본문 요약의 상태나 원자료 근거가 올바르지 않습니다.");
@@ -120,15 +120,15 @@
   }
   function itemMessage(item) {
     if (item.status==="completed") return item.truncated ? "확보한 본문의 일부를 분석한 AI 요약입니다. 기사 전체를 읽은 결과가 아니므로 원문을 함께 확인하세요." : "확보한 기사 본문에 근거한 AI 요약입니다. 원문 근거와 담당자의 판단을 함께 확인하세요.";
-    if (item.status==="stale") return "수집 자료 또는 분석 기준이 바뀌어 이전 본문 요약을 표시하지 않습니다. 수동 재분석이 필요합니다.";
+    if (item.status==="stale") return "수집 자료 또는 분석 기준이 바뀌어 이전 본문 요약을 표시하지 않습니다. 다음 자동 실행 또는 수동 실행에서 재분석합니다.";
     if (REASONS[item.reason_code]) return REASONS[item.reason_code];
     if (item.status==="not_applicable") return REASONS.not_article;
     if (item.status==="unavailable") return "본문을 확보하지 못해 요약을 표시하지 않습니다. 제목 분석과 원문 링크는 계속 이용할 수 있습니다.";
     if (item.status==="failed") return "본문 분석을 마치지 못했습니다. 기존 제목 분석과 담당자의 선택은 유지됩니다.";
-    return "아직 본문 기반 요약이 없습니다. 수동 AI 실행에서 공개 본문을 확보한 뒤 분석합니다.";
+    return "아직 본문 기반 요약이 없습니다. 다음 자동 실행 또는 수동 실행에서 공개 본문을 확보한 뒤 분석합니다.";
   }
   function summary(data) {
-    let label="본문 분석 대기";
+    let label=data.auto_analysis_enabled ? "자동 본문 분석 대기" : "본문 분석 대기";
     if (data.counts.failed) label="일부 분석 실패";
     else if (data.counts.stale) label="재분석 대상 있음";
     else if (data.counts.completed) label="본문 요약 확인 가능";

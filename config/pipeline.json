@@ -3,8 +3,8 @@
   "mode": "live",
   "real_collection_enabled": true,
   "ai_enabled": false,
-  "schedule_enabled": false,
-  "planned_collection_frequency": "daily_not_enabled",
+  "schedule_enabled": true,
+  "planned_collection_frequency": "daily_0800_kst",
   "initial_lookback_days": 30,
   "overlap_hours": 48,
   "timezone": "Asia/Seoul"

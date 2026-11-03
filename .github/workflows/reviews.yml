@@ -46,7 +46,8 @@ jobs:
           node --check site/app.js
           node --check site/review.js
           node --check site/ai.js
-          node --test tests/test_review.js tests/test_ai.js
+          node --check site/article.js
+          node --test tests/test_review.js tests/test_ai.js tests/test_article.js
           python -m weekly_trend verify --root .
       - name: Save the submitted review choices
         env:

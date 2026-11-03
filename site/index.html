@@ -6,10 +6,11 @@
   <meta name="theme-color" content="#0B1D39">
   <meta name="description" content="공개 출처의 경쟁사 동향을 검토하고 주간 보고 후보를 선정합니다. 수동 AI 검토 보조와 담당자의 선택을 구분하며 정기 실행은 꺼져 있습니다.">
   <title>WEEKLY · 주간 경쟁사 동향</title>
-  <link rel="stylesheet" href="styles.css?v=phase4-ai">
-  <script src="review.js?v=phase4-ai" defer></script>
-  <script src="ai.js?v=phase4-ai" defer></script>
-  <script src="app.js?v=phase4-ai" defer></script>
+  <link rel="stylesheet" href="styles.css?v=phase5-article">
+  <script src="review.js?v=phase5-article" defer></script>
+  <script src="ai.js?v=phase5-article" defer></script>
+  <script src="article.js?v=phase5-article" defer></script>
+  <script src="app.js?v=phase5-article" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">본문 바로가기</a>
@@ -42,6 +43,13 @@
       <div id="ai-counts" class="ai-counts" aria-label="AI 검토 보조 처리 현황"></div>
       <p id="ai-last-run" class="ai-last-run">실제 분석 이력 확인 중</p>
       <p id="ai-warning" class="ai-warning" role="status" hidden></p>
+    </section>
+    <section id="article-assistance" class="ai-assistance article-assistance" aria-labelledby="article-heading">
+      <div class="ai-summary-head"><div><div class="eyebrow">SOURCE BRIEF</div><h2 id="article-heading">기사 본문 요약 <span id="article-readiness" class="ai-state-label">확인 중</span></h2></div></div>
+      <p class="ai-summary-note">확보한 기사 본문에서 핵심 변화·주요 사실·검토 이유를 정리하고 짧은 원문 근거를 함께 표시합니다. 본문 확보에 실패한 자료는 제목 분석을 유지합니다.</p>
+      <div id="article-counts" class="ai-counts" aria-label="기사 본문 요약 처리 현황"></div>
+      <p id="article-last-run" class="ai-last-run">저장된 본문 분석 상태를 확인하고 있습니다.</p>
+      <p id="article-warning" class="ai-warning" role="status" hidden></p>
     </section>
     <section class="review-workspace" aria-labelledby="review-heading">
       <div class="review-top"><div><span class="eyebrow">REVIEW DESK</span><h2 id="review-heading">보고할 자료를 골라보세요</h2><p>채택한 자료는 아래 주간 후보 목록에 모입니다. 실제 보고 완료 이력과는 별개입니다.</p></div><a class="secondary-button" href="#weekly-review">주간 후보 보기 ↓</a></div>

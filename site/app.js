@@ -12,6 +12,8 @@
   const state = { latest: null, status: null, topic: "", selected: null, detail: null, request: 0, loadRequest: 0 };
   const Review = window.WeeklyReview;
   const AI = window.WeeklyAI;
+  const Article = window.WeeklyArticle;
+  const articleState = {data:null,loading:true,warning:""};
   const aiState = {data:null,loading:true,warning:""};
   const reviewState = { canonical: null, draft: null, ready: false, problem: "", storageWarning: "", localInvalid: false, duplicates: {}, detailCache: new Map(), weeklyRequest: 0, weeklyRecords: [], weeklyRange: null, memoryMode: null, unsavedStorage: false };
   let toastTimer;
@@ -299,8 +301,8 @@
       const labels = classificationLabels(detail);
       if (labels) analysis.append(labels);
       else analysis.append(el("p", "classification-note", "제목에서 별도 태그나 단계를 분류하지 않았습니다."));
-      analysis.append(el("p", "classification-note", "태그와 단계는 제목에 나타난 표현을 기준으로 합니다. 실제 추진·승인·완료 여부를 확인한 사실이 아닙니다."), el("p", "report-note", "수집 단계의 제목 분류입니다. AI 제안이 있으면 아래에 별도로 표시하며, 원문 요약·실적 수치·보고 초안·기보고 대비 비교는 제공하지 않습니다. 경영진 관심사와 실제 보고 이력은 미등록 상태입니다."));
-      panel.append(analysis, renderAIDetail(detail));
+      analysis.append(el("p", "classification-note", "태그와 단계는 제목에 나타난 표현을 기준으로 합니다. 실제 추진·승인·완료 여부를 확인한 사실이 아닙니다."), el("p", "report-note", "수집 단계의 제목 분류입니다. AI 제안이 있으면 아래에 별도로 표시하며, 이 제목 분류에는 원문 요약·실적 수치·보고 초안·기보고 대비 비교가 포함되지 않습니다. 확보한 기사 본문에 대한 요약은 아래 별도 영역에 표시합니다. 경영진 관심사와 실제 보고 이력은 미등록 상태입니다."));
+      panel.append(analysis, renderAIDetail(detail), renderArticleDetail(detail));
     }
     const evidenceSection = detailSection(demo ? "03" : "02", demo ? "확인한 근거" : "출처와 저장 범위");
     if (demo && detail.change_summary) evidenceSection.append(el("p", "change-note", detail.change_summary));
@@ -323,7 +325,7 @@
           link.setAttribute("aria-label", `${evidence.title || "자료"} 원문 확인 (새 탭)`);
           article.append(link, el("p", "source-domain", new URL(url).hostname));
         } else article.append(el("p", "source-error", "안전한 HTTPS 원문 링크를 확인할 수 없습니다."));
-        article.append(el("p", "evidence-storage", `수집 ${formatDate(evidence.fetched_at, true)} · ${evidence.content_level === "metadata_only" ? "메타데이터만 보관" : "저장 범위 확인 필요"}`), el("p", "evidence-footnote", "공개 저장 범위: 제목·출처·원문 URL·발행·접수일 및 수집 시각. 기사 본문과 이미지, 요약문은 이 화면에 저장하거나 제공하지 않습니다."));
+        article.append(el("p", "evidence-storage", `수집 ${formatDate(evidence.fetched_at, true)} · ${evidence.content_level === "metadata_only" ? "메타데이터만 보관" : "저장 범위 확인 필요"}`), el("p", "evidence-footnote", "원자료 저장 범위: 제목·출처·원문 URL·발행·접수일 및 수집 시각. 기사 본문 전체와 이미지는 보관하지 않습니다. 별도 AI 분석 영역에는 짧은 요약과 제한된 원문 근거를 표시할 수 있습니다."));
         if (evidence.retention_basis) article.append(el("p", "evidence-footnote", evidence.retention_basis));
       }
       evidenceSection.append(article);
@@ -456,7 +458,7 @@
     const data = aiState.data;
     const status = AI.summary(data);
     $("ai-readiness").textContent = status.label;
-    $("ai-summary-note").textContent = "기사 제목과 공시 서식 등 공개 메타데이터를 수동 분석합니다. 본문 요약은 제공하지 않으며 담당자의 채택·보류·제외와 기존 분류는 자동으로 변경하지 않습니다.";
+    $("ai-summary-note").textContent = "이 영역은 기사 제목과 공시 서식 등 공개 메타데이터에 대한 분석입니다. 본문 기반 요약은 아래 별도 영역에 표시하며 담당자의 채택·보류·제외와 기존 분류는 자동으로 변경하지 않습니다.";
     for (const [label,value] of [["분석 가능",data.counts.eligible],["현재 결과",data.counts.completed],["재분석 필요",data.counts.stale],["아직 미분석",data.counts.not_analyzed],["입력 제외",data.counts.blocked],["분석 실패",data.counts.failed],["키·설정 확인 필요",status.keyRequiredCount === null ? "미확인" : status.keyRequiredCount]]) {
       const count = el("div", "ai-count");
       count.append(el("span", "", label),el("strong", "", typeof value === "number" ? `${value}건` : value));
@@ -471,6 +473,87 @@
     if (data.last_attempt && ["failed","partial_success"].includes(data.last_attempt.status)) notes.push("최근 실행에 실패 항목이 있습니다. GitHub 실행 기록을 확인해주세요.");
     $("ai-warning").textContent = notes.join(" ");
     $("ai-warning").hidden = !notes.length;
+  }
+
+  function initializeArticles(result) {
+    articleState.data = null;
+    articleState.loading = false;
+    articleState.warning = "";
+    if (state.latest?.is_demo) { articleState.warning = "가상 데모에는 실제 기사 본문 요약을 연결하지 않습니다."; return; }
+    try {
+      if (!Article || result.error) throw new Error("저장된 기사 본문 요약을 불러오지 못했습니다.");
+      articleState.data = Article.validateSidecar(result.value,state.latest);
+    } catch(error) { articleState.warning = `${error.message} 제목 분석과 검토 선택은 계속 이용할 수 있습니다.`; }
+  }
+
+  function renderArticleSummary() {
+    const container = $("article-counts");
+    container.replaceChildren();
+    $("article-warning").textContent = articleState.warning;
+    $("article-warning").hidden = !articleState.warning;
+    if (!articleState.data) {
+      $("article-readiness").textContent = articleState.loading ? "확인 중" : "본문 요약 표시 안 함";
+      $("article-last-run").textContent = articleState.loading ? "저장된 본문 분석 상태를 확인하고 있습니다." : "유효한 본문 요약이 없어 결과를 표시하지 않습니다.";
+      return;
+    }
+    const data = articleState.data, summary = Article.summary(data);
+    $("article-readiness").textContent = summary.label;
+    for (const [label,key] of [["기사 대상","eligible"],["현재 요약","completed"],["본문 확보 실패","unavailable"],["미분석","pending"],["재분석 필요","stale"],["분석 실패","failed"]]) {
+      const metric = el("div","ai-count");
+      metric.append(el("span","",label),el("strong","",`${data.counts[key]}건`));
+      container.append(metric);
+    }
+    $("article-last-run").textContent = summary.lastAnalysisAt ? `최근 본문 분석 ${formatDate(summary.lastAnalysisAt,true)} · 한국 시간 기준` : "아직 현재 자료에 대한 본문 분석 완료 이력이 없습니다.";
+    if (data.last_attempt?.error_code || data.counts.unavailable || data.counts.failed) {
+      $("article-warning").textContent = "본문 확보 또는 분석이 끝나지 않은 자료가 있습니다. 자료 상세에서 사유를 확인하세요. 제목 분석과 담당자의 선택은 유지됩니다.";
+      $("article-warning").hidden = false;
+    }
+  }
+
+  function renderArticleDetail(detail) {
+    const section = el("section","article-detail");
+    const header = el("div","ai-detail-head");
+    header.append(el("h4","","기사 본문 요약"));
+    section.append(header);
+    if (!articleState.data) {
+      header.append(el("span","ai-state-label",articleState.loading ? "확인 중" : "결과 없음"));
+      section.append(el("p","ai-detail-message",articleState.loading ? "저장된 기사 본문 분석 상태를 확인하고 있습니다." : articleState.warning || "아직 기사 본문 요약이 없습니다. 제목 분석과 원문 링크를 이용하세요."));
+      return section;
+    }
+    const item = articleState.data.items[detail.issue_id];
+    if (!item || !Article.matchesDetail(item,detail)) {
+      header.append(el("span","ai-state-label","원문 연결 확인 필요"));
+      section.append(el("p","ai-detail-message","현재 원자료의 근거와 본문 요약의 출처가 일치하지 않아 결과를 표시하지 않습니다."));
+      return section;
+    }
+    header.append(el("span","ai-state-label",Article.statusLabels[item.status]));
+    section.append(el("p","ai-detail-message",Article.itemMessage(item)));
+    if (item.status!=="completed") return section;
+    const result = item.result;
+    const reference = ids => ids.map(id=>`[${id}]`).join(" ");
+    section.append(el("h5","article-field-heading","핵심 변화"),el("p","article-key-change",`${result.key_change.text} ${reference(result.key_change.evidence_ids)}`));
+    if (result.facts.length) {
+      const list = el("ul","article-facts");
+      result.facts.forEach(fact=>list.append(el("li","",`${fact.text} ${reference(fact.evidence_ids)}`)));
+      section.append(el("h5","article-field-heading","주요 사실"),list);
+    }
+    const stage = el("p","article-stage");
+    stage.append(el("span","","본문 기준 진행 단계"),el("strong","",result.stage));
+    section.append(stage,el("h5","article-field-heading","보고 후보 이유 · AI 검토 의견"),el("p","article-inference",result.why_candidate));
+    const evidence = el("details","article-evidence");
+    evidence.append(el("summary","","요약에 사용한 원문 근거 보기"));
+    result.evidence.forEach(row=>{
+      const quote = el("blockquote","article-quote");
+      quote.append(el("span","article-paragraph",`분석 본문 문단 ${row.id}`),el("p","",`“${row.quote}”`));
+      evidence.append(quote);
+    });
+    section.append(evidence);
+    const provenance = el("p","ai-provenance");
+    const link = el("a","article-source-link",`${item.source_name} 원문 ↗`);
+    link.href = Article.articleURL(item.source_url,item.source_name); link.target = "_blank"; link.rel = "noopener noreferrer";
+    provenance.append(link,document.createTextNode(` · 본문 확인 ${formatDate(item.body_fetched_at,true)} · 분석 ${formatDate(item.analyzed_at,true)}${item.truncated ? " · 일부 본문 분석" : ""}`));
+    section.append(provenance,el("p","ai-advisory-note","출처에 실린 내용의 AI 요약이며 사실관계를 독립적으로 검증한 결과는 아닙니다. 보고 후보 채택은 담당자가 결정하며 이 요약은 목록 복사·CSV에 자동 포함되지 않습니다."));
+    return section;
   }
 
   function renderAIDetail(detail) {
@@ -803,6 +886,8 @@
     reviewState.detailCache.clear();
     aiState.data = null; aiState.loading = true; aiState.warning = "";
     renderAISummary();
+    articleState.data = null; articleState.loading = true; articleState.warning = "";
+    renderArticleSummary();
     renderReviewSummary();
     renderWeekly();
     $("error-banner").hidden = true;
@@ -814,6 +899,7 @@
     $("visible-count").textContent = "불러오는 중";
     $("reload-data").disabled = true;
     const aiResult = getJSON("data/ai-analysis.json").then(value => ({value})).catch(error => ({error}));
+    const articleResult = getJSON("data/article-analysis.json").then(value => ({value})).catch(error => ({error}));
     try {
       const [latest, status, history, reviewsResult] = await Promise.all([getJSON("data/latest.json"), getJSON("data/status.json"), getJSON("data/report-history.json"), getJSON("data/reviews.json").then(value => ({value})).catch(error => ({error}))]);
       if (loadRequest !== state.loadRequest) return;
@@ -831,11 +917,17 @@
       initializeReviews(reviewsResult);
       renderSummary();
       renderAISummary();
+      renderArticleSummary();
       renderCandidates();
       renderWeekly();
       aiResult.then(result => {
         if (loadRequest !== state.loadRequest || !state.latest) return;
         initializeAI(result); renderAISummary();
+        if (state.detail) renderDetail(state.detail);
+      });
+      articleResult.then(result => {
+        if (loadRequest !== state.loadRequest || !state.latest) return;
+        initializeArticles(result); renderArticleSummary();
         if (state.detail) renderDetail(state.detail);
       });
       if (!latest.candidates.length) {
@@ -858,6 +950,8 @@
       renderReviewSummary(); renderWeekly();
       aiState.data = null; aiState.loading = false; aiState.warning = "수집 자료를 불러오지 못해 AI 결과의 대상과 버전을 확인할 수 없습니다.";
       renderAISummary();
+      articleState.data = null; articleState.loading = false; articleState.warning = "수집 자료를 불러오지 못해 기사 본문 요약의 근거를 확인할 수 없습니다.";
+      renderArticleSummary();
       metric("issue-count", "—", "건");
       metric("article-count", "—", "건");
       metric("version-count", "—", "개");

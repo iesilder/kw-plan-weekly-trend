@@ -376,6 +376,8 @@ def run_collection(root, collector=None, now=None):
             write_json(state_path / "analyses" / f"{issue_id}.json", detail)
         from .ai import stage_analysis
         stage_analysis(root, latest, details, state_path, mart, now=now)
+        from .article_analysis import stage_analysis as stage_articles
+        stage_articles(root, latest, details, state_path, mart, now=now)
         _replace(stage, [(stage_db, path), (state_path, root / "state"), (mart, root / "site/data")])
     return {"ok": True, **status}
 
@@ -439,6 +441,8 @@ def verify_live(root):
     validate_mirror(root)
     from .ai import check as check_ai
     check_ai(root)
+    from .article_analysis import check as check_articles
+    check_articles(root)
     topics, companies, sources, _ = load_live_inputs(root)
     latest, details, history = _read_snapshot(root)
     status = read_json(root / "site/data/status.json")

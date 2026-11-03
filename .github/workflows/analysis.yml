@@ -1,6 +1,6 @@
 name: Manual AI assistance and Pages
 
-# Explicit manual run only. Never collect, schedule, enable billing or select reports.
+# Explicit manual inference. Fetch public article bodies only in this workflow; no schedule or report decisions.
 on:
   workflow_dispatch:
     inputs:
@@ -46,16 +46,23 @@ jobs:
           node --check site/app.js
           node --check site/review.js
           node --check site/ai.js
-          node --test tests/test_review.js tests/test_ai.js
+          node --check site/article.js
+          node --test tests/test_review.js tests/test_ai.js tests/test_article.js
           python -m weekly_trend verify --root .
       - name: Analyze permitted public facts or save the waiting state
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           AI_FREE_PROJECT_CONFIRMED: ${{ inputs.free_project_confirmed }}
         run: python scripts/analyze.py --root . --run
+      - name: Read public article bodies and create evidence-bound briefs
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          AI_FREE_PROJECT_CONFIRMED: ${{ inputs.free_project_confirmed }}
+        run: python scripts/analyze_articles.py --root . --run
       - name: Verify the AI sidecar and unchanged collection
         run: |
           python scripts/analyze.py --root . --check
+          python scripts/analyze_articles.py --root . --check
           python -m weekly_trend verify --root .
       - name: Persist only AI assistance
         id: persist
@@ -70,7 +77,7 @@ jobs:
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add state/ai-analysis.json site/data/ai-analysis.json
+          git add state/ai-analysis.json site/data/ai-analysis.json state/article-analysis.json site/data/article-analysis.json
           if ! git diff --cached --quiet; then
             git commit -m 'analysis: save manual AI assistance and waiting state'
             git push origin HEAD:main

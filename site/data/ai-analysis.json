@@ -1,19 +1,29 @@
 {
   "schema_version": "1.0",
   "generation_id": "live-dfcfff7b616bc36e63c2",
-  "generated_at": "2026-11-03T04:00:52.721896+00:00",
+  "generated_at": "2026-11-03T04:07:24.721100+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "metadata-review-v1",
   "policy_version": "dart-factual-metadata-v1",
   "auto_analysis_enabled": false,
-  "last_attempt": null,
+  "last_attempt": {
+    "attempted_at": "2026-11-03T04:07:23.161815+00:00",
+    "completed_at": "2026-11-03T04:07:24.720066+00:00",
+    "status": "success",
+    "error_code": null,
+    "request_count": 1,
+    "eligible_count": 1,
+    "completed_count": 1,
+    "cached_count": 0,
+    "failed_count": 0
+  },
   "counts": {
     "blocked": 5,
-    "completed": 0,
+    "completed": 1,
     "stale": 0,
     "failed": 0,
-    "not_analyzed": 1,
+    "not_analyzed": 0,
     "eligible": 1
   },
   "items": {
@@ -68,16 +78,26 @@
       "result": null
     },
     "issue-b4acf9726e522360746c": {
-      "status": "not_analyzed",
+      "status": "completed",
       "reason_code": null,
       "input_fingerprint": "484e47b1bff91a1ff0ecc5eb00e22cb3f3632b85c1eb56f823eb349670878e10",
       "input_evidence_ids": [
         "version-c5450646d7d2c39e4f2a"
       ],
-      "result_fingerprint": null,
-      "analyzed_at": null,
+      "result_fingerprint": "484e47b1bff91a1ff0ecc5eb00e22cb3f3632b85c1eb56f823eb349670878e10",
+      "analyzed_at": "2026-11-03T04:07:24.720066+00:00",
       "error_code": null,
-      "result": null
+      "result": {
+        "suggested_topic_id": "performance",
+        "relevance": "relevant",
+        "rationale": "제공된 공시 서식에 근거하여 영업 및 잠정 실적 관련 내용을 확인할 수 있는 항목입니다.",
+        "check_points": [
+          "공시 서식명에 따른 실적 관련 기재 항목 확인",
+          "제출 일자에 해당하는 공시 본문 내용 확인",
+          "당사 명칭 및 관련 수치 기재 여부 확인"
+        ],
+        "duplicate_issue_ids": []
+      }
     }
   }
 }

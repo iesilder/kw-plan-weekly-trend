@@ -1,0 +1,80 @@
+name: 경영진 관심사 등록
+description: 관심 주제와 검색어를 등록해 관련 뉴스를 수집합니다.
+title: "[관심사] 관심사항 등록"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        이 이슈를 열면 관심사가 등록되고, 이슈를 닫으면 수집이 중단됩니다. 내용을 수정하면 다음 동기화 때 반영됩니다.
+        관심사와 검색어는 공개 저장됩니다. 개인정보, 비공개 경영 정보, 인증정보를 입력하지 마세요.
+  - type: input
+    id: interest-title
+    attributes:
+      label: 관심 주제
+      description: 웹사이트에서 표시할 짧은 주제입니다. 최대 120자입니다.
+      placeholder: 예) 증권사 AI 고객 서비스
+    validations:
+      required: true
+  - type: textarea
+    id: report-question
+    attributes:
+      label: 보고 질문
+      description: 관련 뉴스를 통해 확인하고 싶은 질문입니다. 최대 1000자입니다.
+      placeholder: 예) 경쟁사는 AI를 어떤 고객 업무에 적용하고 있는가?
+    validations:
+      required: true
+  - type: textarea
+    id: keywords
+    attributes:
+      label: 검색어
+      description: 뉴스 제목에서 찾을 검색어를 한 줄에 하나씩 또는 쉼표로 구분해 입력하세요. 검색어는 1개 이상, 최대 10개이며 각각 최대 80자입니다. 하나라도 일치하면 수집합니다.
+      placeholder: |
+        AI 상담
+        생성형 AI
+        챗봇
+    validations:
+      required: true
+  - type: textarea
+    id: exclude-keywords
+    attributes:
+      label: 제외 검색어
+      description: 제외할 검색어를 한 줄에 하나씩 또는 쉼표로 구분해 입력하세요. 최대 10개이며 각각 최대 80자입니다. 하나라도 일치하면 제외합니다. 없으면 비워두세요.
+      placeholder: 예) 채용
+    validations:
+      required: false
+  - type: dropdown
+    id: topic
+    attributes:
+      label: 분류
+      description: 관심 뉴스를 묶어 볼 분류를 선택하세요.
+      options:
+        - 실적·자본·주주정책
+        - 신사업·상품·고객전략
+        - 제휴·인수·해외사업
+        - 조직·경영전략
+        - 정책·인허가·리스크
+    validations:
+      required: true
+  - type: input
+    id: active-from
+    attributes:
+      label: 시작일
+      description: YYYY-MM-DD 형식입니다. 비워두면 등록 시점의 한국 날짜부터 시작합니다.
+      placeholder: YYYY-MM-DD
+    validations:
+      required: false
+  - type: input
+    id: active-until
+    attributes:
+      label: 종료일
+      description: YYYY-MM-DD 형식이며 해당 날짜까지 포함합니다. 비워두면 종료일 없이 계속 수집합니다.
+      placeholder: YYYY-MM-DD
+    validations:
+      required: false
+  - type: checkboxes
+    id: public-consent
+    attributes:
+      label: 공개 저장 동의
+      options:
+        - label: 관심사와 검색어가 공개 GitHub 이슈와 웹사이트에 저장됨을 이해합니다.
+          required: true

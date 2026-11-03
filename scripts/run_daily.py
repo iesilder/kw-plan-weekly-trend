@@ -33,6 +33,9 @@ def main():
         for stage, label in (("collection", "수집"), ("titles", "기사 제목 분류"), ("articles", "기사 본문 요약")):
             value = record["stages"][stage]
             lines.append(f"| {label} | {value['status']} | {value['error_code'] or 'none'} |")
+        registry = result.get("registry")
+        if registry is not None:
+            lines += ["", f"관심사 등록부 확인: {registry.get('status', 'unknown')} · {registry.get('error_code') or 'none'}", ""]
         lines += ["", "DART는 AI에 전송하지 않으며 채택·실제 보고 여부는 자동 결정하지 않습니다.", ""]
         with Path(os.environ["GITHUB_STEP_SUMMARY"]).open("a", encoding="utf-8") as handle:
             handle.write("\n".join(lines))

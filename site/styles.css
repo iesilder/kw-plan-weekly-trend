@@ -498,3 +498,40 @@ h2{font-size:16px}
 .article-quote p{margin:4px 0 0;font-size:11px;line-height:1.9;word-break:keep-all;overflow-wrap:anywhere}
 .article-source-link{color:var(--deep-blue);text-decoration:underline;text-underline-offset:3px}
 @media(max-width:650px){.article-detail{padding:14px}.article-key-change{font-size:11px;padding:10px}.article-facts,.article-inference,.article-quote p{font-size:10px}.article-stage{font-size:9px;gap:8px}}
+
+/* Interests use public registry records and the existing source list. */
+.interests-panel{border:1px solid var(--border);border-top:3px solid var(--deep-blue);border-radius:7px;padding:22px 24px;margin:0 0 24px;background:var(--surface-subtle);scroll-margin-top:18px}
+.interests-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}
+.interests-head h2{margin-top:8px;line-height:1.7}
+.interests-head .eyebrow{font-size:8px}
+.interests-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:7px}
+.interests-actions .primary-button,.interests-actions .secondary-button{font-size:10px}
+.interests-intro,.interests-privacy,.interests-status,.interests-last-run,.interests-warning,.interests-footnote{font-size:10px;line-height:1.8;color:var(--text-secondary);margin:12px 0 0;overflow-wrap:anywhere}
+.interests-privacy{color:var(--deep-blue);margin-top:5px}
+.interests-status{font-weight:600;color:var(--deep-blue);border-top:1px solid var(--border);padding-top:13px}
+.interests-last-run{margin-top:5px}
+.interest-request-link,.interest-source-link{color:var(--deep-blue);text-decoration:underline;text-underline-offset:3px}
+.interests-warning{padding:10px 12px;border-left:3px solid var(--steel-blue);background:var(--white);color:var(--deep-blue)}
+.interest-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:12px;margin-top:15px}
+.interests-empty{grid-column:1/-1;border:1px dashed var(--border-strong);border-radius:5px;background:var(--white);padding:22px 18px;font-size:11px;line-height:1.8;color:var(--text-secondary);margin:0}
+.interest-card{display:flex;flex-direction:column;min-width:0;border:1px solid var(--border);border-radius:6px;background:var(--white);padding:16px}
+.interest-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.interest-card h3{font-size:13px;line-height:1.7;letter-spacing:-.03em;margin:0;overflow-wrap:anywhere;word-break:keep-all}
+.interest-state{flex-shrink:0;max-width:100px;border:1px solid var(--border);border-radius:3px;padding:3px 5px;color:var(--text-secondary);font-size:9px;line-height:1.5}
+.interest-active .interest-state{color:var(--deep-blue);background:var(--surface-accent);border-color:var(--light-blue)}
+.interest-question{font-size:11px;line-height:1.8;color:var(--text-secondary);margin:10px 0 12px;overflow-wrap:anywhere;white-space:pre-wrap}
+.interest-keywords{display:flex;flex-wrap:wrap;gap:5px}
+.interest-keywords span,.interest-badge{display:inline-block;max-width:100%;font-size:9px;line-height:1.5;border:1px solid var(--border);border-radius:3px;padding:3px 6px;color:var(--deep-blue);background:var(--surface-subtle);overflow-wrap:anywhere}
+.interest-exclusions,.interest-period,.interest-match-status,.interest-collected-at{font-size:9px;line-height:1.8;color:var(--text-secondary);margin:8px 0 0;overflow-wrap:anywhere}
+.interest-match-status{color:var(--deep-blue);font-weight:600;margin-top:12px}
+.interest-collected-at{margin-top:4px}
+.interest-card-actions{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:14px}
+.interest-source-link{font-size:9px}
+.interest-filter-button{font-size:9px;min-height:29px;padding:6px 9px;white-space:normal}
+.interest-filter-button[aria-pressed="true"]{border-color:var(--deep-blue);background:var(--surface-accent)}
+.interests-footnote{font-size:9px;border-top:1px solid var(--border);padding-top:12px}
+.candidate.selected .interest-badge{color:var(--text-on-dark);border-color:var(--light-blue);background:transparent}
+.candidate-top .interest-badge{white-space:normal;text-align:left}
+#active-topic-label{overflow-wrap:anywhere;min-width:0}
+@media(max-width:980px){.interests-panel{padding:19px 20px}.interests-head{flex-wrap:wrap}.interests-actions{justify-content:flex-start}}
+@media(max-width:650px){.interests-panel{padding:18px 15px}.interests-head{display:block}.interests-head h2{font-size:17px}.interests-actions{margin-top:12px}.interests-actions .primary-button,.interests-actions .secondary-button{font-size:9px;padding:7px 9px}.interest-cards{grid-template-columns:1fr}.interest-card{padding:14px}.interests-intro,.interests-privacy,.interests-status,.interests-last-run,.interests-warning{font-size:9px}}

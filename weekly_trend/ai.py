@@ -470,13 +470,27 @@ def parse_response(response, batch):
         raise AIError("invalid_output") from None
 
 
-def run(root, environ=None, transport=None, now=None, automatic=False):
+def _issue_scope(values, allowed):
+    if values is None:
+        return None
+    if (not isinstance(values, (list, tuple, set, frozenset)) or len(values) > 10000
+            or any(not isinstance(value, str) or not ISSUE_ID.fullmatch(value) for value in values)):
+        raise ValueError("Invalid analysis issue scope")
+    result = set(values)
+    if not result <= set(allowed):
+        raise ValueError("Analysis scope contains an unknown issue")
+    return result
+
+
+def run(root, environ=None, transport=None, now=None, automatic=False, issue_ids=None, priority_issue_ids=None):
     root = Path(root)
     config = load_config(root)
     if type(automatic) is not bool or (automatic and config["manual_only"]):
         raise ValueError("Automatic AI analysis is not enabled")
     latest, details = _snapshot(root)
     state, public, inputs, topics = build_public(root, latest, details, now=now)
+    scope = _issue_scope(issue_ids, inputs)
+    priority = _issue_scope(priority_issue_ids, inputs) or set()
     eligible = [item for item in inputs.values() if item["reason"] is None]
     cached = [item for item in eligible if _cache_current(state["entries"].get(item["fingerprint"]), item, inputs)]
     pending = [item for item in eligible if not _cache_current(state["entries"].get(item["fingerprint"]), item, inputs)]
@@ -488,9 +502,13 @@ def run(root, environ=None, transport=None, now=None, automatic=False):
             if item["fingerprint"] in previous.get("fingerprints", []):
                 state.setdefault("failures", {}).setdefault(item["fingerprint"], {
                     "issue_id": item["input"]["issue_id"], "error_code": "invalid_output", "failed_at": previous["completed_at"]})
+    if scope is not None:
+        eligible = [item for item in eligible if item["input"]["issue_id"] in scope]
+        cached = [item for item in cached if item["input"]["issue_id"] in scope]
+        pending = [item for item in pending if item["input"]["issue_id"] in scope]
     suppressed = [item for item in pending if automatic and item["fingerprint"] in state.get("failures", {})]
     pending = [item for item in pending if item not in suppressed]
-    pending.sort(key=lambda item: (item["input"]["published_date"], item["input"]["issue_id"]))
+    pending.sort(key=lambda item: (item["input"]["issue_id"] not in priority, item["input"]["published_date"], item["input"]["issue_id"]))
     batch = pending[:config["max_items_per_run"]]
     stamp = _stamp(now)
     attempt = {"attempted_at": stamp, "completed_at": stamp, "status": "cached", "error_code": None,

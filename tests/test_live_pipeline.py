@@ -278,14 +278,18 @@ class LivePipelineTests(unittest.TestCase):
     def test_all_failed_retains_published_snapshot_but_updates_failure_history(self):
         first = self.run_records([record()])
         before = {str(path.relative_to(self.root / "site/data")): path.read_bytes()
-                  for path in (self.root / "site/data").rglob("*.json") if path.name != "status.json"}
+                  for path in (self.root / "site/data").rglob("*.json") if path.name not in {"status.json", "interests.json"}}
         result = run_collection(self.root, collector=lambda *a, **kw: {"status": "failed", "error_code": "timeout"}, now=NOW + timedelta(days=1))
         after = {str(path.relative_to(self.root / "site/data")): path.read_bytes()
-                 for path in (self.root / "site/data").rglob("*.json") if path.name != "status.json"}
+                 for path in (self.root / "site/data").rglob("*.json") if path.name not in {"status.json", "interests.json"}}
         self.assertEqual(before, after)
         self.assertFalse(result["collection_ok"])
         self.assertEqual(result["publication_status"], "retained")
         self.assertEqual(result["generation_id"], first["generation_id"])
+        # Operational interest status may refresh while the article snapshot is retained.
+        interest_status = read_json(self.root / "site/data/interests.json")
+        self.assertEqual(interest_status["generation_id"], first["generation_id"])
+        self.assertEqual(interest_status["last_collection"]["status"], "skipped")
         self.assertEqual(result["run_count"], 2)
         self.assertTrue(verify(self.root)["ok"])
         self.assertFalse(verify(self.root)["collection_ok"])

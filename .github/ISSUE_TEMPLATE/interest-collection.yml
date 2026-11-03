@@ -1,0 +1,23 @@
+name: 관심사 뉴스 수동 수집
+description: 등록된 활성 관심사의 뉴스를 지금 수집하도록 요청합니다.
+title: "[관심사 수집 요청]"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        현재 등록된 활성 관심사를 기준으로 뉴스를 수집합니다. 이 요청은 새 관심사를 등록하거나 설정을 변경하지 않습니다.
+        제목은 그대로 두세요. 요청 내용은 공개되므로 개인정보, 비공개 경영 정보, 인증정보를 입력하지 마세요.
+  - type: textarea
+    id: request-reason
+    attributes:
+      label: 요청 사유
+      description: 필요한 경우 수집 요청의 배경을 짧게 적으세요. 비워두어도 됩니다.
+    validations:
+      required: false
+  - type: checkboxes
+    id: public-consent
+    attributes:
+      label: 공개 저장 동의
+      options:
+        - label: 활성 경영진 관심사 수집을 요청합니다.
+          required: true

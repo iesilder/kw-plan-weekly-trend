@@ -54,6 +54,23 @@ class DailyTests(unittest.TestCase):
         self.assertEqual((self.root / 'data/daily-run.json').read_bytes(), before)
         self.assertFalse(self.execute(now=NOW + timedelta(days=1))['skipped'])
 
+    def test_registered_interests_are_synchronized_before_collection(self):
+        def sync(root, environ, now):
+            self.calls.append('registry')
+            return {'ok': True, 'interest_count': 1}
+        result = self.execute(registry_sync=sync)
+        self.assertEqual(self.calls, ['registry', 'collection', 'ai', 'ai', 'verify'])
+        self.assertEqual(result['registry']['interest_count'], 1)
+        self.calls.clear()
+        self.assertTrue(self.execute(registry_sync=sync)['skipped'])
+        self.assertEqual(self.calls, [])
+
+    def test_registry_failure_preserves_normal_collection_and_is_visible(self):
+        result = self.execute(registry_sync=lambda *a, **k: {'ok': False, 'error_code': 'network_error'})
+        self.assertEqual(self.calls, ['collection', 'ai', 'ai', 'verify'])
+        self.assertEqual(result['record']['status'], 'partial_success')
+        self.assertEqual(result['registry']['error_code'], 'network_error')
+
     def test_title_failure_does_not_stop_article_analysis_or_collection_publication(self):
         def failed(*args, **kwargs):
             self.calls.append('title_failure')

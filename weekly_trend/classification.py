@@ -125,15 +125,43 @@ def classify_for_source(title, source, companies, topics):
                 "matched_keywords": [form], "matched_topic_ids": ["performance"],
                 "tags": ["실적"], "event_stage": "실적 공시", "classification_rules_version": DART_POLICY_VERSION}
     rules = source.get("_classification_rules")
+    scoped_title, scoped_companies = title, companies
     if source.get("scope") == "company":
         company = next((item for item in companies if item["id"] == source.get("company_id") and item.get("enabled", True)), None)
         if company is None:
             return None
-        return classify(company["name"] + " " + title, [company], topics, rules=rules)
-    route = classify(title, companies, topics, rules=rules)
+        scoped_title, scoped_companies = company["name"] + " " + title, [company]
+    route = classify(scoped_title, scoped_companies, topics, rules=rules)
     if route and source.get("scope") == "competitors" and route["subject_scope"] != "securities_company":
+        route = None
+    if route:
+        return route
+    # Interests supplement the event keywords, never the approved source or
+    # securities-sector identity gate. Their routing is not source metadata.
+    interests = source.get("_interests", [])
+    if (not interests or source.get("type") != "rss" or
+            source.get("adapter") not in {"einfomax_rss", "newswire_rss"}):
         return None
-    return route
+    from .interests import match_title
+    matches = match_title(title, interests)
+    if not matches:
+        return None
+    rules = validate_classification_rules(rules) if rules is not None else load_classification_rules()
+    if _excluded(scoped_title, rules):
+        return None
+    subject = _subjects(scoped_title, scoped_companies, rules)
+    if subject is None or (source.get("scope") == "competitors" and subject["subject_scope"] != "securities_company"):
+        return None
+    matched = {row["interest_id"]: row["keywords"] for row in matches}
+    selected = [item for item in interests if item["id"] in matched]
+    primary = selected[0]["topic_id"]
+    tags = [name for name, words in rules["tag_keywords"].items() if _any(title, words)]
+    return {**subject, "topic_id": primary, "topic": topics[primary],
+            "matched_keywords": list(dict.fromkeys(word for row in matches for word in row["keywords"])),
+            "matched_topic_ids": list(dict.fromkeys(item["topic_id"] for item in selected)),
+            "tags": list(dict.fromkeys([*tags, "경영진 관심사"])),
+            "event_stage": _event_stage(_current_action(title, rules), rules, primary) or "관심사 키워드",
+            "classification_rules_version": rules["version"]}
 
 
 class _TextParser(HTMLParser):

@@ -23,6 +23,7 @@ class PipelineTests(unittest.TestCase):
         settings = read_json(self.root / "config/pipeline.json")
         settings.update(mode="demo", real_collection_enabled=False, schedule_enabled=False, planned_collection_frequency="manual")
         write_json(self.root / "config/pipeline.json", settings)
+        write_json(self.root / "config/interests.json", {"schema_version": "1.0", "interests": []})
 
     def rows(self, query):
         with closing(sqlite3.connect(self.root / "data/raw.sqlite3")) as db:

@@ -12,6 +12,7 @@ def _write(path, value):
 def install_analysis_fixture(root, *, seed_store=False):
     fixture = json.loads((Path(__file__).parent / "fixtures/analysis/metadata.json").read_text(encoding="utf-8"))
     latest = fixture["latest"]
+    _write(root / "config/interests.json", {"schema_version": "1.0", "interests": []})
     for path in (root / "site/data/issues").glob("*.json"):
         path.unlink()
     _write(root / "site/data/latest.json", latest)

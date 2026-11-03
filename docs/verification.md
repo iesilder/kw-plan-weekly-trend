@@ -22,12 +22,39 @@
 - AI·정기 실행이 false이며 실제 관심사·보고 이력은 비어 있습니다. 본문·첨부·제출인 개인정보가 저장되지 않았음을 검사했습니다.
 - 사전 점검에서 발견한 DART 정상 0건 응답, 지분 공시 분류, 날짜 전용 UI 표시 문제를 수정한 뒤 위 두 실행을 새로 수행했습니다.
 
-## GitHub Actions·Pages
+## GitHub Actions·Pages — 수동 2회와 실제 사이트 검증 완료
 
-[Collection checks 실행](https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41549017372)이 위 구현 커밋에서 성공했습니다. 58개 오프라인 테스트, JavaScript 구문 검사, 독립 프로세스 반복 저장 검사가 통과했습니다. 이 검사는 실제 수집·배포를 실행하지 않습니다.
+[Collection checks 실행](https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41549017372)이 구현 커밋에서 성공했습니다. 58개 오프라인 테스트, JavaScript 구문 검사, 독립 프로세스 반복 저장 검사가 통과했습니다.
 
-2단계용 `Manual collection and Pages`의 새 수동 실행과 실제 Pages 화면 검증은 아직 완료하지 않았습니다. 이전 실행의 재실행은 과거 워크플로 정의를 사용하므로 새 `Run workflow`가 필요합니다. 코드·DB 검증과 외부 배포 검증을 혼동하지 않습니다. 연결 도구에는 새 workflow_dispatch 시작 기능이 없고 작업 브라우저는 로그아웃 상태이므로, [수동 실행 화면](https://github.com/iesilder/kw-plan-weekly-trend/actions/workflows/pipeline.yml)에서 main의 새 Run workflow가 필요합니다.
+사용자가 새 `workflow_dispatch`를 시작한 뒤 같은 실행의 build를 한 번 수동 재실행했습니다. 두 번째 시도는 최신 main의 저장 DB를 읽어 수집·검증·저장·Pages 배포까지 다시 수행했습니다. 정기 실행이나 push에 의한 실제 수집은 연결하지 않았습니다.
 
-1단계/색상 변경의 기존 성공 실행: https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41544024109
+| 항목 | GitHub 첫 실행 | GitHub 두 번째 실행 |
+|---|---:|---:|
+| 실행 | [attempt 1](https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41550232074/attempts/1) | [attempt 2](https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41550232074/attempts/2) |
+| 수집 시각(한국 시간) | 2026-11-03 09:05:10 | 2026-11-03 09:09:08 |
+| build / deploy | 성공 / 성공 | 성공 / 성공 |
+| 정상 출처 | 10/10 | 10/10 |
+| 확인한 공시목록 | 33 | 34 |
+| 주제 일치 자료 | 1 | 1 |
+| 누적 자료 / 버전 | 22 / 22 | 22 / 22 |
+| 새 버전 / 중복 | 0 / 1 | 0 / 1 |
+| 누적 실제 수집 실행 | 3회 | 4회 |
+
+누적 실행 4회는 개발 환경 2회와 GitHub 2회를 합한 값입니다. 두 시도 모두 실제 `collect`와 `verify`를 실행했으며, 각각 58개 테스트도 통과했습니다. 추가된 공시목록 한 건은 주제 조건을 통과하지 않아 저장 자료는 증가하지 않았습니다.
+
+첫 데이터 커밋: [17dc6e8](https://github.com/iesilder/kw-plan-weekly-trend/commit/17dc6e87acace855c3c08c8ddea221739f5e5844)  
+두 번째 데이터 커밋: [ef7b70a](https://github.com/iesilder/kw-plan-weekly-trend/commit/ef7b70a351bb1cb256484d0d2eaacb6c6d1f7bd2)
+
+[공개 사이트](https://iesilder.github.io/kw-plan-weekly-trend/)에서 다음 항목을 직접 확인했습니다.
+
+- 실제 자료 22건·22버전·누적 4회, 마지막 수집 09:09, 출처 10곳 성공.
+- 공시명·회사·접수일·원문 링크·메타데이터 저장 범위 표시.
+- 결산실적 검색 1건, 규제·위험·운영 12건, 삼성증권과 해당 주제 조합 5건.
+- 디지털·AI·신사업 0건의 빈 결과 안내와 필터 초기화.
+- 자료 정보 복사에 공시명·출처·URL·날짜만 포함됨.
+- AI·정기 수집 미연결, 경영진 관심사 미등록, 실제 보고 이력 0건.
+- 배포 중 열린 이전 목록에서 세대 불일치 시 상세 표시를 차단하고, '자료 다시 불러오기'로 최신 세대의 정상 상세 표시를 복구함.
+
+현재 자료는 DART 공시 메타데이터이며 언론 기사 수집은 연결되지 않았습니다. 주제는 공시 제목 규칙으로 분류하므로 내용 판단과 중요도 분석은 원문 확인이 필요합니다.
 
 세부 수치는 [phase2-validation.json](phase2-validation.json)에 있습니다.

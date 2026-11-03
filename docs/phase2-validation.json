@@ -23,8 +23,61 @@
   "all_sources_succeeded": true,
   "legacy_demo_preserved": true,
   "metadata_only": true,
-  "github_actions_validation": "pending_new_workflow_dispatch",
-  "pages_phase2_deployment": "pending",
+  "github_actions_validation": {
+    "status": "passed",
+    "first": {
+      "run_id": 41550232074,
+      "run_attempt": 1,
+      "url": "https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41550232074/attempts/1",
+      "data_commit": "17dc6e87acace855c3c08c8ddea221739f5e5844",
+      "generation_id": "live-d52d9f9949411f51be23",
+      "collected_at": "2026-11-03T00:05:10.081161+00:00",
+      "fetched_count": 33,
+      "accepted_count": 1,
+      "article_count": 22,
+      "version_count": 22,
+      "inserted_versions": 0,
+      "duplicate_count": 1,
+      "run_count": 3,
+      "successful_sources": 10,
+      "build": "success",
+      "deploy": "success"
+    },
+    "second": {
+      "run_id": 41550232074,
+      "run_attempt": 2,
+      "url": "https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41550232074/attempts/2",
+      "data_commit": "ef7b70a351bb1cb256484d0d2eaacb6c6d1f7bd2",
+      "generation_id": "live-a431828cca81436f3cfc",
+      "collected_at": "2026-11-03T00:09:08.849233+00:00",
+      "fetched_count": 34,
+      "accepted_count": 1,
+      "article_count": 22,
+      "version_count": 22,
+      "inserted_versions": 0,
+      "duplicate_count": 1,
+      "run_count": 4,
+      "successful_sources": 10,
+      "build": "success",
+      "deploy": "success"
+    }
+  },
+  "pages_phase2_deployment": {
+    "status": "verified",
+    "url": "https://iesilder.github.io/kw-plan-weekly-trend/",
+    "generation_id": "live-a431828cca81436f3cfc",
+    "checks": [
+      "22 real records displayed",
+      "10 successful sources",
+      "date-only publication dates",
+      "title search",
+      "topic and company combined filters",
+      "empty state and reset",
+      "metadata-only clipboard copy",
+      "source link display",
+      "refresh after concurrent deployment"
+    ]
+  },
   "implementation_commit": "baaf8be8c37e6b9b7c4f730b38a27c2c74ce2e0c",
   "github_offline_ci": {
     "url": "https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41549017372",

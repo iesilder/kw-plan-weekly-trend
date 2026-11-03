@@ -1,21 +1,21 @@
 {
   "schema_version": "1.0",
   "generation_id": "live-dfcfff7b616bc36e63c2",
-  "generated_at": "2026-11-03T04:07:24.721100+00:00",
+  "generated_at": "2026-11-03T04:13:10.704675+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "metadata-review-v1",
   "policy_version": "dart-factual-metadata-v1",
   "auto_analysis_enabled": false,
   "last_attempt": {
-    "attempted_at": "2026-11-03T04:07:23.161815+00:00",
-    "completed_at": "2026-11-03T04:07:24.720066+00:00",
-    "status": "success",
+    "attempted_at": "2026-11-03T04:13:10.703998+00:00",
+    "completed_at": "2026-11-03T04:13:10.703998+00:00",
+    "status": "cached",
     "error_code": null,
-    "request_count": 1,
+    "request_count": 0,
     "eligible_count": 1,
-    "completed_count": 1,
-    "cached_count": 0,
+    "completed_count": 0,
+    "cached_count": 1,
     "failed_count": 0
   },
   "counts": {

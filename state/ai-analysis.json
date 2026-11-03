@@ -27,17 +27,15 @@
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-03T04:07:23.161815+00:00",
-    "completed_at": "2026-11-03T04:07:24.720066+00:00",
-    "status": "success",
+    "attempted_at": "2026-11-03T04:13:10.703998+00:00",
+    "completed_at": "2026-11-03T04:13:10.703998+00:00",
+    "status": "cached",
     "error_code": null,
-    "request_count": 1,
+    "request_count": 0,
     "eligible_count": 1,
-    "completed_count": 1,
-    "cached_count": 0,
+    "completed_count": 0,
+    "cached_count": 1,
     "failed_count": 0,
-    "fingerprints": [
-      "484e47b1bff91a1ff0ecc5eb00e22cb3f3632b85c1eb56f823eb349670878e10"
-    ]
+    "fingerprints": []
   }
 }

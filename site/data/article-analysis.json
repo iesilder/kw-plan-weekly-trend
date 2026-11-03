@@ -1,30 +1,30 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-dcff2231972dd25eeea6",
-  "generated_at": "2026-11-03T08:25:37.215444+00:00",
+  "generation_id": "live-0b8e0d781d8b3da63d81",
+  "generated_at": "2026-11-03T09:00:27.271398+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "article-bullets-v1",
   "auto_analysis_enabled": true,
   "counts": {
-    "unavailable": 0,
-    "not_applicable": 1,
     "completed": 5,
-    "pending": 0,
     "failed": 1,
     "stale": 0,
+    "not_applicable": 1,
+    "unavailable": 0,
+    "pending": 0,
     "eligible": 6
   },
   "last_attempt": {
-    "attempted_at": "2026-11-03T06:30:52.438683+00:00",
-    "completed_at": "2026-11-03T06:31:00.923302+00:00",
-    "status": "partial_success",
-    "error_code": "partial_invalid_output",
-    "request_count": 1,
-    "fetch_count": 2,
-    "completed_count": 1,
-    "cached_count": 4,
-    "failed_count": 1
+    "attempted_at": "2026-11-03T09:00:27.271398+00:00",
+    "completed_at": "2026-11-03T09:00:27.271398+00:00",
+    "status": "cached",
+    "error_code": null,
+    "request_count": 0,
+    "fetch_count": 0,
+    "completed_count": 0,
+    "cached_count": 5,
+    "failed_count": 0
   },
   "items": {
     "issue-b37f533f8536327de29d": {

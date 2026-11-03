@@ -173,22 +173,15 @@
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-03T04:27:33.362129+00:00",
-    "completed_at": "2026-11-03T04:27:36.971710+00:00",
-    "status": "success",
+    "attempted_at": "2026-11-03T04:57:40.597603+00:00",
+    "completed_at": "2026-11-03T04:57:40.597603+00:00",
+    "status": "cached",
     "error_code": null,
-    "request_count": 1,
+    "request_count": 0,
     "eligible_count": 6,
-    "completed_count": 6,
-    "cached_count": 0,
+    "completed_count": 0,
+    "cached_count": 6,
     "failed_count": 0,
-    "fingerprints": [
-      "9d728ec57b23a11fbcc1516e2b0bb0ba4d953544cf86dc0a832e702e2a806d07",
-      "39570d859b94671f7805c4ae6be747fd889d357116c8f48bca25a58676c076af",
-      "5efbedad3564f97d7156db9e00de63eaa5cf03a4f1f24a39f0f352dc939469ab",
-      "5be85319226e8fd94c9c4ae6b7cef1a8420ee5b6919519db3890ab4823610103",
-      "68919117de20ecab93face45330897f7864c508dc4172f8a39b915b97844be23",
-      "4a9377c023c9a20301d2ba522995016b3446c70fc5b81741a10747b5c2d8a17a"
-    ]
+    "fingerprints": []
   }
 }

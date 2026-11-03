@@ -1,6 +1,47 @@
 {
   "schema_version": "1.0",
   "entries": {},
-  "checks": {},
-  "last_attempt": null
+  "checks": {
+    "issue-193dc2f5a4e04bf16e42": {
+      "metadata_fingerprint": "ec05345f2de0976ad01264802ede37082a00cb50e08db40c167311a06fb11813",
+      "checked_at": "2026-11-03T04:57:40.672650+00:00",
+      "reason_code": "invalid_output",
+      "status": "failed"
+    },
+    "issue-8cda78e7eb4a64c526cd": {
+      "metadata_fingerprint": "34e7e0957b607134ece1ab086df346b548002df504e81e45c5fe0489cceda0bd",
+      "checked_at": "2026-11-03T04:57:40.672650+00:00",
+      "reason_code": "invalid_output",
+      "status": "failed"
+    },
+    "issue-a7a9b220314dfbd5acef": {
+      "metadata_fingerprint": "a8a58e5df97cc4a1946edf78642d3bfd7726e85dca77441979d9f9c492f516cf",
+      "checked_at": "2026-11-03T04:57:40.672650+00:00",
+      "reason_code": "invalid_output",
+      "status": "failed"
+    },
+    "issue-a99980f5c72b33d80750": {
+      "metadata_fingerprint": "ca02bf8e91df9b547a092e8558a58665de338bb53becdd588a81790023242d78",
+      "checked_at": "2026-11-03T04:57:40.672650+00:00",
+      "reason_code": "invalid_output",
+      "status": "failed"
+    },
+    "issue-ec88113fec2c699faaf5": {
+      "metadata_fingerprint": "7f73e15f4e912c06cdef060bce177109de4acea84686a3361e1d8cfd8ff02835",
+      "checked_at": "2026-11-03T04:57:40.672650+00:00",
+      "reason_code": "invalid_output",
+      "status": "failed"
+    }
+  },
+  "last_attempt": {
+    "attempted_at": "2026-11-03T04:57:40.672650+00:00",
+    "completed_at": "2026-11-03T04:57:59.742440+00:00",
+    "status": "failed",
+    "error_code": "invalid_output",
+    "request_count": 1,
+    "fetch_count": 5,
+    "completed_count": 0,
+    "cached_count": 0,
+    "failed_count": 5
+  }
 }

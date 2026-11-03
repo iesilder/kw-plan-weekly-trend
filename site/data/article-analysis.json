@@ -1,47 +1,134 @@
 {
   "schema_version": "1.0",
   "generation_id": "live-dcff2231972dd25eeea6",
-  "generated_at": "2026-11-03T06:27:51.279148+00:00",
+  "generated_at": "2026-11-03T06:31:00.924509+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "article-bullets-v1",
   "auto_analysis_enabled": false,
   "counts": {
-    "failed": 1,
-    "stale": 1,
     "pending": 0,
+    "failed": 1,
+    "stale": 0,
     "not_applicable": 1,
-    "completed": 4,
     "unavailable": 0,
+    "completed": 5,
     "eligible": 6
   },
   "last_attempt": {
-    "attempted_at": "2026-11-03T06:27:38.702311+00:00",
-    "completed_at": "2026-11-03T06:27:51.277088+00:00",
+    "attempted_at": "2026-11-03T06:30:52.438683+00:00",
+    "completed_at": "2026-11-03T06:31:00.923302+00:00",
     "status": "partial_success",
     "error_code": "partial_invalid_output",
     "request_count": 1,
-    "fetch_count": 5,
-    "completed_count": 4,
-    "cached_count": 0,
+    "fetch_count": 2,
+    "completed_count": 1,
+    "cached_count": 4,
     "failed_count": 1
   },
   "items": {
     "issue-b37f533f8536327de29d": {
-      "status": "stale",
+      "status": "completed",
       "reason_code": null,
       "evidence_ids": [
         "version-4684945a97b42a87b99d"
       ],
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442768",
       "source_name": "연합인포맥스(기사) · 증권",
-      "input_fingerprint": null,
-      "result_fingerprint": "46ba09ff523d8b41c106f52bf4e6f00bc9d7a8201bf2fcc28213d242dc46738e",
-      "analyzed_at": "2026-11-03T06:06:41.516608+00:00",
-      "body_hash": "a41f04cbbedd882899e47985182e2dc8a71a19a48a5c8645fb82d8586a3b232e",
-      "body_fetched_at": "2026-11-03T06:06:32.310257+00:00",
+      "input_fingerprint": "55395c92c04c270215e46dc18694d382a655b470fed16a7d01cd22f499d9771c",
+      "result_fingerprint": "55395c92c04c270215e46dc18694d382a655b470fed16a7d01cd22f499d9771c",
+      "analyzed_at": "2026-11-03T06:31:00.923275+00:00",
+      "body_hash": "d55ec6cc956b91f9db6c9997b3fff0ee42ff2fcb33badb65b16844f8393933fc",
+      "body_fetched_at": "2026-11-03T06:30:52.438683+00:00",
       "truncated": false,
-      "result": null
+      "result": {
+        "key_change": {
+          "text": "기업공개(IPO) 공모가 산정의 합리성을 높이고 상장 직후 오버행 리스크를 줄이기 위해 사전수요예측 제도와 코너스톤투자자 제도가 본격 도입됨.",
+          "evidence_ids": [
+            "p3",
+            "p4"
+          ]
+        },
+        "facts": [
+          {
+            "text": "자본시장과 금융투자업에 관한 법률 시행령 개정안이 국무회의에서 의결되어 이달 13일에 시행될 예정임.",
+            "evidence_ids": [
+              "p5"
+            ]
+          },
+          {
+            "text": "사전수요예측 제도를 통해 증권신고서 제출 전에 자격 요건을 갖춘 기관투자자를 상대로 공시 전 정보를 제공하고 매입 희망 가격과 물량을 파악함.",
+            "evidence_ids": [
+              "p6",
+              "p7"
+            ]
+          },
+          {
+            "text": "코너스톤투자자 제도를 통해 공모주 기관 배정 물량 중 일부를 6개월 이상 의무보유하는 조건으로 사전에 배정함.",
+            "evidence_ids": [
+              "p10"
+            ]
+          },
+          {
+            "text": "보호예수 기간은 배정 물량의 50%는 6개월, 30%는 8개월, 20%는 10개월로 분산됨.",
+            "evidence_ids": [
+              "p13"
+            ]
+          },
+          {
+            "text": "코너스톤 배정 한도는 일반 기관 배정 물량 내에서 코스피 시장은 전체 상한 20%·개별 상한 10%, 코스닥 시장은 전체 상한 30%·개별 상한 20%로 차등 적용됨.",
+            "evidence_ids": [
+              "p14"
+            ]
+          },
+          {
+            "text": "발행사의 대주주 및 특수관계인의 코너스톤 참여와 사전 배정을 대가로 한 이면계약은 엄격히 금지됨.",
+            "evidence_ids": [
+              "p15"
+            ]
+          }
+        ],
+        "stage": "출시·시행",
+        "why_candidate": "IPO 시장의 가격 결정 방식과 기관 배정 제도가 크게 개편되므로, 증권사의 인수업 및 ECM 사업 전략과 내부 통제 기준 정비를 위해 핵심 참고 자료로 활용됨.",
+        "evidence": [
+          {
+            "id": "p3",
+            "quote": "공개(IPO) 시장에 코너스톤투자자(Co"
+          },
+          {
+            "id": "p4",
+            "quote": "수요를 반영해 가격 합리성을 높이고,"
+          },
+          {
+            "id": "p5",
+            "quote": "개정안 시행일인 오는 13일에 맞춰 시행"
+          },
+          {
+            "id": "p6",
+            "quote": "를 파악할 수 있는 '사전수요예측' 제도"
+          },
+          {
+            "id": "p7",
+            "quote": "에게 공시 전 정보를 제공하고 매입 희망"
+          },
+          {
+            "id": "p10",
+            "quote": "배정 물량 중 일부를 6개월 이상 의무보"
+          },
+          {
+            "id": "p13",
+            "quote": "는 8개월, 20%는 10개월 동안 팔"
+          },
+          {
+            "id": "p14",
+            "quote": "닥 시장은 전체 상한 30%, 개별 상한"
+          },
+          {
+            "id": "p15",
+            "quote": "가 있는 기관투자자는 코너스톤투자자로 참"
+          }
+        ]
+      }
     },
     "issue-ec88113fec2c699faaf5": {
       "status": "completed",

@@ -374,60 +374,103 @@
       }
     },
     "issue-b37f533f8536327de29d": {
-      "metadata_fingerprint": "ee93d26fb8f1986ad7fff92fa224e419327e19caa1bf4e923b127879838afcb4",
-      "input_fingerprint": "46ba09ff523d8b41c106f52bf4e6f00bc9d7a8201bf2fcc28213d242dc46738e",
+      "metadata_fingerprint": "bd6786844079c82b394241eaf3b7a4cacbf2efcbe10d2b01f51b37c9664949cd",
+      "input_fingerprint": "55395c92c04c270215e46dc18694d382a655b470fed16a7d01cd22f499d9771c",
       "evidence_ids": [
         "version-4684945a97b42a87b99d"
       ],
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442768",
       "source_name": "연합인포맥스(기사) · 증권",
-      "body_hash": "a41f04cbbedd882899e47985182e2dc8a71a19a48a5c8645fb82d8586a3b232e",
-      "body_fetched_at": "2026-11-03T06:06:32.310257+00:00",
+      "body_hash": "d55ec6cc956b91f9db6c9997b3fff0ee42ff2fcb33badb65b16844f8393933fc",
+      "body_fetched_at": "2026-11-03T06:30:52.438683+00:00",
       "truncated": false,
-      "prompt_version": "article-brief-v2",
-      "analyzed_at": "2026-11-03T06:06:41.516608+00:00",
+      "prompt_version": "article-bullets-v1",
+      "analyzed_at": "2026-11-03T06:31:00.923275+00:00",
       "result": {
         "key_change": {
-          "text": "기업공개 시장에 코너스톤투자자 제도와 사전수요예측 제도를 도입하는 자본시장법 시행령 개정안이 의결됐다.",
+          "text": "기업공개(IPO) 공모가 산정의 합리성을 높이고 상장 직후 오버행 리스크를 줄이기 위해 사전수요예측 제도와 코너스톤투자자 제도가 본격 도입됨.",
           "evidence_ids": [
             "p3",
-            "p5"
+            "p4"
           ]
         },
         "facts": [
           {
-            "text": "금융위원회는 3일 국무회의에서 시행령 개정안이 의결됐다고 밝혔다.",
+            "text": "자본시장과 금융투자업에 관한 법률 시행령 개정안이 국무회의에서 의결되어 이달 13일에 시행될 예정임.",
             "evidence_ids": [
               "p5"
             ]
           },
           {
-            "text": "해당 개정안은 오는 13일에 맞춰 시행될 예정이다.",
+            "text": "사전수요예측 제도를 통해 증권신고서 제출 전에 자격 요건을 갖춘 기관투자자를 상대로 공시 전 정보를 제공하고 매입 희망 가격과 물량을 파악함.",
             "evidence_ids": [
-              "p5"
+              "p6",
+              "p7"
             ]
           },
           {
-            "text": "사모운용사나 투자일임업자는 총 위탁재산 300억 원 이상 요건이 적용된다.",
+            "text": "코너스톤투자자 제도를 통해 공모주 기관 배정 물량 중 일부를 6개월 이상 의무보유하는 조건으로 사전에 배정함.",
             "evidence_ids": [
-              "p9"
+              "p10"
+            ]
+          },
+          {
+            "text": "보호예수 기간은 배정 물량의 50%는 6개월, 30%는 8개월, 20%는 10개월로 분산됨.",
+            "evidence_ids": [
+              "p13"
+            ]
+          },
+          {
+            "text": "코너스톤 배정 한도는 일반 기관 배정 물량 내에서 코스피 시장은 전체 상한 20%·개별 상한 10%, 코스닥 시장은 전체 상한 30%·개별 상한 20%로 차등 적용됨.",
+            "evidence_ids": [
+              "p14"
+            ]
+          },
+          {
+            "text": "발행사의 대주주 및 특수관계인의 코너스톤 참여와 사전 배정을 대가로 한 이면계약은 엄격히 금지됨.",
+            "evidence_ids": [
+              "p15"
             ]
           }
         ],
-        "stage": "인가·승인",
-        "why_candidate": "공모가 산정의 합리성을 높이고 상장 직후 단기 차익 실현에 따른 주가 급락 부작용을 방지하기 위함.",
+        "stage": "출시·시행",
+        "why_candidate": "IPO 시장의 가격 결정 방식과 기관 배정 제도가 크게 개편되므로, 증권사의 인수업 및 ECM 사업 전략과 내부 통제 기준 정비를 위해 핵심 참고 자료로 활용됨.",
         "evidence": [
           {
             "id": "p3",
-            "quote": "업공개(IPO) 시장에 코너스톤투자자(Cornerstone Investor) 제도와 사전수요예측 제도가 본격 도입된다."
+            "quote": "공개(IPO) 시장에 코너스톤투자자(Co"
+          },
+          {
+            "id": "p4",
+            "quote": "수요를 반영해 가격 합리성을 높이고,"
           },
           {
             "id": "p5",
-            "quote": "안이 의결됐다고 밝혔다. 이번 개정안은 이달 중 공포돼 자본시장법 개정안 시행일인 오는 13일에 맞춰 시행될 예정이다."
+            "quote": "개정안 시행일인 오는 13일에 맞춰 시행"
           },
           {
-            "id": "p9",
-            "quote": "동일하다. 다만 일반 사모운용사나 투자일임업자의 경우 총 위탁재산 300억 원 이상 요건만 적용되며, 등록 2년 경과"
+            "id": "p6",
+            "quote": "를 파악할 수 있는 '사전수요예측' 제도"
+          },
+          {
+            "id": "p7",
+            "quote": "에게 공시 전 정보를 제공하고 매입 희망"
+          },
+          {
+            "id": "p10",
+            "quote": "배정 물량 중 일부를 6개월 이상 의무보"
+          },
+          {
+            "id": "p13",
+            "quote": "는 8개월, 20%는 10개월 동안 팔"
+          },
+          {
+            "id": "p14",
+            "quote": "닥 시장은 전체 상한 30%, 개별 상한"
+          },
+          {
+            "id": "p15",
+            "quote": "가 있는 기관투자자는 코너스톤투자자로 참"
           }
         ]
       }
@@ -436,7 +479,7 @@
   "checks": {
     "issue-193dc2f5a4e04bf16e42": {
       "metadata_fingerprint": "10e0d614bab30780b28de67ab28037fee555c7a084596282e8c0d0a20ae8352e",
-      "checked_at": "2026-11-03T06:27:38.702311+00:00",
+      "checked_at": "2026-11-03T06:30:52.438683+00:00",
       "reason_code": "output_number_mismatch",
       "status": "failed"
     },
@@ -465,21 +508,21 @@
       "status": "completed"
     },
     "issue-b37f533f8536327de29d": {
-      "metadata_fingerprint": "ee93d26fb8f1986ad7fff92fa224e419327e19caa1bf4e923b127879838afcb4",
-      "checked_at": "2026-11-03T06:06:32.310257+00:00",
+      "metadata_fingerprint": "bd6786844079c82b394241eaf3b7a4cacbf2efcbe10d2b01f51b37c9664949cd",
+      "checked_at": "2026-11-03T06:30:52.438683+00:00",
       "reason_code": null,
       "status": "completed"
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-03T06:27:38.702311+00:00",
-    "completed_at": "2026-11-03T06:27:51.277088+00:00",
+    "attempted_at": "2026-11-03T06:30:52.438683+00:00",
+    "completed_at": "2026-11-03T06:31:00.923302+00:00",
     "status": "partial_success",
     "error_code": "partial_invalid_output",
     "request_count": 1,
-    "fetch_count": 5,
-    "completed_count": 4,
-    "cached_count": 0,
+    "fetch_count": 2,
+    "completed_count": 1,
+    "cached_count": 4,
     "failed_count": 1
   }
 }

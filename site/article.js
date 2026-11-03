@@ -7,7 +7,7 @@
 })(typeof globalThis === "object" ? globalThis : this, function () {
   "use strict";
   const STATUSES = new Set(["not_applicable", "pending", "completed", "stale", "unavailable", "failed"]);
-  const PROMPT_VERSIONS = new Set(["article-brief-v1", "article-brief-v2"]);
+  const PROMPT_VERSIONS = new Set(["article-brief-v1", "article-brief-v2", "article-bullets-v1"]);
   const STAGES = new Set(["검토", "추진·협약", "인가·승인", "출시·시행", "성과", "점검·조사", "불명"]);
   const SOURCES = new Map([
     ["연합인포맥스(기사) · 증권", "news.einfomax.co.kr"],
@@ -16,7 +16,8 @@
   ]);
   const LABELS = Object.freeze({not_applicable:"본문 요약 대상 아님", pending:"본문 분석 대기", completed:"본문 기반 AI 요약", stale:"원자료 변경 · 재분석 필요", unavailable:"본문 확보 실패", failed:"본문 분석 실패"});
   const REASONS = Object.freeze({
-    not_article:"현재 기사·보도자료 본문만 요약합니다. 공시 본문과 실적 수치 추출은 아직 연결하지 않았습니다.",
+    not_article:"기사·보도자료 본문만 요약합니다. DART 공시는 AI에 전송하지 않으며 공시 목록과 원문 링크는 유지합니다.",
+    dart_not_sent:"DART 공시는 AI에 전송하거나 요약하지 않습니다. 공시 목록과 원문 링크는 그대로 확인할 수 있습니다.",
     missing_api_key:"본문 분석을 아직 실행하지 않았습니다. GitHub의 API 키 설정을 확인한 뒤 수동 AI 실행을 진행하세요.",
     free_project_not_confirmed:"본문 분석을 아직 실행하지 않았습니다. 무료 프로젝트 확인 후 수동 AI 실행을 진행하세요.",
     http_forbidden:"출처가 본문 요청을 허용하지 않아 요약하지 못했습니다. 기존 제목 분석과 원문 링크를 이용할 수 있습니다.",
@@ -73,7 +74,7 @@
       if (!object(row) || !text(row.text,max) || !array(row.evidence_ids,id=>PARAGRAPH.test(id)&&ids.has(id),4) || !row.evidence_ids.length || new Set(row.evidence_ids).size!==row.evidence_ids.length) fail("본문 요약의 주장과 원문 근거가 연결되지 않았습니다.");
       return {text:row.text,evidence_ids:[...row.evidence_ids]};
     }
-    if (!array(value.facts,row=>object(row),4)) fail("본문 요약의 주요 사실 형식이 올바르지 않습니다.");
+    if (!array(value.facts,row=>object(row),7)) fail("본문 요약의 주요 사실 형식이 올바르지 않습니다.");
     return {key_change:claim(value.key_change,260),facts:value.facts.map(row=>claim(row,180)),stage:value.stage,why_candidate:value.why_candidate,evidence:value.evidence.map(row=>({id:row.id,quote:row.quote}))};
   }
   function validateSidecar(value, latest) {

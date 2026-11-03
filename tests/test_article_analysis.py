@@ -157,7 +157,35 @@ class ArticleAnalysisTests(unittest.TestCase):
         self.assertEqual(self.fetches, [])
         self.assertEqual(self.calls, [])
 
+    def test_editable_korean_bullet_prompt_reaches_api_and_changes_cache_fingerprint(self):
+        self.run_good()
+        prompt = (self.root / "config/article_prompt.txt").read_text().strip()
+        self.assertEqual(self.calls[0][0]["system_instruction"], prompt)
+        before = self.public()["items"][self.id]["input_fingerprint"]
+        with (self.root / "config/article_prompt.txt").open("a") as handle:
+            handle.write("\n검토 시 주요 조건의 누락을 다시 확인한다.\n")
+        articles.prepare(self.root, now=NOW)
+        self.assertEqual(self.public()["items"][self.id]["status"], "stale")
+        self.run_good(now=NOW + timedelta(minutes=1))
+        self.assertNotEqual(self.public()["items"][self.id]["input_fingerprint"], before)
+
+    def test_whole_fetched_article_up_to_ten_thousand_characters_is_passed_including_ending(self):
+        self.body["paragraphs"] = [*copy.deepcopy(PARAGRAPHS[:2]),
+                                   *[{"id": f"p{i}", "text": "기사 본문의 주요 배경과 적용 조건을 설명한다. " * 70} for i in range(3, 7)],
+                                   {"id": "p7", "text": "본문 후반부의 중요한 적용 제외 조건과 후속 일정 설명."}]
+        self.run_good()
+        inputs = json.loads(self.calls[0][0]["input"])["items"]
+        self.assertTrue(all(source["paragraphs"][-1]["id"] == "p7" for source in inputs))
+        self.assertTrue(all(source["truncated"] is False for source in inputs))
+
+    def test_bullet_generation_schema_keeps_eight_bullets_and_reference_union_consistent(self):
+        properties = articles.response_schema()["properties"]["items"]["items"]["properties"]
+        self.assertEqual(properties["facts"]["maxItems"], 7)
+        self.assertEqual(properties["key_change"]["properties"]["evidence_ids"]["maxItems"], 2)
+        self.assertLessEqual(8 * 2, articles.MAX_EVIDENCE_PARAGRAPHS)
+
     def test_one_fetch_failure_leaves_other_briefs_and_existing_title_analysis_available(self):
+        title_before = read(self.root / "site/data/ai-analysis.json")
         def one_failure(url, source):
             if not self.fetches:
                 self.fetches.append(url)
@@ -167,7 +195,7 @@ class ArticleAnalysisTests(unittest.TestCase):
         self.assertEqual(result["counts"]["unavailable"], 1)
         self.assertEqual(result["counts"]["completed"], 4)
         self.assertEqual(result["last_attempt"]["status"], "partial_success")
-        self.assertEqual(read(self.root / "site/data/ai-analysis.json")["counts"]["completed"], 6)
+        self.assertEqual(read(self.root / "site/data/ai-analysis.json"), title_before)
 
     def test_wrong_article_title_is_not_sent_to_ai(self):
         def wrong(url, source):

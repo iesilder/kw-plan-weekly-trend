@@ -69,14 +69,14 @@ test("invalid attempts and automatic analysis cannot claim completed operation",
   for(const change of [d=>d.auto_analysis_enabled=true,d=>d.prompt_version="unrecognized",d=>d.model="different",d=>d.generated_at="yesterday",d=>d.last_attempt={...good,request_count:2},d=>d.last_attempt={...good,fetch_count:6},d=>d.last_attempt={...good,completed_at:"2026-11-02T05:00:00Z"}]){const{data,latest}=fixture();change(data);assert.throws(()=>Article.validateSidecar(data,latest));}
 });
 test("DART exclusion and truncated articles are described honestly",()=>{
-  const{data}=fixture();assert.match(Article.itemMessage(data.items[B]),/공시 본문과 실적 수치 추출은 아직 연결하지 않았습니다/);complete(data);data.items[A].truncated=true;assert.match(Article.itemMessage(data.items[A]),/일부를 분석/);assert.match(Article.itemMessage({status:"unavailable",reason_code:"network_error"}),/제목 분석과 원문 링크/);
+  const{data}=fixture();assert.match(Article.itemMessage(data.items[B]),/DART 공시는 AI에 전송하지 않으며/);complete(data);data.items[A].truncated=true;assert.match(Article.itemMessage(data.items[A]),/일부를 분석/);assert.match(Article.itemMessage({status:"unavailable",reason_code:"network_error"}),/제목 분석과 원문 링크/);
 });
 test("a large current cache does not count as a raised API batch",()=>{
   const{data,latest}=fixture();data.last_attempt={attempted_at:STAMP,completed_at:STAMP,status:"cached",error_code:null,request_count:0,fetch_count:0,completed_count:0,cached_count:20,failed_count:0};
   assert.doesNotThrow(()=>Article.validateSidecar(data,latest));assert.match(Article.itemMessage({status:"unavailable",reason_code:"access_restricted"}),/접근 제한/);
 });
 test("known article prompt versions remain compatible while unknown versions fail",()=>{
-  for(const version of ["article-brief-v1","article-brief-v2"]){const{data,latest}=fixture();data.prompt_version=version;complete(data);assert.equal(Article.validateSidecar(data,latest).prompt_version,version);}
+  for(const version of ["article-brief-v1","article-brief-v2","article-bullets-v1"]){const{data,latest}=fixture();data.prompt_version=version;complete(data);assert.equal(Article.validateSidecar(data,latest).prompt_version,version);}
   const{data,latest}=fixture();data.prompt_version="article-brief-v3";assert.throws(()=>Article.validateSidecar(data,latest));
 });
 test("partial success retains four valid briefs and a separately failed item",()=>{
@@ -114,4 +114,21 @@ test("five separate claims may reference twenty paragraphs within a shared quote
   const tooMany=clone(brief);tooMany.evidence.push({id:"p21",quote:"나"});assert.throws(()=>Article.validateResult(tooMany));
   const tooLong=clone(brief);tooLong.evidence[0].quote+="나";assert.throws(()=>Article.validateResult(tooLong));
   const tooManyPerClaim=clone(brief);tooManyPerClaim.key_change.evidence_ids.push("p5");assert.throws(()=>Article.validateResult(tooManyPerClaim));
+});
+test("bullet summaries support one leading point plus seven facts without weakening evidence bounds",()=>{
+  const{data,latest}=fixture();complete(data);data.prompt_version="article-bullets-v1";
+  data.items[A].result.key_change.text="기관 대상 신규 서비스 출시";
+  data.items[A].result.facts=Array.from({length:7},(_,index)=>({text:`주요 추진 항목 ${index+1}`,evidence_ids:["p2"]}));
+  const before=clone(data.items[A].result);
+  const result=Article.validateSidecar(data,latest).items[A].result;
+  const points=[result.key_change,...result.facts];assert.equal(points.length,8);assert.equal(points[0].text,"기관 대상 신규 서비스 출시");assert.deepEqual(points[7].evidence_ids,["p2"]);assert.deepEqual(data.items[A].result,before);
+  data.items[A].result.facts.push({text:"추가 사실",evidence_ids:["p2"]});assert.throws(()=>Article.validateSidecar(data,latest));
+});
+test("DART never receives a completed body summary under the new bullet prompt",()=>{
+  const{data,latest}=fixture();data.prompt_version="article-bullets-v1";
+  data.items[B].reason_code="dart_not_sent";
+  const validated=Article.validateSidecar(data,latest);assert.match(Article.itemMessage(validated.items[B]),/AI에 전송하거나 요약하지 않습니다/);
+  complete(data);Object.assign(data.items[B],clone(data.items[A]),{evidence_ids:[E2],source_name:latest.candidates[1].source_name});
+  data.counts={eligible:2,completed:2,stale:0,unavailable:0,pending:0,not_applicable:0,failed:0};
+  assert.throws(()=>Article.validateSidecar(data,latest));
 });

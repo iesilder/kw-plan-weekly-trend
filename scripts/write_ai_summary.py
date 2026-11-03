@@ -23,7 +23,7 @@ def main():
              f"| 이번 실행 캐시 재사용 | {attempt.get('cached_count', 0)} |",
              f"| 마지막 시도 상태 | {attempt.get('status', 'not_run')} |",
              f"| 상태 코드 | {attempt.get('error_code') or 'none'} |", "",
-             "공시 서식과 기사·보도자료 제목을 분석하며 본문 요약·재무 수치 분석 결과가 아닙니다.",
+             "기사·보도자료 제목만 분류합니다. DART는 AI로 전송하지 않습니다. 본문 요약 결과는 아래 별도 항목에서 확인합니다.",
              "[설정과 범위](https://github.com/iesilder/kw-plan-weekly-trend/blob/main/docs/ai.md)", ""]
     article_path = Path("site/data/article-analysis.json")
     if article_path.exists():

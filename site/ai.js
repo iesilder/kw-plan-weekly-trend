@@ -12,7 +12,7 @@
   const STATUSES = new Set(["blocked", "not_analyzed", "completed", "stale", "failed"]);
   const RELEVANCE = Object.freeze({relevant:"검토 대상에 해당", uncertain:"판단 유보 · 원문 확인", out_of_scope:"검토 범위 밖으로 제안"});
   const STATUS_LABELS = Object.freeze({blocked:"AI 입력 제외", not_analyzed:"아직 분석하지 않음", completed:"AI 제안 · 담당자 확인 필요", stale:"자료 변경 · 재분석 필요", failed:"분석 실패"});
-  const REASONS = Object.freeze({source_ai_prohibited:"이전 분석 기준에서 제외한 자료입니다. 최신 코드로 수동 실행하면 현재 입력 기준을 다시 적용합니다.", rights_unconfirmed:"이전 분석 기준에서 보류한 자료입니다. 최신 코드로 수동 실행하면 현재 입력 기준을 다시 적용합니다.", source_not_eligible:"설정된 공개 메타데이터 입력 범위에 해당하지 않습니다.", not_live_metadata:"실제 공개 메타데이터가 아니므로 분석하지 않습니다.", invalid_factual_metadata:"현재 자료의 제목·날짜·근거 정보를 확인하지 못해 분석하지 않습니다."});
+  const REASONS = Object.freeze({dart_not_sent:"DART 공시는 AI에 전송하지 않습니다. 공시 목록과 원문 링크는 그대로 확인할 수 있습니다.", source_ai_prohibited:"이전 분석 기준에서 제외한 자료입니다. 최신 코드로 수동 실행하면 현재 입력 기준을 다시 적용합니다.", rights_unconfirmed:"이전 분석 기준에서 보류한 자료입니다. 최신 코드로 수동 실행하면 현재 입력 기준을 다시 적용합니다.", source_not_eligible:"설정된 공개 메타데이터 입력 범위에 해당하지 않습니다.", not_live_metadata:"실제 공개 메타데이터가 아니므로 분석하지 않습니다.", invalid_factual_metadata:"현재 자료의 제목·날짜·근거 정보를 확인하지 못해 분석하지 않습니다."});
   const KEY_CODES = new Set(["missing_api_key", "free_project_not_confirmed"]);
   const HASH = /^[a-f0-9]{64}$/;
   const ID = /^issue-[a-f0-9]{20}$/;
@@ -102,8 +102,8 @@
     if (item.status === "stale") return "분석 후 자료 또는 분석 기준이 바뀌었습니다. 이전 제안은 표시하지 않으며 수동 재분석이 필요합니다.";
     if (KEY_CODES.has(item.error_code)) return item.error_code === "missing_api_key" ? "아직 분석하지 않았습니다. GitHub에 API 키를 등록한 뒤 수동으로 실행해주세요." : "아직 분석하지 않았습니다. 무료 프로젝트 확인 설정을 마친 뒤 수동으로 실행해주세요.";
     if (item.status === "failed") return "분석에 실패했습니다. 기존 수집 자료와 담당자의 선택은 유지됩니다. GitHub 실행 기록을 확인해주세요.";
-    if (item.status === "not_analyzed") return "아직 실제 AI 분석 결과가 없습니다. 기사 제목 또는 공시 서식·회사·날짜를 바탕으로 수동 분석합니다. 본문은 입력에 포함되지 않습니다.";
-    return "기사 제목 또는 공시 서식·회사·날짜에 근거한 제안입니다. 기사·공시 본문을 읽거나 실적 수치를 분석한 결과가 아닙니다.";
+    if (item.status === "not_analyzed") return "아직 실제 AI 분석 결과가 없습니다. 기사·보도자료의 제목·출처·날짜를 바탕으로 수동 분석합니다. DART 공시는 AI에 전송하지 않습니다.";
+    return "기사·보도자료 제목의 관련성과 검토 이유에 대한 제안입니다. 기사 본문 요약은 아래 별도 영역에서 확인하세요. DART 공시는 AI에 전송하지 않습니다.";
   }
   return Object.freeze({validateSidecar,summary,lastAnalysisAt,keyRequiredCount,itemMessage,statusLabels:STATUS_LABELS,relevanceLabels:RELEVANCE});
 });

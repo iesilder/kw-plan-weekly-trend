@@ -33,8 +33,19 @@ def _previous(path):
     return value
 
 
+def interest_issue_ids(root, now=None):
+    root = Path(root)
+    if not (root / "site/data/latest.json").exists():
+        return set()
+    from .interests import build_public
+    latest, details = ai._snapshot(root)
+    public = build_public(root, latest, details, now=now)
+    return {match["issue_id"] for interest in public["interests"] if interest["state"] == "active"
+            for match in interest["matches"]}
+
+
 def run(root, environ=None, now=None, collector=None, title_runner=None,
-        article_runner=None, verifier=None):
+        article_runner=None, verifier=None, registry_sync=None):
     root = Path(root)
     settings = read_json(root / "config/pipeline.json")
     if settings.get("schedule_enabled") is not True:
@@ -48,6 +59,11 @@ def run(root, environ=None, now=None, collector=None, title_runner=None,
     if previous and previous["date_kst"] >= date:
         return {"ok": True, "skipped": True, "reason_code": "already_ran_today", "record": previous}
     stamp = ai._stamp(moment)
+    registry = None
+    env = environ if environ is not None else __import__("os").environ
+    if registry_sync is not None or env.get("GITHUB_TOKEN"):
+        from .interests import sync_from_github
+        registry = (registry_sync or sync_from_github)(root, environ=env, now=moment)
     stages = {name: {"status": "skipped", "error_code": None} for name in STAGES}
     try:
         collection = (collector or run_collection)(root, now=moment)
@@ -59,7 +75,9 @@ def run(root, environ=None, now=None, collector=None, title_runner=None,
         for name, runner in (("titles", title_runner or ai.run),
                              ("articles", article_runner or article_analysis.run)):
             try:
-                result = runner(root, environ=environ, now=moment, automatic=True)
+                priority = interest_issue_ids(root, moment)
+                options = {"priority_issue_ids": sorted(priority)} if priority else {}
+                result = runner(root, environ=environ, now=moment, automatic=True, **options)
                 attempt = result["last_attempt"]
                 stages[name] = {"status": attempt["status"], "error_code": attempt["error_code"]}
                 if result.get("suppressed_count", 0) and attempt["status"] in {"cached", "success"}:
@@ -70,10 +88,10 @@ def run(root, environ=None, now=None, collector=None, title_runner=None,
     # optional analysis stage was isolated above.
     (verifier or verify)(root)
     status = ("failed" if stages["collection"]["status"] == "failed" else
-              "partial_success" if any(stage["status"] not in {"success", "cached"} for stage in stages.values())
+              "partial_success" if (registry is not None and not registry.get("ok")) or any(stage["status"] not in {"success", "cached"} for stage in stages.values())
               else "success")
     record = {"schema_version": "1.0", "date_kst": date, "started_at": stamp,
               "completed_at": ai._stamp(now), "status": status, "stages": stages}
     write_json(path, record)
     _previous(path)
-    return {"ok": True, "skipped": False, "reason_code": None, "record": record}
+    return {"ok": True, "skipped": False, "reason_code": None, "record": record, "registry": registry}

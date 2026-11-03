@@ -15,6 +15,7 @@ def main():
         root = Path(directory)
         for name in ("config", "reports", "tests/fixtures"):
             shutil.copytree(REPO / name, root / name)
+        (root / "config/interests.json").write_text(json.dumps({"schema_version": "1.0", "interests": []}), encoding="utf-8")
         settings_path = root / "config/pipeline.json"
         settings = json.loads(settings_path.read_text(encoding="utf-8"))
         settings.update(mode="demo", real_collection_enabled=False, schedule_enabled=False,

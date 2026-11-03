@@ -1,0 +1,137 @@
+name: Collect executive interests and Pages
+
+on:
+  issues:
+    types: [opened]
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'site/*.html'
+      - 'site/*.css'
+      - 'site/*.js'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch' || (github.event.issue.user.login == github.repository_owner && startsWith(github.event.issue.title, '[관심사 수집 요청]'))) && 'weekly-trend-publish' || format('interest-ignored-{0}', github.run_id) }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.actor == github.repository_owner) || (github.event_name == 'issues' && github.event.issue.user.login == github.repository_owner && startsWith(github.event.issue.title, '[관심사 수집 요청]')))
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      issues: read
+    outputs:
+      data_sha: ${{ steps.persist.outputs.sha }}
+      artifact_name: ${{ steps.base.outputs.artifact_name }}
+      request_failed: ${{ steps.interests.outputs.request_failed }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: '3.12'
+      - name: Remember starting revision
+        id: base
+        run: |
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "artifact_name=github-pages-interests-${{ github.run_id }}-${{ github.run_attempt }}" >> "$GITHUB_OUTPUT"
+      - name: Verify offline behavior
+        run: |
+          python -m unittest discover -s tests -v
+          node --check site/app.js
+          node --check site/review.js
+          node --check site/ai.js
+          node --check site/article.js
+          node --check site/interests.js
+          node --test tests/test_*.js
+      - name: Prepare interest controls after a website change
+        if: github.event_name == 'push'
+        run: python scripts/run_interests.py --root . --prepare
+      - name: Synchronize interests and collect this explicit request
+        if: github.event_name != 'push'
+        id: interests
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          # Existing Free, billing-unlinked project approved for daily news analysis.
+          AI_FREE_PROJECT_CONFIRMED: 'true'
+        run: python scripts/run_interests.py --root . --run
+      - name: Verify the publishable snapshot
+        run: python -m weekly_trend verify --root .
+      - name: Persist validated collection and analysis
+        id: persist
+        env:
+          START_SHA: ${{ steps.base.outputs.sha }}
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          if [ "$(git rev-parse origin/main)" != "$START_SHA" ]; then
+            echo 'Main changed during this run. No overwrite or deployment performed.' >&2
+            exit 1
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add config/interests.json data state site/data
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: save explicit executive interest collection'
+            git push origin HEAD:main
+          fi
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Record saved counts
+        run: |
+          python scripts/write_run_summary.py
+          python scripts/write_ai_summary.py
+      - name: Package the website only
+        uses: actions/upload-pages-artifact@v5.0.0
+        with:
+          name: ${{ steps.base.outputs.artifact_name }}
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+      issues: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: main
+      - name: Reject obsolete deployment
+        env:
+          DATA_SHA: ${{ needs.build.outputs.data_sha }}
+        run: |
+          if [ "$(git rev-parse HEAD)" != "$DATA_SHA" ]; then
+            echo 'A newer main revision exists. No obsolete deployment performed.' >&2
+            exit 1
+          fi
+      - name: Deploy the verified artifact
+        id: deployment
+        uses: actions/deploy-pages@v5.0.1
+        with:
+          artifact_name: ${{ needs.build.outputs.artifact_name }}
+      - name: Surface request failure after preserving the snapshot
+        if: needs.build.outputs.request_failed == 'true'
+        run: |
+          echo 'Interest request failed. The verified snapshot and failure status were preserved.' >&2
+          exit 1
+      - name: Complete the successfully published request
+        if: success() && github.event_name == 'issues' && needs.build.outputs.request_failed != 'true'
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/complete_interest_request.py

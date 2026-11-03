@@ -402,7 +402,7 @@ def _validation_failure(check, data):
             (code == "invalid_output" or code.startswith("output_")))
 
 
-def run(root, environ=None, fetcher=None, transport=None, now=None, automatic=False):
+def run(root, environ=None, fetcher=None, transport=None, now=None, automatic=False, issue_ids=None, priority_issue_ids=None):
     root = Path(root)
     stamp = ai._stamp(now)
     moment = ai._valid_time(stamp)
@@ -412,7 +412,9 @@ def run(root, environ=None, fetcher=None, transport=None, now=None, automatic=Fa
     state = load_state(root)
     latest, details = ai._snapshot(root)
     public, inputs = _public(root, latest, details, state, now)
-    eligible = {key: value for key, value in inputs.items() if not value["reason"]}
+    scope = ai._issue_scope(issue_ids, inputs)
+    priority = ai._issue_scope(priority_issue_ids, inputs) or set()
+    eligible = {key: value for key, value in inputs.items() if not value["reason"] and (scope is None or key in scope)}
     pending = []
     cached = []
     suppressed = []
@@ -446,9 +448,9 @@ def run(root, environ=None, fetcher=None, transport=None, now=None, automatic=Fa
             # rechecks of already summarized articles; otherwise old successes
             # would consume every fetch slot after the 24-hour TTL expires.
             return (0, data["published_date"], data["published_date"], issue_id)
-        pending.sort(key=pending_order)
+        pending.sort(key=lambda key: (pending_order(key)[0], key not in priority, *pending_order(key)[1:]))
     else:
-        pending.sort(key=lambda key: (eligible[key]["published_date"], key))
+        pending.sort(key=lambda key: (key not in priority, eligible[key]["published_date"], key))
     selected = pending[:config["max_articles_per_run"]]
     attempt = {"attempted_at": stamp, "completed_at": stamp, "status": "cached", "error_code": None,
                "request_count": 0, "fetch_count": 0, "completed_count": 0, "cached_count": len(cached), "failed_count": 0}

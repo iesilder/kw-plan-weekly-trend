@@ -37,8 +37,9 @@ jobs:
           node --check site/review.js
           node --check site/ai.js
           node --check site/article.js
+          node --check site/interests.js
       - name: Review selection and duplicate-candidate tests
-        run: node --test tests/test_review.js tests/test_ai.js tests/test_article.js
+        run: node --test tests/test_*.js
       - name: Independent-process persistence check
         run: python scripts/check_repeatability.py
 

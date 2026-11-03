@@ -1,8 +1,46 @@
 {
   "schema_version": "1.0",
   "is_demo": false,
-  "generation_id": "live-191e97c1a7a389967d11",
+  "generation_id": "live-dcff2231972dd25eeea6",
   "issues": [
+    {
+      "issue_id": "issue-b37f533f8536327de29d",
+      "title": "코너스톤·사전수요예측 본격 도입…자본시장법 시행령 의결",
+      "company": "증권업권 관련",
+      "company_ids": [],
+      "companies": [],
+      "topic_id": "risk",
+      "topic": "정책·인허가·리스크",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(시행령)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-4684945a97b42a87b99d"
+      ],
+      "detail_path": "data/issues/issue-b37f533f8536327de29d.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "published_at": null,
+      "published_date": "2026-11-03",
+      "fetched_at": "2026-11-03T05:01:06.592491+00:00",
+      "matched_keywords": [
+        "시행령"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ],
+      "tags": [
+        "정책",
+        "자본"
+      ],
+      "event_stage": "출시·사업 개시",
+      "classification_rules_version": "news-events-v2",
+      "content_filter": "topics",
+      "content_policy_version": "news-events-v2_52ce6f3968839698"
+    },
     {
       "issue_id": "issue-ec88113fec2c699faaf5",
       "title": "금융위, '바이낸스 해킹' 여파에 가상자산거래소 긴급 점검",

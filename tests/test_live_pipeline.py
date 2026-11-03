@@ -443,13 +443,13 @@ class LivePipelineTests(unittest.TestCase):
         path = self.root / "config/pipeline.json"
         settings = read_json(path)
         write_json(path, {**settings, "schedule_enabled": True,
-                          "planned_collection_frequency": "daily_0800_kst", "timezone": "Asia/Seoul"})
+                          "planned_collection_frequency": "daily_1100_kst", "timezone": "Asia/Seoul"})
         with patch("weekly_trend.ai.request_once", side_effect=AssertionError("collection must not call AI")), \
                 patch("weekly_trend.article_analysis.fetch_article", side_effect=AssertionError("collection must not fetch bodies")):
             result = self.run_records([record()])
         self.assertTrue(result["schedule_enabled"])
         self.assertFalse(result["ai_enabled"])
-        self.assertEqual(result["planned_collection_frequency"], "daily_0800_kst")
+        self.assertEqual(result["planned_collection_frequency"], "daily_1100_kst")
         self.assertEqual(result["timezone"], "Asia/Seoul")
         self.assertEqual(result["last_successful_run_at"], NOW.isoformat(timespec="microseconds"))
         self.assertTrue(verify(self.root)["ok"])
@@ -466,14 +466,25 @@ class LivePipelineTests(unittest.TestCase):
         settings = read_json(path)
         for changes in [
             {"schedule_enabled": "true"}, {"schedule_enabled": 1}, {"schedule_enabled": None},
-            {"schedule_enabled": True, "planned_collection_frequency": "daily_0800_kst", "timezone": "UTC"},
+            {"schedule_enabled": True, "planned_collection_frequency": "daily_1100_kst", "timezone": "UTC"},
+            {"schedule_enabled": True, "planned_collection_frequency": "daily_0800_kst", "timezone": "Asia/Seoul"},
             {"schedule_enabled": True, "planned_collection_frequency": "daily_0900_kst", "timezone": "Asia/Seoul"},
-            {"schedule_enabled": False, "planned_collection_frequency": "daily_0800_kst", "timezone": "Asia/Seoul"},
+            {"schedule_enabled": False, "planned_collection_frequency": "daily_1100_kst", "timezone": "Asia/Seoul"},
         ]:
             write_json(path, {**settings, **changes})
             with self.assertRaises(ValueError):
                 self.run_records([record()])
             self.assertEqual(before, (self.root / "data/raw.sqlite3").read_bytes())
+
+    def test_eight_am_snapshot_remains_readable_after_schedule_moves_to_eleven(self):
+        config_path = self.root / "config/pipeline.json"
+        write_json(config_path, {**read_json(config_path), "schedule_enabled": True,
+                                 "planned_collection_frequency": "daily_1100_kst", "timezone": "Asia/Seoul"})
+        self.run_records([record()])
+        for path in (self.root / "site/data/status.json", self.root / "state/run_status.json"):
+            write_json(path, {**read_json(path), "planned_collection_frequency": "daily_0800_kst"})
+        self.assertTrue(verify(self.root)["ok"])
+        self.assertEqual(load_live_inputs(self.root)[3]["planned_collection_frequency"], "daily_1100_kst")
 
     def test_old_manual_snapshot_can_be_verified_after_schedule_is_configured(self):
         self.run_records([record()])
@@ -484,7 +495,7 @@ class LivePipelineTests(unittest.TestCase):
             write_json(path, status)
         config_path = self.root / "config/pipeline.json"
         write_json(config_path, {**read_json(config_path), "schedule_enabled": True,
-                                 "planned_collection_frequency": "daily_0800_kst", "timezone": "Asia/Seoul"})
+                                 "planned_collection_frequency": "daily_1100_kst", "timezone": "Asia/Seoul"})
         self.assertTrue(verify(self.root)["ok"])
 
     def test_future_date_only_rejected_using_korean_calendar_day(self):

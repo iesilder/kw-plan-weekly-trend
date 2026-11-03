@@ -1,6 +1,6 @@
 # 일일 자동 갱신
 
-`Daily collection, news AI and Pages`가 한국 시간 매일 오전 8시를 기준으로 공개 목록·RSS 수집 → 기사 제목 분류 → 기사 본문 개조식 요약 → 검증·저장 → Pages 배포를 실행합니다. DART는 수집·직접 검토만 하며 AI 입력에 포함하지 않습니다. 채택·보류·제외, 실제 보고 여부와 경영진 관심사는 자동으로 바꾸지 않습니다.
+`Daily collection, news AI and Pages`가 한국 시간 매일 오전 11시를 기준으로 공개 목록·RSS 수집 → 기사 제목 분류 → 기사 본문 개조식 요약 → 검증·저장 → Pages 배포를 실행합니다. DART는 수집·직접 검토만 하며 AI 입력에 포함하지 않습니다. 채택·보류·제외, 실제 보고 여부와 경영진 관심사는 자동으로 바꾸지 않습니다.
 
 ## 처음 한 번
 
@@ -9,7 +9,7 @@
 3. `build`, `deploy`와 실행 요약의 수집·제목 분류·본문 요약 상태를 확인합니다. [사이트](https://iesilder.github.io/kw-plan-weekly-trend/)를 새로고침해 마지막 수집 시각과 요약 건수를 확인합니다.
 4. 이후에는 매일 수동 실행할 필요가 없습니다.
 
-스케줄은 `.github/workflows/daily.yml`의 `0 23 * * *` UTC, 즉 다음 한국 날짜의 08:00입니다. GitHub 처리 대기 때문에 정확한 시각에 시작한다고 보장하지 않습니다. 공개 저장소는 60일간 활동이 없으면 예약 실행이 중지될 수 있으며 Actions에서 다시 활성화할 수 있습니다. [GitHub 예약 실행 설명](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule)
+스케줄은 `.github/workflows/daily.yml`의 `0 2 * * *` UTC, 즉 같은 날 한국 시간 11:00입니다. GitHub 처리 대기 때문에 정확한 시각에 시작한다고 보장하지 않습니다. 공개 저장소는 60일간 활동이 없으면 예약 실행이 중지될 수 있으며 Actions에서 다시 활성화할 수 있습니다. [GitHub 예약 실행 설명](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule)
 
 ## 호출·저장 제한
 

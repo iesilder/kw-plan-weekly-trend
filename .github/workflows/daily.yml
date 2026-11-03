@@ -2,8 +2,8 @@ name: Daily collection, news AI and Pages
 
 on:
   schedule:
-    # 23:00 UTC is 08:00 the following day in Korea.
-    - cron: '0 23 * * *'
+    # 02:00 UTC is 11:00 the same day in Korea.
+    - cron: '0 2 * * *'
   workflow_dispatch:
 
 permissions:

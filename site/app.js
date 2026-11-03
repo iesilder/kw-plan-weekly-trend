@@ -112,7 +112,7 @@
       "page-heading": demo ? "이번 주, 살펴볼 변화" : "이번 주, 보고할 변화",
       "page-intro": demo ? "경쟁사의 움직임을 모으고, 보고할 이유를 확인합니다." : "수집한 자료를 검토하고 주간 보고 후보를 고릅니다.",
       "notice-title": demo ? "가상 데이터 · 실제 기사/AI 분석 아님" : "공개 자료 수집 · 담당자 검토",
-      "notice-description": demo ? "수집부터 화면까지의 연결을 확인하는 1단계 데모입니다. 모든 회사와 사건은 가상입니다." : state.status.schedule_enabled === true ? "매일 08:00(한국 시간)에 자료 수집과 기사 AI 분석을 자동 실행하도록 예약했습니다. DART 공시는 목록만 수집하며 AI에 전송하지 않습니다. 실행 결과와 원문을 확인한 뒤 담당자가 채택 여부를 결정합니다." : "수동으로 수집한 자료입니다. AI 제안과 원문을 확인한 뒤 담당자가 채택 여부를 결정합니다. DART 공시는 AI에 전송하지 않습니다.",
+      "notice-description": demo ? "수집부터 화면까지의 연결을 확인하는 1단계 데모입니다. 모든 회사와 사건은 가상입니다." : state.status.schedule_enabled === true ? "매일 11:00(한국 시간)에 자료 수집과 기사 AI 분석을 자동 실행하도록 예약했습니다. DART 공시는 목록만 수집하며 AI에 전송하지 않습니다. 실행 결과와 원문을 확인한 뒤 담당자가 채택 여부를 결정합니다." : "수동으로 수집한 자료입니다. AI 제안과 원문을 확인한 뒤 담당자가 채택 여부를 결정합니다. DART 공시는 AI에 전송하지 않습니다.",
       "phase-label": demo ? "PHASE 01" : "PHASE 04",
       "issue-count-label": demo ? "검토 후보" : "수집 자료",
       "article-count-label": demo ? "원자료" : "현재 범위 자료",
@@ -126,7 +126,7 @@
     };
     Object.entries(values).forEach(([id, value]) => { $(id).textContent = value; });
     $("mode-notice").setAttribute("aria-label", demo ? "데모 안내" : "수집 자료 안내");
-    $("execution-mode").textContent = state.status.schedule_enabled === true ? "매일 08:00 자동 실행 예약" : "수동 실행 모드";
+    $("execution-mode").textContent = state.status.schedule_enabled === true ? "매일 11:00 자동 실행 예약" : "수동 실행 모드";
     $("connection-status").textContent = `${state.status.schedule_enabled === true ? "수집·기사 분석 예약 · 한국 시간" : "수동 수집"} · AI 상태 확인 중`;
     $("candidate-list").setAttribute("aria-label", demo ? "보고 후보 목록" : "수집 자료 목록");
     const sort = $("sort-order");
@@ -447,7 +447,7 @@
     counts.replaceChildren();
     $("ai-warning").textContent = aiState.warning;
     $("ai-warning").hidden = !aiState.warning;
-    const scheduleText = state.status?.schedule_enabled === true ? "매일 08:00 KST 예약" : "수동 수집";
+    const scheduleText = state.status?.schedule_enabled === true ? "매일 11:00 KST 예약" : "수동 수집";
     if (!aiState.data) {
       $("ai-readiness").textContent = aiState.loading ? "확인 중" : "상태 확인 불가";
       $("ai-summary-note").textContent = aiState.loading ? "저장된 분석 상태를 확인하고 있습니다. 이 화면에서 AI를 호출하지 않습니다." : "유효한 AI 결과를 확인하지 못해 제안을 표시하지 않습니다.";
@@ -909,7 +909,7 @@
       if (history.reports.length !== 0 || Number(status.report_count || 0) !== 0 || Number(status.interests_count || 0) !== 0) throw new Error("현재 단계의 실제 보고 이력과 경영진 관심사는 비어 있어야 합니다.");
       if (!latest.candidates.every(item => typeof item.issue_id === "string" && typeof item.title === "string" && typeof item.company === "string" && Object.hasOwn(topicNames, item.topic_id) && Array.isArray(item.bullets))) throw new Error("자료 목록의 형식이 올바르지 않습니다.");
       if (!latest.is_demo && (status.ai_enabled !== false || latest.candidates.some(item => item.analysis_status !== "pending_ai" || item.priority !== "unranked" || item.bullets.length !== 0))) throw new Error("원자료 수집 상태와 별도 AI 분석 결과가 혼합되어 있습니다. 생성 상태를 확인해주세요.");
-      if (typeof status.schedule_enabled !== "boolean" || (status.schedule_enabled && (status.planned_collection_frequency !== "daily_0800_kst" || status.timezone !== "Asia/Seoul"))) throw new Error("자동 수집 일정과 상태 정보가 일치하지 않습니다.");
+      if (typeof status.schedule_enabled !== "boolean" || (status.schedule_enabled && (!["daily_1100_kst", "daily_0800_kst"].includes(status.planned_collection_frequency) || status.timezone !== "Asia/Seoul"))) throw new Error("자동 수집 일정과 상태 정보가 일치하지 않습니다.");
       state.request++;
       state.selected = null;
       state.detail = null;

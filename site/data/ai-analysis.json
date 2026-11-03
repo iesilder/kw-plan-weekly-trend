@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "generation_id": "live-dcff2231972dd25eeea6",
-  "generated_at": "2026-11-03T06:06:32.243371+00:00",
+  "generated_at": "2026-11-03T06:17:50.186523+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "metadata-review-v2",
@@ -19,12 +19,12 @@
     "failed_count": 1
   },
   "counts": {
-    "blocked": 0,
-    "completed": 6,
+    "blocked": 1,
+    "completed": 5,
     "stale": 0,
     "failed": 1,
     "not_analyzed": 0,
-    "eligible": 7
+    "eligible": 6
   },
   "items": {
     "issue-b37f533f8536327de29d": {
@@ -149,25 +149,14 @@
       }
     },
     "issue-b4acf9726e522360746c": {
-      "status": "completed",
-      "reason_code": null,
-      "input_fingerprint": "9d728ec57b23a11fbcc1516e2b0bb0ba4d953544cf86dc0a832e702e2a806d07",
-      "input_evidence_ids": [
-        "version-c5450646d7d2c39e4f2a"
-      ],
-      "result_fingerprint": "9d728ec57b23a11fbcc1516e2b0bb0ba4d953544cf86dc0a832e702e2a806d07",
-      "analyzed_at": "2026-11-03T04:27:36.971710+00:00",
+      "status": "blocked",
+      "reason_code": "dart_not_sent",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
       "error_code": null,
-      "result": {
-        "suggested_topic_id": "performance",
-        "relevance": "relevant",
-        "rationale": "제공된 DART 공시 서식 명칭에 근거하여 NH투자증권의 영업(잠정)실적 발표에 따른 사업 성과 변화를 검토할 후보입니다.",
-        "check_points": [
-          "영업(잠정)실적 공시 본문의 구체적인 지표 확인",
-          "전년 동기 대비 주요 실적 변동 내용 확인"
-        ],
-        "duplicate_issue_ids": []
-      }
+      "result": null
     }
   }
 }

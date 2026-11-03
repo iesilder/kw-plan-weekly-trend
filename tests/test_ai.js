@@ -65,6 +65,21 @@ test("unknown sources, unsupported policy and body-bearing records cannot masque
   ]){const{data,latest}=newsSample();change(data,latest);assert.throws(()=>AI.validateSidecar(data,latest));}
 });
 test("news input is labeled as metadata rather than a body summary",()=>{
-  const{data}=newsSample();assert.match(AI.itemMessage(data.items[C]),/본문은 입력에 포함되지 않습니다/);complete(data,C);
-  assert.match(AI.itemMessage(data.items[C]),/기사·공시 본문을 읽거나 실적 수치를 분석한 결과가 아닙니다/);
+  const{data}=newsSample();assert.match(AI.itemMessage(data.items[C]),/기사·보도자료의 제목·출처·날짜/);complete(data,C);
+  assert.match(AI.itemMessage(data.items[C]),/기사 본문 요약은 아래 별도 영역/);
+});
+test("DART exclusions coexist with cached news title advice without implying transmission",()=>{
+  const{data,latest}=newsSample();complete(data,C);
+  const before=JSON.parse(JSON.stringify(data.items[C]));
+  for(const id of [A,B])data.items[id]={status:"blocked",reason_code:"dart_not_sent",input_fingerprint:null,input_evidence_ids:[],result_fingerprint:null,analyzed_at:null,error_code:null,result:null};
+  data.counts={eligible:1,blocked:2,completed:1,stale:0,failed:0,not_analyzed:0};
+  const validated=AI.validateSidecar(data,latest);assert.equal(validated.counts.blocked,2);assert.deepEqual(validated.items[C],before);
+  assert.match(AI.itemMessage(validated.items[A]),/DART 공시는 AI에 전송하지 않습니다/);
+  assert.match(AI.itemMessage(validated.items[A]),/공시 목록과 원문 링크/);
+  data.items[A]={...validated.items[C],reason_code:"dart_not_sent",input_evidence_ids:[E1]};
+  assert.throws(()=>AI.validateSidecar(data,latest));
+});
+test("a DART exclusion cannot masquerade as a pending AI input",()=>{
+  const{data,latest}=sample();data.items[A].reason_code="dart_not_sent";assert.throws(()=>AI.validateSidecar(data,latest));
+  assert.match(AI.itemMessage({status:"not_analyzed",reason_code:null,error_code:null}),/DART 공시는 AI에 전송하지 않습니다/);
 });

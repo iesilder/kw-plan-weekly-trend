@@ -1,4 +1,4 @@
-"""Manual inference over collected public title/form metadata.
+"""Manual inference over collected public news-title metadata only.
 
 Source facts, classification, human review choices and delivered-report history
 remain separate. No article body, URL, internal interest or review choice is sent.
@@ -14,8 +14,6 @@ import tempfile
 from datetime import datetime, timedelta, timezone
 import urllib.error
 import urllib.request
-
-from .classification import earnings_form
 
 ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/interactions"
 MODEL = "gemini-3.5-flash-lite"
@@ -209,7 +207,6 @@ def _date(evidence):
 
 def _inputs(root, latest, details, config):
     sources = {source["id"]: source for source in _read(Path(root) / "config/sources.json")["sources"]}
-    companies = {company["id"]: company for company in _read(Path(root) / "config/companies.json")["companies"]}
     topics = [{"id": topic["id"], "name": topic["name"]} for topic in _read(Path(root) / "config/topics.json")["topics"]]
     if len(topics) != 5 or {topic["id"] for topic in topics} != TOPICS:
         raise ValueError("The five configured AI topics are required")
@@ -228,6 +225,12 @@ def _inputs(root, latest, details, config):
             continue
         source_ids = [row.get("source_id", "") for row in evidence]
         origins = [sources.get(source_id, {}) for source_id in source_ids]
+        if any(origin.get("type") == "dart_html" or origin.get("adapter") == "dart_html" for origin in origins):
+            # Source-origin exclusion also covers mixed DART/news evidence.
+            # News discussing a disclosure remains eligible; words and company
+            # names are not used as a substitute for provenance.
+            item["reason"] = "dart_not_sent"
+            continue
         if any(origin.get("policy_status") != "verified" or origin.get("retention") != "metadata_only" or origin.get("enabled") is not True for origin in origins):
             item["reason"] = "source_not_eligible"
             continue
@@ -238,16 +241,7 @@ def _inputs(root, latest, details, config):
                 sorted(evidence_ids) != sorted(candidate.get("evidence_ids", [])) or len(set(evidence_ids)) != len(evidence_ids)):
             item["reason"] = "invalid_factual_metadata"
             continue
-        if all(origin.get("type") == "dart_html" and origin.get("content_filter") == "earnings_only" for origin in origins):
-            forms = [earnings_form(row.get("title", "")) for row in evidence]
-            configured = [companies.get(origin.get("company_id"), {}) for origin in origins]
-            company_names = [company.get("name") for company in configured]
-            if (not all(forms) or len(set(forms)) != 1 or len(set(dates)) != 1 or not all(company_names) or len(set(company_names)) != 1 or
-                    any(company.get("enabled") is False for company in configured) or candidate.get("company") != company_names[0]):
-                item["reason"] = "invalid_factual_metadata"
-                continue
-            factual = {"issue_id": issue_id, "company": company_names[0], "disclosure_form": forms[0], "published_date": dates[0]}
-        elif all(origin.get("type") == "rss" and origin.get("adapter") in {"einfomax_rss", "newswire_rss"} for origin in origins):
+        if all(origin.get("type") == "rss" and origin.get("adapter") in {"einfomax_rss", "newswire_rss"} for origin in origins):
             titles = [row.get("title") for row in evidence]
             if (candidate.get("content_filter") != "topics" or any(not _valid_title(title) for title in titles) or
                     candidate.get("title") not in titles):

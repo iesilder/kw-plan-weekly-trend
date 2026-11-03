@@ -458,7 +458,7 @@
     const data = aiState.data;
     const status = AI.summary(data);
     $("ai-readiness").textContent = status.label;
-    $("ai-summary-note").textContent = "이 영역은 기사 제목과 공시 서식 등 공개 메타데이터에 대한 분석입니다. 본문 기반 요약은 아래 별도 영역에 표시하며 담당자의 채택·보류·제외와 기존 분류는 자동으로 변경하지 않습니다.";
+    $("ai-summary-note").textContent = "기사·보도자료 제목의 관련성을 분석합니다. DART 공시는 AI에 전송하지 않습니다. 본문 개조식 요약은 아래 별도 영역에 표시하며 담당자의 채택·보류·제외와 기존 분류는 자동으로 변경하지 않습니다.";
     for (const [label,value] of [["분석 가능",data.counts.eligible],["현재 결과",data.counts.completed],["재분석 필요",data.counts.stale],["아직 미분석",data.counts.not_analyzed],["입력 제외",data.counts.blocked],["분석 실패",data.counts.failed],["키·설정 확인 필요",status.keyRequiredCount === null ? "미확인" : status.keyRequiredCount]]) {
       const count = el("div", "ai-count");
       count.append(el("span", "", label),el("strong", "", typeof value === "number" ? `${value}건` : value));
@@ -469,7 +469,7 @@
     const notes = [];
     if (!data.last_attempt) notes.push("첫 수동 실행 전에는 API 키와 무료 프로젝트 설정 여부를 확인하지 않습니다.");
     if (status.keyRequiredCount > 0) notes.push("GitHub 설정 방법을 확인한 뒤 수동 AI 실행을 다시 진행하세요. 이 사이트에 비밀키를 입력하지 않습니다.");
-    if (data.counts.blocked) notes.push("입력에서 제외된 자료의 상세 사유를 확인하세요. 최신 기준은 출처명만으로 기사를 일괄 제외하지 않습니다.");
+    if (data.counts.blocked) notes.push("DART 공시는 AI 입력에서 제외하며 목록과 원문 링크만 유지합니다. 그 밖의 제외 사유는 자료 상세에서 확인하세요.");
     if (data.last_attempt && ["failed","partial_success"].includes(data.last_attempt.status)) notes.push("최근 실행에 실패 항목이 있습니다. GitHub 실행 기록을 확인해주세요.");
     $("ai-warning").textContent = notes.join(" ");
     $("ai-warning").hidden = !notes.length;
@@ -513,7 +513,7 @@
   function renderArticleDetail(detail) {
     const section = el("section","article-detail");
     const header = el("div","ai-detail-head");
-    header.append(el("h4","","기사 본문 요약"));
+    header.append(el("h4","","기사 요약 · 개조식"));
     section.append(header);
     if (!articleState.data) {
       header.append(el("span","ai-state-label",articleState.loading ? "확인 중" : "결과 없음"));
@@ -531,15 +531,15 @@
     if (item.status!=="completed") return section;
     const result = item.result;
     const reference = ids => ids.map(id=>`[${id}]`).join(" ");
-    section.append(el("h5","article-field-heading","핵심 변화"),el("p","article-key-change",`${result.key_change.text} ${reference(result.key_change.evidence_ids)}`));
-    if (result.facts.length) {
-      const list = el("ul","article-facts");
-      result.facts.forEach(fact=>list.append(el("li","",`${fact.text} ${reference(fact.evidence_ids)}`)));
-      section.append(el("h5","article-field-heading","주요 사실"),list);
-    }
+    const list = el("ul","article-facts article-summary");
+    [result.key_change,...result.facts].forEach(point=>list.append(el("li","",`${point.text} ${reference(point.evidence_ids)}`)));
+    section.append(el("h5","article-field-heading",item.truncated ? "기사 일부 요약 · 개조식" : "기사 전체 요약 · 개조식"),list);
+    const review = el("div","article-review");
+    review.append(el("h5","article-field-heading","AI 검토 의견 · 기사 요약과 별도"));
     const stage = el("p","article-stage");
-    stage.append(el("span","","본문 기준 진행 단계"),el("strong","",result.stage));
-    section.append(stage,el("h5","article-field-heading","보고 후보 이유 · AI 검토 의견"),el("p","article-inference",result.why_candidate));
+    stage.append(el("span","","진행 단계 · AI 분류"),el("strong","",result.stage));
+    review.append(stage,el("h5","article-field-heading","보고 후보 이유"),el("p","article-inference",result.why_candidate));
+    section.append(review);
     const evidence = el("details","article-evidence");
     evidence.append(el("summary","","참조 문단 발췌 보기"));
     result.evidence.forEach(row=>{

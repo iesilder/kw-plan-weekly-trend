@@ -49,7 +49,7 @@ jobs:
           node --check site/article.js
           node --test tests/test_review.js tests/test_ai.js tests/test_article.js
           python -m weekly_trend verify --root .
-      - name: Analyze permitted public facts or save the waiting state
+      - name: Classify news titles only; keep DART out of AI input
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           AI_FREE_PROJECT_CONFIRMED: ${{ inputs.free_project_confirmed }}

@@ -1,43 +1,52 @@
 {
   "schema_version": "1.0",
   "generation_id": "live-dcff2231972dd25eeea6",
-  "generated_at": "2026-11-03T06:17:50.186523+00:00",
+  "generated_at": "2026-11-03T06:27:38.617408+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "metadata-review-v2",
   "policy_version": "public-metadata-inference-v2",
   "auto_analysis_enabled": false,
   "last_attempt": {
-    "attempted_at": "2026-11-03T06:06:28.305995+00:00",
-    "completed_at": "2026-11-03T06:06:32.242171+00:00",
-    "status": "failed",
-    "error_code": "invalid_output",
+    "attempted_at": "2026-11-03T06:27:37.061542+00:00",
+    "completed_at": "2026-11-03T06:27:38.615893+00:00",
+    "status": "success",
+    "error_code": null,
     "request_count": 1,
-    "eligible_count": 7,
-    "completed_count": 0,
-    "cached_count": 6,
-    "failed_count": 1
+    "eligible_count": 6,
+    "completed_count": 1,
+    "cached_count": 5,
+    "failed_count": 0
   },
   "counts": {
     "blocked": 1,
-    "completed": 5,
+    "completed": 6,
     "stale": 0,
-    "failed": 1,
+    "failed": 0,
     "not_analyzed": 0,
     "eligible": 6
   },
   "items": {
     "issue-b37f533f8536327de29d": {
-      "status": "failed",
+      "status": "completed",
       "reason_code": null,
       "input_fingerprint": "3954153e90ce44d8e838f8eda257e9ca8c0f369e1f3eba93fb03458fe6ad3d46",
       "input_evidence_ids": [
         "version-4684945a97b42a87b99d"
       ],
-      "result_fingerprint": null,
-      "analyzed_at": null,
-      "error_code": "invalid_output",
-      "result": null
+      "result_fingerprint": "3954153e90ce44d8e838f8eda257e9ca8c0f369e1f3eba93fb03458fe6ad3d46",
+      "analyzed_at": "2026-11-03T06:27:38.615893+00:00",
+      "error_code": null,
+      "result": {
+        "suggested_topic_id": "risk",
+        "relevance": "relevant",
+        "rationale": "연합인포맥스(기사) · 증권 매체 기사에 따르면 코너스톤 및 사전수요예측 본격 도입과 관련된 자본시장법 시행령이 의결되었다. 이는 관련 제도 및 규제 환경의 변화를 나타내며, 자본시장 제도 변경에 따른 영향 검토 대상이 된다.",
+        "check_points": [
+          "제도 도입에 따른 자본시장법 시행령의 구체적 개정 내용 확인",
+          "코너스톤 및 사전수요예측 적용 대상 및 절차 검토"
+        ],
+        "duplicate_issue_ids": []
+      }
     },
     "issue-ec88113fec2c699faaf5": {
       "status": "completed",

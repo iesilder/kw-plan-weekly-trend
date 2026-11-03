@@ -454,5 +454,105 @@
         "AI and schedules off; interests and report history empty"
       ]
     }
+  },
+  "topic_alignment_validation": {
+    "status": "passed",
+    "implementation_commit": "cb4f95ea996d6be668b56ac37a9fd422bb157bb8",
+    "tests_per_run": 98,
+    "companies_in_news": 13,
+    "dart_company_sources": 10,
+    "classification_rules_version": "news-events-v2",
+    "ai_enabled": false,
+    "schedule_enabled": false,
+    "registered_report_count": 0,
+    "first": {
+      "generation_id": "live-868597c12ee8ee266e22",
+      "last_run_at": "2026-11-03T01:20:04.366921+00:00",
+      "article_count": 6,
+      "version_count": 6,
+      "archived_article_count": 21,
+      "total_article_count": 27,
+      "total_version_count": 27,
+      "run_count": 7,
+      "fetched_count": 870,
+      "accepted_count": 6,
+      "inserted_versions": 4,
+      "duplicate_count": 2,
+      "data_commit": "369fb34bed45faa6353776289560453325b9327e",
+      "run_id": 41550232074,
+      "run_attempt": 5,
+      "url": "https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41550232074/attempts/5",
+      "build": "success",
+      "deploy": "success",
+      "sources_success": 13,
+      "sources_not_modified": 0,
+      "sources_failed": 0,
+      "jobs": [
+        {
+          "id": 125664854236,
+          "name": "build",
+          "conclusion": "success"
+        },
+        {
+          "id": 125665097196,
+          "name": "deploy",
+          "conclusion": "success"
+        }
+      ]
+    },
+    "second": {
+      "generation_id": "live-1232f3209c26d7acab0c",
+      "last_run_at": "2026-11-03T01:21:25.149458+00:00",
+      "article_count": 6,
+      "version_count": 6,
+      "archived_article_count": 21,
+      "total_article_count": 27,
+      "total_version_count": 27,
+      "run_count": 8,
+      "fetched_count": 69,
+      "accepted_count": 0,
+      "inserted_versions": 0,
+      "duplicate_count": 0,
+      "data_commit": "ac793e3ca899aa43a7f0bfd1ae80db0b7af833f8",
+      "run_id": 41550232074,
+      "run_attempt": 6,
+      "url": "https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41550232074/attempts/6",
+      "build": "success",
+      "deploy": "success",
+      "sources_success": 12,
+      "sources_not_modified": 1,
+      "sources_failed": 0,
+      "jobs": [
+        {
+          "id": 125665310305,
+          "name": "build",
+          "conclusion": "success"
+        },
+        {
+          "id": 125665540683,
+          "name": "deploy",
+          "conclusion": "success"
+        }
+      ]
+    },
+    "pages": {
+      "status": "verified",
+      "url": "https://iesilder.github.io/kw-plan-weekly-trend/",
+      "generation_id": "live-1232f3209c26d7acab0c",
+      "checks": [
+        "five updated topic names",
+        "6 records: 1 DART earnings and 5 news",
+        "digital asset tag filter returns one policy item",
+        "new-business topic filter returns one item",
+        "title-based tags stages and rationale displayed",
+        "reset and data reload",
+        "8 collection runs and 10:21 KST timestamp",
+        "AI schedules and registered report history remain disabled or empty"
+      ]
+    },
+    "limitations": [
+      "Current RSS entries only; no historical search API",
+      "T+1 original and follow-up have separate URLs and remain separate records; semantic event merging not enabled"
+    ]
   }
 }

@@ -112,3 +112,15 @@
 이전 검증 당시 자료는 DART 공시 메타데이터였으며 언론 기사 수집은 연결되지 않았습니다. 이후 변경 내용은 이 문서 맨 위에 기록했습니다. 주제는 제목 규칙으로 분류하므로 내용 판단과 중요도 분석은 원문 확인이 필요합니다.
 
 세부 수치는 [phase2-validation.json](phase2-validation.json)에 있습니다.
+# 3단계 보고 후보 검토 검증 · 2026-11-03
+
+- 코드 `e9734cbee7797a5726da637c7ee63fbde0850356`의 GitHub CI에서 Python 117개, JavaScript 13개 및 독립 프로세스 반복 검증이 통과했습니다. [CI 실행](https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41562616242)
+- 기존 수동 수집·Pages 실행의 attempt 7에서 build `125676668623`, deploy `125676828723` 모두 성공했습니다. 재실행의 원래 head SHA와 별개로 checkout 로그에서 실제 코드 `e9734cb`를 확인했습니다. [배포 실행](https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41550232074)
+- 10:53 KST 수집 후 현재 범위 6건·6버전, 누적 실행 9회이며 새 원자료 버전은 0개입니다. 13개 출처 모두 성공했습니다. 게시 데이터는 `b71f8337e8d83ccec0323937f7fc3ff94d293c04`입니다.
+- 실제 브라우저에서 네 가지 검토 상태, 중복 후보 2건의 개별 이동, 현재 주·이전 주 기간, 필터와 독립된 채택 목록, 복사 대체창, CSV·JSON 백업 다운로드, 새로고침 후 선택 유지를 확인했습니다. CSV는 현재 주 2행·7열·UTF-8 BOM 1개였고, 브라우저 백업의 4개 선택을 별도 시험 복사본에서 Python 저장 코드가 정상 적용했습니다.
+- 입력 충돌·잘못된 ID·저장소 오류·조회 실패·CSV 수식·안전하지 않은 링크·수집 재실행 시 검토 보존을 자동 검증했습니다. 실제 보고 이력과 내부 관심사는 계속 비어 있습니다.
+- 시험 선택은 모두 정리했습니다. 공개 기준 파일과 화면 복사본은 revision 0, 저장된 선택 0건으로 일치합니다. AI·정기 실행·주제 규칙은 변경하지 않았습니다.
+- **검증 한계:** 새 `Save review choices and Pages` 워크플로의 등록은 확인했지만 최초 수동 실행은 아직 하지 못했습니다. 연결 도구에 신규 `workflow_dispatch`가 없고 검증 브라우저는 GitHub 비로그인 상태입니다. 저장 코드·표준입력·동시 변경 거절·수집 후 보존은 로컬 및 CI에서 검증했으며, 저장 전용 Actions 전체 경로는 운영자가 처음 실행할 때 추가 확인해야 합니다.
+
+구조화된 결과: [phase3-validation.json](phase3-validation.json). 사용법: [review.md](review.md).
+

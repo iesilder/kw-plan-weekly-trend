@@ -1,0 +1,60 @@
+{
+  "phase": "report_candidate_review",
+  "verified_date_kst": "2026-11-03",
+  "code_commit": "e9734cbee7797a5726da637c7ee63fbde0850356",
+  "published_data_commit": "b71f8337e8d83ccec0323937f7fc3ff94d293c04",
+  "ci": {
+    "run_id": 41562616242,
+    "job_id": 125676504793,
+    "conclusion": "success",
+    "python_tests_passed": 117,
+    "javascript_tests_passed": 13,
+    "independent_process_repeatability": "passed"
+  },
+  "manual_collection_and_pages": {
+    "run_id": 41550232074,
+    "attempt": 7,
+    "build_job_id": 125676668623,
+    "deploy_job_id": 125676828723,
+    "build": "success",
+    "deploy": "success",
+    "checkout_commit": "e9734cbee7797a5726da637c7ee63fbde0850356",
+    "generation_id": "live-749aa75074693e989f6e",
+    "collected_at_kst": "2026-11-03T10:53:53.217997+09:00",
+    "article_count": 6,
+    "version_count": 6,
+    "collection_run_count": 9,
+    "source_success_count": 13,
+    "source_failure_count": 0,
+    "new_source_versions": 0
+  },
+  "browser_verification": {
+    "live_url": "https://iesilder.github.io/kw-plan-weekly-trend/",
+    "four_review_states": "passed",
+    "duplicate_candidates": "T+1 original and follow-up only; individual sources preserved",
+    "weekly_date_range": "current week and previous-week filing verified",
+    "browsing_filters_independent_of_weekly_list": "passed",
+    "copy_fallback": "metadata-only text with both original links verified",
+    "csv_download": "2 selected current-week rows; 7 columns; single UTF-8 BOM",
+    "draft_backup_download": "4-choice patch accepted by Python in isolated copy",
+    "live_reload_persistence": "passed",
+    "temporary_test_choices_cleared": true
+  },
+  "review_storage": {
+    "canonical_and_public_mirror_match": true,
+    "revision": 0,
+    "saved_choice_count": 0,
+    "actual_report_count": 0,
+    "manual_review_workflow_registered": true,
+    "manual_review_workflow_first_run": "not_executed",
+    "verification_limit": "Connector has no workflow_dispatch capability; browser is signed out. CLI, input validation, preservation and conflict behavior passed offline/CI; the new save-only workflow still needs its first authenticated manual execution."
+  },
+  "unchanged_constraints": {
+    "classification_rules_unchanged": true,
+    "ai_enabled": false,
+    "schedule_enabled": false,
+    "executive_interests_empty": true,
+    "actual_report_history_empty": true,
+    "metadata_only": true
+  }
+}

@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       free_project_confirmed:
-        description: 'Gemini 프로젝트가 Free·결제 미연결임을 확인했고 공개 데이터 이용조건을 확인했습니다'
+        description: 'Gemini Free·결제 미연결 및 무료 입력·출력 데이터 이용조건을 확인했습니다'
         required: true
         default: false
         type: boolean

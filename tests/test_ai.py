@@ -44,6 +44,12 @@ class AITests(unittest.TestCase):
         for folder in ("config", "reports", "site/data"):
             shutil.copytree(PROJECT / folder, self.root / folder)
         (self.root / "site/data/ai-analysis.json").unlink(missing_ok=True)
+        # Keep the existing DART/cache/error tests isolated from news batching.
+        sources = read_json(self.root / "config/sources.json")
+        for source in sources["sources"]:
+            if source["type"] == "rss":
+                source["enabled"] = False
+        write_json(self.root / "config/sources.json", sources)
         self.latest = read_json(self.root / "site/data/latest.json")
         self.dart = next(item for item in self.latest["candidates"] if item["content_filter"] == "earnings_only")
         self.dart_id = self.dart["issue_id"]
@@ -79,7 +85,7 @@ class AITests(unittest.TestCase):
         self.write_detail(detail)
         return candidate
 
-    def test_prepare_is_network_free_and_marks_source_rights_without_fake_analysis(self):
+    def test_prepare_is_network_free_and_respects_disabled_sources_without_fake_analysis(self):
         with patch("weekly_trend.ai.request_once", side_effect=AssertionError("network forbidden")):
             result = ai.prepare(self.root, now=NOW)
         self.assertEqual(result["request_count"], 0)
@@ -88,7 +94,7 @@ class AITests(unittest.TestCase):
         self.assertEqual(self.public()["last_attempt"], None)
         self.assertEqual(ai.load_state(self.root)["entries"], {})
         self.assertEqual(self.public()["items"][self.dart_id]["status"], "not_analyzed")
-        self.assertTrue(all(item["reason_code"] == "source_ai_prohibited" for key, item in self.public()["items"].items() if key != self.dart_id))
+        self.assertTrue(all(item["reason_code"] == "source_not_eligible" for key, item in self.public()["items"].items() if key != self.dart_id))
         self.assertTrue(ai.check(self.root)["ok"])
 
     def test_key_missing_never_calls_and_exits_as_persistable_pending_result(self):
@@ -98,6 +104,85 @@ class AITests(unittest.TestCase):
         self.assertEqual(result["last_attempt"]["error_code"], "missing_api_key")
         self.assertEqual(self.public()["items"][self.dart_id]["status"], "not_analyzed")
         self.assertEqual(ai.load_state(self.root)["entries"], {})
+
+    def enable_news(self):
+        sources = read_json(self.root / "config/sources.json")
+        for source in sources["sources"]:
+            if source["type"] == "rss":
+                source["enabled"] = True
+        write_json(self.root / "config/sources.json", sources)
+
+    def test_news_and_dart_all_eligible_in_one_bounded_request_and_cached_on_repeat(self):
+        self.enable_news()
+        protected = {path: (self.root / path).read_bytes() for path in (
+            "reports/reviews.json", "reports/history.json", "site/data/latest.json")}
+        result = self.run_good()
+        self.assertEqual(result["counts"]["eligible"], 6)
+        self.assertEqual(result["counts"]["blocked"], 0)
+        self.assertEqual(result["last_attempt"]["completed_count"], 6)
+        self.assertEqual(result["last_attempt"]["request_count"], 1)
+        payload = self.calls[0][0]
+        self.assertIs(payload["store"], False)
+        items = json.loads(payload["input"])["items"]
+        news = [item for item in items if "news_metadata" in item]
+        self.assertEqual(len(news), 5)
+        for item in news:
+            self.assertEqual(set(item), {"issue_id", "published_date", "news_metadata"})
+            for row in item["news_metadata"]:
+                self.assertEqual(set(row), {"title", "source", "published_date"})
+        self.assertNotIn("https:", payload["input"])
+        self.assertNotIn("content_text", payload["input"])
+        again = ai.run(self.root, environ={}, transport=self.good_transport, now=NOW + timedelta(hours=1))
+        self.assertEqual(again["last_attempt"]["cached_count"], 6)
+        self.assertEqual(again["last_attempt"]["request_count"], 0)
+        self.assertEqual(len(self.calls), 1)
+        self.assertEqual(protected, {path: (self.root / path).read_bytes() for path in protected})
+        self.assertTrue(ai.check(self.root)["ok"])
+
+    def test_newswire_title_is_eligible_without_publisher_gate(self):
+        self.enable_news()
+        candidate = next(item for item in self.latest["candidates"] if item["content_filter"] == "topics")
+        detail = self.detail(candidate)
+        candidate["source_name"] = "뉴스와이어(보도자료) · 증권"
+        row = detail["evidence"][0]
+        row.update(source_id="newswire-securities", source_name=candidate["source_name"])
+        self.write_detail(detail)
+        write_json(self.root / "site/data/latest.json", self.latest)
+        result = ai.prepare(self.root, now=NOW)
+        self.assertEqual(result["counts"]["eligible"], 6)
+        self.assertEqual(self.public()["items"][candidate["issue_id"]]["status"], "not_analyzed")
+
+    def test_news_title_integrity_and_body_boundary_remain_enforced(self):
+        self.enable_news()
+        candidate = next(item for item in self.latest["candidates"] if item["content_filter"] == "topics")
+        original = self.detail(candidate)
+        for changes, reason in [({"title": "다른 기사 제목"}, "invalid_factual_metadata"),
+                                ({"title": "<script>bad</script>"}, "invalid_factual_metadata"),
+                                ({"content_text": "본문 전체"}, "not_live_metadata"),
+                                ({"published_date": "unknown"}, "invalid_factual_metadata")]:
+            detail = copy.deepcopy(original)
+            detail["evidence"][0].update(changes)
+            self.write_detail(detail)
+            ai.prepare(self.root, now=NOW)
+            self.assertEqual(self.public()["items"][candidate["issue_id"]]["reason_code"], reason)
+
+    def test_settlement_notation_must_be_grounded_in_each_items_own_title(self):
+        self.enable_news()
+        def transport(payload, key, timeout):
+            items = json.loads(payload["input"])["items"]
+            return response([answer(item["issue_id"], rationale="제목에 T+1 결제주기 변화가 언급되어 검토 대상입니다.")
+                             if any("T+1" in row["title"] for row in item.get("news_metadata", [])) else answer(item["issue_id"])
+                             for item in items])
+        result = ai.run(self.root, environ=ENV, transport=transport, now=NOW)
+        self.assertEqual(result["last_attempt"]["completed_count"], 6)
+        self.assertTrue(ai.check(self.root)["ok"])
+        # A notation in another article must not support an invented DART claim.
+        state = ai.empty_state()
+        write_json(self.root / "state/ai-analysis.json", state)
+        def invented(payload, key, timeout):
+            return response([answer(item["issue_id"], rationale="T+1 관련 공시입니다.") for item in json.loads(payload["input"])["items"]])
+        rejected = ai.run(self.root, environ=ENV, transport=invented, now=NOW)
+        self.assertEqual(rejected["last_attempt"]["error_code"], "invalid_output")
 
     def test_free_project_confirmation_is_explicit_and_required_before_network(self):
         for value in [None, "false", "TRUE", True]:
@@ -116,7 +201,7 @@ class AITests(unittest.TestCase):
         self.assertEqual(timeout, 45)
         self.assertEqual(payload["model"], "gemini-3.5-flash-lite")
         self.assertIs(payload["store"], False)
-        self.assertEqual(payload["generation_config"]["max_output_tokens"], 2048)
+        self.assertEqual(payload["generation_config"]["max_output_tokens"], 4096)
         factual = json.loads(payload["input"])
         self.assertEqual(set(factual["items"][0]), {"issue_id", "company", "disclosure_form", "published_date"})
         self.assertEqual(factual["items"][0]["disclosure_form"], "영업(잠정)실적")
@@ -179,7 +264,7 @@ class AITests(unittest.TestCase):
     def test_prompt_and_source_policy_changes_invalidate_cache(self):
         self.run_good()
         config = read_json(self.root / "config/ai.json")
-        config["prompt_version"] = "metadata-review-v2"
+        config["prompt_version"] = "metadata-review-test-v3"
         write_json(self.root / "config/ai.json", config)
         ai.prepare(self.root, now=NOW)
         self.assertEqual(self.public()["items"][self.dart_id]["status"], "stale")
@@ -194,7 +279,7 @@ class AITests(unittest.TestCase):
 
     def test_source_gate_blocks_newswire_unverified_custom_dart_and_nonmetadata(self):
         original = self.detail()
-        variants = [("newswire-securities", "rights_unconfirmed"), ("dart-company-11", "source_not_eligible"), ("other-source", "source_not_eligible")]
+        variants = [("newswire-securities", "source_not_eligible"), ("dart-company-11", "source_not_eligible"), ("other-source", "source_not_eligible")]
         for source_id, reason in variants:
             detail = copy.deepcopy(original)
             detail["evidence"][0]["source_id"] = source_id
@@ -218,6 +303,9 @@ class AITests(unittest.TestCase):
         self.assertEqual(self.public()["items"][self.dart_id]["reason_code"], "invalid_factual_metadata")
 
     def test_maximum_five_oldest_items_one_request_and_remaining_pending(self):
+        config = read_json(self.root / "config/ai.json")
+        config["max_items_per_run"] = 5
+        write_json(self.root / "config/ai.json", config)
         for number in range(1, 8):
             self.add_dart(number, f"2026-10-{10+number:02d}")
         result = self.run_good()
@@ -330,7 +418,7 @@ class AITests(unittest.TestCase):
 
     def test_config_rejects_paid_fallback_and_raised_budgets(self):
         original = read_json(self.root / "config/ai.json")
-        for changes in [{"model": "some-paid-fallback"}, {"max_requests_per_run": 2}, {"max_items_per_run": 6}, {"timeout_seconds": 46}, {"manual_only": False}, {"max_output_tokens": True}]:
+        for changes in [{"model": "some-paid-fallback"}, {"max_requests_per_run": 2}, {"max_items_per_run": 11}, {"max_output_tokens": 4097}, {"timeout_seconds": 46}, {"manual_only": False}, {"max_output_tokens": True}]:
             write_json(self.root / "config/ai.json", {**original, **changes})
             with self.assertRaises(ValueError):
                 ai.prepare(self.root, now=NOW)

@@ -2,11 +2,11 @@
   "schema_version": "1.0",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
-  "prompt_version": "metadata-review-v1",
-  "policy_version": "dart-factual-metadata-v1",
+  "prompt_version": "metadata-review-v2",
+  "policy_version": "public-metadata-inference-v2",
   "manual_only": true,
-  "max_items_per_run": 5,
+  "max_items_per_run": 10,
   "max_requests_per_run": 1,
-  "max_output_tokens": 2048,
+  "max_output_tokens": 4096,
   "timeout_seconds": 45
 }

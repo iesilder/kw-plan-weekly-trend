@@ -1,0 +1,61 @@
+{
+  "issue_id": "issue-8cda78e7eb4a64c526cd",
+  "title": "카카오페이증권, 인수업 인가 후 첫 스팩 설립…IB 사업 본격화",
+  "company": "카카오페이증권",
+  "company_ids": [
+    "company-10"
+  ],
+  "companies": [
+    "카카오페이증권"
+  ],
+  "topic_id": "digital",
+  "topic": "디지털·AI·신사업",
+  "priority": "unranked",
+  "report_status": "no_history",
+  "why_now": "제목의 회사·업권 정보와 주제 키워드(IB사업, 본격화, 첫, 설립)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+  "bullets": [],
+  "evidence_ids": [
+    "version-42e8ddadcc22cab2da7a"
+  ],
+  "detail_path": "data/issues/issue-8cda78e7eb4a64c526cd.json",
+  "is_demo": false,
+  "analysis_status": "pending_ai",
+  "evidence_confidence": "metadata_only",
+  "source_name": "연합인포맥스(기사) · 증권",
+  "published_at": null,
+  "published_date": "2026-11-02",
+  "fetched_at": "2026-11-03T00:29:46.082736+00:00",
+  "matched_keywords": [
+    "IB사업",
+    "본격화",
+    "첫",
+    "설립"
+  ],
+  "matched_topic_ids": [
+    "digital"
+  ],
+  "content_filter": "topics",
+  "content_policy_version": "news-metadata-v1",
+  "schema_version": "1.0",
+  "generation_id": "live-bd988783959051731c97",
+  "change_summary": "본문·기보고 대비 변화는 분석하지 않았습니다.",
+  "last_report": null,
+  "evidence": [
+    {
+      "title": "카카오페이증권, 인수업 인가 후 첫 스팩 설립…IB 사업 본격화",
+      "published_at": null,
+      "published_date": "2026-11-02",
+      "source_updated_at": null,
+      "fetched_at": "2026-11-03T00:29:46.082736+00:00",
+      "content_level": "metadata_only",
+      "content_text": "",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "retention_basis": "공식 RSS 안내의 외부 사이트 제목·링크 표시 용도를 기준으로 제목·출처·발행일·원문 링크만 보존합니다. description·본문·이미지·요약은 저장하지 않습니다. 본문 재배포나 데이터 재판매 허가를 의미하지 않습니다.",
+      "retention_url": "https://news.einfomax.co.kr/rssIndex.html",
+      "evidence_id": "version-42e8ddadcc22cab2da7a",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442601",
+      "is_demo": false
+    }
+  ]
+}

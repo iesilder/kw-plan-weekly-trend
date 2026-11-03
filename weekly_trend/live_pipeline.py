@@ -46,15 +46,15 @@ def _source_with_classification_context(source, rules, companies, topics):
     return source
 
 
-def _schedule_metadata(settings):
+def _schedule_metadata(settings, *, allow_legacy=False):
     enabled = settings.get("schedule_enabled")
     frequency = settings.get("planned_collection_frequency")
     zone = settings.get("timezone", "Asia/Seoul")
     if type(enabled) is not bool or zone != "Asia/Seoul":
         raise ValueError("Collection schedule must use a boolean flag and Asia/Seoul timezone")
     if enabled:
-        if frequency != "daily_0800_kst":
-            raise ValueError("Enabled collection schedule must declare daily 08:00 KST")
+        if frequency != "daily_1100_kst" and not (allow_legacy and frequency == "daily_0800_kst"):
+            raise ValueError("Enabled collection schedule must declare daily 11:00 KST")
     elif frequency not in (None, "manual", "daily_not_enabled"):
         raise ValueError("Disabled collection schedule cannot claim an active daily frequency")
     return {"schedule_enabled": enabled, "planned_collection_frequency": frequency or "manual", "timezone": zone}
@@ -412,7 +412,8 @@ def validate_snapshot(db, topics, latest, details, history):
 
 
 def validate_status(db, latest, status):
-    _schedule_metadata(status)
+    # Saved snapshots may predate the change from 08:00 to 11:00 KST.
+    _schedule_metadata(status, allow_legacy=True)
     expected_counts = counts(db)
     if any(status.get(key) != value for key, value in expected_counts.items()):
         raise ValueError("Live SQLite/status count mismatch")

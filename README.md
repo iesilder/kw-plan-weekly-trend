@@ -2,7 +2,7 @@
 
 [사이트 열기](https://iesilder.github.io/kw-plan-weekly-trend/) · [수동 수집 워크플로](https://github.com/iesilder/kw-plan-weekly-trend/actions/workflows/pipeline.yml)
 
-기존 경쟁사 10곳의 DART 실적 공시와 기사·보도자료 RSS 메타데이터를 수동 수집해 SQLite에 보존합니다. 뉴스는 경쟁사 13곳, 관련 금융그룹, 증권업에 영향을 주는 정책·사업 변화를 5개 주제로 분류합니다. **매일 한국 시간 오전 8시를 기준으로 수집 → 기사 제목 분류·본문 요약 → 저장 → Pages 갱신을 실행합니다.** GitHub 실행 대기 때문에 시작이 늦어질 수 있습니다. [자동 갱신과 첫 실행](docs/daily.md) 경영진 관심사와 등록된 실제 보고 이력은 빈 값입니다.
+기존 경쟁사 10곳의 DART 실적 공시와 기사·보도자료 RSS 메타데이터를 수동 수집해 SQLite에 보존합니다. 뉴스는 경쟁사 13곳, 관련 금융그룹, 증권업에 영향을 주는 정책·사업 변화를 5개 주제로 분류합니다. **매일 한국 시간 오전 11시를 기준으로 수집 → 기사 제목 분류·본문 요약 → 저장 → Pages 갱신을 실행합니다.** GitHub 실행 대기 때문에 시작이 늦어질 수 있습니다. [자동 갱신과 첫 실행](docs/daily.md) 경영진 관심사와 등록된 실제 보고 이력은 빈 값입니다.
 
 수집 자료를 **채택·보류·제외**하고 선택한 기간의 채택 자료를 주간 후보 목록으로 모아 복사하거나 CSV로 내보낼 수 있습니다. 제목이 비슷한 자료는 중복 검토 후보로 제안하며 원문을 합치지 않습니다. 선택은 브라우저에 임시 저장되고, **GitHub에 저장** 안내를 따라 별도 수동 워크플로에서 저장소에 보관할 수 있습니다. 후보 선정은 실제 보고 완료가 아닙니다. [사용 방법과 저장 범위](docs/review.md)
 
@@ -58,7 +58,7 @@ python -m weekly_trend verify --root .
 
 | 경로 | 역할 |
 |---|---|
-| `.github/workflows/daily.yml` | 매일 08:00 KST 수집·기사 분석·저장·Pages |
+| `.github/workflows/daily.yml` | 매일 11:00 KST 수집·기사 분석·저장·Pages |
 | `weekly_trend/daily.py` | 한국 날짜별 중복 실행 제한과 단계별 실패 분리 |
 | `data/daily-run.json` | 마지막 저장된 일일 실행 날짜와 단계 상태 |
 | `config/topics.json` | 5개 주제의 이름과 활성 상태 |

@@ -7,6 +7,7 @@
 })(typeof globalThis === "object" ? globalThis : this, function () {
   "use strict";
   const STATUSES = new Set(["not_applicable", "pending", "completed", "stale", "unavailable", "failed"]);
+  const PROMPT_VERSIONS = new Set(["article-brief-v1", "article-brief-v2"]);
   const STAGES = new Set(["검토", "추진·협약", "인가·승인", "출시·시행", "성과", "점검·조사", "불명"]);
   const SOURCES = new Map([
     ["연합인포맥스(기사) · 증권", "news.einfomax.co.kr"],
@@ -23,7 +24,13 @@
     body_not_found:"기사 본문 영역을 확인하지 못했습니다. 제목 분석을 유지하며 본문을 읽은 요약은 표시하지 않습니다.",
     body_too_short:"확보한 본문이 충분하지 않아 요약하지 않았습니다. 원문 링크로 내용을 확인하세요.",
     rate_limited:"AI 사용 한도에 도달해 본문 분석을 마치지 못했습니다. 기존 수집 자료와 검토 선택은 유지됩니다.",
-    invalid_output:"AI 요약의 형식이나 원문 근거를 확인하지 못해 결과를 표시하지 않습니다."
+    invalid_output:"AI 요약의 형식이나 원문 근거를 확인하지 못해 결과를 표시하지 않습니다.",
+    output_number_mismatch:"요약에 원문에서 확인되지 않는 수치가 포함되어 이 자료의 결과를 표시하지 않습니다.",
+    output_evidence_mismatch:"요약의 주장과 참조 문단을 연결하지 못해 이 자료의 결과를 표시하지 않습니다.",
+    output_invalid_shape:"이 자료의 AI 응답 형식을 확인하지 못해 요약을 표시하지 않습니다.",
+    output_missing_item:"AI 응답에 이 자료의 요약이 없어 결과를 표시하지 않습니다.",
+    output_duplicate_item:"AI 응답에서 이 자료가 중복되어 결과를 확인할 수 없습니다.",
+    output_quote_invalid:"이 자료의 참조 문단 발췌를 검증하지 못해 요약을 표시하지 않습니다."
   });
   const ISSUE = /^issue-[a-f0-9]{20}$/;
   const VERSION = /^version-[a-f0-9]{20}$/;
@@ -69,7 +76,7 @@
   function validateSidecar(value, latest) {
     if (!object(value) || value.schema_version!=="1.0" || !latest || latest.is_demo!==false || !Array.isArray(latest.candidates)) fail("본문 요약 자료의 형식을 확인할 수 없습니다.");
     if (value.generation_id!==latest.generation_id) fail("본문 요약과 현재 수집 자료의 버전이 다릅니다.");
-    if (!instant(value.generated_at) || value.provider!=="google_gemini" || value.model!=="gemini-3.5-flash-lite" || value.prompt_version!=="article-brief-v1" || value.auto_analysis_enabled!==false || !object(value.items) || !object(value.counts)) fail("본문 요약의 생성 정보나 실행 설정이 올바르지 않습니다.");
+    if (!instant(value.generated_at) || value.provider!=="google_gemini" || value.model!=="gemini-3.5-flash-lite" || !PROMPT_VERSIONS.has(value.prompt_version) || value.auto_analysis_enabled!==false || !object(value.items) || !object(value.counts)) fail("본문 요약의 생성 정보나 실행 설정이 올바르지 않습니다.");
     const candidates = new Map(latest.candidates.map(item=>[item.issue_id,item]));
     if (candidates.size!==latest.candidates.length || !same([...candidates.keys()],Object.keys(value.items))) fail("본문 요약의 대상 목록이 현재 수집 자료와 다릅니다.");
     const result = {schema_version:"1.0",generation_id:value.generation_id,generated_at:value.generated_at,provider:value.provider,model:value.model,prompt_version:value.prompt_version,auto_analysis_enabled:false,counts:{eligible:0,completed:0,stale:0,unavailable:0,pending:0,not_applicable:0,failed:0},last_attempt:null,items:{}};

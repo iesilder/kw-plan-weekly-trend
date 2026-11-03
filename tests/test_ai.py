@@ -51,6 +51,9 @@ class AITests(unittest.TestCase):
                 source["enabled"] = False
         write_json(self.root / "config/sources.json", sources)
         self.latest = read_json(self.root / "site/data/latest.json")
+        self.dart_count = sum(item["content_filter"] == "earnings_only" for item in self.latest["candidates"])
+        self.news_count = sum(item["content_filter"] == "topics" for item in self.latest["candidates"])
+        self.total_count = len(self.latest["candidates"])
         self.dart = next(item for item in self.latest["candidates"] if item["content_filter"] == "earnings_only")
         self.dart_id = self.dart["issue_id"]
         self.calls = []
@@ -89,12 +92,13 @@ class AITests(unittest.TestCase):
         with patch("weekly_trend.ai.request_once", side_effect=AssertionError("network forbidden")):
             result = ai.prepare(self.root, now=NOW)
         self.assertEqual(result["request_count"], 0)
-        self.assertEqual(result["counts"]["eligible"], 1)
-        self.assertEqual(result["counts"]["blocked"], 5)
+        self.assertEqual(result["counts"]["eligible"], self.dart_count)
+        self.assertEqual(result["counts"]["blocked"], self.news_count)
         self.assertEqual(self.public()["last_attempt"], None)
         self.assertEqual(ai.load_state(self.root)["entries"], {})
         self.assertEqual(self.public()["items"][self.dart_id]["status"], "not_analyzed")
-        self.assertTrue(all(item["reason_code"] == "source_not_eligible" for key, item in self.public()["items"].items() if key != self.dart_id))
+        news_ids = {item["issue_id"] for item in self.latest["candidates"] if item["content_filter"] == "topics"}
+        self.assertTrue(all(self.public()["items"][issue_id]["reason_code"] == "source_not_eligible" for issue_id in news_ids))
         self.assertTrue(ai.check(self.root)["ok"])
 
     def test_key_missing_never_calls_and_exits_as_persistable_pending_result(self):
@@ -117,15 +121,15 @@ class AITests(unittest.TestCase):
         protected = {path: (self.root / path).read_bytes() for path in (
             "reports/reviews.json", "reports/history.json", "site/data/latest.json")}
         result = self.run_good()
-        self.assertEqual(result["counts"]["eligible"], 6)
+        self.assertEqual(result["counts"]["eligible"], self.total_count)
         self.assertEqual(result["counts"]["blocked"], 0)
-        self.assertEqual(result["last_attempt"]["completed_count"], 6)
+        self.assertEqual(result["last_attempt"]["completed_count"], self.total_count)
         self.assertEqual(result["last_attempt"]["request_count"], 1)
         payload = self.calls[0][0]
         self.assertIs(payload["store"], False)
         items = json.loads(payload["input"])["items"]
         news = [item for item in items if "news_metadata" in item]
-        self.assertEqual(len(news), 5)
+        self.assertEqual(len(news), self.news_count)
         for item in news:
             self.assertEqual(set(item), {"issue_id", "published_date", "news_metadata"})
             for row in item["news_metadata"]:
@@ -133,7 +137,7 @@ class AITests(unittest.TestCase):
         self.assertNotIn("https:", payload["input"])
         self.assertNotIn("content_text", payload["input"])
         again = ai.run(self.root, environ={}, transport=self.good_transport, now=NOW + timedelta(hours=1))
-        self.assertEqual(again["last_attempt"]["cached_count"], 6)
+        self.assertEqual(again["last_attempt"]["cached_count"], self.total_count)
         self.assertEqual(again["last_attempt"]["request_count"], 0)
         self.assertEqual(len(self.calls), 1)
         self.assertEqual(protected, {path: (self.root / path).read_bytes() for path in protected})
@@ -149,7 +153,7 @@ class AITests(unittest.TestCase):
         self.write_detail(detail)
         write_json(self.root / "site/data/latest.json", self.latest)
         result = ai.prepare(self.root, now=NOW)
-        self.assertEqual(result["counts"]["eligible"], 6)
+        self.assertEqual(result["counts"]["eligible"], self.total_count)
         self.assertEqual(self.public()["items"][candidate["issue_id"]]["status"], "not_analyzed")
 
     def test_news_title_integrity_and_body_boundary_remain_enforced(self):
@@ -174,7 +178,7 @@ class AITests(unittest.TestCase):
                              if any("T+1" in row["title"] for row in item.get("news_metadata", [])) else answer(item["issue_id"])
                              for item in items])
         result = ai.run(self.root, environ=ENV, transport=transport, now=NOW)
-        self.assertEqual(result["last_attempt"]["completed_count"], 6)
+        self.assertEqual(result["last_attempt"]["completed_count"], self.total_count)
         self.assertTrue(ai.check(self.root)["ok"])
         # A notation in another article must not support an invented DART claim.
         state = ai.empty_state()
@@ -194,7 +198,7 @@ class AITests(unittest.TestCase):
         protected = ["reports/history.json", "reports/reviews.json", "site/data/latest.json", "site/data/reviews.json", "site/data/report-history.json", "config/pipeline.json", "config/interests.json"]
         before = {path: (self.root / path).read_bytes() for path in protected}
         result = self.run_good()
-        self.assertEqual(result["last_attempt"]["completed_count"], 1)
+        self.assertEqual(result["last_attempt"]["completed_count"], self.dart_count)
         self.assertEqual(len(self.calls), 1)
         payload, key, timeout = self.calls[0]
         self.assertEqual(key, ENV["GEMINI_API_KEY"])
@@ -222,7 +226,7 @@ class AITests(unittest.TestCase):
         self.assertEqual(len(self.calls), 1)
         self.assertEqual(result["last_attempt"]["status"], "cached")
         self.assertEqual(result["last_attempt"]["request_count"], 0)
-        self.assertEqual(result["last_attempt"]["cached_count"], 1)
+        self.assertEqual(result["last_attempt"]["cached_count"], self.dart_count)
         self.assertEqual(self.public()["items"][self.dart_id], before)
 
     def test_generation_and_fetched_at_churn_does_not_invalidate_cache(self):
@@ -314,7 +318,7 @@ class AITests(unittest.TestCase):
         self.assertEqual([item["published_date"] for item in inputs], ["2026-10-11", "2026-10-12", "2026-10-13", "2026-10-14", "2026-10-15"])
         self.assertEqual(result["last_attempt"]["status"], "partial_success")
         self.assertEqual(result["counts"]["completed"], 5)
-        self.assertEqual(result["counts"]["not_analyzed"], 3)
+        self.assertEqual(result["counts"]["not_analyzed"], self.dart_count + 7 - 5)
 
     def test_invalid_json_unknown_ids_duplicate_ids_and_figures_reject_entire_batch(self):
         second = self.add_dart(2)

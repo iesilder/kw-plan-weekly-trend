@@ -541,10 +541,10 @@
     stage.append(el("span","","본문 기준 진행 단계"),el("strong","",result.stage));
     section.append(stage,el("h5","article-field-heading","보고 후보 이유 · AI 검토 의견"),el("p","article-inference",result.why_candidate));
     const evidence = el("details","article-evidence");
-    evidence.append(el("summary","","요약에 사용한 원문 근거 보기"));
+    evidence.append(el("summary","","참조 문단 발췌 보기"));
     result.evidence.forEach(row=>{
       const quote = el("blockquote","article-quote");
-      quote.append(el("span","article-paragraph",`분석 본문 문단 ${row.id}`),el("p","",`“${row.quote}”`));
+      quote.append(el("span","article-paragraph",`참조 문단 발췌 ${row.id}`),el("p","",`“${row.quote}”`));
       evidence.append(quote);
     });
     section.append(evidence);

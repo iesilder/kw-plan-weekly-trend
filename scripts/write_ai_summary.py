@@ -2,6 +2,7 @@
 
 import json
 import os
+from collections import Counter
 from pathlib import Path
 
 
@@ -38,6 +39,12 @@ def main():
                   f"| 본문 AI 요청 | {body_attempt.get('request_count', 0)} |",
                   f"| 본문 캐시 재사용 | {body_attempt.get('cached_count', 0)} |", "",
                   "기사 전문은 저장하지 않습니다. 요약과 검증된 짧은 근거만 보존합니다.", ""]
+        reasons = Counter(item["reason_code"] for item in article["items"].values()
+                          if item["status"] in {"failed", "unavailable"} and item["reason_code"])
+        if reasons:
+            lines += ["### 본문 처리 사유", "", "| 안전한 상태 코드 | 건수 |", "|---|---|"]
+            lines += [f"| {code} | {count} |" for code, count in sorted(reasons.items())]
+            lines += ["", "원응답·기사 전문·API 키는 실행 요약에 기록하지 않습니다.", ""]
     summary = "\n".join(lines)
     if os.environ.get("GITHUB_STEP_SUMMARY"):
         with Path(os.environ["GITHUB_STEP_SUMMARY"]).open("a", encoding="utf-8") as handle:

@@ -50,7 +50,7 @@ class ArticleAnalysisTests(unittest.TestCase):
         self.fetches, self.calls = [], []
         self.latest = read(self.root / "site/data/latest.json")
         self.news = [row for row in self.latest["candidates"] if row["content_filter"] == "topics"]
-        self.id = self.news[0]["issue_id"]
+        self.id = min(self.news, key=lambda row: (row.get("published_date") or row["published_at"][:10], row["issue_id"]))["issue_id"]
         self.body = {"title": "테스트용 기사", "paragraphs": copy.deepcopy(PARAGRAPHS),
                      "content_hash": hashlib.sha256(json.dumps(PARAGRAPHS).encode()).hexdigest(),
                      "fetched_at": NOW.isoformat(), "truncated": False}
@@ -88,8 +88,8 @@ class ArticleAnalysisTests(unittest.TestCase):
     def test_prepare_never_fetches_or_calls_ai_and_does_not_invent_summaries(self):
         with patch("weekly_trend.article_analysis.fetch_article", side_effect=AssertionError("network forbidden")), patch("weekly_trend.ai.request_once", side_effect=AssertionError("AI forbidden")):
             result = articles.prepare(self.root, now=NOW)
-        self.assertEqual(result["counts"]["eligible"], 5)
-        self.assertEqual(result["counts"]["pending"], 5)
+        self.assertEqual(result["counts"]["eligible"], len(self.news))
+        self.assertEqual(result["counts"]["pending"], len(self.news))
         self.assertEqual(result["counts"]["not_applicable"], 1)
         self.assertTrue(all(item["result"] is None for item in self.public()["items"].values()))
         self.assertTrue(articles.check(self.root)["ok"])
@@ -142,7 +142,7 @@ class ArticleAnalysisTests(unittest.TestCase):
         self.assertNotEqual(self.public()["items"][self.id]["input_fingerprint"], original)
         self.assertEqual(len(self.calls), 2)
         config = read(self.root / "config/articles.json")
-        config["prompt_version"] = "article-brief-test-v2"
+        config["prompt_version"] = "article-brief-test-v3"
         write(self.root / "config/articles.json", config)
         articles.prepare(self.root, now=NOW)
         item = self.public()["items"][self.id]
@@ -224,6 +224,25 @@ class ArticleAnalysisTests(unittest.TestCase):
         self.assertEqual(result["last_attempt"]["error_code"], "network_error")
         self.assertNotIn("unit-test-key", json.dumps(result))
         self.assertNotIn("private provider response", (self.root / "state/article-analysis.json").read_text())
+
+    def test_partial_response_saves_normal_briefs_and_only_marks_invalid_item_failed(self):
+        def partial(payload, key, timeout):
+            values = []
+            for index, source in enumerate(json.loads(payload["input"])["items"]):
+                result = brief()
+                result.pop("evidence")
+                if index == 0:
+                    result["facts"][0]["text"] = "투자 규모는 900억원이다."
+                values.append({"issue_id": source["issue_id"], **result})
+            return {"status": "completed", "steps": [{"type": "model_output", "content": [{"type": "text", "text": json.dumps({"items": values}, ensure_ascii=False)}]}]}
+        result = articles.run(self.root, environ=ENV, fetcher=self.fetch, transport=partial, now=NOW)
+        self.assertEqual(result["last_attempt"]["status"], "partial_success")
+        self.assertEqual(result["counts"]["completed"], 4)
+        self.assertEqual(result["counts"]["failed"], 1)
+        failed = next(item for item in self.public()["items"].values() if item["status"] == "failed")
+        self.assertEqual(failed["reason_code"], "output_number_mismatch")
+        self.assertEqual(len(read(self.root / "state/article-analysis.json")["entries"]), 4)
+        self.assertTrue(articles.check(self.root)["ok"])
 
     def test_collection_rebuild_preserves_article_cache_and_never_fetches_or_calls_ai(self):
         from weekly_trend.live_pipeline import run_collection

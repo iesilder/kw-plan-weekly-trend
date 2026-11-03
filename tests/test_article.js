@@ -75,3 +75,29 @@ test("a large current cache does not count as a raised API batch",()=>{
   const{data,latest}=fixture();data.last_attempt={attempted_at:STAMP,completed_at:STAMP,status:"cached",error_code:null,request_count:0,fetch_count:0,completed_count:0,cached_count:20,failed_count:0};
   assert.doesNotThrow(()=>Article.validateSidecar(data,latest));assert.match(Article.itemMessage({status:"unavailable",reason_code:"access_restricted"}),/접근 제한/);
 });
+test("known article prompt versions remain compatible while unknown versions fail",()=>{
+  for(const version of ["article-brief-v1","article-brief-v2"]){const{data,latest}=fixture();data.prompt_version=version;complete(data);assert.equal(Article.validateSidecar(data,latest).prompt_version,version);}
+  const{data,latest}=fixture();data.prompt_version="article-brief-v3";assert.throws(()=>Article.validateSidecar(data,latest));
+});
+test("partial success retains four valid briefs and a separately failed item",()=>{
+  const{data,latest}=fixture();data.prompt_version="article-brief-v2";complete(data);
+  const extraIds=["c","d","e","f"].map(char=>"issue-"+char.repeat(20));
+  for(const[index,id]of extraIds.entries()){
+    const evidence="version-"+String(index+3).repeat(20);
+    latest.candidates.push({...latest.candidates[0],issue_id:id,evidence_ids:[evidence]});
+    data.items[id]={...clone(data.items[A]),evidence_ids:[evidence]};
+  }
+  Object.assign(data.items[extraIds[3]],{status:"failed",reason_code:"output_number_mismatch",result:null,result_fingerprint:null,analyzed_at:null});
+  data.counts={eligible:5,completed:4,stale:0,unavailable:0,pending:0,not_applicable:1,failed:1};
+  data.last_attempt={attempted_at:STAMP,completed_at:STAMP,status:"partial_success",error_code:null,request_count:1,fetch_count:5,completed_count:4,cached_count:0,failed_count:1};
+  const before=clone(data);const validated=Article.validateSidecar(data,latest);
+  assert.equal(validated.counts.completed,4);assert.equal(validated.counts.failed,1);assert.equal(validated.items[extraIds[3]].result,null);assert.equal(Article.summary(validated).label,"일부 분석 실패");
+  for(const id of [A,...extraIds.slice(0,3)])assert.deepEqual(validated.items[id].result,before.items[id].result);
+  assert.deepEqual(data,before);
+});
+test("item-specific output errors use safe explanatory messages without raw responses",()=>{
+  for(const code of ["output_number_mismatch","output_evidence_mismatch","output_invalid_shape","output_missing_item","output_duplicate_item","output_quote_invalid"]){
+    const message=Article.itemMessage({status:"failed",reason_code:code});assert.match(message,/이 자료|요약/);assert.doesNotMatch(message,new RegExp(code));
+  }
+  const marker="untrusted-provider-response-credential";assert.doesNotMatch(Article.itemMessage({status:"failed",reason_code:marker}),new RegExp(marker));
+});

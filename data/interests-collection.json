@@ -3,30 +3,30 @@
   "entries": {
     "interest-10": {
       "filter_fingerprint": "a9718ce4779c91651ac6b6eff281fef28917eb20f15aa030142db774974c0088",
-      "last_success_at": "2026-11-04T06:12:31.397040+00:00",
+      "last_success_at": "2026-11-04T06:26:28.294767+00:00",
       "sources": {
         "einfomax-s1n2": {
           "filter_fingerprint": "a9718ce4779c91651ac6b6eff281fef28917eb20f15aa030142db774974c0088",
-          "last_success_at": "2026-11-04T06:12:31.397040+00:00",
-          "next_collection_start": "2026-11-02T06:12:31.397040+00:00",
-          "etag": "\"5519-65f6d3c2cef55\"",
-          "last_modified": "Wed, 04 Nov 2026 06:10:25 GMT",
+          "last_success_at": "2026-11-04T06:26:28.294767+00:00",
+          "next_collection_start": "2026-11-02T06:26:28.294767+00:00",
+          "etag": "\"5519-65f6d71c19bc7\"",
+          "last_modified": "Wed, 04 Nov 2026 06:25:24 GMT",
           "status": "success",
           "error_code": null
         },
         "einfomax-s1n7": {
           "filter_fingerprint": "a9718ce4779c91651ac6b6eff281fef28917eb20f15aa030142db774974c0088",
-          "last_success_at": "2026-11-04T06:12:31.397040+00:00",
-          "next_collection_start": "2026-11-02T06:12:31.397040+00:00",
-          "etag": "\"52e3-65f6d3c2d31c3\"",
-          "last_modified": "Wed, 04 Nov 2026 06:10:25 GMT",
+          "last_success_at": "2026-11-04T06:26:28.294767+00:00",
+          "next_collection_start": "2026-11-02T06:26:28.294767+00:00",
+          "etag": "\"52a2-65f6d71c1da3b\"",
+          "last_modified": "Wed, 04 Nov 2026 06:25:24 GMT",
           "status": "success",
           "error_code": null
         },
         "newswire-securities": {
           "filter_fingerprint": "a9718ce4779c91651ac6b6eff281fef28917eb20f15aa030142db774974c0088",
-          "last_success_at": "2026-11-04T06:12:31.397040+00:00",
-          "next_collection_start": "2026-11-02T06:12:31.397040+00:00",
+          "last_success_at": "2026-11-04T06:26:28.294767+00:00",
+          "next_collection_start": "2026-11-02T06:26:28.294767+00:00",
           "etag": null,
           "last_modified": null,
           "status": "success",
@@ -38,8 +38,8 @@
   },
   "last_attempt": {
     "mode": "daily",
-    "started_at": "2026-11-04T06:12:31.397040+00:00",
-    "completed_at": "2026-11-04T06:12:31.397040+00:00",
+    "started_at": "2026-11-04T06:26:28.294767+00:00",
+    "completed_at": "2026-11-04T06:26:28.294767+00:00",
     "status": "success",
     "request_url": null,
     "error_code": null

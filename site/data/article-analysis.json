@@ -1,47 +1,130 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-c318de1be3581fa292c2",
-  "generated_at": "2026-11-04T06:13:18.725702+00:00",
+  "generation_id": "live-12383ffea9144cb6c551",
+  "generated_at": "2026-11-04T06:26:56.926333+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "article-bullets-v1",
   "auto_analysis_enabled": true,
   "counts": {
-    "completed": 9,
-    "unavailable": 0,
-    "failed": 3,
-    "not_applicable": 1,
     "pending": 0,
+    "unavailable": 0,
+    "failed": 1,
+    "not_applicable": 1,
+    "completed": 11,
     "stale": 0,
     "eligible": 12
   },
   "last_attempt": {
-    "attempted_at": "2026-11-04T06:13:13.102243+00:00",
-    "completed_at": "2026-11-04T06:13:18.722195+00:00",
-    "status": "failed",
-    "error_code": "invalid_output",
+    "attempted_at": "2026-11-04T06:26:46.201671+00:00",
+    "completed_at": "2026-11-04T06:26:56.923698+00:00",
+    "status": "success",
+    "error_code": null,
     "request_count": 1,
-    "fetch_count": 1,
-    "completed_count": 0,
+    "fetch_count": 2,
+    "completed_count": 2,
     "cached_count": 0,
-    "failed_count": 1
+    "failed_count": 0
   },
   "items": {
     "issue-ee1808d185516fc0bef6": {
-      "status": "failed",
-      "reason_code": "output_number_mismatch",
+      "status": "completed",
+      "reason_code": null,
       "evidence_ids": [
         "version-04cc4b05f9102f43b121"
       ],
       "source_url": "https://www.fsc.go.kr/no010101/88071",
       "source_name": "금융위원회 · 보도자료",
-      "input_fingerprint": null,
-      "result_fingerprint": null,
-      "analyzed_at": null,
-      "body_hash": null,
-      "body_fetched_at": null,
+      "input_fingerprint": "ca7135ebedaab8c71e23f4d7695ded1e1bd48705e9a1a61f82322094c3b4551b",
+      "result_fingerprint": "ca7135ebedaab8c71e23f4d7695ded1e1bd48705e9a1a61f82322094c3b4551b",
+      "analyzed_at": "2026-11-04T06:26:56.923691+00:00",
+      "body_hash": "5af1dfd9e0a2d3869ad39029c6712d07201f992b809a7647c97e1213555431ee",
+      "body_fetched_at": "2026-11-04T06:26:46.201671+00:00",
       "truncated": false,
-      "result": null
+      "result": {
+        "key_change": {
+          "text": "국무회의에서 IPO 사전수요예측과 코너스톤투자자 제도를 도입하는 자본시장법 시행령 개정안이 의결됨",
+          "evidence_ids": [
+            "p1",
+            "p2"
+          ]
+        },
+        "facts": [
+          {
+            "text": "사전수요예측은 증권신고서 공시 및 희망 공모가 밴드 확정 전에 주관사가 기관투자자 수요를 파악하도록 허용하는 제도임",
+            "evidence_ids": [
+              "p1",
+              "p2"
+            ]
+          },
+          {
+            "text": "사전수요예측 참여자격은 일반 사모집합투자업자 및 투자일임업자의 총 위탁재산 300억원 이상 요건을 적용함",
+            "evidence_ids": [
+              "p2",
+              "p3"
+            ]
+          },
+          {
+            "text": "코너스톤투자자는 공모주 기관투자자 배정물량 중 일부를 6개월 이상 보호예수하는 기관투자자에게 사전 배정하는 제도임",
+            "evidence_ids": [
+              "p1",
+              "p2"
+            ]
+          },
+          {
+            "text": "코너스톤투자자 보호예수기간 및 수량은 50%는 6개월, 30%는 8개월, 20%는 10개월로 설정함",
+            "evidence_ids": [
+              "p1",
+              "p3"
+            ]
+          },
+          {
+            "text": "코너스톤투자자 배정 물량 상한은 일반 기관투자자 물량 중 코스피 전체 20%·개별 10%, 코스닥 전체 30%·개별 20%로 설정함",
+            "evidence_ids": [
+              "p1",
+              "p4"
+            ]
+          },
+          {
+            "text": "이해관계 있는 기관투자자의 코너스톤투자자 계약과 직접적·간접적 이익 교환을 통한 이면계약을 원천 금지함",
+            "evidence_ids": [
+              "p4",
+              "p5"
+            ]
+          },
+          {
+            "text": "개정안은 11월 중 공포되며 법률 시행일인 ʼ26.11.13일부터 시행될 예정임",
+            "evidence_ids": [
+              "p1",
+              "p5"
+            ]
+          }
+        ],
+        "stage": "출시·시행",
+        "why_candidate": "자본시장법 시행령 개정에 따른 IPO 제도 변화와 세부 요건을 파악하기 위함",
+        "evidence": [
+          {
+            "id": "p1",
+            "quote": "국무회의 의결 □ ʼ26.11.13일 시행예정인 ｢자본시장법｣에서 대통"
+          },
+          {
+            "id": "p2",
+            "quote": "경우 총 위탁재산이 300억원 이상일 요건”만 적용하고, 등록 2년 경"
+          },
+          {
+            "id": "p3",
+            "quote": "는 8개월, 20%는 10개월로 설정*한다. 이는 코너스톤투자자 보호예수"
+          },
+          {
+            "id": "p4",
+            "quote": "20%, 개별* 한도 10%, 코스닥은 전체 한도 30%, 개별 한도 2"
+          },
+          {
+            "id": "p5",
+            "quote": "월 중 공포되며, 법률 시행일인 ʼ26.11.13일부터 시행될 예정이다."
+          }
+        ]
+      }
     },
     "issue-b37f533f8536327de29d": {
       "status": "completed",
@@ -537,20 +620,103 @@
       }
     },
     "issue-d9fb63dca1fe16a50763": {
-      "status": "failed",
-      "reason_code": "output_number_mismatch",
+      "status": "completed",
+      "reason_code": null,
       "evidence_ids": [
         "version-fbed5fbf5b4e474423c4"
       ],
       "source_url": "https://www.fsc.go.kr/no010101/88020",
       "source_name": "금융위원회 · 보도자료",
-      "input_fingerprint": null,
-      "result_fingerprint": null,
-      "analyzed_at": null,
-      "body_hash": null,
-      "body_fetched_at": null,
+      "input_fingerprint": "798b1c5486a5f14ddb31a488a279e7b73afde9d5bb08fa85aa4a816b7803eec0",
+      "result_fingerprint": "798b1c5486a5f14ddb31a488a279e7b73afde9d5bb08fa85aa4a816b7803eec0",
+      "analyzed_at": "2026-11-04T06:26:56.923668+00:00",
+      "body_hash": "8073d70cfd6030db0aa8f771d285fbe2382492b40de385cc854b7a50b2f3311f",
+      "body_fetched_at": "2026-11-04T06:26:46.201671+00:00",
       "truncated": false,
-      "result": null
+      "result": {
+        "key_change": {
+          "text": "금융위원회는 부실 금융회사를 신속히 정리하기 위해 금산법 및 예보법 개정안을 입법예고하고 관련 제도를 도입할 계획임",
+          "evidence_ids": [
+            "p1",
+            "p3"
+          ]
+        },
+        "facts": [
+          {
+            "text": "적용 대상은 금산법상 금융기관 중 예금보험기금 자금지원이 가능한 은행·보험·증권사·저축은행·금융지주회사임",
+            "evidence_ids": [
+              "p1",
+              "p4"
+            ]
+          },
+          {
+            "text": "발동 요건은 금융기관 부실로 중대한 금융위기나 금융시장 안정 저해 우려가 있고 다른 처분으로 방지할 수 없는 긴급한 상황임",
+            "evidence_ids": [
+              "p1",
+              "p4"
+            ]
+          },
+          {
+            "text": "지정 절차는 재정경제부·금융감독원·예금보험공사·한국은행이 참여하는 금융위원회에서 재적위원 3분의 2 이상의 찬성으로 의결함",
+            "evidence_ids": [
+              "p1",
+              "p4"
+            ]
+          },
+          {
+            "text": "정리 방식은 영업정지·관리인 선임, 계약이전, 제3자 인수, 주식 소각·병합, 인·허가 취소 등 다양한 금산법상 조치를 허용함",
+            "evidence_ids": [
+              "p1",
+              "p4"
+            ]
+          },
+          {
+            "text": "신속성 확보를 위해 국가계약법상 입찰, 행정절차법상 사전통지, 상법·금산법상 결합·결의, 공정거래법상 기업결합심사를 생략할 수 있음",
+            "evidence_ids": [
+              "p1",
+              "p5"
+            ]
+          },
+          {
+            "text": "안전장치로 예금보험공사의 1~2일 내 잠정평가 후 사후 확정 실사를 거쳐 청산기준 손실을 사후 보전하고 국회 상임위에 사후 보고함",
+            "evidence_ids": [
+              "p1",
+              "p5"
+            ]
+          },
+          {
+            "text": "법안의 입법예고 기간은 11.2일(월)부터 12.14일(월)까지 총 42일간 실시될 예정임",
+            "evidence_ids": [
+              "p5",
+              "p6"
+            ]
+          }
+        ],
+        "stage": "추진·협약",
+        "why_candidate": "시스템리스크 확산을 막는 신속정리제도 도입 법안의 주요 내용과 절차를 점검하기 위함",
+        "evidence": [
+          {
+            "id": "p1",
+            "quote": "가능 재산 실사를 1~2일 내 잠정평가(간이실사) 안전장치 청·파산 대비"
+          },
+          {
+            "id": "p3",
+            "quote": "신속·선제적 대응 ➊ 금산법상 금융기관 중 예보기금 자금지원이 가능한 금"
+          },
+          {
+            "id": "p4",
+            "quote": "에서 재적위원 3분의 2 이상의 찬성으로 의결하도록 하여 절차적 정당성을"
+          },
+          {
+            "id": "p5",
+            "quote": "11.2일(월)부터 12.14일(월)까지 입법예고를 실시할 예정이며,"
+          },
+          {
+            "id": "p6",
+            "quote": "일(월) ~ 2026.12.14일(월), (42일) ￭ 입법예고된 내용에"
+          }
+        ]
+      }
     },
     "issue-49697d9828e2c35c9098": {
       "status": "completed",

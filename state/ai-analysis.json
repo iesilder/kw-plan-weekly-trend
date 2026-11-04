@@ -196,22 +196,22 @@
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-04T06:12:48.632176+00:00",
-    "completed_at": "2026-11-04T06:12:52.589671+00:00",
+    "attempted_at": "2026-11-04T06:26:45.585074+00:00",
+    "completed_at": "2026-11-04T06:26:46.195578+00:00",
     "status": "failed",
-    "error_code": "invalid_output",
+    "error_code": "request_rejected",
     "request_count": 1,
     "eligible_count": 6,
     "completed_count": 0,
     "cached_count": 0,
     "failed_count": 6,
     "fingerprints": [
-      "101df6aece80efda1804316fe3517d5260db894c3f51acb3521fa0f7b116dbf3",
-      "d811fa443395429663ab6fc108e7399db406a49ca5e49ffa56af8d58d53bb69c",
-      "a4034959a0fb8d3a89ed8f2f1373805db100f466d0fa40a3dce1e02581fe5a81",
-      "1e2b606923dd3ff9932b139b835f408ccb4d68d0117f8f3920191207a0612a2e",
-      "1c7b86637a82669d5c5ee1f7ea5bc814c5fb73296d1f037fac3445860f1f64c4",
-      "eecff5dcdbed120c3ce38426dd86a32cb2b71f498d0eb51b407868900e47e0c7"
+      "3080ce609bce42113c8a203cc33b4fe57560ceac0cc522d451c0df78aafdbea5",
+      "3497874184f7ad40799107bcef5a66df655106046dd9f288c937bf9f5b1ef055",
+      "38910371df348908761b9ff338a59441be5bfc48bd11d587de599e787dbc5243",
+      "e37a36dbfc6f602fc65fd02952e1babe5a2e5c1cab36e983b555fdb256f68498",
+      "35c1bdc9399c9c3720c43b557fdc75df7939107e15a97b56ca0119b1a6de32fa",
+      "048583c58116124b383b23245866df4e4f22b1c803cd4c8ea9f6ab30b5b5a68e"
     ]
   },
   "failures": {

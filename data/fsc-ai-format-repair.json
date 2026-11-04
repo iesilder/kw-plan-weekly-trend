@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "repair_version": "fsc-format-repair-v1",
+  "started_at": "2026-11-04T06:26:45.582299+00:00",
+  "completed_at": "2026-11-04T06:26:56.940426+00:00",
+  "status": "partial_success",
+  "stages": {
+    "titles": {
+      "status": "failed",
+      "error_code": "request_rejected",
+      "request_count": 1,
+      "fetch_count": 0,
+      "completed_count": 0,
+      "issue_ids": [
+        "issue-0727cc1f0b22bdd5ae98",
+        "issue-3108a2f8608f22965149",
+        "issue-34d0a1c085f04dc0c774",
+        "issue-49697d9828e2c35c9098",
+        "issue-d9fb63dca1fe16a50763",
+        "issue-ee1808d185516fc0bef6"
+      ]
+    },
+    "articles": {
+      "status": "success",
+      "error_code": null,
+      "request_count": 1,
+      "fetch_count": 2,
+      "completed_count": 2,
+      "issue_ids": [
+        "issue-d9fb63dca1fe16a50763",
+        "issue-ee1808d185516fc0bef6"
+      ]
+    }
+  },
+  "title_issue_ids": [
+    "issue-0727cc1f0b22bdd5ae98",
+    "issue-3108a2f8608f22965149",
+    "issue-34d0a1c085f04dc0c774",
+    "issue-49697d9828e2c35c9098",
+    "issue-d9fb63dca1fe16a50763",
+    "issue-ee1808d185516fc0bef6"
+  ],
+  "article_issue_ids": [
+    "issue-d9fb63dca1fe16a50763",
+    "issue-ee1808d185516fc0bef6"
+  ],
+  "completed_titles": 0,
+  "remaining_titles": 6,
+  "completed_articles": 2,
+  "remaining_articles": 0,
+  "untargeted_titles": 0,
+  "untargeted_articles": 0
+}

@@ -3,30 +3,30 @@
   "entries": {
     "interest-10": {
       "filter_fingerprint": "a9718ce4779c91651ac6b6eff281fef28917eb20f15aa030142db774974c0088",
-      "last_success_at": "2026-11-04T03:10:08.445970+00:00",
+      "last_success_at": "2026-11-04T04:35:16.756063+00:00",
       "sources": {
         "einfomax-s1n2": {
           "filter_fingerprint": "a9718ce4779c91651ac6b6eff281fef28917eb20f15aa030142db774974c0088",
-          "last_success_at": "2026-11-04T03:10:08.445970+00:00",
-          "next_collection_start": "2026-11-02T03:10:08.445970+00:00",
-          "etag": "\"5564-65f6aa6709691\"",
-          "last_modified": "Wed, 04 Nov 2026 03:05:23 GMT",
+          "last_success_at": "2026-11-04T04:35:16.756063+00:00",
+          "next_collection_start": "2026-11-02T04:35:16.756063+00:00",
+          "etag": "\"5533-65f6bd6b705d1\"",
+          "last_modified": "Wed, 04 Nov 2026 04:30:28 GMT",
           "status": "success",
           "error_code": null
         },
         "einfomax-s1n7": {
           "filter_fingerprint": "a9718ce4779c91651ac6b6eff281fef28917eb20f15aa030142db774974c0088",
-          "last_success_at": "2026-11-04T03:10:08.445970+00:00",
-          "next_collection_start": "2026-11-02T03:10:08.445970+00:00",
-          "etag": "\"54a1-65f6aa670cd58\"",
-          "last_modified": "Wed, 04 Nov 2026 03:05:23 GMT",
+          "last_success_at": "2026-11-04T04:35:16.756063+00:00",
+          "next_collection_start": "2026-11-02T04:35:16.756063+00:00",
+          "etag": "\"543c-65f6bd6b734b0\"",
+          "last_modified": "Wed, 04 Nov 2026 04:30:28 GMT",
           "status": "success",
           "error_code": null
         },
         "newswire-securities": {
           "filter_fingerprint": "a9718ce4779c91651ac6b6eff281fef28917eb20f15aa030142db774974c0088",
-          "last_success_at": "2026-11-04T03:10:08.445970+00:00",
-          "next_collection_start": "2026-11-02T03:10:08.445970+00:00",
+          "last_success_at": "2026-11-04T04:35:16.756063+00:00",
+          "next_collection_start": "2026-11-02T04:35:16.756063+00:00",
           "etag": null,
           "last_modified": null,
           "status": "success",
@@ -38,10 +38,10 @@
   },
   "last_attempt": {
     "mode": "manual",
-    "started_at": "2026-11-04T03:10:08.445970+00:00",
-    "completed_at": "2026-11-04T03:10:08.445970+00:00",
+    "started_at": "2026-11-04T04:35:16.756063+00:00",
+    "completed_at": "2026-11-04T04:35:16.756063+00:00",
     "status": "success",
-    "request_url": "https://github.com/iesilder/kw-plan-weekly-trend/issues/12",
+    "request_url": "https://github.com/iesilder/kw-plan-weekly-trend/issues/17",
     "error_code": null
   }
 }

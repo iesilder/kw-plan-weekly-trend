@@ -22,6 +22,28 @@
         }
       },
       "matched_count": 0
+    },
+    "issue-17": {
+      "request_id": "issue-17",
+      "request_url": "https://github.com/iesilder/kw-plan-weekly-trend/issues/17",
+      "started_at": "2026-11-04T04:35:16.756063+00:00",
+      "completed_at": "2026-11-04T04:35:22.223327+00:00",
+      "status": "success",
+      "stages": {
+        "collection": {
+          "status": "success",
+          "error_code": null
+        },
+        "titles": {
+          "status": "cached",
+          "error_code": null
+        },
+        "articles": {
+          "status": "cached",
+          "error_code": null
+        }
+      },
+      "matched_count": 0
     }
   }
 }

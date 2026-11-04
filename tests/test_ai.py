@@ -139,6 +139,21 @@ class AITests(unittest.TestCase):
         ai.prepare(self.root, now=NOW)
         self.assertEqual(self.public()["items"][fsc["issue_id"]]["reason_code"], "dart_not_sent")
 
+    def test_fsc_title_format_guidance_changes_only_its_input_and_binds_response_ids(self):
+        self.run_good()
+        original = copy.deepcopy(ai.load_state(self.root)["entries"])
+        fsc = self.add_fsc_news()
+        self.run_good(issue_ids=[fsc["issue_id"]])
+        payload = self.calls[-1][0]
+        sent = json.loads(payload["input"])["items"]
+        self.assertEqual(sent[0]["format_rules"], ai.FSC_TITLE_FORMAT_RULES)
+        schema = payload["response_format"]["schema"]["properties"]["items"]["items"]["properties"]
+        self.assertEqual(schema["issue_id"]["enum"], [fsc["issue_id"]])
+        self.assertEqual(schema["duplicate_issue_ids"]["items"]["enum"], [fsc["issue_id"]])
+        self.assertEqual(schema["duplicate_issue_ids"]["maxItems"], 0)
+        self.assertTrue(all(ai.load_state(self.root)["entries"].get(key) == value for key, value in original.items()))
+        self.assertNotIn("format_rules", json.loads(self.calls[0][0]["input"])["items"][0])
+
     def test_prepare_is_network_free_and_never_claims_dart_analysis(self):
         with patch("weekly_trend.ai.request_once", side_effect=AssertionError("network forbidden")):
             result = ai.prepare(self.root, now=NOW)

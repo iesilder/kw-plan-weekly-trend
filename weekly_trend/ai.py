@@ -41,6 +41,11 @@ Do not include numeric figures in rationale or check_points, except the exact se
 duplicate_issue_ids may only refer to other issue IDs in this request; a shared form or company alone does not establish duplication.
 Use an empty duplicate_issue_ids list whenever uncertain. Suggestions do not merge records or change human choices.
 """
+FSC_TITLE_FORMAT_RULES = [
+    "금융위원회 보도자료 제목의 정책 변화만 간단히 설명한다. rationale과 check_points에는 숫자를 쓰지 않는다.",
+    "제목에 위원회 차수나 날짜가 있어도 이를 복사하지 않는다. 제19차 같은 표기는 위원회 회의로, 날짜는 해당 발표로 표현한다.",
+    "issue_id는 제공된 값을 그대로 복사하고, duplicate_issue_ids는 확신할 때만 같은 요청의 다른 issue_id를 쓰며 불확실하면 빈 배열로 둔다.",
+]
 
 
 class AIError(Exception):
@@ -267,6 +272,10 @@ def _inputs(root, latest, details, config):
             factual = {"issue_id": issue_id, "published_date": min(dates), "news_metadata": [
                 {"title": row["title"], "source": origin["name"], "published_date": date}
                 for row, origin, date in zip(evidence, origins, dates)]}
+            if any(origin.get("adapter") == "fsc_html" for origin in origins):
+                # Source-specific output guidance changes only FSC inputs; the
+                # existing news fingerprints and successful caches stay exact.
+                factual["format_rules"] = FSC_TITLE_FORMAT_RULES
         else:
             item["reason"] = "source_not_eligible"
             continue
@@ -405,7 +414,7 @@ def check(root):
     return {"ok": True, "mode": "verified", "generation_id": actual["generation_id"], "counts": actual["counts"]}
 
 
-def response_schema():
+def response_schema(batch=None):
     item = {"type": "object", "additionalProperties": False,
             "properties": {"issue_id": {"type": "string"}, "suggested_topic_id": {"type": "string", "enum": sorted(TOPICS)},
                            "relevance": {"type": "string", "enum": ["relevant", "uncertain", "out_of_scope"]},
@@ -413,13 +422,18 @@ def response_schema():
                            "check_points": {"type": "array", "maxItems": 3, "items": {"type": "string", "maxLength": 150}},
                            "duplicate_issue_ids": {"type": "array", "maxItems": 4, "items": {"type": "string"}}}}
     item["required"] = list(item["properties"])
+    if batch:
+        known = sorted({row["input"]["issue_id"] for row in batch})
+        item["properties"]["issue_id"]["enum"] = known
+        item["properties"]["duplicate_issue_ids"]["items"]["enum"] = known
+        item["properties"]["duplicate_issue_ids"]["maxItems"] = min(4, len(known) - 1)
     return {"type": "object", "additionalProperties": False, "properties": {"items": {"type": "array", "maxItems": 10, "items": item}}, "required": ["items"]}
 
 
 def request_body(batch, topics, config):
     return {"model": config["model"], "store": False, "input": _json({"topics": topics, "items": [item["input"] for item in batch]}),
             "system_instruction": SYSTEM_INSTRUCTION, "generation_config": {"max_output_tokens": config["max_output_tokens"]},
-            "response_format": {"type": "text", "mime_type": "application/json", "schema": response_schema()}}
+            "response_format": {"type": "text", "mime_type": "application/json", "schema": response_schema(batch)}}
 
 
 class _NoRedirect(urllib.request.HTTPRedirectHandler):

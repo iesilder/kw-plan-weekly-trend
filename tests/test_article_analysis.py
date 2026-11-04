@@ -117,7 +117,10 @@ class ArticleAnalysisTests(unittest.TestCase):
         sent = json.loads(self.calls[0][0]["input"])["items"]
         self.assertEqual([item["issue_id"] for item in sent], [fsc["issue_id"]])
         self.assertEqual(sent[0]["source"], "금융위원회 · 보도자료")
-        self.assertEqual(sent[0]["paragraphs"], PARAGRAPHS)
+        self.assertEqual([{key: row[key] for key in ("id", "text")} for row in sent[0]["paragraphs"]], PARAGRAPHS)
+        self.assertEqual(sent[0]["format_rules"], articles.FSC_BODY_FORMAT_RULES)
+        for row in sent[0]["paragraphs"]:
+            self.assertEqual(row["allowed_numeric_tokens"], sorted(articles._numbers(row["text"])))
         state = read(self.root / "state/article-analysis.json")
         self.assertTrue(all(state["entries"][key] == value for key, value in old_entries.items()))
         self.assertEqual(self.public()["items"][fsc["issue_id"]]["status"], "completed")
@@ -128,6 +131,50 @@ class ArticleAnalysisTests(unittest.TestCase):
                    str(ROOT / "site/article.js"), str(self.root / "site/data/article-analysis.json"), str(self.root / "site/data/latest.json")]
         checked = subprocess.run(command, capture_output=True, text=True)
         self.assertEqual(checked.returncode, 0, checked.stderr)
+
+    def test_fsc_format_guidance_preserves_a_valid_legacy_cache_after_expiry(self):
+        fsc = self.add_fsc_news()
+        self.run_good(issue_ids=[fsc["issue_id"]])
+        state = read(self.root / "state/article-analysis.json")
+        entry = state["entries"][fsc["issue_id"]]
+        original_metadata = entry["metadata_fingerprint"]
+        legacy_fingerprint = articles._hash({"metadata": original_metadata, "body_hash": self.body["content_hash"],
+            "paragraphs": self.body["paragraphs"], "truncated": False})
+        self.assertNotEqual(legacy_fingerprint, entry["input_fingerprint"])
+        entry["input_fingerprint"] = legacy_fingerprint
+        old_result = copy.deepcopy(entry["result"])
+        write(self.root / "state/article-analysis.json", state)
+        self.calls.clear()
+        result = self.run_good(issue_ids=[fsc["issue_id"]], now=NOW + timedelta(days=2))
+        self.assertEqual(self.calls, [])
+        self.assertEqual(result["last_attempt"]["cached_count"], 1)
+        after = read(self.root / "state/article-analysis.json")["entries"][fsc["issue_id"]]
+        self.assertEqual(after["metadata_fingerprint"], original_metadata)
+        self.assertEqual(after["input_fingerprint"], legacy_fingerprint)
+        self.assertEqual(after["result"], old_result)
+        self.assertTrue(articles.check(self.root)["ok"])
+
+    def test_fsc_failed_repair_gets_new_scoped_input_without_changing_other_entries(self):
+        self.run_good()
+        old_entries = copy.deepcopy(read(self.root / "state/article-analysis.json")["entries"])
+        fsc = self.add_fsc_news()
+        latest, details = ai._snapshot(self.root)
+        inputs = articles._inputs(self.root, latest, details, articles.load_config(self.root))
+        data = inputs[fsc["issue_id"]]
+        legacy_fingerprint = articles._hash({"metadata": data["metadata_fingerprint"], "body_hash": self.body["content_hash"],
+            "paragraphs": self.body["paragraphs"], "truncated": False})
+        state = read(self.root / "state/article-analysis.json")
+        state["checks"][fsc["issue_id"]] = {"metadata_fingerprint": data["metadata_fingerprint"], "checked_at": NOW.isoformat(),
+            "reason_code": "output_number_mismatch", "status": "failed", "input_fingerprint": legacy_fingerprint,
+            "body_hash": self.body["content_hash"]}
+        write(self.root / "state/article-analysis.json", state)
+        self.calls.clear()
+        self.run_good(issue_ids=[fsc["issue_id"]], automatic=False)
+        after = read(self.root / "state/article-analysis.json")
+        self.assertEqual(len(self.calls), 1)
+        self.assertNotEqual(after["entries"][fsc["issue_id"]]["input_fingerprint"], legacy_fingerprint)
+        self.assertTrue(all(after["entries"][key] == value for key, value in old_entries.items()))
+        self.assertEqual(after["entries"][fsc["issue_id"]]["metadata_fingerprint"], data["metadata_fingerprint"])
 
     def test_prepare_never_fetches_or_calls_ai_and_does_not_invent_summaries(self):
         with patch("weekly_trend.article_analysis.fetch_article", side_effect=AssertionError("network forbidden")), patch("weekly_trend.ai.request_once", side_effect=AssertionError("AI forbidden")):

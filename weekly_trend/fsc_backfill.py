@@ -74,12 +74,12 @@ def _previous(path):
     return value
 
 
-def _stage(runner, root, env, now, issue_ids):
+def _stage(runner, root, env, now, issue_ids, *, automatic=True):
     if not issue_ids:
         return {"status": "skipped", "error_code": None, "request_count": 0,
                 "fetch_count": 0, "completed_count": 0, "issue_ids": []}
     try:
-        result = runner(root, environ=env, now=now, automatic=True, issue_ids=issue_ids)
+        result = runner(root, environ=env, now=now, automatic=automatic, issue_ids=issue_ids)
         attempt = result["last_attempt"]
         return {"status": attempt["status"], "error_code": attempt["error_code"],
                 "request_count": attempt["request_count"], "fetch_count": attempt.get("fetch_count", 0),

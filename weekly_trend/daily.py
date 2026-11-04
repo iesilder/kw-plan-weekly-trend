@@ -63,7 +63,12 @@ def run(root, environ=None, now=None, collector=None, title_runner=None,
     env = environ if environ is not None else __import__("os").environ
     if registry_sync is not None or env.get("GITHUB_TOKEN"):
         from .interests import sync_from_github
-        registry = (registry_sync or sync_from_github)(root, environ=env, now=moment)
+        try:
+            registry = (registry_sync or sync_from_github)(root, environ=env, now=moment)
+        except Exception:
+            # Registry availability must not stop independent source collection.
+            # Never publish exception text (it may contain tokens or payloads).
+            registry = {"ok": False, "status": "failed", "error_code": "registry_step_failed"}
     stages = {name: {"status": "skipped", "error_code": None} for name in STAGES}
     try:
         collection = (collector or run_collection)(root, now=moment)
@@ -80,6 +85,10 @@ def run(root, environ=None, now=None, collector=None, title_runner=None,
                 result = runner(root, environ=environ, now=moment, automatic=True, **options)
                 attempt = result["last_attempt"]
                 stages[name] = {"status": attempt["status"], "error_code": attempt["error_code"]}
+                counts = result.get("counts", {})
+                if attempt["status"] in {"cached", "success"} and any(
+                        counts.get(key, 0) for key in ("failed", "unavailable", "pending", "not_analyzed", "stale")):
+                    stages[name] = {"status": "partial_success", "error_code": "analysis_incomplete"}
                 if result.get("suppressed_count", 0) and attempt["status"] in {"cached", "success"}:
                     stages[name] = {"status": "partial_success", "error_code": "unchanged_invalid_output"}
             except Exception:

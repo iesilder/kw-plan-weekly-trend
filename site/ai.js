@@ -101,6 +101,9 @@
     if (item.status === "blocked") return REASONS[item.reason_code] || "현재 AI 이용 범위에서 제외했습니다.";
     if (item.status === "stale") return "분석 후 자료 또는 분석 기준이 바뀌었습니다. 이전 제안은 표시하지 않으며 다음 자동 실행 또는 수동 실행에서 재분석합니다.";
     if (KEY_CODES.has(item.error_code)) return item.error_code === "missing_api_key" ? "아직 분석하지 않았습니다. GitHub의 API 키를 등록한 뒤 다음 자동 실행 또는 수동 실행을 진행하세요." : "아직 분석하지 않았습니다. 무료 프로젝트 설정을 확인한 뒤 다음 자동 실행 또는 수동 실행을 진행하세요.";
+    if (item.status === "failed" && item.error_code === "request_invalid") return "AI 서비스가 요청 형식 또는 설정을 거절했습니다(HTTP 400). 실행 기록과 요청 스키마를 점검해야 하며 기존 자료와 담당자 선택은 유지됩니다.";
+    if (item.status === "failed" && item.error_code === "request_not_found") return "AI 서비스의 요청 경로 또는 모델을 찾지 못했습니다(HTTP 404). 모델·API 설정 확인이 필요합니다.";
+    if (item.status === "failed" && item.error_code === "request_timeout") return "AI 서비스가 요청 시간 초과를 반환했습니다(HTTP 408). 기존 자료는 유지되며 다음 허용된 실행에서 재시도합니다.";
     if (item.status === "failed") return "분석에 실패했습니다. 기존 수집 자료와 담당자의 선택은 유지됩니다. GitHub 실행 기록을 확인해주세요.";
     if (item.status === "not_analyzed") return "아직 실제 AI 분석 결과가 없습니다. 기사·보도자료의 제목·출처·날짜를 바탕으로 분석합니다. DART 공시는 AI에 전송하지 않습니다.";
     return "기사·보도자료 제목의 관련성과 검토 이유에 대한 제안입니다. 기사 본문 요약은 아래 별도 영역에서 확인하세요. DART 공시는 AI에 전송하지 않습니다.";

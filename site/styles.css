@@ -510,6 +510,8 @@ h2{font-size:16px}
 .interests-privacy{color:var(--deep-blue);margin-top:5px}
 .interests-status{font-weight:600;color:var(--deep-blue);border-top:1px solid var(--border);padding-top:13px}
 .interests-last-run{margin-top:5px}
+.interests-registry-checked{font-size:10px;line-height:1.8;color:var(--text-secondary);margin:5px 0 0;overflow-wrap:anywhere}
+.interests-actions #interests-refresh:disabled{cursor:progress}
 .interest-request-link,.interest-source-link{color:var(--deep-blue);text-decoration:underline;text-underline-offset:3px}
 .interests-warning{padding:10px 12px;border-left:3px solid var(--steel-blue);background:var(--white);color:var(--deep-blue)}
 .interest-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:12px;margin-top:15px}
@@ -519,6 +521,7 @@ h2{font-size:16px}
 .interest-card h3{font-size:13px;line-height:1.7;letter-spacing:-.03em;margin:0;overflow-wrap:anywhere;word-break:keep-all}
 .interest-state{flex-shrink:0;max-width:100px;border:1px solid var(--border);border-radius:3px;padding:3px 5px;color:var(--text-secondary);font-size:9px;line-height:1.5}
 .interest-active .interest-state{color:var(--deep-blue);background:var(--surface-accent);border-color:var(--light-blue)}
+.interest-state.interest-registration-pending{max-width:130px;border-style:dashed;white-space:normal}
 .interest-question{font-size:11px;line-height:1.8;color:var(--text-secondary);margin:10px 0 12px;overflow-wrap:anywhere;white-space:pre-wrap}
 .interest-keywords{display:flex;flex-wrap:wrap;gap:5px}
 .interest-keywords span,.interest-badge{display:inline-block;max-width:100%;font-size:9px;line-height:1.5;border:1px solid var(--border);border-radius:3px;padding:3px 6px;color:var(--deep-blue);background:var(--surface-subtle);overflow-wrap:anywhere}

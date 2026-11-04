@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "entries": {},
+  "last_attempt": {
+    "mode": "daily",
+    "started_at": "2026-11-03T23:44:48.965119+00:00",
+    "completed_at": "2026-11-03T23:44:48.965119+00:00",
+    "status": "skipped",
+    "request_url": null,
+    "error_code": null
+  }
+}

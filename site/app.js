@@ -14,7 +14,9 @@
   const AI = window.WeeklyAI;
   const Article = window.WeeklyArticle;
   const Interests = window.WeeklyInterests;
-  const interestsState = {data:null,loading:true,warning:"",filter:""};
+  const Registry = window.WeeklyInterestRegistry;
+  const registryState = {client:Registry ? Registry.createClient({fetchImpl:(...args) => fetch(...args)}) : null,live:null,loading:false,warning:"",dirty:false,pending:null,forceQueued:false,freshnessLoad:-1};
+  const interestsState = {data:null,published:null,loading:true,warning:"",publishedWarning:"",filter:""};
   const articleState = {data:null,loading:true,warning:""};
   const aiState = {data:null,loading:true,warning:""};
   const reviewState = { canonical: null, draft: null, ready: false, problem: "", storageWarning: "", localInvalid: false, duplicates: {}, detailCache: new Map(), weeklyRequest: 0, weeklyRecords: [], weeklyRange: null, memoryMode: null, unsavedStorage: false };
@@ -444,14 +446,72 @@
   }
 
   function initializeInterests(result) {
-    interestsState.data = null;
+    interestsState.published = null;
     interestsState.loading = false;
-    interestsState.warning = "";
-    if (state.latest?.is_demo) { interestsState.warning = "가상 데모에는 실제 관심사나 수집 결과를 연결하지 않습니다. 등록과 관리는 GitHub에서 진행할 수 있습니다."; return; }
+    interestsState.publishedWarning = "";
     try {
+      if (state.latest?.is_demo) throw new Error("가상 데모에는 관심사 기사 수집 결과를 연결하지 않습니다.");
       if (!Interests || result.error) throw new Error("저장된 관심사 등록부를 불러오지 못했습니다.");
-      interestsState.data = Interests.validateSidecar(result.value,state.latest);
-    } catch (error) { interestsState.warning = `${error.message} 관심사 등록·관리는 GitHub에서 확인할 수 있으며 자료 검토는 계속 이용할 수 있습니다.`; }
+      interestsState.published = Interests.validateSidecar(result.value,state.latest);
+    } catch (error) { interestsState.publishedWarning = `${error.message} 게시된 기사 연결과 실제 관심사 수집 이력을 확인할 수 없습니다.`; }
+    rebuildInterestView();
+    ensureRegistryFreshness();
+  }
+
+  function ensureRegistryFreshness() {
+    if (registryState.live && interestsState.published?.registry.last_success_at && Date.parse(interestsState.published.registry.last_success_at) > Date.parse(registryState.live.fetched_at) && registryState.freshnessLoad !== state.loadRequest) {
+      registryState.freshnessLoad = state.loadRequest;
+      void refreshLiveInterests({force:true});
+    }
+  }
+
+  function rebuildInterestView() {
+    interestsState.data = interestsState.published;
+    let mergeWarning = "";
+    if (Registry && registryState.live) {
+      try {
+        interestsState.data = Registry.mergeRegistry(interestsState.published,registryState.live,state.latest?.is_demo === false ? state.latest : null);
+        if (interestsState.data.registry_view_status === "stale") mergeWarning = "게시된 등록 목록이 마지막 화면 조회보다 최신입니다. 새 등록 목록을 확인하는 동안 게시된 목록을 유지합니다.";
+      } catch { mergeWarning = "등록 목록과 현재 기사 자료의 연결을 확인하지 못했습니다. 확인 가능한 저장 목록을 유지합니다."; }
+    }
+    interestsState.warning = [registryState.warning,mergeWarning,interestsState.publishedWarning].filter(Boolean).join(" ");
+  }
+
+  function refreshLiveInterests({force = false} = {}) {
+    if (registryState.pending) {
+      if (force) registryState.forceQueued = true;
+      return registryState.pending;
+    }
+    registryState.loading = true;
+    rebuildInterestView(); renderInterests();
+    const request = Promise.resolve().then(() => {
+      if (!registryState.client) throw new Error("registry_unavailable");
+      return registryState.client.load({force});
+    }).then(live => {
+      registryState.live = live;
+      registryState.warning = "";
+    }).catch(error => {
+      const reason = error?.code === "rate_limited" ? "GitHub 조회 제한으로 지금 등록 목록을 다시 확인하지 못했습니다." : "GitHub의 실시간 등록 목록을 확인하지 못했습니다.";
+      registryState.warning = `${reason} ${registryState.live ? "마지막으로 확인한 등록 목록을 유지합니다." : interestsState.published ? "마지막 배포에 저장된 목록을 표시합니다. 새 등록·변경은 아직 확인하지 못했습니다." : "미등록이나 관련 기사 0건으로 판단하지 않습니다. 잠시 후 등록 목록을 새로고침하세요."}`;
+    }).finally(() => {
+      registryState.loading = false;
+      registryState.pending = null;
+      rebuildInterestView(); renderInterests();
+      if (state.latest?.candidates.length) renderCandidates();
+      if (registryState.forceQueued) {
+        registryState.forceQueued = false;
+        void refreshLiveInterests({force:true});
+      } else ensureRegistryFreshness();
+    });
+    registryState.pending = request;
+    return request;
+  }
+
+  function refreshRegistryOnReturn() {
+    if (document.visibilityState === "hidden") return;
+    const force = registryState.dirty;
+    registryState.dirty = false;
+    void refreshLiveInterests({force});
   }
 
   function renderInterests() {
@@ -461,17 +521,20 @@
     select.replaceChildren(new Option("모든 관심사",""));
     $("interests-warning").textContent = interestsState.warning;
     $("interests-warning").hidden = !interestsState.warning;
+    $("interests-refresh").disabled = registryState.loading;
+    $("interests-refresh").textContent = registryState.loading ? "등록 목록 확인 중…" : "등록 목록 새로고침";
     if (Interests) {
       $("interests-register").href = Interests.registrationURL();
       $("interests-manage").href = Interests.managementURL();
     }
     const data = interestsState.data;
     if (!data) {
-      const loading = interestsState.loading;
+      const loading = interestsState.loading || registryState.loading;
       if (!loading) interestsState.filter = "";
       $("interests-readiness").textContent = loading ? "확인 중" : "등록부 확인 필요";
       $("sidebar-interests").textContent = loading ? "확인 중" : "확인 필요";
       $("interests-status").textContent = loading ? "저장된 관심사를 확인하고 있습니다." : "관심사 목록을 확인할 수 없습니다. 미등록이나 관련 기사 0건으로 판단하지 않습니다.";
+      $("interests-registry-checked").textContent = loading ? "GitHub 등록 목록 확인 중" : "등록 목록 확인 시각: 확인할 수 없음";
       $("interests-last-run").textContent = loading ? "실제 관심사 수집 이력 확인 중" : "실제 관심사 수집 이력: 확인할 수 없음";
       cards.append(el("p","interests-empty",loading ? "관심사 등록부를 불러오는 중입니다." : "GitHub의 관심사 관리 화면에서 등록 상태를 확인하세요."));
       select.disabled = true;
@@ -481,9 +544,11 @@
       return;
     }
     const summary = Interests.summary(data);
-    $("interests-readiness").textContent = summary.label;
-    $("sidebar-interests").textContent = data.registry.status === "success" ? `게시 기준 ${summary.activeCount}건` : "확인 필요";
-    $("interests-status").textContent = `${summary.note} 표시 건수와 상태는 마지막 게시 기준입니다.${data.registry.last_success_at ? ` 최근 등록부 확인 ${formatDate(data.registry.last_success_at,true)}.` : ""}`;
+    const live = data.registration_live === true;
+    $("interests-readiness").textContent = live ? registryState.warning ? "최근 등록 목록 유지" : `등록 확인 · 활성 ${summary.activeCount}건` : summary.label;
+    $("sidebar-interests").textContent = live || data.registry.status === "success" ? `등록 활성 ${summary.activeCount}건` : "확인 필요";
+    $("interests-status").textContent = live ? "GitHub에 제출한 관심사 등록 목록입니다. 등록 확인은 기사 수집 실행과 별개이며, 새 등록·변경한 조건은 수집 대기로 표시합니다." : `${summary.note} 현재 표시한 등록 목록은 마지막 배포의 저장본입니다. 새 등록·변경 여부는 GitHub 조회 후 확인합니다.`;
+    $("interests-registry-checked").textContent = live ? `${registryState.warning ? "마지막으로 확인한" : "최근 확인한"} 등록 목록 ${formatDate(data.registry_fetched_at,true)} · 한국 시간` : data.registry.last_success_at ? `저장된 등록부 확인 ${formatDate(data.registry.last_success_at,true)} · 최신 GitHub 등록 목록 확인 전` : "최신 GitHub 등록 목록 확인 전";
     $("interests-collect").disabled = false;
     $("interests-collect").title = "GitHub에서 요청을 제출하면 등록부를 먼저 새로 확인한 뒤 별도로 수집합니다.";
     const run = data.last_collection;
@@ -495,14 +560,18 @@
         link.href = run.request_url; link.target = "_blank"; link.rel = "noopener noreferrer";
         $("interests-last-run").append(link);
       }
-    } else $("interests-last-run").textContent = "아직 실제 관심사 수집 이력이 없습니다. 등록만으로 수집 완료로 표시하지 않습니다.";
-    if (!data.interests.length) cards.append(el("p","interests-empty",data.registry.status === "success" ? "등록된 관심사가 없습니다. 위 ‘관심사 등록’에서 제목과 키워드를 입력하세요." : "확인된 관심사 정보가 없습니다. GitHub에서 등록 상태를 확인하세요."));
+    } else $("interests-last-run").textContent = interestsState.published ? "아직 실제 관심사 수집 이력이 없습니다. 등록만으로 수집 완료로 표시하지 않습니다." : "실제 관심사 수집 이력 확인 전입니다. GitHub 등록 확인은 기사 수집 완료를 의미하지 않습니다.";
+    if (!data.interests.length) cards.append(el("p","interests-empty",live ? "GitHub에서 확인한 등록 관심사가 없습니다. 위 ‘관심사 등록’에서 제출한 뒤 이 화면으로 돌아오면 다시 확인합니다." : data.registry.status === "success" ? "마지막 저장본에 등록된 관심사가 없습니다. 새 등록 여부는 GitHub 조회 후 확인합니다." : "확인된 관심사 정보가 없습니다. GitHub에서 등록 상태를 확인하세요."));
     const order = {active:0,disabled:1,expired:2};
+    const filterableIds = new Set();
     [...data.interests].sort((a,b) => order[a.state]-order[b.state] || a.title.localeCompare(b.title,"ko")).forEach(item => {
-      if (item.state === "active") select.add(new Option(item.title,item.id));
+      const registrationPending = ["pending","changed"].includes(item.registration_status);
+      const filterable = item.state === "active" && !registrationPending && !!state.latest?.candidates.length;
+      if (filterable) { select.add(new Option(item.title,item.id)); filterableIds.add(item.id); }
       const card = el("article",`interest-card interest-${item.state}`);
       const heading = el("div","interest-card-head");
-      heading.append(el("h3","",item.title),el("span","interest-state",item.state === "active" ? "활성" : item.state === "expired" ? "기간 종료" : "사용 안 함 · 시작 전"));
+      const registrationLabel = item.registration_status === "pending" ? "등록됨 · 수집 대기" : item.registration_status === "changed" ? "변경됨 · 수집 대기" : item.state === "active" ? "활성" : item.state === "expired" ? "기간 종료" : "사용 안 함 · 시작 전";
+      heading.append(el("h3","",item.title),el("span",`interest-state${registrationPending ? " interest-registration-pending" : ""}`,registrationLabel));
       card.append(heading,el("p","interest-question",item.question));
       const keywords = el("div","interest-keywords");
       keywords.setAttribute("aria-label","제목 일치 키워드");
@@ -511,13 +580,14 @@
       if (item.exclude_keywords.length) card.append(el("p","interest-exclusions",`제외어: ${item.exclude_keywords.join(", ")}`));
       card.append(el("p","interest-period",`${topicName(item.topic_id)} · ${formatDate(item.active_from)} ~ ${item.active_until ? formatDate(item.active_until) : "종료일 없음"}`));
       const complete = ["success","partial_success"].includes(item.collection_status);
-      const matchText = item.state !== "active" ? "현재 수집 대상에서 제외되어 있습니다." : complete ? `현재 연결 기사 ${item.match_count}건${item.collection_status === "partial_success" ? " · 일부 출처를 확인하지 못했습니다." : " · 승인된 RSS 제목 기준"}` : `${Interests.statusLabels[item.collection_status]} · ${item.match_count ? `현재 연결 기사 ${item.match_count}건` : "관련 기사 없음으로 판단하지 않습니다."}`;
-      card.append(el("p","interest-match-status",matchText),el("p","interest-collected-at",item.last_collected_at ? `최근 성공 수집 ${formatDate(item.last_collected_at,true)} · ${Interests.statusLabels[item.collection_status]}` : `실제 수집 이력 없음 · ${Interests.statusLabels[item.collection_status]}`));
+      const matchText = item.state !== "active" ? "현재 수집 대상에서 제외되어 있습니다." : registrationPending ? "현재 등록 조건으로 확인된 기사 수집 결과가 없습니다. 관련 기사 없음으로 판단하지 않습니다." : !state.latest ? "기사 자료를 불러오지 못해 관련 기사 연결을 확인할 수 없습니다." : complete ? `현재 연결 기사 ${item.match_count}건${item.collection_status === "partial_success" ? " · 일부 출처를 확인하지 못했습니다." : " · 승인된 RSS 제목 기준"}` : `${Interests.statusLabels[item.collection_status]} · ${item.match_count ? `현재 연결 기사 ${item.match_count}건` : "관련 기사 없음으로 판단하지 않습니다."}`;
+      card.append(el("p","interest-match-status",matchText),el("p","interest-collected-at",item.last_collected_at ? `최근 성공 수집 ${formatDate(item.last_collected_at,true)} · ${Interests.statusLabels[item.collection_status]}` : `현재 조건의 수집 완료 이력: 확인되지 않음 · ${Interests.statusLabels[item.collection_status]}`));
       const actions = el("div","interest-card-actions");
       const source = el("a","interest-source-link","GitHub 등록 내용 ↗");
       source.href = item.source_url; source.target = "_blank"; source.rel = "noopener noreferrer";
+      source.addEventListener("click",() => { registryState.dirty = true; });
       actions.append(source);
-      if (item.state === "active") {
+      if (filterable) {
         const filter = el("button","secondary-button interest-filter-button",!complete && !item.match_count ? "연결 기사 보기" : `관련 기사 보기 (${item.match_count})`);
         filter.type = "button"; filter.dataset.interest = item.id;
         filter.setAttribute("aria-pressed",String(previous === item.id));
@@ -527,9 +597,9 @@
       card.append(actions);
       cards.append(card);
     });
-    select.value = Interests.normalizeFilter(data,previous);
+    select.value = filterableIds.has(previous) ? Interests.normalizeFilter(data,previous) : "";
     interestsState.filter = select.value;
-    select.disabled = summary.activeCount === 0;
+    select.disabled = filterableIds.size === 0;
   }
 
   function initializeAI(result) {
@@ -977,7 +1047,7 @@
     }
   }
 
-  async function loadData() {
+  async function loadData({forceRegistry = false} = {}) {
     const loadRequest = ++state.loadRequest;
     state.request++;
     state.selected = null;
@@ -991,8 +1061,9 @@
     renderAISummary();
     articleState.data = null; articleState.loading = true; articleState.warning = "";
     renderArticleSummary();
-    interestsState.data = null; interestsState.loading = true; interestsState.warning = "";
-    renderInterests();
+    interestsState.published = null; interestsState.loading = true; interestsState.publishedWarning = "";
+    rebuildInterestView(); renderInterests();
+    void refreshLiveInterests({force:forceRegistry});
     renderReviewSummary();
     renderWeekly();
     $("error-banner").hidden = true;
@@ -1022,6 +1093,7 @@
       state.detail = null;
       state.latest = latest;
       state.status = status;
+      rebuildInterestView(); renderInterests();
       initializeReviews(reviewsResult);
       renderSummary();
       renderAISummary();
@@ -1070,8 +1142,8 @@
       renderAISummary();
       articleState.data = null; articleState.loading = false; articleState.warning = "수집 자료를 불러오지 못해 기사 본문 요약의 근거를 확인할 수 없습니다.";
       renderArticleSummary();
-      interestsState.data = null; interestsState.loading = false; interestsState.warning = "수집 자료를 불러오지 못해 관심사와 관련 기사의 버전을 확인할 수 없습니다. 등록과 수집 요청은 GitHub에서 진행할 수 있습니다.";
-      renderInterests();
+      interestsState.published = null; interestsState.loading = false; interestsState.publishedWarning = "기사 자료를 불러오지 못해 게시된 관심사 수집 결과와 관련 기사의 버전을 확인할 수 없습니다. 등록 목록은 별도로 확인합니다.";
+      rebuildInterestView(); renderInterests();
       metric("issue-count", "—", "건");
       metric("article-count", "—", "건");
       metric("version-count", "—", "개");
@@ -1111,7 +1183,11 @@
     $("sort-order").value = state.latest?.is_demo ? "priority" : "recent";
     if (state.latest) renderCandidates();
   });
-  $("reload-data").addEventListener("click", loadData);
+  $("reload-data").addEventListener("click",() => { void loadData({forceRegistry:true}); });
+  $("interests-refresh").addEventListener("click",() => { void refreshLiveInterests({force:true}); });
+  ["interests-register","interests-manage"].forEach(id => $(id).addEventListener("click",() => { registryState.dirty = true; }));
+  window.addEventListener("focus",refreshRegistryOnReturn);
+  document.addEventListener("visibilitychange",refreshRegistryOnReturn);
   $("interests-collect").addEventListener("click",() => {
     window.open(Interests ? Interests.collectionURL() : "https://github.com/iesilder/kw-plan-weekly-trend/issues/new?template=interest-collection.yml","_blank","noopener,noreferrer");
     toast("GitHub에서 수집 요청을 제출하면 등록부를 새로 확인한 뒤 실행합니다.");

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-97d6200d9694a63947ec",
-  "generated_at": "2026-11-04T06:56:36.664101+00:00",
+  "generation_id": "live-95bad369be34d9f64f3f",
+  "generated_at": "2026-11-04T07:46:23.731958+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "metadata-review-v2",
@@ -23,10 +23,22 @@
     "completed": 6,
     "stale": 0,
     "failed": 6,
-    "not_analyzed": 0,
-    "eligible": 12
+    "not_analyzed": 1,
+    "eligible": 13
   },
   "items": {
+    "issue-9884327dd09baee772ca": {
+      "status": "not_analyzed",
+      "reason_code": null,
+      "input_fingerprint": "9f366543acdc06277697cd14900a9515c1c3757e334bf554de2f0f6a2b723199",
+      "input_evidence_ids": [
+        "version-7a3d7725c039557bbb18"
+      ],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
     "issue-ee1808d185516fc0bef6": {
       "status": "failed",
       "reason_code": null,

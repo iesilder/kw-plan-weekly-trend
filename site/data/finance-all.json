@@ -1,11 +1,26 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-92868849e293f7e8a394",
-  "generated_at": "2026-11-04T06:56:36.664101+00:00",
+  "generation_id": "finance-b2ec57c25211dff19b18",
+  "generated_at": "2026-11-04T07:46:23.731958+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 45,
+  "count": 46,
   "articles": [
+    {
+      "article_id": "article-9884327dd09baee772ca",
+      "version_id": "version-7a3d7725c039557bbb18",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "홍콩 H지수 ELS 관련 은행·증권사 검사 결과 조치 - 제19차 금융위원회(11.4.) 의결",
+      "source_url": "https://www.fsc.go.kr/no010101/88082",
+      "published_date": "2026-11-04",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T07:46:23.731958+00:00",
+      "institutions": [
+        "금융위원회"
+      ]
+    },
     {
       "article_id": "article-840ea073e2a90cb9622c",
       "version_id": "version-1f5ed0fc06e8002b41d5",

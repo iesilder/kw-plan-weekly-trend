@@ -1,8 +1,45 @@
 {
   "schema_version": "1.0",
   "is_demo": false,
-  "generation_id": "live-97d6200d9694a63947ec",
+  "generation_id": "live-95bad369be34d9f64f3f",
   "issues": [
+    {
+      "issue_id": "issue-9884327dd09baee772ca",
+      "title": "홍콩 H지수 ELS 관련 은행·증권사 검사 결과 조치 - 제19차 금융위원회(11.4.) 의결",
+      "company": "금융위원회",
+      "company_ids": [],
+      "companies": [
+        "금융위원회"
+      ],
+      "topic_id": "risk",
+      "topic": "정책·인허가·리스크",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(검사)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-7a3d7725c039557bbb18"
+      ],
+      "detail_path": "data/issues/issue-9884327dd09baee772ca.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "금융위원회 · 보도자료",
+      "published_at": null,
+      "published_date": "2026-11-04",
+      "fetched_at": "2026-11-04T07:46:23.731958+00:00",
+      "matched_keywords": [
+        "검사"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ],
+      "tags": [],
+      "event_stage": "점검·조사",
+      "classification_rules_version": "news-events-v2",
+      "content_filter": "topics",
+      "content_policy_version": "news-events-v2_06ff3f3f95045b8f"
+    },
     {
       "issue_id": "issue-ee1808d185516fc0bef6",
       "title": "코너스톤투자자 제도 등 도입 관련 자본시장법 시행령 개정안 국무회의 의결",

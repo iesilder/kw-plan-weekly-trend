@@ -1,19 +1,19 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-97d6200d9694a63947ec",
-  "generated_at": "2026-11-04T06:56:36.664101+00:00",
+  "generation_id": "live-95bad369be34d9f64f3f",
+  "generated_at": "2026-11-04T07:46:23.731958+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "article-bullets-v1",
   "auto_analysis_enabled": true,
   "counts": {
-    "failed": 1,
     "stale": 0,
     "unavailable": 0,
+    "failed": 1,
     "completed": 11,
-    "pending": 0,
+    "pending": 1,
     "not_applicable": 1,
-    "eligible": 12
+    "eligible": 13
   },
   "last_attempt": {
     "attempted_at": "2026-11-04T06:26:46.201671+00:00",
@@ -27,6 +27,22 @@
     "failed_count": 0
   },
   "items": {
+    "issue-9884327dd09baee772ca": {
+      "status": "pending",
+      "reason_code": null,
+      "evidence_ids": [
+        "version-7a3d7725c039557bbb18"
+      ],
+      "source_url": "https://www.fsc.go.kr/no010101/88082",
+      "source_name": "금융위원회 · 보도자료",
+      "input_fingerprint": null,
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "body_hash": null,
+      "body_fetched_at": null,
+      "truncated": false,
+      "result": null
+    },
     "issue-ee1808d185516fc0bef6": {
       "status": "completed",
       "reason_code": null,

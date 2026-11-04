@@ -4,11 +4,11 @@ import json
 from pathlib import Path
 import unittest
 from unittest.mock import patch
-from urllib.error import HTTPError
+from urllib.error import HTTPError, URLError
 from urllib.request import Request
 
 from weekly_trend import article_sources as articles
-from weekly_trend.collectors import validate_url
+from weekly_trend.collectors import CollectionError, validate_url
 
 
 E_URL = "https://news.einfomax.co.kr/news/articleView.html?idxno=1234567"
@@ -124,6 +124,71 @@ class ArticleSourcesTests(unittest.TestCase):
             result = articles.fetch_article(F_URL, F_SOURCE)
         self.assertEqual(calls, [F_URL])
         self.assertTrue(result["paragraphs"])
+
+    def test_fsc_transient_network_and_server_errors_have_one_bounded_retry(self):
+        for failure in (URLError(TimeoutError()), TimeoutError(),
+                        HTTPError(F_URL, 503, "not logged", {}, io.BytesIO(b"not logged"))):
+            calls = []
+            class Opener:
+                def open(self, request, timeout):
+                    calls.append(request.full_url)
+                    if len(calls) == 1:
+                        raise failure
+                    return Response(fsc_page('<p>' + TEXT + '</p>').encode(), url=F_URL)
+            with self.subTest(failure=type(failure).__name__), self.no_dns(), patch("weekly_trend.article_sources.build_opener", return_value=Opener()), patch("weekly_trend.article_sources.time.sleep") as sleep:
+                self.assertTrue(articles.fetch_article(F_URL, F_SOURCE)["paragraphs"])
+                self.assertEqual(calls, [F_URL, F_URL])
+                sleep.assert_called_once_with(0.25)
+        calls = []
+        class TimeoutOpener:
+            def open(self, request, timeout):
+                calls.append(request.full_url)
+                raise TimeoutError()
+        with self.no_dns(), patch("weekly_trend.article_sources.build_opener", return_value=TimeoutOpener()), patch("weekly_trend.article_sources.time.sleep"):
+            with self.assertRaisesRegex(articles.ArticleError, "network_error"):
+                articles.fetch_article(F_URL, F_SOURCE)
+        self.assertEqual(calls, [F_URL, F_URL])
+
+    def test_fsc_access_rate_limit_identity_and_parser_errors_are_not_retried(self):
+        for status, code in ((401, "access_restricted"), (403, "access_restricted"), (429, "rate_limited")):
+            calls = []
+            class Opener:
+                def open(self, request, timeout):
+                    calls.append(request.full_url)
+                    raise HTTPError(F_URL, status, "not logged", {}, io.BytesIO(b"not logged"))
+            with self.subTest(status=status), self.no_dns(), patch("weekly_trend.article_sources.build_opener", return_value=Opener()), patch("weekly_trend.article_sources.time.sleep") as sleep:
+                with self.assertRaisesRegex(articles.ArticleError, code):
+                    articles.fetch_article(F_URL, F_SOURCE)
+                self.assertEqual(calls, [F_URL])
+                sleep.assert_not_called()
+
+    def test_fsc_response_deadline_can_retry_but_size_limit_remains_final(self):
+        data = fsc_page('<p>' + TEXT + '</p>').encode()
+        for code, expected_calls in (("timeout", 2), ("response_too_large", 1)):
+            calls = []
+            class Opener:
+                def open(self, request, timeout):
+                    calls.append(request.full_url)
+                    return Response(data, url=F_URL)
+            with self.subTest(code=code), self.no_dns(), patch("weekly_trend.article_sources.build_opener", return_value=Opener()), patch("weekly_trend.article_sources._read_response", side_effect=[CollectionError(code, "not logged"), data]), patch("weekly_trend.article_sources.time.sleep"):
+                if code == "timeout":
+                    self.assertTrue(articles.fetch_article(F_URL, F_SOURCE)["paragraphs"])
+                else:
+                    with self.assertRaisesRegex(articles.ArticleError, code):
+                        articles.fetch_article(F_URL, F_SOURCE)
+            self.assertEqual(len(calls), expected_calls)
+        for html, code in ((fsc_page(''), "body_not_found"),
+                           (fsc_page('<p>' + TEXT + '</p>', canonical=F_URL.replace('88054', '88055')), "article_identity_mismatch")):
+            calls = []
+            class HTMLopener:
+                def open(self, request, timeout):
+                    calls.append(request.full_url)
+                    return Response(html.encode(), url=F_URL)
+            with self.subTest(code=code), self.no_dns(), patch("weekly_trend.article_sources.build_opener", return_value=HTMLopener()), patch("weekly_trend.article_sources.time.sleep") as sleep:
+                with self.assertRaisesRegex(articles.ArticleError, code):
+                    articles.fetch_article(F_URL, F_SOURCE)
+                self.assertEqual(calls, [F_URL])
+                sleep.assert_not_called()
 
     def test_fsc_body_size_budget_marks_truncation_and_keeps_replay_hash_stable(self):
         html = fsc_page(''.join('<p>' + TEXT + str(index) + '</p>' for index in range(100)))

@@ -9,6 +9,7 @@ import hashlib
 from html.parser import HTMLParser
 import json
 import re
+import time
 from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qs, urlsplit, urlunsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
@@ -255,33 +256,44 @@ def extract_article(html, url, source):
 
 
 def fetch_article(url, source):
-    """Fetch one public HTML article once, with exact identity and size checks."""
+    """Read a bounded public article, with one transient retry for FSC only."""
     expected = article_url(url, source, resolve=True)
     request = Request(expected, headers={"Accept": "text/html", "Accept-Encoding": "identity"})
     opener = build_opener(_ArticleRedirect(expected, source))
-    try:
-        with opener.open(request, timeout=TIMEOUT_SECONDS) as response:
-            if article_url(response.geturl(), source, resolve=True) != expected:
-                raise ArticleError("unexpected_redirect")
-            if response.status != 200:
-                raise ArticleError("http_error")
-            content_type = response.headers.get_content_type()
-            if content_type not in {"text/html", "application/xhtml+xml"}:
-                raise ArticleError("unsupported_content_type")
-            data = _read_response(response)
-            charset = response.headers.get_content_charset() or "utf-8"
-            if charset.lower().replace("_", "-") not in {"utf-8", "euc-kr", "cp949"}:
-                raise ArticleError("unsupported_charset")
-            try:
-                html = data.decode(charset)
-            except (UnicodeDecodeError, LookupError):
-                raise ArticleError("invalid_html") from None
-            return extract_article(html, expected, source)
-    except HTTPError as error:
-        code = error.code
-        error.close()
-        raise ArticleError("access_restricted" if code in {401, 403} else "rate_limited" if code == 429 else "http_error") from None
-    except CollectionError as error:
-        raise ArticleError(error.code) from None
-    except (URLError, TimeoutError, OSError):
-        raise ArticleError("network_error") from None
+    attempts = 2 if source.get("adapter") == "fsc_html" else 1
+    for attempt in range(attempts):
+        try:
+            with opener.open(request, timeout=TIMEOUT_SECONDS) as response:
+                if article_url(response.geturl(), source, resolve=True) != expected:
+                    raise ArticleError("unexpected_redirect")
+                if response.status != 200:
+                    raise ArticleError("http_error")
+                content_type = response.headers.get_content_type()
+                if content_type not in {"text/html", "application/xhtml+xml"}:
+                    raise ArticleError("unsupported_content_type")
+                data = _read_response(response)
+                charset = response.headers.get_content_charset() or "utf-8"
+                if charset.lower().replace("_", "-") not in {"utf-8", "euc-kr", "cp949"}:
+                    raise ArticleError("unsupported_charset")
+                try:
+                    html = data.decode(charset)
+                except (UnicodeDecodeError, LookupError):
+                    raise ArticleError("invalid_html") from None
+                return extract_article(html, expected, source)
+        except HTTPError as error:
+            code = error.code
+            error.close()
+            if attempt + 1 < attempts and 500 <= code <= 599:
+                time.sleep(0.25)
+                continue
+            raise ArticleError("access_restricted" if code in {401, 403} else "rate_limited" if code == 429 else "http_error") from None
+        except CollectionError as error:
+            if attempt + 1 < attempts and error.code == "timeout":
+                time.sleep(0.25)
+                continue
+            raise ArticleError(error.code) from None
+        except (URLError, TimeoutError, OSError):
+            if attempt + 1 < attempts:
+                time.sleep(0.25)
+                continue
+            raise ArticleError("network_error") from None

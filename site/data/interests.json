@@ -1,17 +1,17 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-fabb7953250ae5815c3b",
-  "generated_at": "2026-11-04T05:48:43.719702+00:00",
+  "generation_id": "live-c318de1be3581fa292c2",
+  "generated_at": "2026-11-04T06:12:31.397040+00:00",
   "registry": {
     "status": "success",
-    "last_attempt_at": "2026-11-04T05:41:32.444533+00:00",
-    "last_success_at": "2026-11-04T05:41:32.444533+00:00",
+    "last_attempt_at": "2026-11-04T06:12:31.397040+00:00",
+    "last_success_at": "2026-11-04T06:12:31.397040+00:00",
     "error_code": null
   },
   "last_collection": {
     "mode": "daily",
-    "started_at": "2026-11-04T05:41:32.444533+00:00",
-    "completed_at": "2026-11-04T05:41:32.444533+00:00",
+    "started_at": "2026-11-04T06:12:31.397040+00:00",
+    "completed_at": "2026-11-04T06:12:31.397040+00:00",
     "status": "success",
     "request_url": null,
     "error_code": null
@@ -36,7 +36,7 @@
       "source_url": "https://github.com/iesilder/kw-plan-weekly-trend/issues/10",
       "enabled": true,
       "state": "active",
-      "last_collected_at": "2026-11-04T05:41:32.444533+00:00",
+      "last_collected_at": "2026-11-04T06:12:31.397040+00:00",
       "collection_status": "success",
       "match_count": 0,
       "matches": []

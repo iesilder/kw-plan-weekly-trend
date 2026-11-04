@@ -1,40 +1,40 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-fabb7953250ae5815c3b",
-  "generated_at": "2026-11-04T05:41:32.444533+00:00",
+  "generation_id": "live-c318de1be3581fa292c2",
+  "generated_at": "2026-11-04T06:13:18.725702+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "article-bullets-v1",
   "auto_analysis_enabled": true,
   "counts": {
-    "pending": 0,
-    "completed": 5,
-    "failed": 1,
-    "stale": 0,
+    "completed": 9,
     "unavailable": 0,
-    "not_applicable": 7,
-    "eligible": 6
+    "failed": 3,
+    "not_applicable": 1,
+    "pending": 0,
+    "stale": 0,
+    "eligible": 12
   },
   "last_attempt": {
-    "attempted_at": "2026-11-04T05:41:32.444533+00:00",
-    "completed_at": "2026-11-04T05:41:32.444533+00:00",
-    "status": "cached",
-    "error_code": null,
-    "request_count": 0,
-    "fetch_count": 0,
+    "attempted_at": "2026-11-04T06:13:13.102243+00:00",
+    "completed_at": "2026-11-04T06:13:18.722195+00:00",
+    "status": "failed",
+    "error_code": "invalid_output",
+    "request_count": 1,
+    "fetch_count": 1,
     "completed_count": 0,
-    "cached_count": 5,
-    "failed_count": 0
+    "cached_count": 0,
+    "failed_count": 1
   },
   "items": {
     "issue-ee1808d185516fc0bef6": {
-      "status": "not_applicable",
-      "reason_code": "not_article",
+      "status": "failed",
+      "reason_code": "output_number_mismatch",
       "evidence_ids": [
         "version-04cc4b05f9102f43b121"
       ],
-      "source_url": null,
-      "source_name": null,
+      "source_url": "https://www.fsc.go.kr/no010101/88071",
+      "source_name": "금융위원회 · 보도자료",
       "input_fingerprint": null,
       "result_fingerprint": null,
       "analyzed_at": null,
@@ -147,20 +147,55 @@
       }
     },
     "issue-0727cc1f0b22bdd5ae98": {
-      "status": "not_applicable",
-      "reason_code": "not_article",
+      "status": "completed",
+      "reason_code": null,
       "evidence_ids": [
         "version-eee51b793385ecc43965"
       ],
-      "source_url": null,
-      "source_name": null,
-      "input_fingerprint": null,
-      "result_fingerprint": null,
-      "analyzed_at": null,
-      "body_hash": null,
-      "body_fetched_at": null,
+      "source_url": "https://www.fsc.go.kr/no010101/88054",
+      "source_name": "금융위원회 · 보도자료",
+      "input_fingerprint": "882c328819d6a8d86b8c7f09a32880e6a6c2d809d046c7ab5609b028be4d1ef0",
+      "result_fingerprint": "882c328819d6a8d86b8c7f09a32880e6a6c2d809d046c7ab5609b028be4d1ef0",
+      "analyzed_at": "2026-11-04T06:13:13.086710+00:00",
+      "body_hash": "492f630b75f37657e6ec2384c2baceb4eca0f863773abf7c66bebbc251e61ca9",
+      "body_fetched_at": "2026-11-04T06:12:52.593814+00:00",
       "truncated": false,
-      "result": null
+      "result": {
+        "key_change": {
+          "text": "금융위원회가 바이낸스 해킹사고와 관련하여 국내 가상자산사업자의 사고대응력 제고를 위한 긴급 점검회의를 개최함",
+          "evidence_ids": [
+            "p1"
+          ]
+        },
+        "facts": [
+          {
+            "text": "바이낸스는 핫월렛에서 약 63억달러 규모의 가상자산이 무단 출고되는 사고가 발생했다고 발표함",
+            "evidence_ids": [
+              "p1"
+            ]
+          },
+          {
+            "text": "사고 주원인으로 임직원 업무용 노트북 침해 및 거래승인·서명 시스템 비인가 접근 가능성이 제기됨",
+            "evidence_ids": [
+              "p1"
+            ]
+          },
+          {
+            "text": "금융당국은 콜드월렛 비중 상향, 입출고 상시 모니터링, 비정상 접근 보고체계 운영, 준비금 추가 적립을 당부함",
+            "evidence_ids": [
+              "p1"
+            ]
+          }
+        ],
+        "stage": "점검·조사",
+        "why_candidate": "글로벌 가상자산 해킹 사고에 따른 국내 업권의 보안 점검 및 즉시 실행 가능한 추가 보안 강화 조치 요구 사항임.",
+        "evidence": [
+          {
+            "id": "p1",
+            "quote": "낸스는 핫월렛에서 약 63억달러(한화 약 8조원) 규모의 가상자산이 무단 출고되는 사고가 발생 하였다고 발표하였다. 사고 직후 바이낸스는 탈취된"
+          }
+        ]
+      }
     },
     "issue-ec88113fec2c699faaf5": {
       "status": "completed",
@@ -502,13 +537,13 @@
       }
     },
     "issue-d9fb63dca1fe16a50763": {
-      "status": "not_applicable",
-      "reason_code": "not_article",
+      "status": "failed",
+      "reason_code": "output_number_mismatch",
       "evidence_ids": [
         "version-fbed5fbf5b4e474423c4"
       ],
-      "source_url": null,
-      "source_name": null,
+      "source_url": "https://www.fsc.go.kr/no010101/88020",
+      "source_name": "금융위원회 · 보도자료",
       "input_fingerprint": null,
       "result_fingerprint": null,
       "analyzed_at": null,
@@ -518,36 +553,94 @@
       "result": null
     },
     "issue-49697d9828e2c35c9098": {
-      "status": "not_applicable",
-      "reason_code": "not_article",
+      "status": "completed",
+      "reason_code": null,
       "evidence_ids": [
         "version-0d1e147fc7ea32c424f3"
       ],
-      "source_url": null,
-      "source_name": null,
-      "input_fingerprint": null,
-      "result_fingerprint": null,
-      "analyzed_at": null,
-      "body_hash": null,
-      "body_fetched_at": null,
+      "source_url": "https://www.fsc.go.kr/no010101/88013",
+      "source_name": "금융위원회 · 보도자료",
+      "input_fingerprint": "addbd3cc24566cf5d0ff925cdd7c9e25b47476fc6cc3fde66993ceb5e542ecd6",
+      "result_fingerprint": "addbd3cc24566cf5d0ff925cdd7c9e25b47476fc6cc3fde66993ceb5e542ecd6",
+      "analyzed_at": "2026-11-04T06:13:13.086706+00:00",
+      "body_hash": "c9f9e4cf21699822d1f1087cc8473d49b0c26153a8ea23667856d4d9afb1cdee",
+      "body_fetched_at": "2026-11-04T06:12:52.593814+00:00",
       "truncated": false,
-      "result": null
+      "result": {
+        "key_change": {
+          "text": "증권선물위원회가 재무제표를 위법 작성·공시한 ㈜피델릭스에 대하여 감사인지정 등의 조치를 의결함",
+          "evidence_ids": [
+            "p1"
+          ]
+        },
+        "facts": [
+          {
+            "text": "중요 감사절차를 위반한 현대회계법인과 동일이사 연속감사업무제한 등 외감법을 위반한 위드회계법인에 감사업무제한 조치를 결정함",
+            "evidence_ids": [
+              "p1"
+            ]
+          }
+        ],
+        "stage": "인가·승인",
+        "why_candidate": "상장사 회계위반 및 부실 감사법인에 대한 증선위의 제재 결정 사항임.",
+        "evidence": [
+          {
+            "id": "p1",
+            "quote": "대회계법인과 동일이사 연속감사업무제한 등「주식회사 등의 외부감사에 관한 법률」을 위반한 위드회계법인에 대하여 감사업무제한 등의 조치를 결정*하였"
+          }
+        ]
+      }
     },
     "issue-34d0a1c085f04dc0c774": {
-      "status": "not_applicable",
-      "reason_code": "not_article",
+      "status": "completed",
+      "reason_code": null,
       "evidence_ids": [
         "version-ba4e3ee7cf45325ace23"
       ],
-      "source_url": null,
-      "source_name": null,
-      "input_fingerprint": null,
-      "result_fingerprint": null,
-      "analyzed_at": null,
-      "body_hash": null,
-      "body_fetched_at": null,
+      "source_url": "https://www.fsc.go.kr/no010101/88010",
+      "source_name": "금융위원회 · 보도자료",
+      "input_fingerprint": "bea0eab9fcbf818b79b5a0bffd9441b28e084d658a318808653c65fe7200b29a",
+      "result_fingerprint": "bea0eab9fcbf818b79b5a0bffd9441b28e084d658a318808653c65fe7200b29a",
+      "analyzed_at": "2026-11-04T06:13:13.086700+00:00",
+      "body_hash": "1cbfe184fc67c6c74d82c4cd036c9fbe016b5dfdb60f22e3a15c4ae3766ea478",
+      "body_fetched_at": "2026-11-04T06:12:52.593814+00:00",
       "truncated": false,
-      "result": null
+      "result": {
+        "key_change": {
+          "text": "금융위원회가 빗썸 등 주요 가상자산사업자의 침해사고와 관련하여 긴급점검 회의를 개최하고 현장조사에 착수함",
+          "evidence_ids": [
+            "p1"
+          ]
+        },
+        "facts": [
+          {
+            "text": "빗썸의 임직원 정보 유출 정황이 확인되었으나 가상자산지갑 주소 등 부정결제 정보 유출은 아직 확인되지 않음",
+            "evidence_ids": [
+              "p1"
+            ]
+          },
+          {
+            "text": "금융당국은 소비자 피해 발생 시 전액배상 등 소비자 보호 조치가 이루어지도록 관리·감독할 계획임",
+            "evidence_ids": [
+              "p1"
+            ]
+          },
+          {
+            "text": "전자금융거래법 미적용 업권의 보안조치를 강화하고 제2금융권 주요 회사에 대한 사고조사와 피해자 보호 조치를 추진함",
+            "evidence_ids": [
+              "p1"
+            ]
+          }
+        ],
+        "stage": "점검·조사",
+        "why_candidate": "가상자산사업자 및 제2금융권 해킹사고에 따른 금융당국의 긴급 점검 및 보안 강화 추진 상황임.",
+        "evidence": [
+          {
+            "id": "p1",
+            "quote": "점검 회의 개최」- ’26.10.28.(수) 금융위원회는 유영준 디지털금융정책관 주재로 금감원, 금보원, DAXA, 빗썸 등과 함께 주요 가상자"
+          }
+        ]
+      }
     },
     "issue-b4acf9726e522360746c": {
       "status": "not_applicable",
@@ -566,20 +659,43 @@
       "result": null
     },
     "issue-3108a2f8608f22965149": {
-      "status": "not_applicable",
-      "reason_code": "not_article",
+      "status": "completed",
+      "reason_code": null,
       "evidence_ids": [
         "version-dd49690da45e4662b79d"
       ],
-      "source_url": null,
-      "source_name": null,
-      "input_fingerprint": null,
-      "result_fingerprint": null,
-      "analyzed_at": null,
-      "body_hash": null,
-      "body_fetched_at": null,
+      "source_url": "https://www.fsc.go.kr/no010101/87929",
+      "source_name": "금융위원회 · 보도자료",
+      "input_fingerprint": "9909b4b14de6e246bb2ea1129951a73ecf3e7f7abb9a94391cac02a923222bb9",
+      "result_fingerprint": "9909b4b14de6e246bb2ea1129951a73ecf3e7f7abb9a94391cac02a923222bb9",
+      "analyzed_at": "2026-11-04T06:13:13.086676+00:00",
+      "body_hash": "04369dff2b40e9162604772cd8a3ea581bbfd3de58f2d5edef78ebc4ff4f835f",
+      "body_fetched_at": "2026-11-04T06:12:52.593814+00:00",
       "truncated": false,
-      "result": null
+      "result": {
+        "key_change": {
+          "text": "증권선물위원회가 회계처리기준 위반 재무제표 작성 및 공시를 한 한주에이알티㈜에 감사인지정 조치를 의결함",
+          "evidence_ids": [
+            "p1"
+          ]
+        },
+        "facts": [
+          {
+            "text": "해당 회사의 감사절차를 소홀히 한 정진세림회계법인과 선진회계법인 및 소속공인회계사에 당해회사 감사업무 제한 조치를 의결함",
+            "evidence_ids": [
+              "p1"
+            ]
+          }
+        ],
+        "stage": "인가·승인",
+        "why_candidate": "회계기준 위반 기업 및 부실 감사 회계법인에 대한 증선위 제재 조치 사항으로 증권사 감사·리스크 관리에 참고가 필요함.",
+        "evidence": [
+          {
+            "id": "p1",
+            "quote": ", 선진회계법인) 및 소속공인회계사에 대해서는 당해회사 감사업무 제한 등의 조치를 의결하였습니다. ※ (붙임) 조사·감리결과 지적사항 및 조치내"
+          }
+        ]
+      }
     }
   }
 }

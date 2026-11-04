@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "backfill_version": "fsc-press-summary-v1",
+  "target_issue_ids": [
+    "issue-0727cc1f0b22bdd5ae98",
+    "issue-3108a2f8608f22965149",
+    "issue-34d0a1c085f04dc0c774",
+    "issue-49697d9828e2c35c9098",
+    "issue-d9fb63dca1fe16a50763",
+    "issue-ee1808d185516fc0bef6"
+  ],
+  "started_at": "2026-11-04T06:12:48.627567+00:00",
+  "completed_at": "2026-11-04T06:13:18.740761+00:00",
+  "status": "partial_success",
+  "stages": {
+    "titles": {
+      "status": "failed",
+      "error_code": "invalid_output",
+      "request_count": 1,
+      "fetch_count": 0,
+      "completed_count": 0,
+      "issue_ids": [
+        "issue-0727cc1f0b22bdd5ae98",
+        "issue-3108a2f8608f22965149",
+        "issue-34d0a1c085f04dc0c774",
+        "issue-49697d9828e2c35c9098",
+        "issue-d9fb63dca1fe16a50763",
+        "issue-ee1808d185516fc0bef6"
+      ]
+    },
+    "articles_1": {
+      "status": "partial_success",
+      "error_code": "partial_invalid_output",
+      "request_count": 1,
+      "fetch_count": 5,
+      "completed_count": 4,
+      "issue_ids": [
+        "issue-0727cc1f0b22bdd5ae98",
+        "issue-3108a2f8608f22965149",
+        "issue-34d0a1c085f04dc0c774",
+        "issue-49697d9828e2c35c9098",
+        "issue-d9fb63dca1fe16a50763"
+      ]
+    },
+    "articles_2": {
+      "status": "failed",
+      "error_code": "invalid_output",
+      "request_count": 1,
+      "fetch_count": 1,
+      "completed_count": 0,
+      "issue_ids": [
+        "issue-ee1808d185516fc0bef6"
+      ]
+    }
+  },
+  "completed_count": 4,
+  "pending_count": 2,
+  "untargeted_count": 0
+}

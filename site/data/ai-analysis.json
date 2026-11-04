@@ -1,40 +1,42 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-fabb7953250ae5815c3b",
-  "generated_at": "2026-11-04T05:41:32.444533+00:00",
+  "generation_id": "live-c318de1be3581fa292c2",
+  "generated_at": "2026-11-04T06:12:52.591885+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "metadata-review-v2",
   "policy_version": "public-metadata-inference-v2",
   "auto_analysis_enabled": true,
   "last_attempt": {
-    "attempted_at": "2026-11-04T05:41:32.444533+00:00",
-    "completed_at": "2026-11-04T05:41:32.444533+00:00",
-    "status": "cached",
-    "error_code": null,
-    "request_count": 0,
+    "attempted_at": "2026-11-04T06:12:48.632176+00:00",
+    "completed_at": "2026-11-04T06:12:52.589671+00:00",
+    "status": "failed",
+    "error_code": "invalid_output",
+    "request_count": 1,
     "eligible_count": 6,
     "completed_count": 0,
-    "cached_count": 6,
-    "failed_count": 0
+    "cached_count": 0,
+    "failed_count": 6
   },
   "counts": {
-    "blocked": 7,
+    "blocked": 1,
     "completed": 6,
     "stale": 0,
-    "failed": 0,
+    "failed": 6,
     "not_analyzed": 0,
-    "eligible": 6
+    "eligible": 12
   },
   "items": {
     "issue-ee1808d185516fc0bef6": {
-      "status": "blocked",
-      "reason_code": "source_not_eligible",
-      "input_fingerprint": null,
-      "input_evidence_ids": [],
+      "status": "failed",
+      "reason_code": null,
+      "input_fingerprint": "eecff5dcdbed120c3ce38426dd86a32cb2b71f498d0eb51b407868900e47e0c7",
+      "input_evidence_ids": [
+        "version-04cc4b05f9102f43b121"
+      ],
       "result_fingerprint": null,
       "analyzed_at": null,
-      "error_code": null,
+      "error_code": "invalid_output",
       "result": null
     },
     "issue-b37f533f8536327de29d": {
@@ -59,13 +61,15 @@
       }
     },
     "issue-0727cc1f0b22bdd5ae98": {
-      "status": "blocked",
-      "reason_code": "source_not_eligible",
-      "input_fingerprint": null,
-      "input_evidence_ids": [],
+      "status": "failed",
+      "reason_code": null,
+      "input_fingerprint": "1c7b86637a82669d5c5ee1f7ea5bc814c5fb73296d1f037fac3445860f1f64c4",
+      "input_evidence_ids": [
+        "version-eee51b793385ecc43965"
+      ],
       "result_fingerprint": null,
       "analyzed_at": null,
-      "error_code": null,
+      "error_code": "invalid_output",
       "result": null
     },
     "issue-ec88113fec2c699faaf5": {
@@ -178,33 +182,39 @@
       }
     },
     "issue-d9fb63dca1fe16a50763": {
-      "status": "blocked",
-      "reason_code": "source_not_eligible",
-      "input_fingerprint": null,
-      "input_evidence_ids": [],
+      "status": "failed",
+      "reason_code": null,
+      "input_fingerprint": "1e2b606923dd3ff9932b139b835f408ccb4d68d0117f8f3920191207a0612a2e",
+      "input_evidence_ids": [
+        "version-fbed5fbf5b4e474423c4"
+      ],
       "result_fingerprint": null,
       "analyzed_at": null,
-      "error_code": null,
+      "error_code": "invalid_output",
       "result": null
     },
     "issue-49697d9828e2c35c9098": {
-      "status": "blocked",
-      "reason_code": "source_not_eligible",
-      "input_fingerprint": null,
-      "input_evidence_ids": [],
+      "status": "failed",
+      "reason_code": null,
+      "input_fingerprint": "a4034959a0fb8d3a89ed8f2f1373805db100f466d0fa40a3dce1e02581fe5a81",
+      "input_evidence_ids": [
+        "version-0d1e147fc7ea32c424f3"
+      ],
       "result_fingerprint": null,
       "analyzed_at": null,
-      "error_code": null,
+      "error_code": "invalid_output",
       "result": null
     },
     "issue-34d0a1c085f04dc0c774": {
-      "status": "blocked",
-      "reason_code": "source_not_eligible",
-      "input_fingerprint": null,
-      "input_evidence_ids": [],
+      "status": "failed",
+      "reason_code": null,
+      "input_fingerprint": "d811fa443395429663ab6fc108e7399db406a49ca5e49ffa56af8d58d53bb69c",
+      "input_evidence_ids": [
+        "version-ba4e3ee7cf45325ace23"
+      ],
       "result_fingerprint": null,
       "analyzed_at": null,
-      "error_code": null,
+      "error_code": "invalid_output",
       "result": null
     },
     "issue-b4acf9726e522360746c": {
@@ -218,13 +228,15 @@
       "result": null
     },
     "issue-3108a2f8608f22965149": {
-      "status": "blocked",
-      "reason_code": "source_not_eligible",
-      "input_fingerprint": null,
-      "input_evidence_ids": [],
+      "status": "failed",
+      "reason_code": null,
+      "input_fingerprint": "101df6aece80efda1804316fe3517d5260db894c3f51acb3521fa0f7b116dbf3",
+      "input_evidence_ids": [
+        "version-dd49690da45e4662b79d"
+      ],
       "result_fingerprint": null,
       "analyzed_at": null,
-      "error_code": null,
+      "error_code": "invalid_output",
       "result": null
     }
   }

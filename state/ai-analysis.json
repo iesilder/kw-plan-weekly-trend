@@ -196,15 +196,54 @@
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-04T05:41:32.444533+00:00",
-    "completed_at": "2026-11-04T05:41:32.444533+00:00",
-    "status": "cached",
-    "error_code": null,
-    "request_count": 0,
+    "attempted_at": "2026-11-04T06:12:48.632176+00:00",
+    "completed_at": "2026-11-04T06:12:52.589671+00:00",
+    "status": "failed",
+    "error_code": "invalid_output",
+    "request_count": 1,
     "eligible_count": 6,
     "completed_count": 0,
-    "cached_count": 6,
-    "failed_count": 0,
-    "fingerprints": []
+    "cached_count": 0,
+    "failed_count": 6,
+    "fingerprints": [
+      "101df6aece80efda1804316fe3517d5260db894c3f51acb3521fa0f7b116dbf3",
+      "d811fa443395429663ab6fc108e7399db406a49ca5e49ffa56af8d58d53bb69c",
+      "a4034959a0fb8d3a89ed8f2f1373805db100f466d0fa40a3dce1e02581fe5a81",
+      "1e2b606923dd3ff9932b139b835f408ccb4d68d0117f8f3920191207a0612a2e",
+      "1c7b86637a82669d5c5ee1f7ea5bc814c5fb73296d1f037fac3445860f1f64c4",
+      "eecff5dcdbed120c3ce38426dd86a32cb2b71f498d0eb51b407868900e47e0c7"
+    ]
+  },
+  "failures": {
+    "101df6aece80efda1804316fe3517d5260db894c3f51acb3521fa0f7b116dbf3": {
+      "issue_id": "issue-3108a2f8608f22965149",
+      "error_code": "invalid_output",
+      "failed_at": "2026-11-04T06:12:52.589671+00:00"
+    },
+    "d811fa443395429663ab6fc108e7399db406a49ca5e49ffa56af8d58d53bb69c": {
+      "issue_id": "issue-34d0a1c085f04dc0c774",
+      "error_code": "invalid_output",
+      "failed_at": "2026-11-04T06:12:52.589671+00:00"
+    },
+    "a4034959a0fb8d3a89ed8f2f1373805db100f466d0fa40a3dce1e02581fe5a81": {
+      "issue_id": "issue-49697d9828e2c35c9098",
+      "error_code": "invalid_output",
+      "failed_at": "2026-11-04T06:12:52.589671+00:00"
+    },
+    "1e2b606923dd3ff9932b139b835f408ccb4d68d0117f8f3920191207a0612a2e": {
+      "issue_id": "issue-d9fb63dca1fe16a50763",
+      "error_code": "invalid_output",
+      "failed_at": "2026-11-04T06:12:52.589671+00:00"
+    },
+    "1c7b86637a82669d5c5ee1f7ea5bc814c5fb73296d1f037fac3445860f1f64c4": {
+      "issue_id": "issue-0727cc1f0b22bdd5ae98",
+      "error_code": "invalid_output",
+      "failed_at": "2026-11-04T06:12:52.589671+00:00"
+    },
+    "eecff5dcdbed120c3ce38426dd86a32cb2b71f498d0eb51b407868900e47e0c7": {
+      "issue_id": "issue-ee1808d185516fc0bef6",
+      "error_code": "invalid_output",
+      "failed_at": "2026-11-04T06:12:52.589671+00:00"
+    }
   }
 }

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-b1344820a242e28f0718",
-  "generated_at": "2026-11-04T04:35:16.756063+00:00",
+  "generation_id": "live-fabb7953250ae5815c3b",
+  "generated_at": "2026-11-04T05:41:32.444533+00:00",
   "report_week": "2026-W45",
   "is_demo": false,
   "topics": [
@@ -27,6 +27,48 @@
     }
   ],
   "candidates": [
+    {
+      "issue_id": "issue-ee1808d185516fc0bef6",
+      "title": "코너스톤투자자 제도 등 도입 관련 자본시장법 시행령 개정안 국무회의 의결",
+      "company": "금융위원회",
+      "company_ids": [],
+      "companies": [
+        "금융위원회"
+      ],
+      "topic_id": "risk",
+      "topic": "정책·인허가·리스크",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(제도, 시행령, 개정안)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-04cc4b05f9102f43b121"
+      ],
+      "detail_path": "data/issues/issue-ee1808d185516fc0bef6.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "금융위원회 · 보도자료",
+      "published_at": null,
+      "published_date": "2026-11-03",
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "matched_keywords": [
+        "제도",
+        "시행령",
+        "개정안"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ],
+      "tags": [
+        "정책",
+        "자본"
+      ],
+      "event_stage": "출시·사업 개시",
+      "classification_rules_version": "news-events-v2",
+      "content_filter": "topics",
+      "content_policy_version": "news-events-v2_06ff3f3f95045b8f"
+    },
     {
       "issue_id": "issue-b37f533f8536327de29d",
       "title": "코너스톤·사전수요예측 본격 도입…자본시장법 시행령 의결",
@@ -63,7 +105,49 @@
       "event_stage": "출시·사업 개시",
       "classification_rules_version": "news-events-v2",
       "content_filter": "topics",
-      "content_policy_version": "news-events-v2_52ce6f3968839698"
+      "content_policy_version": "news-events-v2_4f5b3edf25e4ff4a"
+    },
+    {
+      "issue_id": "issue-0727cc1f0b22bdd5ae98",
+      "title": "글로벌 해킹 위협에 대비한 국내 가상자산사업자의 사고대응력 제고를 위해 긴밀하고 신속하게 대응해 나가겠습니다.",
+      "company": "금융위원회",
+      "company_ids": [],
+      "companies": [
+        "금융위원회"
+      ],
+      "topic_id": "risk",
+      "topic": "정책·인허가·리스크",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(해킹)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-eee51b793385ecc43965"
+      ],
+      "detail_path": "data/issues/issue-0727cc1f0b22bdd5ae98.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "금융위원회 · 보도자료",
+      "published_at": null,
+      "published_date": "2026-11-02",
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "matched_keywords": [
+        "해킹"
+      ],
+      "matched_topic_ids": [
+        "digital",
+        "expansion",
+        "risk"
+      ],
+      "tags": [
+        "디지털자산",
+        "리스크"
+      ],
+      "event_stage": "사고·제재",
+      "classification_rules_version": "news-events-v2",
+      "content_filter": "topics",
+      "content_policy_version": "news-events-v2_06ff3f3f95045b8f"
     },
     {
       "issue_id": "issue-ec88113fec2c699faaf5",
@@ -105,7 +189,7 @@
       "event_stage": "점검·조사",
       "classification_rules_version": "news-events-v2",
       "content_filter": "topics",
-      "content_policy_version": "news-events-v2_52ce6f3968839698"
+      "content_policy_version": "news-events-v2_4f5b3edf25e4ff4a"
     },
     {
       "issue_id": "issue-a99980f5c72b33d80750",
@@ -143,7 +227,7 @@
       "event_stage": "계획·추진",
       "classification_rules_version": "news-events-v2",
       "content_filter": "topics",
-      "content_policy_version": "news-events-v2_52ce6f3968839698"
+      "content_policy_version": "news-events-v2_4f5b3edf25e4ff4a"
     },
     {
       "issue_id": "issue-a7a9b220314dfbd5acef",
@@ -181,7 +265,7 @@
       "event_stage": "계획·추진",
       "classification_rules_version": "news-events-v2",
       "content_filter": "topics",
-      "content_policy_version": "news-events-v2_52ce6f3968839698"
+      "content_policy_version": "news-events-v2_4f5b3edf25e4ff4a"
     },
     {
       "issue_id": "issue-193dc2f5a4e04bf16e42",
@@ -218,7 +302,7 @@
       "event_stage": "점검·조사",
       "classification_rules_version": "news-events-v2",
       "content_filter": "topics",
-      "content_policy_version": "news-events-v2_52ce6f3968839698"
+      "content_policy_version": "news-events-v2_4f5b3edf25e4ff4a"
     },
     {
       "issue_id": "issue-8cda78e7eb4a64c526cd",
@@ -260,7 +344,126 @@
       "event_stage": "출시·사업 개시",
       "classification_rules_version": "news-events-v2",
       "content_filter": "topics",
-      "content_policy_version": "news-events-v2_52ce6f3968839698"
+      "content_policy_version": "news-events-v2_4f5b3edf25e4ff4a"
+    },
+    {
+      "issue_id": "issue-d9fb63dca1fe16a50763",
+      "title": "“금융회사의 부실 확산에 신속·선제적으로 대응하여 금융시장의 안정 및 소비자 보호를 위한 ｢금융회사 신속정리제도｣ 도입을 추진합니다.”",
+      "company": "금융위원회",
+      "company_ids": [],
+      "companies": [
+        "금융위원회"
+      ],
+      "topic_id": "risk",
+      "topic": "정책·인허가·리스크",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(제도)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-fbed5fbf5b4e474423c4"
+      ],
+      "detail_path": "data/issues/issue-d9fb63dca1fe16a50763.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "금융위원회 · 보도자료",
+      "published_at": null,
+      "published_date": "2026-10-29",
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "matched_keywords": [
+        "제도"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ],
+      "tags": [
+        "정책"
+      ],
+      "event_stage": "계획·추진",
+      "classification_rules_version": "news-events-v2",
+      "content_filter": "topics",
+      "content_policy_version": "news-events-v2_06ff3f3f95045b8f"
+    },
+    {
+      "issue_id": "issue-49697d9828e2c35c9098",
+      "title": "사업보고서 등에 대한 조사·감리결과 조치 - 제19차 증권선물위원회(’26.10.28.) 조치 의결",
+      "company": "금융위원회 · 증권선물위원회",
+      "company_ids": [],
+      "companies": [
+        "금융위원회",
+        "증권선물위원회"
+      ],
+      "topic_id": "risk",
+      "topic": "정책·인허가·리스크",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(조사)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-0d1e147fc7ea32c424f3"
+      ],
+      "detail_path": "data/issues/issue-49697d9828e2c35c9098.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "금융위원회 · 보도자료",
+      "published_at": null,
+      "published_date": "2026-10-28",
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "matched_keywords": [
+        "조사"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ],
+      "tags": [],
+      "event_stage": "점검·조사",
+      "classification_rules_version": "news-events-v2",
+      "content_filter": "topics",
+      "content_policy_version": "news-events-v2_06ff3f3f95045b8f"
+    },
+    {
+      "issue_id": "issue-34d0a1c085f04dc0c774",
+      "title": "빗썸 등 주요 가상자산사업자들에 대한 해킹사고에 대해 긴밀하고 신속하게 대응하고 있습니다. -「가상자산업권 등 침해사고 관련 긴급점검 회의 개최」",
+      "company": "금융위원회",
+      "company_ids": [],
+      "companies": [
+        "금융위원회"
+      ],
+      "topic_id": "risk",
+      "topic": "정책·인허가·리스크",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(해킹, 점검)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-ba4e3ee7cf45325ace23"
+      ],
+      "detail_path": "data/issues/issue-34d0a1c085f04dc0c774.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "금융위원회 · 보도자료",
+      "published_at": null,
+      "published_date": "2026-10-28",
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "matched_keywords": [
+        "해킹",
+        "점검"
+      ],
+      "matched_topic_ids": [
+        "digital",
+        "risk"
+      ],
+      "tags": [
+        "디지털자산",
+        "리스크"
+      ],
+      "event_stage": "점검·조사",
+      "classification_rules_version": "news-events-v2",
+      "content_filter": "topics",
+      "content_policy_version": "news-events-v2_06ff3f3f95045b8f"
     },
     {
       "issue_id": "issue-b4acf9726e522360746c",
@@ -301,7 +504,45 @@
       "event_stage": "실적 공시",
       "classification_rules_version": "dart-earnings-v1",
       "content_filter": "earnings_only",
-      "content_policy_version": "dart-earnings-v1_29b30dfd84014527"
+      "content_policy_version": "dart-earnings-v1_af85d7227c67f62d"
+    },
+    {
+      "issue_id": "issue-3108a2f8608f22965149",
+      "title": "사업보고서 등에 대한 조사·감리결과 조치 - 제18차 증권선물위원회(10.14.) 조치 의결",
+      "company": "금융위원회 · 증권선물위원회",
+      "company_ids": [],
+      "companies": [
+        "금융위원회",
+        "증권선물위원회"
+      ],
+      "topic_id": "risk",
+      "topic": "정책·인허가·리스크",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(조사)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-dd49690da45e4662b79d"
+      ],
+      "detail_path": "data/issues/issue-3108a2f8608f22965149.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "금융위원회 · 보도자료",
+      "published_at": null,
+      "published_date": "2026-10-14",
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "matched_keywords": [
+        "조사"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ],
+      "tags": [],
+      "event_stage": "점검·조사",
+      "classification_rules_version": "news-events-v2",
+      "content_filter": "topics",
+      "content_policy_version": "news-events-v2_06ff3f3f95045b8f"
     }
   ]
 }

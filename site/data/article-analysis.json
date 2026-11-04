@@ -1,32 +1,48 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-b1344820a242e28f0718",
-  "generated_at": "2026-11-04T04:35:16.756063+00:00",
+  "generation_id": "live-fabb7953250ae5815c3b",
+  "generated_at": "2026-11-04T05:41:32.444533+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "article-bullets-v1",
   "auto_analysis_enabled": true,
   "counts": {
-    "stale": 0,
-    "not_applicable": 1,
-    "failed": 1,
-    "unavailable": 0,
-    "completed": 5,
     "pending": 0,
+    "completed": 5,
+    "failed": 1,
+    "stale": 0,
+    "unavailable": 0,
+    "not_applicable": 7,
     "eligible": 6
   },
   "last_attempt": {
-    "attempted_at": "2026-11-04T04:35:16.756063+00:00",
-    "completed_at": "2026-11-04T04:35:16.756063+00:00",
+    "attempted_at": "2026-11-04T05:41:32.444533+00:00",
+    "completed_at": "2026-11-04T05:41:32.444533+00:00",
     "status": "cached",
     "error_code": null,
     "request_count": 0,
     "fetch_count": 0,
     "completed_count": 0,
-    "cached_count": 0,
+    "cached_count": 5,
     "failed_count": 0
   },
   "items": {
+    "issue-ee1808d185516fc0bef6": {
+      "status": "not_applicable",
+      "reason_code": "not_article",
+      "evidence_ids": [
+        "version-04cc4b05f9102f43b121"
+      ],
+      "source_url": null,
+      "source_name": null,
+      "input_fingerprint": null,
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "body_hash": null,
+      "body_fetched_at": null,
+      "truncated": false,
+      "result": null
+    },
     "issue-b37f533f8536327de29d": {
       "status": "completed",
       "reason_code": null,
@@ -129,6 +145,22 @@
           }
         ]
       }
+    },
+    "issue-0727cc1f0b22bdd5ae98": {
+      "status": "not_applicable",
+      "reason_code": "not_article",
+      "evidence_ids": [
+        "version-eee51b793385ecc43965"
+      ],
+      "source_url": null,
+      "source_name": null,
+      "input_fingerprint": null,
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "body_hash": null,
+      "body_fetched_at": null,
+      "truncated": false,
+      "result": null
     },
     "issue-ec88113fec2c699faaf5": {
       "status": "completed",
@@ -469,11 +501,75 @@
         ]
       }
     },
+    "issue-d9fb63dca1fe16a50763": {
+      "status": "not_applicable",
+      "reason_code": "not_article",
+      "evidence_ids": [
+        "version-fbed5fbf5b4e474423c4"
+      ],
+      "source_url": null,
+      "source_name": null,
+      "input_fingerprint": null,
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "body_hash": null,
+      "body_fetched_at": null,
+      "truncated": false,
+      "result": null
+    },
+    "issue-49697d9828e2c35c9098": {
+      "status": "not_applicable",
+      "reason_code": "not_article",
+      "evidence_ids": [
+        "version-0d1e147fc7ea32c424f3"
+      ],
+      "source_url": null,
+      "source_name": null,
+      "input_fingerprint": null,
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "body_hash": null,
+      "body_fetched_at": null,
+      "truncated": false,
+      "result": null
+    },
+    "issue-34d0a1c085f04dc0c774": {
+      "status": "not_applicable",
+      "reason_code": "not_article",
+      "evidence_ids": [
+        "version-ba4e3ee7cf45325ace23"
+      ],
+      "source_url": null,
+      "source_name": null,
+      "input_fingerprint": null,
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "body_hash": null,
+      "body_fetched_at": null,
+      "truncated": false,
+      "result": null
+    },
     "issue-b4acf9726e522360746c": {
       "status": "not_applicable",
       "reason_code": "not_article",
       "evidence_ids": [
         "version-c5450646d7d2c39e4f2a"
+      ],
+      "source_url": null,
+      "source_name": null,
+      "input_fingerprint": null,
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "body_hash": null,
+      "body_fetched_at": null,
+      "truncated": false,
+      "result": null
+    },
+    "issue-3108a2f8608f22965149": {
+      "status": "not_applicable",
+      "reason_code": "not_article",
+      "evidence_ids": [
+        "version-dd49690da45e4662b79d"
       ],
       "source_url": null,
       "source_name": null,

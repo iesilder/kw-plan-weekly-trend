@@ -1,25 +1,25 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-b1344820a242e28f0718",
-  "generated_at": "2026-11-04T04:35:16.756063+00:00",
+  "generation_id": "live-fabb7953250ae5815c3b",
+  "generated_at": "2026-11-04T05:41:32.444533+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "metadata-review-v2",
   "policy_version": "public-metadata-inference-v2",
   "auto_analysis_enabled": true,
   "last_attempt": {
-    "attempted_at": "2026-11-04T04:35:16.756063+00:00",
-    "completed_at": "2026-11-04T04:35:16.756063+00:00",
+    "attempted_at": "2026-11-04T05:41:32.444533+00:00",
+    "completed_at": "2026-11-04T05:41:32.444533+00:00",
     "status": "cached",
     "error_code": null,
     "request_count": 0,
-    "eligible_count": 0,
+    "eligible_count": 6,
     "completed_count": 0,
-    "cached_count": 0,
+    "cached_count": 6,
     "failed_count": 0
   },
   "counts": {
-    "blocked": 1,
+    "blocked": 7,
     "completed": 6,
     "stale": 0,
     "failed": 0,
@@ -27,6 +27,16 @@
     "eligible": 6
   },
   "items": {
+    "issue-ee1808d185516fc0bef6": {
+      "status": "blocked",
+      "reason_code": "source_not_eligible",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
     "issue-b37f533f8536327de29d": {
       "status": "completed",
       "reason_code": null,
@@ -47,6 +57,16 @@
         ],
         "duplicate_issue_ids": []
       }
+    },
+    "issue-0727cc1f0b22bdd5ae98": {
+      "status": "blocked",
+      "reason_code": "source_not_eligible",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
     },
     "issue-ec88113fec2c699faaf5": {
       "status": "completed",
@@ -157,9 +177,49 @@
         "duplicate_issue_ids": []
       }
     },
+    "issue-d9fb63dca1fe16a50763": {
+      "status": "blocked",
+      "reason_code": "source_not_eligible",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
+    "issue-49697d9828e2c35c9098": {
+      "status": "blocked",
+      "reason_code": "source_not_eligible",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
+    "issue-34d0a1c085f04dc0c774": {
+      "status": "blocked",
+      "reason_code": "source_not_eligible",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
     "issue-b4acf9726e522360746c": {
       "status": "blocked",
       "reason_code": "dart_not_sent",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
+    "issue-3108a2f8608f22965149": {
+      "status": "blocked",
+      "reason_code": "source_not_eligible",
       "input_fingerprint": null,
       "input_evidence_ids": [],
       "result_fingerprint": null,

@@ -37,9 +37,9 @@
   "event_stage": "실적 공시",
   "classification_rules_version": "dart-earnings-v1",
   "content_filter": "earnings_only",
-  "content_policy_version": "dart-earnings-v1_29b30dfd84014527",
+  "content_policy_version": "dart-earnings-v1_af85d7227c67f62d",
   "schema_version": "1.0",
-  "generation_id": "live-b1344820a242e28f0718",
+  "generation_id": "live-fabb7953250ae5815c3b",
   "change_summary": "본문·기보고 대비 변화는 분석하지 않았습니다.",
   "last_report": null,
   "evidence": [

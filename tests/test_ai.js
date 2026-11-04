@@ -88,3 +88,9 @@ test("automatic analysis is a boolean setting and does not imply execution succe
   for(const flag of [true,false]){const{data,latest}=sample();data.auto_analysis_enabled=flag;const validated=AI.validateSidecar(data,latest);assert.equal(validated.auto_analysis_enabled,flag);assert.equal(validated.counts.completed,0);assert.equal(AI.summary(validated).actualAnalysisExists,false);assert.equal(AI.summary(validated).label,flag?"자동 실행 대기":"수동 실행 준비");}
   for(const flag of [1,0,null,"false",undefined]){const{data,latest}=sample();data.auto_analysis_enabled=flag;assert.throws(()=>AI.validateSidecar(data,latest));}
 });
+
+test("official FSC press titles accept current inference while unknown source names stay blocked",()=>{
+  const{data,latest}=newsSample();latest.candidates[2].source_name="금융위원회 · 보도자료";complete(data,C);
+  const validated=AI.validateSidecar(data,latest);assert.equal(validated.items[C].status,"completed");assert.equal(validated.counts.completed,1);
+  latest.candidates[2].source_name="금융위원회 · 임의 자료";assert.throws(()=>AI.validateSidecar(data,latest));
+});

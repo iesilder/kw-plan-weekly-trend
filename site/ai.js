@@ -8,7 +8,7 @@
   "use strict";
   const TOPICS = new Set(["performance", "digital", "expansion", "strategy", "risk"]);
   const POLICIES = new Set(["dart-factual-metadata-v1", "public-metadata-inference-v2"]);
-  const NEWS_SOURCES = new Set(["연합인포맥스(기사) · 증권", "연합인포맥스(기사) · IB·기업", "뉴스와이어(보도자료) · 증권"]);
+  const NEWS_SOURCES = new Set(["연합인포맥스(기사) · 증권", "연합인포맥스(기사) · IB·기업", "뉴스와이어(보도자료) · 증권", "금융위원회 · 보도자료"]);
   const STATUSES = new Set(["blocked", "not_analyzed", "completed", "stale", "failed"]);
   const RELEVANCE = Object.freeze({relevant:"검토 대상에 해당", uncertain:"판단 유보 · 원문 확인", out_of_scope:"검토 범위 밖으로 제안"});
   const STATUS_LABELS = Object.freeze({blocked:"AI 입력 제외", not_analyzed:"아직 분석하지 않음", completed:"AI 제안 · 담당자 확인 필요", stale:"자료 변경 · 재분석 필요", failed:"분석 실패"});

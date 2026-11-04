@@ -12,7 +12,8 @@
   const SOURCES = new Map([
     ["연합인포맥스(기사) · 증권", "news.einfomax.co.kr"],
     ["연합인포맥스(기사) · IB·기업", "news.einfomax.co.kr"],
-    ["뉴스와이어(보도자료) · 증권", "www.newswire.co.kr"]
+    ["뉴스와이어(보도자료) · 증권", "www.newswire.co.kr"],
+    ["금융위원회 · 보도자료", "www.fsc.go.kr"]
   ]);
   const LABELS = Object.freeze({not_applicable:"본문 요약 대상 아님", pending:"본문 분석 대기", completed:"본문 기반 AI 요약", stale:"원자료 변경 · 재분석 필요", unavailable:"본문 확보 실패", failed:"본문 분석 실패"});
   const REASONS = Object.freeze({
@@ -60,6 +61,10 @@
     try {
       const url = new URL(value);
       if (url.protocol!=="https:" || url.username || url.password || url.port || url.hostname!==SOURCES.get(sourceName)) return null;
+      if (url.hostname==="www.fsc.go.kr") {
+        if (!/^\/no010101\/[1-9][0-9]{0,11}$/.test(url.pathname) || url.search) return null;
+        return `https://${url.hostname}${url.pathname}`;
+      }
       const key = url.hostname==="news.einfomax.co.kr" ? "idxno" : "no";
       const path = key==="idxno" ? "/news/articleView.html" : "/newsRead.php";
       if (url.pathname!==path || url.searchParams.getAll(key).length!==1 || [...url.searchParams.keys()].some(name=>name!==key) || !/^[1-9][0-9]{0,11}$/.test(url.searchParams.get(key)||"")) return null;

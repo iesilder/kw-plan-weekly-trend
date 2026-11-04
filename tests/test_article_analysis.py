@@ -89,6 +89,46 @@ class ArticleAnalysisTests(unittest.TestCase):
     def public(self):
         return read(self.root / "site/data/article-analysis.json")
 
+    def add_fsc_news(self):
+        candidate = copy.deepcopy(self.news[0])
+        detail = read(self.root / "site" / candidate["detail_path"])
+        source = next(row for row in read(self.root / "config/sources.json")["sources"] if row["adapter"] == "fsc_html")
+        issue_id, evidence_id = "issue-" + "f" * 20, "version-" + "e" * 20
+        for value in (candidate, detail):
+            value.update(issue_id=issue_id, detail_path=f"data/issues/{issue_id}.json", evidence_ids=[evidence_id],
+                         title="토큰증권 시행령 개정안 공개", source_name=source["name"])
+        detail["evidence"][0].update(evidence_id=evidence_id, title=candidate["title"], source_id=source["id"],
+            source_name=source["name"], source_url="https://www.fsc.go.kr/no010101/99999")
+        self.latest["candidates"].append(candidate)
+        self.news.append(candidate)
+        write(self.root / "site/data/latest.json", self.latest)
+        write(self.root / "site" / candidate["detail_path"], detail)
+        return candidate
+
+    def test_fsc_summary_is_body_grounded_without_reanalyzing_cached_news_or_dart(self):
+        self.run_good()
+        old_entries = copy.deepcopy(read(self.root / "state/article-analysis.json")["entries"])
+        fsc = self.add_fsc_news()
+        self.fetches.clear()
+        self.calls.clear()
+        result = self.run_good(automatic=True, issue_ids=[fsc["issue_id"]])
+        self.assertEqual(self.fetches, ["https://www.fsc.go.kr/no010101/99999"])
+        self.assertEqual(result["last_attempt"]["request_count"], 1)
+        sent = json.loads(self.calls[0][0]["input"])["items"]
+        self.assertEqual([item["issue_id"] for item in sent], [fsc["issue_id"]])
+        self.assertEqual(sent[0]["source"], "금융위원회 · 보도자료")
+        self.assertEqual(sent[0]["paragraphs"], PARAGRAPHS)
+        state = read(self.root / "state/article-analysis.json")
+        self.assertTrue(all(state["entries"][key] == value for key, value in old_entries.items()))
+        self.assertEqual(self.public()["items"][fsc["issue_id"]]["status"], "completed")
+        self.assertEqual(self.public()["counts"]["not_applicable"], 1)
+        self.assertNotIn(PARAGRAPHS[2]["text"], (self.root / "state/article-analysis.json").read_text())
+        self.assertTrue(articles.check(self.root)["ok"])
+        command = ["node", "-e", "const fs=require('fs'),a=require(process.argv[1]);a.validateSidecar(JSON.parse(fs.readFileSync(process.argv[2])),JSON.parse(fs.readFileSync(process.argv[3])));",
+                   str(ROOT / "site/article.js"), str(self.root / "site/data/article-analysis.json"), str(self.root / "site/data/latest.json")]
+        checked = subprocess.run(command, capture_output=True, text=True)
+        self.assertEqual(checked.returncode, 0, checked.stderr)
+
     def test_prepare_never_fetches_or_calls_ai_and_does_not_invent_summaries(self):
         with patch("weekly_trend.article_analysis.fetch_article", side_effect=AssertionError("network forbidden")), patch("weekly_trend.ai.request_once", side_effect=AssertionError("AI forbidden")):
             result = articles.prepare(self.root, now=NOW)

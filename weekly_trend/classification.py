@@ -165,7 +165,7 @@ def classify_for_source(title, source, companies, topics):
     return {**subject, "topic_id": primary, "topic": topics[primary],
             "matched_keywords": list(dict.fromkeys(word for row in matches for word in row["keywords"])),
             "matched_topic_ids": list(dict.fromkeys(item["topic_id"] for item in selected)),
-            "tags": list(dict.fromkeys([*tags, "경영진 관심사"])),
+            "tags": list(dict.fromkeys([*tags, "최근 관심 주제"])),
             "event_stage": _event_stage(_current_action(title, rules), rules, primary) or "관심사 키워드",
             "classification_rules_version": rules["version"]}
 

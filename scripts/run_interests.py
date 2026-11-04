@@ -71,7 +71,7 @@ def request_identity(environ):
             or issue.get('user', {}).get('login', '').casefold() != 'iesilder'
             or 'pull_request' in issue or type(number) is not int or not 1 <= number < 10**19
             or not issue.get('title', '').startswith('[관심사 수집 요청]')
-            or not re.search(r'^-\s+\[[xX]\]\s+활성 경영진 관심사 수집을 요청합니다\.\s*$', issue.get('body') or '', re.M)):
+            or not re.search(r'^-\s+\[[xX]\]\s+활성 (?:최근 관심 주제|경영진 관심사) 수집을 요청합니다\.\s*$', issue.get('body') or '', re.M)):
         raise ValueError('Unauthorized or invalid interest collection request')
     url = f'https://github.com/{REPOSITORY}/issues/{number}'
     if issue.get('html_url') != url:
@@ -110,7 +110,7 @@ def main():
             handle.write(f'request_failed={str(failed).lower()}\n')
     if args.run and os.environ.get('GITHUB_STEP_SUMMARY'):
         record = result['record']
-        lines = ['## 경영진 관심사 별도 수집', '',
+        lines = ['## 최근 관심 주제 별도 수집', '',
                  '이미 저장한 요청이므로 다시 수집하지 않았습니다.' if result['skipped'] else '활성 관심사를 기준으로 별도 수집·기사 분석을 수행했습니다.',
                  '', '| 단계 | 상태 | 사유 |', '|---|---|---|']
         for name, label in [('collection', '관심사 수집'), ('titles', '기사 제목 분류'), ('articles', '기사 본문 요약')]:

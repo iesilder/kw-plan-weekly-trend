@@ -9,11 +9,11 @@
   const REPO = "iesilder/kw-plan-weekly-trend";
   const ACTIONS_URL = `https://github.com/${REPO}/actions`;
   const API = `https://api.github.com/repos/${REPO}/actions/workflows/`;
-  const WORKFLOWS = {daily:"daily.yml",pipeline:"pipeline.yml",interests:"interests.yml"};
-  const KIND_LABELS = {daily_scheduled:"정기 자동 배치",daily_manual:"정기 배치 수동 실행",manual_collection:"일반 수동 수집",interest_manual:"관심사 요청 실행"};
+  const WORKFLOWS = {daily:"daily.yml",pipeline:"pipeline.yml",interests:"interests.yml",rss:"rss.yml"};
+  const KIND_LABELS = {daily_scheduled:"정기 자동 배치",daily_manual:"정기 배치 수동 실행",manual_collection:"일반 수동 수집",interest_manual:"관심사 요청 실행",interest_rebuild:"관심사 저장 자료 재분류",rss_scheduled:"RSS 정기 저장",rss_manual:"RSS 수동 저장",rss_bootstrap:"수집 구조 변경 후 갱신"};
   const STATE_LABELS = {queued:"대기 중",running:"실행 중",success:"성공",failure:"실패",cancelled:"취소",skipped:"실행 생략",unknown:"확인 불가"};
   const MESSAGES = {network_error:"GitHub 실행 기록을 확인하지 못했습니다.",timeout:"실행 기록 확인 시간이 초과되었습니다.",invalid_response:"GitHub 실행 기록의 응답을 확인할 수 없습니다.",response_too_large:"실행 기록 응답이 조회 크기 한도를 넘었습니다.",pagination_limit:"최근 실행이 조회 한도를 넘어 전체 기록을 확인하지 못했습니다.",rate_limited:"GitHub 공개 조회가 일시 제한되었습니다. 잠시 후 다시 확인해 주세요."};
-  const DAY = 86400000, CACHE = 300000, MINIMUM = 60000, LIMIT = 2000000, PAGES = 3, TIMEOUT = 15000;
+  const DAY = 86400000, CACHE = 300000, MINIMUM = 60000, LIMIT = 2000000, PAGES = 3, RSS_PAGES = 10, TIMEOUT = 15000;
   const plain = value => value !== null && typeof value === "object" && !Array.isArray(value);
   const clone = value => JSON.parse(JSON.stringify(value));
   const safeInteger = value => Number.isSafeInteger(value) && value > 0;
@@ -48,10 +48,13 @@
     if (workflow === "daily" && run.event === "schedule") kind = "daily_scheduled";
     else if (workflow === "daily" && run.event === "workflow_dispatch") kind = "daily_manual";
     else if (workflow === "pipeline" && run.event === "workflow_dispatch") kind = "manual_collection";
+    else if (workflow === "rss" && run.event === "schedule") kind = "rss_scheduled";
+    else if (workflow === "rss" && run.event === "workflow_dispatch") kind = "rss_manual";
+    else if (workflow === "rss" && run.event === "push") kind = "rss_bootstrap";
     else if (workflow === "interests" && run.event === "workflow_dispatch") kind = "interest_manual";
     else if (workflow === "interests" && run.event === "issues") {
-      if (run.conclusion === "skipped" || (typeof run.display_title === "string" && /^\[관심사\](?:\s|$)/.test(run.display_title))) return null;
-      kind = "interest_manual";
+      if (run.conclusion === "skipped") return null;
+      kind = typeof run.display_title === "string" && /^\[관심사(?: 재분류)?\](?:\s|$)/.test(run.display_title) ? "interest_rebuild" : "interest_manual";
     } else return null;
     let state = "unknown";
     if (["queued","waiting","pending","requested"].includes(run.status)) state = "queued";
@@ -141,7 +144,10 @@
       const records = [], seen = new Set();
       let expected = null, received = 0;
       try {
-        for (let page = 1; page <= PAGES; page++) {
+        // An hourly feed has roughly 720 runs in 30 days; keep this bounded
+        // separately from less frequent daily/manual workflows.
+        const maxPages = workflow === "rss" ? RSS_PAGES : PAGES;
+        for (let page = 1; page <= maxPages; page++) {
           const data = await request(workflow,page,cutoff);
           if (!plain(data) || !Number.isSafeInteger(data.total_count) || data.total_count < 0 || !Array.isArray(data.workflow_runs) || data.workflow_runs.length > 100) throw failure("invalid_response");
           if (expected !== null && expected !== data.total_count) throw failure("pagination_limit");

@@ -17,6 +17,8 @@ from .live_storage import (apply_policies, connect, counts, current_records, ing
 from .pipeline import TOPIC_IDS, read_json, write_json
 from .storage import canonical_url, digest
 
+CAPTURE_VERSION = "raw-metadata-v1"
+
 COVERAGE_NOTE = "현재 피드·목록에 남아 있는 항목만 확인하며, 해당 기간 전체 수집을 보장하지 않습니다."
 ERROR_MESSAGES = {
     "collector_exception": "출처 수집 중 오류가 발생했습니다. 다음 실행에서 재시도합니다.",
@@ -34,6 +36,7 @@ def _source_with_classification_context(source, rules, companies, topics):
                           [item for item in companies if item["id"] == source.get("company_id")])
     policy = {"configured_version": configured_version, "content_filter": content_filter,
               "scope": source.get("scope"), "company_id": source.get("company_id"),
+              "authority_name": source.get("authority_name"), "adapter": source.get("adapter"), "url": source.get("url"),
               "companies": sorted([{"id": item["id"], "name": item["name"],
                                     "enabled": item.get("enabled", True),
                                     "aliases": sorted(item.get("aliases", []))}
@@ -231,7 +234,7 @@ def load_live_inputs(root, now=None):
 
 
 def normalize_record(record, source, topics, companies, start, now):
-    """Return a safe scoped record or a counted exclusion; never copy arbitrary fields."""
+    """Return safe source metadata, independently from all downstream mart filters."""
     title = plain_title(record["title"])
     uri = canonical_url(safe_https_url(record["uri"], source["allowed_hosts"]))
     published = timestamp(record.get("published_at"))
@@ -243,31 +246,16 @@ def normalize_record(record, source, topics, companies, start, now):
             raise ValueError("Invalid publication date")
         if date.fromisoformat(published_date) > now.astimezone(timezone(timedelta(hours=9))).date() + timedelta(days=1):
             raise ValueError("Publication date is implausibly in the future")
-    from .interests import match_title
-    matches = match_title(title, source.get("_interests", [])) if _interest_source(source) else []
-    if source.get("_interests_only") and not matches:
-        return None, "outside_scope"
-    windows = source.get("_interest_windows", {})
-    matching_starts = [datetime.fromisoformat(windows[row["interest_id"]]) for row in matches if row["interest_id"] in windows]
-    if matching_starts:
-        start = min(matching_starts) if source.get("_interests_only") else min(start, *matching_starts)
     known_times = [datetime.fromisoformat(value) for value in (published, updated) if value]
     # Date-only records remain date-only. UTC midnight is not invented as publication time.
-    if known_times and max(known_times) < start:
-        return None, "outside_window"
-    if not known_times and published_date and published_date < start.date().isoformat():
-        return None, "outside_window"
     if known_times and max(known_times) > now + timedelta(days=1):
         raise ValueError("Publication timestamp is implausibly in the future")
-    route = classify_for_source(title, source, companies, topics)
-    if route is None:
-        return None, "outside_content_filter" if source_policy(source)[0] == "earnings_only" else "outside_scope"
     return {"uri": uri, "title": title, "published_at": published,
             "source_updated_at": updated, "published_date": published_date,
             "source_id": source["id"], "source_name": plain_title(source["name"]),
             "content_text": "", "content_level": "metadata_only",
             "retention_basis": plain_title(source["retention_basis"]),
-            "retention_url": safe_https_url(source["retention_url"]), **route}, None
+            "retention_url": safe_https_url(source["retention_url"])}, None
 
 
 def build_snapshot(db, topics, now):
@@ -318,21 +306,33 @@ def _public_source(state):
             if key not in {"etag", "last_modified"} and not key.startswith("_")}
 
 
+def source_inventory(db, source_ids):
+    """Latest observed attempt per enabled source, independent of capture scope."""
+    latest = {}
+    for row in db.execute("SELECT source_id,state_json FROM live_source_runs ORDER BY source_run_id"):
+        if row["source_id"] in source_ids:
+            latest[row["source_id"]] = _public_source(json.loads(row["state_json"]))
+    return [latest[source_id] for source_id in source_ids if source_id in latest]
+
+
 def _collect_one(collector, source, previous, topics, companies, now):
     content_filter, policy_version = source_policy(source)
-    backfill = (previous.get("completed_content_policy_version") != policy_version or
-                previous.get("completed_content_filter") != content_filter)
+    # Capture and classification have independent versions. Only the one-time
+    # raw-store migration may reopen 30 days; edits to interests/rules reuse raw.
+    backfill = previous.get("completed_capture_version") != CAPTURE_VERSION
     start = (datetime.fromisoformat(previous["next_collection_start"]) if previous.get("next_collection_start") else
              datetime.fromisoformat(previous["last_success_at"]) - timedelta(hours=48)
              if previous.get("last_success_at") else now - timedelta(days=30))
     if backfill:
         start = (datetime.fromisoformat(previous["policy_backfill_start"])
-                 if previous.get("content_policy_version") == policy_version and previous.get("policy_backfill_start")
+                 if previous.get("capture_version") == CAPTURE_VERSION and previous.get("policy_backfill_start")
                  else now - timedelta(days=30))
     stamp = timestamp(now.isoformat())
     state = {"source_id": source["id"], "source_name": plain_title(source["name"]),
              "status": "failed", "last_attempt_at": stamp, "last_success_at": previous.get("last_success_at"),
              "fetched_count": 0, "accepted_count": 0, "inserted_versions": 0, "duplicate_count": 0,
+             "raw_saved_count": 0, "mart_included_count": 0, "mart_excluded_count": 0,
+             "capture_version": CAPTURE_VERSION, "completed_capture_version": previous.get("completed_capture_version"),
              "rejected_count": 0, "outside_scope_count": 0, "outside_window_count": 0, "outside_content_filter_count": 0,
              "error_code": None, "error_message": None, "coverage_start": timestamp(start.isoformat()),
              "coverage_end": stamp, "coverage_note": COVERAGE_NOTE,
@@ -346,10 +346,9 @@ def _collect_one(collector, source, previous, topics, companies, now):
              "completed_content_filter": previous.get("completed_content_filter"),
              "policy_backfill_pending": backfill,
              "policy_backfill_start": timestamp(start.isoformat()) if backfill else None}
-    force_representation = backfill or source.get("_interest_force") is True
+    force_representation = backfill
     request_previous = {**previous, "etag": None, "last_modified": None} if force_representation else previous
-    starts = [start, *[datetime.fromisoformat(value) for value in source.get("_interest_windows", {}).values()]]
-    state["coverage_start"] = timestamp(min(starts).isoformat())
+    state["coverage_start"] = timestamp(start.isoformat())
     try:
         result = collector({**source, "collection_start": state["coverage_start"], "collection_end": stamp}, now=now, previous_state=request_previous or None)
     except Exception:
@@ -380,13 +379,20 @@ def _collect_one(collector, source, previous, topics, companies, now):
             continue
         if normalized:
             accepted.append(normalized)
+            known = [datetime.fromisoformat(value) for value in
+                     (normalized["published_at"], normalized["source_updated_at"]) if value]
+            if (max(known) < start if known else normalized.get("published_date") and normalized["published_date"] < start.date().isoformat()):
+                state["outside_window_count"] += 1
+            route = classify_for_source(normalized["title"], source, companies, topics)
+            if route is None:
+                state["outside_content_filter_count" if content_filter == "earnings_only" else "outside_scope_count"] += 1
         else:
             state[excluded + "_count"] += 1
     if records and state["rejected_count"] == len(records):
         state.update(error_code="invalid_records", error_message=ERROR_MESSAGES["invalid_records"])
         return state, []
     truncated = result.get("truncated") is True
-    state.update(status=result["status"], last_success_at=stamp, accepted_count=len(accepted), truncated=truncated)
+    state.update(status=result["status"], last_success_at=stamp, accepted_count=len(accepted), raw_saved_count=len(accepted), truncated=truncated)
     if isinstance(result.get("total_count"), int) and result["total_count"] >= 0:
         state["total_count"] = result["total_count"]
     if truncated:
@@ -394,6 +400,7 @@ def _collect_one(collector, source, previous, topics, companies, now):
     else:
         state["coverage_watermark_at"] = stamp
         state["next_collection_start"] = timestamp((now - timedelta(hours=48)).isoformat())
+        state["completed_capture_version"] = CAPTURE_VERSION
         state["completed_content_policy_version"] = policy_version
         state["completed_content_filter"] = content_filter
         state["policy_backfill_pending"] = False
@@ -429,8 +436,10 @@ def _replace(stage, destinations):
         raise
 
 
-def run_collection(root, collector=None, now=None, interests_only=False, request_url=None):
+def run_collection(root, collector=None, now=None, interests_only=False, request_url=None, *, source_mode="all", rebuild_only=False):
     root = Path(root).resolve()
+    if source_mode not in {"all", "rss"} or type(rebuild_only) is not bool:
+        raise ValueError("Invalid capture mode")
     if type(interests_only) is not bool:
         raise ValueError("Interest-only collection must be explicit")
     if request_url is not None and not re.fullmatch(r"https://github\.com/iesilder/kw-plan-weekly-trend/issues/[1-9][0-9]*", request_url):
@@ -441,7 +450,7 @@ def run_collection(root, collector=None, now=None, interests_only=False, request
     reviews = load_reviews(root)
     topics, companies, sources, settings = load_live_inputs(root, now=now)
     interests = load_interests(root, now=now, active_only=True)
-    no_work = interests_only and not interests
+    no_work = rebuild_only or interests_only and not interests
     book = _interest_book(root)
     sources = [_interest_context(source, interests, book, now, interests_only)
                if _interest_source(source) and interests else source for source in sources]
@@ -452,6 +461,12 @@ def run_collection(root, collector=None, now=None, interests_only=False, request
             raise ValueError("No approved RSS source is available for interest collection")
         if no_work:
             sources = []
+    if source_mode == "rss":
+        sources = [source for source in sources if source.get("type") == "rss"]
+    if rebuild_only:
+        sources = []
+    if not sources and not no_work:
+        raise ValueError("No enabled source is available for this capture mode")
     if collector is None:
         from .collectors import collect_source
         collector = collect_source
@@ -478,23 +493,25 @@ def run_collection(root, collector=None, now=None, interests_only=False, request
                 if (old_latest.get("is_demo") is False and old_latest.get("topics") !=
                         [{"id": topic_id, "name": name} for topic_id, name in topics.items()]):
                     policy_changed = True
-            run_id = db.execute("INSERT INTO live_collection_runs(started_at,finished_at,status) VALUES(?,?,'running')", (stamp, stamp)).lastrowid
+            run_id = db.execute("INSERT INTO live_collection_runs(started_at,finished_at,status,execution_mode) VALUES(?,?,'running',?)", (stamp, stamp, "mart_rebuild" if rebuild_only else "collection")).lastrowid
             source_states = []
             for source in sources:
-                previous = source.get("_manual_previous", old_sources.get(source["id"], {})) if interests_only else old_sources.get(source["id"], {})
-                if _interest_source(source) and interests and not interests_only and previous.get("last_success_at"):
-                    chosen_coverage = datetime.fromisoformat(previous["last_success_at"])
-                    from .interests import interest_fingerprint
-                    for interest in interests:
-                        checkpoint = book["entries"].get(interest["id"], {}).get("sources", {}).get(source["id"], {})
-                        if (checkpoint.get("filter_fingerprint") == interest_fingerprint(interest)
-                                and checkpoint.get("last_success_at")
-                                and datetime.fromisoformat(checkpoint["last_success_at"]) < chosen_coverage):
-                            source = {**source, "_interest_force": True}
-                            break
+                # Manual requests can reuse the latest complete raw representation,
+                # regardless of which interest was active then. Their capture cursor
+                # never depends on an interest fingerprint or changes normal state.
+                previous = old_sources.get(source["id"], {})
+                if interests_only:
+                    latest_source = db.execute("SELECT state_json FROM live_source_runs WHERE source_id=? ORDER BY source_run_id DESC LIMIT 1",
+                                               (source["id"],)).fetchone()
+                    if latest_source is not None:
+                        previous = json.loads(latest_source[0])
                 state, records = _collect_one(collector, source, previous, topics, companies, now)
                 if state["status"] != "failed":
                     state["inserted_versions"], state["duplicate_count"] = ingest(db, records, stamp)
+                apply_policies(db, policy_sources, companies, topics)
+                active_ids = {row[0] for row in db.execute("SELECT article_id FROM live_article_policy WHERE active=1")}
+                state["mart_included_count"] = sum("article-" + digest(record["uri"]) in active_ids for record in records)
+                state["mart_excluded_count"] = state["accepted_count"] - state["mart_included_count"]
                 if interests_only:
                     # An ad hoc interest pass must not advance the normal daily
                     # source cursor, conditional headers, or DART checkpoints.
@@ -531,6 +548,9 @@ def run_collection(root, collector=None, now=None, interests_only=False, request
                       "last_run_at": stamp, "last_successful_run_at": successful_run,
                       "published_at": latest["generated_at"] if collection_ok or retained or policy_filtered else None,
                       **counts(db), "issue_count": len(latest["candidates"]), **totals,
+                      "capture_schema_version": CAPTURE_VERSION,
+                      "execution_mode": "mart_rebuild" if rebuild_only else "collection",
+                      "collection_performed": bool(source_states), "source_mode": source_mode,
                       "analysis_mode": "pending_ai", "collection_mode": "public_metadata",
                       "collection_ok": collection_ok, "collection_status": outcome,
                       "publication_status": "updated" if collection_ok else "filtered" if policy_filtered else "retained" if retained else "unavailable",
@@ -539,10 +559,12 @@ def run_collection(root, collector=None, now=None, interests_only=False, request
                       "report_count": 0, "real_collection_enabled": True, "interests_only": interests_only,
                       "ai_enabled": False, **_schedule_metadata(settings),
                       "initial_lookback_days": 30, "overlap_hours": 48, "coverage_note": COVERAGE_NOTE,
-                      "sources": [_public_source(item) for item in source_states]}
-            book = _update_interest_book(book, interests, sources, source_states, now, interests_only, request_url)
+                      "sources": [_public_source(item) for item in source_states],
+                      "source_inventory": source_inventory(db, [source["id"] for source in policy_sources])}
+            if not rebuild_only:
+                book = _update_interest_book(book, interests, sources, source_states, now, interests_only, request_url)
             validate_snapshot(db, topics, latest, details, history)
-            validate_status(db, latest, status)
+            validate_status(db, latest, status, [source["id"] for source in policy_sources])
         finally:
             db.close()
         mart, state_path = stage / "mart", stage / "state"
@@ -584,11 +606,15 @@ def validate_snapshot(db, topics, latest, details, history):
         raise ValueError("SQLite integrity failed")
 
 
-def validate_status(db, latest, status):
+def validate_status(db, latest, status, source_ids=None):
     # Saved snapshots may predate the change from 08:00 to 11:00 KST.
     _schedule_metadata(status, allow_legacy=True)
+    if status.get("capture_schema_version") not in {None, CAPTURE_VERSION}:
+        raise ValueError("Unsupported raw capture schema")
     expected_counts = counts(db)
-    if any(status.get(key) != value for key, value in expected_counts.items()):
+    raw_fields = {"raw_article_count", "raw_version_count", "mart_article_count", "mart_excluded_count", "mart_exclusions"}
+    if any(status.get(key) != value for key, value in expected_counts.items()
+           if status.get("capture_schema_version") == CAPTURE_VERSION or key not in raw_fields):
         raise ValueError("Live SQLite/status count mismatch")
     if (status.get("schema_version") != "1.0" or status.get("is_demo") is not False or
             status.get("real_collection_enabled") is not True or status.get("ai_enabled") is not False or
@@ -612,9 +638,26 @@ def validate_status(db, latest, status):
         raise ValueError("Failed collection cannot claim success")
     stored_sources = [_public_source(json.loads(row[0])) for row in db.execute(
         "SELECT state_json FROM live_source_runs WHERE run_id=? ORDER BY source_run_id", (run["run_id"],))]
-    no_work = status.get("interests_only") is True and status["interests_count"] == 0 and run["status"] == "success"
+    execution_mode = run["execution_mode"] if "execution_mode" in run.keys() else "collection"
+    no_work = (status.get("interests_only") is True and status["interests_count"] == 0 or
+               execution_mode == "mart_rebuild") and run["status"] == "success"
+    if status.get("capture_schema_version") == CAPTURE_VERSION:
+        if (status.get("execution_mode") != execution_mode or
+                status.get("collection_performed") != bool(stored_sources)):
+            raise ValueError("Execution mode differs from stored run")
     if (not stored_sources and not no_work) or status.get("sources") != stored_sources:
         raise ValueError("Source status differs from SQLite")
+    if status.get("capture_schema_version") == CAPTURE_VERSION:
+        for source in stored_sources:
+            keys = ("raw_saved_count", "mart_included_count", "mart_excluded_count", "accepted_count", "inserted_versions", "duplicate_count")
+            if (any(type(source.get(key)) is not int or source[key] < 0 for key in keys) or
+                    source["raw_saved_count"] != source["accepted_count"] or
+                    source["mart_included_count"] + source["mart_excluded_count"] != source["raw_saved_count"] or
+                    source["inserted_versions"] + source["duplicate_count"] != source["accepted_count"]):
+                raise ValueError("Raw and mart source counts are inconsistent")
+    if status.get("capture_schema_version") == CAPTURE_VERSION and source_ids is not None:
+        if status.get("source_inventory") != source_inventory(db, source_ids):
+            raise ValueError("Source inventory differs from SQLite")
     latest_success = db.execute("SELECT MAX(finished_at) FROM live_collection_runs WHERE status IN ('success','partial_success')").fetchone()[0]
     if status.get("last_successful_run_at") != latest_success:
         raise ValueError("Last successful run differs from SQLite")
@@ -657,7 +700,7 @@ def verify_live(root):
         db.row_factory = sqlite3.Row
         validate_policies(db, sources, companies, topics)
         validate_snapshot(db, topics, latest, details, history)
-        validate_status(db, latest, status)
+        validate_status(db, latest, status, [source["id"] for source in sources])
     if read_json(root / "state/run_status.json") != status:
         raise ValueError("Live state and mart status differ")
     if read_json(root / "state/issues.json") != {"schema_version": "1.0", "is_demo": False,

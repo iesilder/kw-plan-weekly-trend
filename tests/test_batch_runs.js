@@ -5,7 +5,7 @@ const Batch = require("../site/batch_runs.js");
 const NOW = "2026-11-04T03:15:00.000Z";
 const REPO = "iesilder/kw-plan-weekly-trend";
 const API = `https://api.github.com/repos/${REPO}/actions/workflows/`;
-const FILES = {daily:"daily.yml",pipeline:"pipeline.yml",interests:"interests.yml"};
+const FILES = {daily:"daily.yml",pipeline:"pipeline.yml",interests:"interests.yml",rss:"rss.yml"};
 const clone = value => JSON.parse(JSON.stringify(value));
 function run(workflow = "daily", changes = {}) {
   return {id:workflow === "daily" ? 100 : workflow === "pipeline" ? 200 : 300,run_attempt:1,path:`.github/workflows/${FILES[workflow]}`,repository:{full_name:REPO},head_branch:"main",event:workflow === "daily" ? "schedule" : "workflow_dispatch",status:"completed",conclusion:"success",html_url:`https://github.com/${REPO}/actions/runs/${workflow === "daily" ? 100 : workflow === "pipeline" ? 200 : 300}`,created_at:"2026-11-04T02:01:00Z",run_started_at:"2026-11-04T02:01:01Z",updated_at:"2026-11-04T02:02:00Z",...changes};
@@ -33,7 +33,7 @@ test("fixed public API requests return only bounded execution metadata and canon
   assert.equal(model.records[0].url,`https://github.com/${REPO}/actions/runs/100/attempts/1`);
   assert.equal(model.records[0].state,"success");
   assert.equal(model.cached,false);
-  assert.equal(fixture.calls.length,3);
+  assert.equal(fixture.calls.length,4);
   for (const {url,options} of fixture.calls) {
     assert.ok(url.startsWith(API));
     const parsed = new URL(url);
@@ -64,9 +64,12 @@ test("workflow failure includes deployment failure even if collection itself sav
   assert.equal(today.record.kind,"daily_scheduled");
 });
 
-test("UI-only deployment and registration Issues are omitted, including not-yet-skipped registration",async () => {
+test("UI-only deployment and skipped Issues are omitted while registration rebuild is shown",async () => {
   const fixture = setup({interests:[run("interests",{event:"push"}),withId(run("interests",{event:"issues",display_title:"[관심사] 등록",status:"queued",conclusion:null}),301),withId(run("interests",{event:"issues",display_title:"[관심사 수집 요청]",conclusion:"skipped"}),302)]});
-  assert.deepEqual((await fixture.client.load()).records,[]);
+  const records = (await fixture.client.load()).records;
+  assert.equal(records.length,1);
+  assert.equal(records[0].kind,"interest_rebuild");
+  assert.equal(records[0].state,"queued");
 });
 
 test("request issue titles can be generic without dropping a real workflow execution",async () => {
@@ -182,22 +185,22 @@ test("inflight requests deduplicate, ordinary loads cache 5min, forced loads obe
   const fixture = setup({daily:[run()]});
   const [one,two] = await Promise.all([fixture.client.load(),fixture.client.load({force:true})]);
   assert.deepEqual(one,two);
-  assert.equal(fixture.calls.length,3);
+  assert.equal(fixture.calls.length,4);
   one.records[0].state = "SECRET mutation";
   fixture.advance(59000);
   const cached = await fixture.client.load({force:true});
   assert.equal(cached.records[0].state,"success");
   assert.equal(cached.cached,true);
-  assert.equal(fixture.calls.length,3);
+  assert.equal(fixture.calls.length,4);
   fixture.advance(1001);
   await fixture.client.load({force:true});
-  assert.equal(fixture.calls.length,6);
+  assert.equal(fixture.calls.length,8);
   fixture.advance(299999);
   await fixture.client.load();
-  assert.equal(fixture.calls.length,6);
+  assert.equal(fixture.calls.length,8);
   fixture.advance(1);
   await fixture.client.load();
-  assert.equal(fixture.calls.length,9);
+  assert.equal(fixture.calls.length,12);
 });
 
 test("rate limit Retry-After prevents forced retries and preserves retry time without HTTP body",async () => {
@@ -207,7 +210,7 @@ test("rate limit Retry-After prevents forced retries and preserves retry time wi
   assert.equal(model.workflows.daily.error.retryAt,"2026-11-04T03:25:00.000Z");
   fixture.advance(120000);
   const cached = await fixture.client.load({force:true});
-  assert.equal(fixture.calls.length,3);
+  assert.equal(fixture.calls.length,4);
   assert.equal(Batch.deriveToday(cached,Date.parse(NOW)+120000).state,"unknown");
   assert.doesNotMatch(JSON.stringify(cached),/SECRET|quota/);
 });
@@ -266,4 +269,40 @@ test("history uses latest attempt execution time while today's schedule still us
   assert.equal(model.records[0].attempt,2);
   assert.equal(model.records[1].id,300);
   assert.equal(Batch.deriveToday(model,NOW).state,"no_record");
+});
+
+
+test("RSS scheduled, manual and bootstrap saves stay separate from today's daily batch",async () => {
+  const fixture = setup({rss:[withId(run("rss",{event:"schedule"}),400),withId(run("rss",{event:"workflow_dispatch"}),401),withId(run("rss",{event:"push"}),402)]});
+  const model = await fixture.client.load();
+  assert.deepEqual(model.records.map(record => record.kind).sort(),["rss_bootstrap","rss_manual","rss_scheduled"]);
+  assert.equal(Batch.deriveToday(model,NOW).state,"no_record");
+  assert.equal(Batch.deriveToday(model,NOW).record,null);
+});
+
+test("a full 30-day hourly RSS history is complete beyond the ordinary three-page limit",async () => {
+  const fixture = setup({rss:({page}) => reply(Array.from({length:page < 8 ? 100 : 20},(_,index) => withId(run("rss",{event:"schedule"}),(page-1)*100+index+1000)),{total:720})});
+  const model = await fixture.client.load();
+  assert.equal(model.workflows.rss.complete,true);
+  assert.equal(model.workflows.rss.records.length,720);
+  assert.equal(fixture.calls.filter(call => call.url.includes("rss.yml")).length,8);
+  assert.equal(model.warning,"");
+});
+
+test("hourly RSS history remains bounded and reports incompleteness rather than hiding truncation",async () => {
+  const fixture = setup({rss:({page}) => reply(Array.from({length:100},(_,index) => withId(run("rss",{event:"schedule"}),(page-1)*100+index+1000)),{total:1001})});
+  const model = await fixture.client.load();
+  assert.equal(model.workflows.rss.complete,false);
+  assert.equal(model.workflows.rss.error.code,"pagination_limit");
+  assert.equal(fixture.calls.filter(call => call.url.includes("rss.yml")).length,10);
+  assert.ok(model.warning);
+  assert.equal(Batch.deriveToday(model,NOW).state,"no_record");
+});
+
+
+test("registry rename uses the explicit rebuild run label rather than implying source collection",async () => {
+  const fixture = setup({interests:[run("interests",{event:"issues",display_title:"[관심사 재분류] 등록 내용 갱신"})]});
+  const record = (await fixture.client.load()).records[0];
+  assert.equal(record.kind,"interest_rebuild");
+  assert.equal(record.label,"관심사 저장 자료 재분류");
 });

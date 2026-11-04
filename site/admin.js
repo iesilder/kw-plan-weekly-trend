@@ -55,12 +55,23 @@
     if (!["article_count","version_count","run_count"].every(key => integer(status[key])) || (status.issue_count !== undefined && (!integer(status.issue_count) || status.issue_count !== latest.candidates.length)) || (status.interests_count !== undefined && !integer(status.interests_count))) throw new Error("counts");
     if (new Set(latest.candidates.map(item => item?.issue_id)).size !== latest.candidates.length || !latest.candidates.every(item => object(item) && /^issue-[a-f0-9]{20}$/.test(item.issue_id) && string(item.title,1000) && Array.isArray(item.evidence_ids))) throw new Error("candidates");
     if (typeof status.schedule_enabled !== "boolean" || (status.schedule_enabled && (!["daily_1100_kst","daily_0800_kst"].includes(status.planned_collection_frequency) || status.timezone !== "Asia/Seoul"))) throw new Error("schedule");
+    if (status.capture_schema_version !== undefined) {
+      if (status.capture_schema_version !== "raw-metadata-v1" || !["raw_article_count","raw_version_count","mart_article_count","mart_excluded_count"].every(key => integer(status[key])) || status.raw_article_count < status.mart_article_count || status.raw_version_count < status.raw_article_count || status.mart_article_count !== status.article_count || status.raw_article_count !== status.mart_article_count + status.mart_excluded_count || !object(status.mart_exclusions) || !Object.values(status.mart_exclusions).every(integer)) throw new Error("raw_counts");
+    }
+    if (status.execution_mode !== undefined && !["collection","mart_rebuild"].includes(status.execution_mode)) throw new Error("execution_mode");
+    if (status.collection_performed !== undefined && typeof status.collection_performed !== "boolean") throw new Error("collection_performed");
     for (const key of ["last_run_at","last_successful_run_at"]) if (status[key] != null && !instant(status[key])) throw new Error("date");
     if (!latest.is_demo) {
       if (!["updated","retained","filtered","unavailable"].includes(status.publication_status) || !Array.isArray(status.sources) || status.sources.length > 100) throw new Error("sources");
-      for (const source of status.sources) {
+      const groups = [status.sources];
+      if (status.source_inventory !== undefined) {
+        if (!Array.isArray(status.source_inventory) || status.source_inventory.length > 100) throw new Error("source_inventory");
+        groups.push(status.source_inventory);
+      }
+      for (const source of groups.flat()) {
         if (!object(source) || !string(source.source_name || source.source_id,300) || !["success","not_modified","failed"].includes(source.status)) throw new Error("source");
-        for (const key of ["fetched_count","accepted_count","inserted_versions","duplicate_count","rejected_count","outside_scope_count","outside_window_count","outside_content_filter_count"]) if (source[key] != null && !integer(source[key])) throw new Error("source_count");
+        for (const key of ["fetched_count","accepted_count","inserted_versions","duplicate_count","rejected_count","outside_scope_count","outside_window_count","outside_content_filter_count","raw_saved_count","mart_included_count","mart_excluded_count"]) if (source[key] != null && !integer(source[key])) throw new Error("source_count");
+        if (source.raw_saved_count !== undefined && source.mart_included_count !== undefined && source.mart_excluded_count !== undefined && source.raw_saved_count !== source.mart_included_count + source.mart_excluded_count) throw new Error("source_mart_counts");
         for (const key of ["last_attempt_at","last_success_at","coverage_start","coverage_end"]) if (source[key] != null && !instant(source[key])) throw new Error("source_date");
         if (source.coverage_note != null && !string(source.coverage_note,2000)) throw new Error("source_note");
       }
@@ -92,42 +103,54 @@
   function renderCollection() {
     const {latest,status} = state;
     const demo = latest.is_demo, interestOnly = status.interests_only === true, interestSkipped = interestOnly && status.interests_count === 0;
-    set("issue-count-label",demo ? "검토 후보" : "수집 자료");
-    set("article-count-label",demo ? "원자료" : "현재 범위 자료");
-    set("version-count-label",demo ? "보존한 자료 버전" : "현재 범위 자료 버전");
-    set("last-run-label",demo ? "마지막 데모 실행" : interestOnly ? "마지막 관심사 별도 수집" : "마지막 수집 시도");
-    metric("issue-count",latest.candidates.length,"건"); metric("article-count",status.article_count,"건"); metric("version-count",status.version_count,"개");
+    const raw = status.capture_schema_version === "raw-metadata-v1", rebuilt = status.execution_mode === "mart_rebuild", rssOnly = status.source_mode === "rss";
+    set("issue-count-label",demo ? "검토 후보" : "대시보드 자료");
+    set("article-count-label",raw ? "누적 원자료" : demo ? "원자료" : "보관 자료 · 이전 구조");
+    set("version-count-label",raw ? "원자료 보존 버전" : demo ? "보존한 자료 버전" : "보관 자료 버전");
+    set("last-run-label",demo ? "마지막 데모 실행" : rebuilt ? "마지막 데이터마트 갱신" : interestOnly ? "마지막 관심사 별도 수집" : rssOnly ? "마지막 RSS 수집" : "마지막 수집 시도");
+    metric("issue-count",latest.candidates.length,"건"); metric("article-count",raw ? status.raw_article_count : status.total_article_count ?? status.article_count,"건"); metric("version-count",raw ? status.raw_version_count : status.total_version_count ?? status.version_count,"개");
     set("last-run",formatDate(status.last_run_at || latest.generated_at)); set("run-count",`${status.run_count}회`);
     set("mode-badge",demo ? "DEMO" : "관리");
-    set("notice-title",demo ? "가상 데이터 · 실제 기사/AI 분석 아님" : interestOnly ? "마지막 실행: 관심사 별도 수집" : "저장된 수집·분석 현황");
-    set("notice-description",demo ? "가상 자료의 처리 현황이며 실제 수집·분석 이력이 아닙니다." : interestOnly ? `${interestSkipped ? "활성 관심사가 없어 기사 수집을 생략했습니다." : "관심사에 대한 RSS 기사·보도자료만 별도로 수집을 시도한 실행입니다."} DART 공시는 이번 요청에서 갱신하지 않았습니다. 기존 자료의 발행·수집 시각과 실행 결과를 확인하세요.` : status.schedule_enabled ? "매일 11:00(한국 시간) 자료 수집·기사 분석을 예약했습니다. 아래는 마지막 저장 결과이며 실제 배치 실행 여부는 위 실행 기록에서 확인하세요." : "수동으로 저장한 수집 현황입니다. 실제 실행 결과와 출처별 상태를 함께 확인하세요.");
-    set("execution-mode",status.schedule_enabled ? "매일 11:00 자동 실행 예약" : "수동 실행 모드");
-    set("connection-status",`${status.schedule_enabled ? "매일 11:00 KST 예약" : "수동 수집"} · 분석 상태 확인 중`);
+    set("notice-title",demo ? "가상 데이터 · 실제 기사/AI 분석 아님" : rebuilt ? "저장 원자료로 데이터마트 갱신" : interestOnly ? "마지막 실행: 관심사 별도 수집" : rssOnly ? "마지막 실행: RSS 원자료 수집" : "원자료 저장 · 데이터마트 현황");
+    set("notice-description",demo ? "가상 자료의 처리 현황이며 실제 수집·분석 이력이 아닙니다." : rebuilt ? "등록된 관심사와 주제 기준을 저장 원자료에 다시 적용했습니다. 이 갱신은 출처 수집이나 AI 분석을 실행하지 않습니다." : interestOnly ? `${interestSkipped ? "활성 관심사가 없어 기사 수집을 생략했습니다." : raw ? "RSS에서 받은 유효한 원자료를 먼저 저장한 뒤 전체 주제·관심사 기준으로 데이터마트를 만들었습니다." : "관심사에 대한 RSS 기사·보도자료만 별도로 수집을 시도한 실행입니다."} DART 공시는 이번 요청에서 갱신하지 않았습니다. 기존 자료의 발행·수집 시각과 실행 결과를 확인하세요.` : rssOnly ? "RSS의 최신 목록을 읽어 원자료를 저장하고 데이터마트를 갱신했습니다. 이 수집에서는 AI를 실행하지 않습니다. API·목록 출처와 기사 AI는 매일 11:00(한국 시간) 일배치에서 처리합니다." : status.schedule_enabled ? raw ? "RSS 원자료는 매시간, 전체 출처 수집과 기사 AI는 매일 11:00(한국 시간)에 예약했습니다. 아래는 마지막 저장 결과이며 실제 실행 여부는 위 기록에서 확인하세요." : "매일 11:00(한국 시간) 자료 수집·기사 분석을 예약했습니다. 아래는 마지막 저장 결과이며 실제 배치 실행 여부는 위 실행 기록에서 확인하세요." : "수동으로 저장한 수집 현황입니다. 실제 실행 결과와 출처별 상태를 함께 확인하세요.");
+    set("execution-mode",status.schedule_enabled ? raw ? "RSS 매시간 · 일배치 11:00" : "매일 11:00 자동 실행 예약" : "수동 실행 모드");
+    set("connection-status",`${status.schedule_enabled ? raw ? "RSS 매시간 · 일배치 11:00 KST" : "매일 11:00 KST 예약" : "수동 수집"} · 분석 상태 확인 중`);
     renderSources();
   }
   function renderSources() {
     const {latest,status} = state, panel = $("source-status-panel"), list = $("source-status-list");
     list.replaceChildren(); panel.hidden = latest.is_demo;
     if (panel.hidden) return;
-    const sources = status.sources, interestOnly = status.interests_only === true, interestSkipped = interestOnly && status.interests_count === 0;
+    const inventory = Array.isArray(status.source_inventory);
+    const sources = inventory ? status.source_inventory : status.sources, interestOnly = status.interests_only === true, interestSkipped = interestOnly && status.interests_count === 0;
+    const raw = status.capture_schema_version === "raw-metadata-v1", rebuilt = status.execution_mode === "mart_rebuild";
     const counts = Object.fromEntries(["success","not_modified","failed"].map(key => [key,sources.filter(source => source.status === key).length]));
     const publication = status.publication_status;
-    set("source-status-note",interestOnly ? "마지막 관심사 별도 수집의 RSS 출처 상태입니다. DART는 이번 요청에 포함되지 않으며 기존 자료의 수집 시각을 확인해야 합니다." : "각 출처의 제공 범위 안에서만 수집합니다. 실패·미분류·필터 제외 내역을 확인하세요.");
-    set("source-status-summary",interestSkipped ? "활성 관심사 없어 수집 생략" : `${interestOnly ? "관심사 RSS · " : ""}성공 ${counts.success} · 304 ${counts.not_modified} · 실패 ${counts.failed}${publication === "filtered" ? " · 기존 자료에 변경된 수집 범위 적용" : publication === "retained" ? " · 이전 자료 유지" : publication === "unavailable" ? " · 게시 자료 없음" : ""}`);
-    panel.open = counts.failed > 0 || ["filtered","unavailable"].includes(publication);
+    const sourceHistoryNote = inventory ? " 출처별 행은 각 출처의 최근 시도 결과이며, 마지막 실행에 포함되지 않은 출처도 표시합니다. 각 행의 시도·성공 시각을 확인하세요." : "";
+    set("source-status-note",(rebuilt ? "저장 원자료에 현재 주제·관심사를 다시 적용한 결과입니다. 새 출처 요청은 하지 않았습니다." : raw ? "제목·발행일·출처·원문 링크를 먼저 저장합니다. 데이터마트에서 제외한 유효 원자료도 보관하며, 관심사·주제가 바뀌면 다시 분류합니다. 본문·설명문·첨부는 저장하지 않습니다." : interestOnly ? "마지막 관심사 별도 수집의 RSS 출처 상태입니다. DART는 이번 요청에 포함되지 않으며 기존 자료의 수집 시각을 확인해야 합니다." : "이전 구조에서 저장한 자료입니다. 조건 제외 항목은 원자료로 보관되지 않았습니다. 출처별 수집 결과를 확인하세요.") + sourceHistoryNote);
+    set("source-status-summary",rebuilt ? "저장 원자료 재분류 · 출처 수집 없음" : interestSkipped ? "활성 관심사 없어 수집 생략" : `${inventory ? "출처별 최근 상태 · " : interestOnly ? "관심사 RSS · " : ""}성공 ${counts.success} · 304 ${counts.not_modified} · 실패 ${counts.failed}${publication === "filtered" ? " · 기존 자료에 변경된 수집 범위 적용" : publication === "retained" ? " · 이전 자료 유지" : publication === "unavailable" ? " · 게시 자료 없음" : ""}`);
+    panel.open = counts.failed > 0 || ["filtered","unavailable"].includes(publication) || (raw && status.mart_article_count === 0);
     if (publication === "filtered") list.append(el("p","source-alert",`수집 실패 · 기존 자료에 변경된 수집 범위 적용. 이번 수집은 성공하지 않았으며 기존에 보관한 자료를 표시합니다. 최근 성공 실행: ${formatDate(status.last_successful_run_at)}.`));
     if (publication === "retained") list.append(el("p","source-alert",`현재 화면은 마지막으로 게시한 자료를 유지합니다. 자료 생성: ${formatDate(latest.generated_at)}. 최근 성공 실행: ${formatDate(status.last_successful_run_at)}.`));
     if (publication === "unavailable") list.append(el("p","source-alert","아직 게시할 수 있는 수집 결과가 없습니다. 이 상태는 ‘보고할 이슈 없음’을 뜻하지 않습니다."));
-    if (integer(status.archived_article_count) && status.archived_article_count > 0) list.append(el("p","source-coverage",`현재 범위 자료 ${status.article_count}건을 표시합니다. 범위에서 제외된 보관 자료 ${status.archived_article_count}건은 현재 집계에 포함하지 않습니다.`));
+    if (raw) {
+      const reasonLabels = {outside_scope:"주제·관심사 범위 밖",outside_content_filter:"공시 유형 등 조건 제외",source_disabled:"출처 비활성·미등록",outside_initial_window:"최초 조회 기간 이전"};
+      const reasons = Object.entries(status.mart_exclusions).filter(([,value]) => value > 0).map(([key,value]) => `${reasonLabels[key] || "기타 기준 제외"} ${value}건`);
+      list.append(el("p","source-coverage",`누적 원자료 ${status.raw_article_count}건 · 원자료 버전 ${status.raw_version_count}개 · 데이터마트 ${status.mart_article_count}건 · 데이터마트 제외 ${status.mart_excluded_count}건${reasons.length ? ` (${reasons.join(" · ")})` : ""}. 제외 자료도 원자료에 남아 있습니다.`));
+      list.append(el("p","source-coverage","출처별 수신·원자료 유효·데이터마트 반영은 각 출처의 최근 응답 항목 수입니다. 새 버전과 중복은 저장 결과이며 누적 원자료의 고유 URL 수와 다를 수 있습니다. 데이터마트 제외 건수는 ‘뉴스 없음’을 뜻하지 않습니다."));
+    } else if (integer(status.archived_article_count) && status.archived_article_count > 0) list.append(el("p","source-coverage",`현재 범위 자료 ${status.article_count}건을 표시합니다. 범위에서 제외된 보관 자료 ${status.archived_article_count}건은 현재 집계에 포함하지 않습니다.`));
     if (interestSkipped) list.append(el("p","source-coverage","활성 관심사가 없어 수집을 생략하고 등록부와 화면 정보를 갱신했습니다. 메인에서 관심사를 등록한 뒤 별도 수집을 요청할 수 있습니다."));
-    else if (!sources.length) list.append(el("p","source-alert","출처별 수집 상태가 제공되지 않았습니다. 배치 실행 기록을 확인하세요."));
+    else if (!sources.length && !rebuilt) list.append(el("p","source-alert","출처별 수집 상태가 제공되지 않았습니다. 배치 실행 기록을 확인하세요."));
     const labels = {success:"수집 성공",not_modified:"변경 없음 · 304",failed:"수집 실패"};
     for (const source of sources) {
       const row = el("article","source-status-item"), heading = el("div","source-status-heading");
       heading.append(el("h3","",source.source_name || source.source_id),el("span",`source-state${source.status === "failed" ? " failed" : ""}`,labels[source.status]));
       row.append(heading,el("p","source-status-meta",`최근 시도 ${formatDate(source.last_attempt_at)} · 최근 성공 ${source.last_success_at ? formatDate(source.last_success_at) : "성공 이력 없음"}`));
+      const sourceRaw = raw && source.raw_saved_count !== undefined;
       const excluded = source.outside_scope_count == null && source.outside_content_filter_count == null ? "—" : (source.outside_scope_count || 0) + (source.outside_content_filter_count || 0);
-      row.append(el("p","source-status-meta",`피드 항목 ${source.fetched_count ?? "—"}건 · 조건 통과 ${source.accepted_count ?? "—"}건 · 조건 제외 ${excluded}건 · 기간 제외 ${source.outside_window_count ?? "—"}건 · 유효성 제외 ${source.rejected_count ?? "—"}건 · 중복 ${source.duplicate_count ?? "—"}건 · 새 버전 ${source.inserted_versions ?? "—"}개`));
+      row.append(el("p","source-status-meta",sourceRaw ? `수신 ${source.fetched_count ?? "—"}건 · 원자료 유효 ${source.raw_saved_count ?? source.accepted_count ?? "—"}건 · 새 버전 ${source.inserted_versions ?? "—"}개 · 중복 ${source.duplicate_count ?? "—"}건 · 유효성 제외 ${source.rejected_count ?? "—"}건` : `피드 항목 ${source.fetched_count ?? "—"}건 · 조건 통과 ${source.accepted_count ?? "—"}건 · 조건 제외 ${excluded}건 · 기간 제외 ${source.outside_window_count ?? "—"}건 · 유효성 제외 ${source.rejected_count ?? "—"}건 · 중복 ${source.duplicate_count ?? "—"}건 · 새 버전 ${source.inserted_versions ?? "—"}개`));
+      if (sourceRaw) row.append(el("p","source-status-meta",`응답 항목 중 데이터마트 반영 ${source.mart_included_count ?? "—"}건 · 데이터마트 제외 ${source.mart_excluded_count ?? "—"}건 · 조회 기준 시점 이전 ${source.outside_window_count ?? "—"}건 (원자료 보관)`));
+      if (raw && !sourceRaw) row.append(el("p","source-coverage","이 출처는 아직 원자료 우선 저장 방식으로 수집하기 전의 기록입니다. 다음 수집에서 갱신합니다."));
       if (source.status === "failed") row.append(el("p","source-error","출처 요청에 실패했습니다. 상세 내용은 해당 배치 실행 로그에서 확인하세요."));
       if (source.status === "not_modified") row.append(el("p","source-coverage","HTTP 304: 출처가 피드 변경 없음으로 응답해 기존 저장 자료를 유지합니다."));
       const range = source.coverage_start || source.coverage_end ? `조회 날짜 범위 ${formatDate(source.coverage_start,false)} ~ ${formatDate(source.coverage_end,false)}. ` : "조회한 날짜 범위 없음. ";
@@ -144,18 +167,18 @@
         const count = el("div","ai-count"); count.append(el("span","",label),el("strong","",typeof value === "number" ? `${value}건` : value)); $("ai-counts").append(count);
       }
       set("ai-last-run",summary.lastAnalysisAt ? `최근 실제 분석 ${formatDate(summary.lastAnalysisAt)} · 한국 시간 기준` : "아직 실제 AI 분석 이력이 없습니다. 준비 상태를 분석 완료로 집계하지 않습니다.");
-      set("connection-status",`${state.status.schedule_enabled ? "매일 11:00 KST 예약" : "수동 수집"} · ${data.auto_analysis_enabled ? "기사 AI 자동 분석 설정" : "AI 수동 보조"}`);
+      set("connection-status",`${state.status.schedule_enabled ? state.status.capture_schema_version === "raw-metadata-v1" ? "RSS 매시간 · 일배치 11:00 KST" : "매일 11:00 KST 예약" : "수동 수집"} · ${data.auto_analysis_enabled ? "기사 AI 자동 분석 설정" : "AI 수동 보조"}`);
       const notes = [];
       if (!data.last_attempt) notes.push("첫 분석 실행 전에는 API 키와 무료 프로젝트 설정 여부를 확인하지 않습니다.");
       if (summary.keyRequiredCount > 0) notes.push("GitHub의 키·무료 프로젝트 설정을 확인하세요. 이 사이트에는 비밀키를 입력하지 않습니다.");
-      if (data.counts.blocked) notes.push("DART 공시는 AI 입력에서 제외하며 목록과 원문 링크만 유지합니다.");
+      if (data.counts.blocked) notes.push("DART 공시는 AI 입력에서 제외합니다. 그 밖의 출처도 분석 지원 여부에 따라 제목·원문 링크만 표시할 수 있습니다.");
       if (data.last_attempt && ["failed","partial_success"].includes(data.last_attempt.status)) notes.push("최근 실행에 실패 항목이 있습니다. 배치 실행 기록을 확인하세요.");
       warning("ai-warning",notes.join(" "));
     } catch {
       set("ai-readiness","상태 확인 불가"); set("ai-summary-note","현재 수집 자료와 일치하는 제목 분석 결과를 확인하지 못했습니다.");
       set("ai-last-run","실제 분석 이력: 확인할 수 없음");
       warning("ai-warning",state.latest.is_demo ? "가상 데모에는 실제 AI 분석 결과를 연결하지 않습니다." : "AI 보조 자료를 불러오지 못했거나 현재 자료와 버전·근거·건수가 일치하지 않습니다. 다시 불러오거나 배치 실행 로그를 확인하세요.");
-      set("connection-status",`${state.status.schedule_enabled ? "매일 11:00 KST 예약" : "수동 수집"} · AI 상태 확인 필요`);
+      set("connection-status",`${state.status.schedule_enabled ? state.status.capture_schema_version === "raw-metadata-v1" ? "RSS 매시간 · 일배치 11:00 KST" : "매일 11:00 KST 예약" : "수동 수집"} · AI 상태 확인 필요`);
     }
   }
   function renderArticle(result) {

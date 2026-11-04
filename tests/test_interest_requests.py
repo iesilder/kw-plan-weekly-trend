@@ -7,7 +7,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from scripts.run_interests import request_identity
+from scripts.run_interests import registry_identity, request_identity, synchronize_registry
 from weekly_trend import interest_requests
 
 NOW = datetime(2026, 11, 4, 4, tzinfo=timezone.utc)
@@ -47,6 +47,44 @@ class RequestEventTests(unittest.TestCase):
             change()
             with self.assertRaises(ValueError):
                 self.submit()
+
+    def test_registration_lifecycle_and_renaming_rebuild_without_authorizing_collection(self):
+        self.event['issue']['title'] = '[관심사] AI 적용 현황'
+        for action in ('opened', 'edited', 'closed', 'reopened'):
+            self.event['action'] = action
+            self.path.write_text(json.dumps(self.event))
+            self.assertEqual(registry_identity(self.env), 42)
+            with self.assertRaises(ValueError):
+                request_identity(self.env)
+        self.event.update(action='edited', changes={'title': {'from': '[관심사] AI 적용 현황'}})
+        self.event['issue']['title'] = '등록 취소'
+        self.path.write_text(json.dumps(self.event))
+        self.assertEqual(registry_identity(self.env), 42)
+        self.event['issue']['user']['login'] = 'stranger'
+        self.path.write_text(json.dumps(self.event))
+        with self.assertRaises(ValueError):
+            registry_identity(self.env)
+
+    def test_registry_change_only_syncs_and_rebuilds_saved_raw(self):
+        calls = []
+        def sync(root, environ, now):
+            calls.append('registry')
+            return {'ok': True}
+        def rebuild(root, now, rebuild_only):
+            self.assertTrue(rebuild_only)
+            calls.append('rebuild')
+            return {'generation_id': 'live-saved-raw'}
+        with patch('weekly_trend.ai.request_once', side_effect=AssertionError('AI forbidden')), \
+             patch('weekly_trend.article_analysis.fetch_article', side_effect=AssertionError('article fetch forbidden')):
+            result = synchronize_registry(self.root, environ={}, registry_sync=sync, rebuilder=rebuild,
+                                          verifier=lambda root: calls.append('verify'))
+        self.assertEqual(calls, ['registry', 'rebuild', 'verify'])
+        self.assertEqual(result['generation_id'], 'live-saved-raw')
+        calls.clear()
+        with self.assertRaises(ValueError):
+            synchronize_registry(self.root, registry_sync=lambda *a, **k: {'ok': False},
+                                 rebuilder=rebuild, verifier=lambda root: calls.append('verify'))
+        self.assertEqual(calls, [])
 
 
 class InterestRequestTests(unittest.TestCase):

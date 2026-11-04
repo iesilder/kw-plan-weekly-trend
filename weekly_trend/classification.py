@@ -126,6 +126,12 @@ def classify_for_source(title, source, companies, topics):
                 "tags": ["실적"], "event_stage": "실적 공시", "classification_rules_version": DART_POLICY_VERSION}
     rules = source.get("_classification_rules")
     scoped_title, scoped_companies = title, companies
+    # Official press releases often omit their issuing institution in the title.
+    # Supply that provenance only for routing; the stored source title stays exact.
+    if (source.get("adapter") == "fsc_html" and
+            source.get("authority_name") == "금융위원회" and
+            urlsplit(source.get("url", "")).hostname == "www.fsc.go.kr"):
+        scoped_title = "금융위원회 " + title
     if source.get("scope") == "company":
         company = next((item for item in companies if item["id"] == source.get("company_id") and item.get("enabled", True)), None)
         if company is None:

@@ -164,3 +164,75 @@ test("source labels remain inert text and management history dialog does not mut
 test("script does nothing on a page without the management reload control",async () => {
   const h = harness({missingPage:true});await h.settle();assert.equal(h.requests.length,0);
 });
+
+function rawFixture() {
+  const data = fixture(),status = data[paths[1]];
+  Object.assign(status,{capture_schema_version:"raw-metadata-v1",execution_mode:"collection",collection_performed:true,source_mode:"rss",interests_only:false,raw_article_count:60,raw_version_count:63,mart_article_count:status.article_count,mart_excluded_count:60-status.article_count,mart_exclusions:{outside_scope:60-status.article_count}});
+  Object.assign(status.sources[0],{fetched_count:20,accepted_count:20,raw_saved_count:20,inserted_versions:3,duplicate_count:17,mart_included_count:0,mart_excluded_count:20,outside_scope_count:20});
+  return data;
+}
+
+test("raw metadata totals stay distinct from dashboard counts and source filtering does not claim missing news",async () => {
+  const data = rawFixture(),h = harness({data});await h.settle();
+  assert.equal(h.$("admin-error").hidden,true);
+  assert.equal(h.$("article-count-label").textContent,"누적 원자료");
+  assert.equal(h.$("article-count").textContent,"60건");
+  assert.equal(h.$("version-count").textContent,"63개");
+  assert.equal(h.$("issue-count").textContent,`${data[paths[0]].candidates.length}건`);
+  assert.match(h.$("source-status-list").textContent,/수신 20건 · 원자료 유효 20건 · 새 버전 3개 · 중복 17건/);
+  assert.match(h.$("source-status-list").textContent,/데이터마트 반영 0건 · 데이터마트 제외 20건/);
+  assert.match(h.$("source-status-list").textContent,/제외 자료도 원자료에 남아/);
+  assert.match(h.$("source-status-list").textContent,/데이터마트 제외 건수는 ‘뉴스 없음’을 뜻하지 않습니다/);
+  assert.doesNotMatch(h.$("source-status-list").textContent,/조건 통과 20건/);
+  assert.match(h.$("notice-description").textContent,/이 수집에서는 AI를 실행하지 않습니다/);
+  assert.deepEqual(h.requests.map(request => request.path),paths);
+});
+
+test("legacy snapshots disclose earlier filtered storage instead of representing it as complete raw data",async () => {
+  const data = fixture(),status = data[paths[1]],h = harness({data});await h.settle();
+  assert.equal(h.$("article-count-label").textContent,"보관 자료 · 이전 구조");
+  assert.equal(h.$("article-count").textContent,`${status.total_article_count}건`);
+  assert.match(h.$("source-status-note").textContent,/이전 구조에서 저장한 자료|마지막 관심사 별도 수집/);
+});
+
+test("offline mart rebuild reports no collection rather than unavailable source results",async () => {
+  const data = rawFixture();Object.assign(data[paths[1]],{execution_mode:"mart_rebuild",collection_performed:false,sources:[]});
+  const h = harness({data});await h.settle();
+  assert.equal(h.$("admin-error").hidden,true);
+  assert.equal(h.$("last-run-label").textContent,"마지막 데이터마트 갱신");
+  assert.equal(h.$("source-status-summary").textContent,"저장 원자료 재분류 · 출처 수집 없음");
+  assert.match(h.$("notice-description").textContent,/출처 수집이나 AI 분석을 실행하지 않습니다/);
+  assert.doesNotMatch(h.$("source-status-list").textContent,/출처별 수집 상태가 제공되지/);
+});
+
+test("inconsistent raw totals or per-source mart results are rejected instead of displaying forged counts",async () => {
+  for (const change of [data => { data[paths[1]].raw_article_count = 1; },data => { data[paths[1]].raw_version_count = 59; },data => { data[paths[1]].mart_excluded_count++; },data => { data[paths[1]].sources[0].mart_excluded_count = 19; },data => { data[paths[1]].sources[0].raw_saved_count = -1; }]) {
+    const data = rawFixture();change(data);const h = harness({data});await h.settle();
+    assert.equal(h.$("admin-error").hidden,false);
+    assert.equal(h.$("article-count").textContent,"—건");
+    assert.equal(h.$("source-status-list").textContent,"");
+  }
+});
+
+test("source inventory keeps daily FSC results visible after RSS collection and offline mart rebuild",async () => {
+  for (const rebuilt of [false,true]) {
+    const data = rawFixture(),status = data[paths[1]];
+    const fsc = {...status.sources[0],source_id:"fsc-press",source_name:"금융위원회 · 보도자료",last_attempt_at:"2026-11-04T02:00:00Z",last_success_at:"2026-11-04T02:00:00Z",raw_saved_count:12,mart_included_count:2,mart_excluded_count:10,fetched_count:12};
+    status.source_inventory = [...copy(status.sources),fsc];
+    if (rebuilt) Object.assign(status,{execution_mode:"mart_rebuild",collection_performed:false,sources:[]});
+    const h = harness({data});await h.settle();
+    assert.equal(h.$("admin-error").hidden,true);
+    assert.match(h.$("source-status-list").textContent,/금융위원회 · 보도자료/);
+    assert.match(h.$("source-status-list").textContent,/최근 시도 2026\.11\.04 · 11:00/);
+    assert.match(h.$("source-status-note").textContent,/마지막 실행에 포함되지 않은 출처도 표시/);
+    assert.match(h.$("source-status-list").textContent,/수신 12건 · 원자료 유효 12건/);
+    if (!rebuilt) assert.match(h.$("source-status-summary").textContent,/출처별 최근 상태/);
+  }
+});
+
+test("invalid inventory data is rejected with the same source validation as current-run data",async () => {
+  const data = rawFixture();data[paths[1]].source_inventory = [{...data[paths[1]].sources[0],raw_saved_count:-1}];
+  const h = harness({data});await h.settle();
+  assert.equal(h.$("admin-error").hidden,false);
+  assert.equal(h.$("source-status-list").textContent,"");
+});

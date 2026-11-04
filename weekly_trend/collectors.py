@@ -326,10 +326,13 @@ class _FSCList(HTMLParser):
         super().__init__(convert_charrefs=True)
         self.stack, self.items = [], []
         self.current = None
+        self.has_list = False
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         classes = set(attrs.get("class", "").split())
+        if "board-list-wrap" in classes:
+            self.has_list = True
         if tag not in {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}:
             self.stack.append((tag, classes))
         inside = any("board-list-wrap" in classes for _, classes in self.stack)
@@ -363,7 +366,20 @@ def _parse_fsc(body, source):
         raise CollectionError("invalid_encoding", "FSC response was not valid UTF-8") from None
     parser = _FSCList()
     parser.feed(text)
-    if not parser.items:
+    # The official list exposes its result count and current/last page. Check
+    # them rather than treating a blocked or redesigned page as an empty feed.
+    text_parser = _PlainText()
+    text_parser.feed(text)
+    page_text = " ".join(" ".join(text_parser.parts).split())
+    page_match = re.search(r"전체\s*([\d,]+)\s*건\s*페이지\s*(\d+)\s*/\s*(\d+)", page_text)
+    if not parser.has_list or not page_match:
+        raise CollectionError("unexpected_html", "Expected FSC listing pagination was not found")
+    total, page, pages = (int(value.replace(",", "")) for value in page_match.groups())
+    if total == 0:
+        if any(entry["href"] for entry in parser.items):
+            raise CollectionError("unexpected_html", "FSC empty listing included article links")
+        return [], page, pages, total
+    if not parser.items or page < 1 or pages < 1 or page > pages:
         raise CollectionError("unexpected_html", "Expected FSC listing was not found")
     records = []
     for entry in parser.items:
@@ -371,14 +387,13 @@ def _parse_fsc(body, source):
         try:
             published_date = datetime.strptime(day, "%Y-%m-%d").date().isoformat()
         except ValueError:
-            published_date = None
+            raise CollectionError("invalid_item", "FSC listing included an invalid publication date") from None
         item = _record(source, entry["title"] or " ".join(entry["title_parts"]), entry["href"],
                        published_date=published_date)
-        if item:
-            records.append(item)
-    if not records:
-        raise CollectionError("no_valid_items", "FSC listing contained no valid metadata items")
-    return records, len(parser.items)
+        if item is None:
+            raise CollectionError("invalid_item", "FSC listing included invalid article metadata")
+        records.append(item)
+    return records, page, pages, total
 
 
 class _DARTList(HTMLParser):
@@ -576,6 +591,53 @@ def _collect_dart_html(source, now, previous):
             "collection_start_date": start, "collection_end_date": end}
 
 
+def _collect_fsc_html(source, now, previous):
+    """Read the official date-filtered press list without article/attachment GETs."""
+    if source["url"] != "https://www.fsc.go.kr/no010101":
+        raise CollectionError("invalid_config", "FSC listing endpoint is invalid")
+    start, end = _dart_window(source, now, previous)
+    start_day = datetime.strptime(start, "%Y%m%d").strftime("%Y-%m-%d")
+    end_day = datetime.strptime(end, "%Y%m%d").strftime("%Y-%m-%d")
+    try:
+        max_pages = int(source.get("max_pages", 10))
+        if not 1 <= max_pages <= 10:
+            raise ValueError("Page limit")
+    except (TypeError, ValueError):
+        raise CollectionError("invalid_config", "FSC page limit must be between one and ten") from None
+    records, seen, previous_total, pages, total = [], set(), None, 0, 0
+    for current in range(1, max_pages + 1):
+        query = {"curPage": current, "srchBeginDt": start_day, "srchEndDt": end_day,
+                 "srchCtgry": "", "srchKey": "sj", "srchText": ""}
+        body, _ = _fetch({**source, "url": source["url"] + "?" + urlencode(query)}, {})
+        if body is None:
+            raise CollectionError("invalid_response", "FSC listing unexpectedly returned no representation")
+        items, page, pages, total = _parse_fsc(body, source)
+        if total and page != current:
+            raise CollectionError("pagination_mismatch", "FSC returned an unexpected page")
+        if previous_total is not None and total != previous_total:
+            raise CollectionError("listing_changed", "FSC listing changed while paging")
+        previous_total = total
+        for item in items:
+            if not start_day <= item["published_date"] <= end_day:
+                raise CollectionError("window_mismatch", "FSC returned an item outside the requested date range")
+            if item["uri"] in seen:
+                raise CollectionError("listing_changed", "FSC listing repeated an article while paging")
+            seen.add(item["uri"])
+            records.append(item)
+        if total == 0 or current >= pages:
+            if len(records) != total:
+                raise CollectionError("incomplete_listing", "FSC listing count did not match its metadata")
+            break
+        if current < max_pages:
+            time.sleep(0.5)
+    truncated = pages > max_pages
+    return {"records": records, "fetched_count": len(records), "etag": None, "last_modified": None,
+            "truncated": truncated, "total_count": total,
+            "collection_start_date": start, "collection_end_date": end,
+            "coverage_note": ("금융위원회 보도자료 목록 페이지 상한에 도달했습니다. 다음 수집 기준시각을 전진시키지 않습니다."
+                              if truncated else "금융위원회 공식 보도자료 목록의 제목·발행일·원문 링크를 저장했습니다. 본문·첨부는 요청하지 않았습니다.")}
+
+
 def collect_source(source, now, previous_state=None):
     """Fetch one approved source; errors return a safe failure result without bodies."""
     previous = previous_state or {}
@@ -599,11 +661,14 @@ def collect_source(source, now, previous_state=None):
             if source.get("adapter") != "dart_html":
                 raise CollectionError("invalid_config", "DART listing adapter is required")
             return {**result, **_collect_dart_html(source, now, previous), "status": "success"}
+        if source.get("adapter") == "fsc_html":
+            if source.get("type") != "html":
+                raise CollectionError("invalid_config", "FSC listing adapter requires HTML type")
+            return {**result, **_collect_fsc_html(source, now, previous), "status": "success"}
         body, validators = _fetch(source, previous)
         if body is None:
             return {**result, **validators, "status": "not_modified"}
-        records, count = (_parse_fsc(body, source) if source.get("adapter") == "fsc_html"
-                          else _parse_feed(body, source))
+        records, count = _parse_feed(body, source)
         return {**result, **validators, "status": "success", "records": records, "fetched_count": count}
     except CollectionError as error:
         return {**result, "error_code": error.code, "error_message": error.message}

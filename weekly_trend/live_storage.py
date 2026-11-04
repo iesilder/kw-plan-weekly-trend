@@ -1,7 +1,7 @@
 """Persistent metadata-only live store, isolated from the authored demo tables."""
 
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 from .storage import connect as connect_demo, digest
 from .classification import classify_for_source, source_policy
@@ -77,6 +77,8 @@ def connect(path):
     columns = {row[1] for row in db.execute("PRAGMA table_info(live_collection_runs)")}
     if "policy_filtered" not in columns:
         db.execute("ALTER TABLE live_collection_runs ADD COLUMN policy_filtered INTEGER NOT NULL DEFAULT 0")
+    if "execution_mode" not in columns:
+        db.execute("ALTER TABLE live_collection_runs ADD COLUMN execution_mode TEXT NOT NULL DEFAULT 'collection'")
     return db
 
 
@@ -133,7 +135,11 @@ def current_records(db, include_inactive=False):
 def counts(db):
     active = db.execute("SELECT COUNT(*) FROM live_articles a JOIN live_article_policy p ON a.article_id=p.article_id WHERE p.active=1").fetchone()[0]
     total = db.execute("SELECT COUNT(*) FROM live_articles").fetchone()[0]
-    return {"article_count": active, "active_article_count": active, "archived_article_count": total - active,
+    exclusions = {row["inactive_reason"]: row["count"] for row in db.execute(
+        "SELECT inactive_reason,COUNT(*) AS count FROM live_article_policy WHERE active=0 GROUP BY inactive_reason")}
+    return {"raw_article_count": total, "raw_version_count": db.execute("SELECT COUNT(*) FROM live_article_versions").fetchone()[0],
+            "mart_article_count": active, "mart_excluded_count": total - active, "mart_exclusions": exclusions,
+            "article_count": active, "active_article_count": active, "archived_article_count": total - active,
             "total_article_count": total,
             "version_count": db.execute("SELECT COUNT(*) FROM live_article_versions v JOIN live_article_policy p ON p.article_id=v.article_id WHERE p.active=1").fetchone()[0],
             "total_version_count": db.execute("SELECT COUNT(*) FROM live_article_versions").fetchone()[0],
@@ -150,9 +156,18 @@ def expected_policies(db, sources, companies, topics):
             continue
         content_filter, version = source_policy(source)
         route = classify_for_source(record["title"], source, companies, topics)
-        rows.append((record["article_id"], int(route is not None), content_filter, version,
-                     None if route else "outside_content_filter" if content_filter == "earnings_only" else "outside_scope",
-                     json_text(route or {})))
+        # The source payload is retained even when its initial publication predates
+        # our agreed first 30-day window. This stable per-URL cutoff never slides
+        # forward, and an actual source update can bring an older URL into scope.
+        known = [datetime.fromisoformat(value) for value in
+                 (record.get("published_at"), record.get("source_updated_at")) if value]
+        initial_start = datetime.fromisoformat(record["first_seen_at"]) - timedelta(days=30)
+        outside_initial = (max(known) < initial_start if known else
+                           bool(record.get("published_date") and record["published_date"] < initial_start.date().isoformat()))
+        reason = ("outside_initial_window" if outside_initial else None if route else
+                  "outside_content_filter" if content_filter == "earnings_only" else "outside_scope")
+        rows.append((record["article_id"], int(route is not None and not outside_initial), content_filter, version,
+                     reason, json_text(route or {})))
     return rows
 
 

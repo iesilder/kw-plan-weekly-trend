@@ -1,8 +1,9 @@
 name: Collect executive interests and Pages
+run-name: ${{ github.event_name == 'issues' && (startsWith(github.event.issue.title, '[관심사]') || startsWith(github.event.changes.title.from, '[관심사]')) && '[관심사 재분류] 등록부와 저장 원자료 반영' || github.event_name == 'issues' && github.event.issue.title || github.event_name == 'push' && 'Website controls deployment' || '[관심사 수집 요청] 수동 실행' }}
 
 on:
   issues:
-    types: [opened]
+    types: [opened, edited, closed, reopened]
   workflow_dispatch:
   push:
     branches: [main]
@@ -15,12 +16,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch' || (github.event.issue.user.login == github.repository_owner && startsWith(github.event.issue.title, '[관심사 수집 요청]'))) && 'weekly-trend-publish' || format('interest-ignored-{0}', github.run_id) }}
+  group: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch' || (github.event.issue.user.login == github.repository_owner && ((github.event.action == 'opened' && startsWith(github.event.issue.title, '[관심사 수집 요청]')) || startsWith(github.event.issue.title, '[관심사]') || startsWith(github.event.changes.title.from, '[관심사]')))) && 'weekly-trend-publish' || format('interest-ignored-{0}', github.run_id) }}
   cancel-in-progress: false
 
 jobs:
   build:
-    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.actor == github.repository_owner) || (github.event_name == 'issues' && github.event.issue.user.login == github.repository_owner && startsWith(github.event.issue.title, '[관심사 수집 요청]')))
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.actor == github.repository_owner) || (github.event_name == 'issues' && github.event.issue.user.login == github.repository_owner && ((github.event.action == 'opened' && startsWith(github.event.issue.title, '[관심사 수집 요청]')) || startsWith(github.event.issue.title, '[관심사]') || startsWith(github.event.changes.title.from, '[관심사]'))))
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
@@ -55,8 +56,13 @@ jobs:
       - name: Prepare interest controls after a website change
         if: github.event_name == 'push'
         run: python scripts/run_interests.py --root . --prepare
+      - name: Reclassify stored raw metadata after an interest registration change
+        if: github.event_name == 'issues' && (startsWith(github.event.issue.title, '[관심사]') || startsWith(github.event.changes.title.from, '[관심사]'))
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/run_interests.py --root . --sync
       - name: Synchronize interests and collect this explicit request
-        if: github.event_name != 'push'
+        if: github.event_name == 'workflow_dispatch' || (github.event_name == 'issues' && github.event.action == 'opened' && startsWith(github.event.issue.title, '[관심사 수집 요청]'))
         id: interests
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -81,7 +87,7 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add config/interests.json data state site/data
           if ! git diff --cached --quiet; then
-            git commit -m 'data: save explicit executive interest collection'
+            git commit -m 'data: save interest registry and published snapshot'
             git push origin HEAD:main
           fi
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
@@ -130,7 +136,7 @@ jobs:
           echo 'Interest request failed. The verified snapshot and failure status were preserved.' >&2
           exit 1
       - name: Complete the successfully published request
-        if: success() && github.event_name == 'issues' && needs.build.outputs.request_failed != 'true'
+        if: success() && github.event_name == 'issues' && github.event.action == 'opened' && startsWith(github.event.issue.title, '[관심사 수집 요청]') && needs.build.outputs.request_failed != 'true'
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ github.token }}

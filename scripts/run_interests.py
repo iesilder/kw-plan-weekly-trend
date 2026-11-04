@@ -12,6 +12,43 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 REPOSITORY = 'iesilder/kw-plan-weekly-trend'
 
 
+def registry_identity(environ):
+    """Authorize owner registrations for offline reclassification only."""
+    if (environ.get('GITHUB_REPOSITORY') != REPOSITORY
+            or environ.get('GITHUB_REF') != 'refs/heads/main'
+            or environ.get('GITHUB_EVENT_NAME') != 'issues'):
+        raise ValueError('Unsupported interest registration event')
+    path = Path(environ['GITHUB_EVENT_PATH'])
+    if path.stat().st_size > 1048576:
+        raise ValueError('Oversized interest registration event')
+    event = json.loads(path.read_text(encoding='utf-8'))
+    issue = event.get('issue', {})
+    number = issue.get('number')
+    old_title = event.get('changes', {}).get('title', {}).get('from', '')
+    if (event.get('action') not in {'opened', 'edited', 'closed', 'reopened'}
+            or event.get('repository', {}).get('full_name') != REPOSITORY
+            or issue.get('user', {}).get('login', '').casefold() != 'iesilder'
+            or 'pull_request' in issue or type(number) is not int or not 1 <= number < 10**19
+            or not (issue.get('title', '').startswith('[관심사]') or old_title.startswith('[관심사]'))
+            or issue.get('html_url') != f'https://github.com/{REPOSITORY}/issues/{number}'):
+        raise ValueError('Unauthorized interest registration event')
+    return number
+
+
+def synchronize_registry(root, environ=None, now=None, registry_sync=None, rebuilder=None, verifier=None):
+    """Use stored raw metadata after a registry change; no source or AI call."""
+    from weekly_trend.interests import sync_from_github
+    from weekly_trend.live_pipeline import run_collection
+    from weekly_trend.pipeline import verify
+    result = (registry_sync or sync_from_github)(root, environ=environ, now=now)
+    if not result.get('ok'):
+        raise ValueError('Interest registry synchronization failed')
+    snapshot = (rebuilder or run_collection)(root, now=now, rebuild_only=True)
+    (verifier or verify)(root)
+    return {'ok': True, 'mode': 'registry_rebuilt', 'registry': result,
+            'generation_id': snapshot['generation_id'], 'request_count': 0}
+
+
 def request_identity(environ):
     if environ.get('GITHUB_REPOSITORY') != REPOSITORY or environ.get('GITHUB_REF') != 'refs/heads/main':
         raise ValueError('Unsupported collection repository or ref')
@@ -49,9 +86,13 @@ def main():
     modes.add_argument('--run', action='store_true')
     modes.add_argument('--prepare', action='store_true')
     modes.add_argument('--check', action='store_true')
+    modes.add_argument('--sync', action='store_true')
     args = parser.parse_args()
     try:
-        if args.run:
+        if args.sync:
+            registry_identity(os.environ)
+            result = synchronize_registry(args.root, environ=os.environ)
+        elif args.run:
             from weekly_trend.interest_requests import run
             request_id, url = request_identity(os.environ)
             result = run(args.root, request_id, url)

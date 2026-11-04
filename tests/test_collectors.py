@@ -24,6 +24,16 @@ FEED = b'''<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><it
 </item></channel></rss>'''
 DART_HTML = {**SOURCE, "type": "dart_html", "adapter": "dart_html", "corp_code": "00111722",
              "company": "Example Securities", "url": "https://dart.fss.or.kr/dsab001/search.ax"}
+FSC_HTML = {**SOURCE, "id": "fsc", "name": "FSC", "type": "html", "adapter": "fsc_html",
+            "url": "https://www.fsc.go.kr/no010101", "allowed_hosts": ["www.fsc.go.kr"]}
+
+
+def fsc_page(page=1, pages=1, total=1, first=1, count=1, day="2026-11-02"):
+    rows = [f'<li><div class="subject"><a href="/no010101/{88000 + index}?curPage={page}">Policy {index}</a></div>'
+            f'<div class="day">{day}</div><div class="info">NEVER RETAIN STAFF</div></li>'
+            for index in range(first, first + count)]
+    return (f'<p>전체 <strong>{total:,}</strong>건 페이지 <strong>{page}</strong>/{pages}</p>'
+            f'<div class="board-list-wrap"><ul>{"".join(rows)}</ul></div>').encode()
 
 
 def dart_page(page=1, pages=1, total=1, first=1, count=1, corp_code="00111722"):
@@ -284,13 +294,12 @@ class CollectorTests(unittest.TestCase):
         self.assertEqual(result["error_code"], "unsupported_encoding")
 
     def test_fsc_only_subject_link_date_no_attachments_or_body(self):
-        source = {**SOURCE, "id": "fsc", "name": "FSC", "type": "html", "adapter": "fsc_html",
-                  "url": "https://www.fsc.go.kr/no010101", "allowed_hosts": ["www.fsc.go.kr"]}
-        body = b'''<a href="https://evil.example">other menu</a><div class="board-list-wrap"><ul><li>
+        source = FSC_HTML
+        body = '''<p>전체1건 페이지1/1</p><a href="https://evil.example">other menu</a><div class="board-list-wrap"><ul><li>
         <div class="inner"><div class="cont"><div class="subject"><a href="/no010101/88054?curPage=1"
         title="Regulatory announcement">Regulatory announcement</a></div><div class="info">staff info</div>
         <div class="file"><div><a href="/file.pdf">attachment text</a></div></div></div>
-        <div class="day">2026-11-02</div></div></li></ul></div>'''
+        <div class="day">2026-11-02</div></div></li></ul></div>'''.encode()
         result, _ = self.collect(body, source)
         self.assertEqual(result["status"], "success")
         record = result["records"][0]
@@ -299,6 +308,49 @@ class CollectorTests(unittest.TestCase):
         self.assertIsNone(record["published_at"])
         self.assertNotIn("staff info", str(result))
         self.assertNotIn("attachment", str(result))
+
+    def test_fsc_pages_and_incremental_date_window(self):
+        previous = {"last_success_at": "2026-11-01T00:00:00+00:00", "etag": '"old"'}
+        with patch("weekly_trend.collectors._fetch", side_effect=[(fsc_page(pages=2, total=11, count=10), {}),
+                (fsc_page(page=2, pages=2, total=11, first=11), {})]) as fetch:
+            result = collect_source(FSC_HTML, NOW, previous)
+        self.assertEqual(result["status"], "success")
+        self.assertEqual(result["fetched_count"], 11)
+        self.assertEqual(result["total_count"], 11)
+        self.assertFalse(result["truncated"])
+        first_query = parse_qs(urlsplit(fetch.call_args_list[0].args[0]["url"]).query)
+        self.assertEqual(first_query["srchBeginDt"], ["2026-10-30"])
+        self.assertEqual(first_query["srchEndDt"], ["2026-11-02"])
+        self.assertEqual(parse_qs(urlsplit(fetch.call_args_list[1].args[0]["url"]).query)["curPage"], ["2"])
+        self.assertEqual(fetch.call_args_list[0].args[1], {})
+        self.assertNotIn("NEVER RETAIN", str(result))
+
+    def test_fsc_partial_pages_do_not_claim_complete_coverage(self):
+        with patch("weekly_trend.collectors._fetch", return_value=(fsc_page(pages=3, total=21, count=10), {})):
+            result = collect_source({**FSC_HTML, "max_pages": 1}, NOW)
+        self.assertEqual(result["status"], "success")
+        self.assertTrue(result["truncated"])
+        self.assertEqual(len(result["records"]), 10)
+
+    def test_fsc_valid_empty_and_broken_listing_are_distinct(self):
+        result, _ = self.collect(fsc_page(total=0, count=0), FSC_HTML)
+        self.assertEqual(result["status"], "success")
+        self.assertEqual(result["records"], [])
+        for body in (b"<html>Service unavailable</html>", fsc_page().replace(b"2026-11-02", b"invalid"),
+                     fsc_page().replace(b"2026-11-02", b"2026-09-01")):
+            result, _ = self.collect(body, FSC_HTML)
+            self.assertEqual(result["status"], "failed")
+            self.assertEqual(result["records"], [])
+
+    def test_fsc_moving_or_repeated_listing_fails_safely(self):
+        for page_two in (fsc_page(page=2, pages=2, total=12, first=11, count=2),
+                         fsc_page(page=2, pages=2, total=11, first=1),
+                         fsc_page(page=1, pages=2, total=11, first=11)):
+            with patch("weekly_trend.collectors._fetch", side_effect=[(fsc_page(pages=2, total=11, count=10), {}),
+                    (page_two, {})]):
+                result = collect_source(FSC_HTML, NOW)
+            self.assertEqual(result["status"], "failed")
+            self.assertEqual(result["records"], [])
 
     def test_timezone_required_and_empty_feed_distinct_from_invalid_page(self):
         self.assertEqual(collect_source(SOURCE, datetime(2026, 11, 2))["error_code"], "invalid_clock")

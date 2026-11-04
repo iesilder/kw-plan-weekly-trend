@@ -88,6 +88,10 @@ class LivePipelineTests(unittest.TestCase):
             for payload in payloads:
                 db.execute("INSERT INTO live_article_policy VALUES(?,?,?,?,?,?)",
                            ("article-" + digest(payload["uri"]), 1, "topics", "legacy-news-v0", None, json_text(route)))
+            for row in db.execute("SELECT source_id,state_json FROM live_source_state").fetchall():
+                state = json.loads(row[1])
+                state.pop("completed_capture_version", None)
+                db.execute("UPDATE live_source_state SET state_json=? WHERE source_id=?", (json.dumps(state), row[0]))
             db.commit()
 
     def test_dart_complete_earnings_form_allowlist_and_non_announcements(self):
@@ -327,7 +331,9 @@ class LivePipelineTests(unittest.TestCase):
         self.assertEqual(result["sources"][0]["outside_scope_count"], 2)
         self.sources([source(scope="general"), self.dart_source(source_id="test-dart")])
         result = self.run_records([record(uri="https://news.example.com/filing", title="분기보고서")])
-        self.assertEqual(result["article_count"], 2)
+        # Distinct sources emitting the same URL do not create a second article;
+        # URL identity and the latest stored metadata determine its mart policy.
+        self.assertEqual(result["total_article_count"], 4)
         self.assertEqual({item["company"] for item in self.latest()["candidates"]}, {"미래에셋증권"})
 
     def test_company_source_issuer_takes_precedence_over_company_in_title(self):
@@ -553,7 +559,7 @@ class LivePipelineTests(unittest.TestCase):
         self.assertEqual((repeated["report_count"], repeated["interests_count"]), (0, 0))
         self.assertTrue(verify(self.root)["ok"])
 
-    def test_rules_edit_reclassifies_on_failure_and_backfills_without_metadata_revision(self):
+    def test_rules_edit_reclassifies_on_failure_without_reopening_capture_or_metadata_revision(self):
         self.sources([source(scope="competitors_and_industry", content_policy_version="news-events-v2")])
         article = record(title="미래에셋증권 합성전환 AI 업무 플랫폼 도입", published_at="2026-10-20T00:00:00Z")
         first = self.run_records([article])
@@ -574,9 +580,9 @@ class LivePipelineTests(unittest.TestCase):
         self.assertEqual(changed["publication_status"], "filtered")
         self.assertFalse(changed["collection_ok"])
         self.assertNotEqual(first["sources"][0]["content_policy_version"], changed["sources"][0]["content_policy_version"])
-        self.assertTrue(changed["sources"][0]["policy_backfill_pending"])
-        self.assertEqual(datetime.fromisoformat(calls[0][0]["collection_start"]), NOW + timedelta(days=1) - timedelta(days=30))
-        self.assertIsNone(calls[0][1]["etag"])
+        self.assertFalse(changed["sources"][0]["policy_backfill_pending"])
+        self.assertEqual(datetime.fromisoformat(calls[0][0]["collection_start"]), NOW - timedelta(hours=48))
+        self.assertEqual(calls[0][1]["etag"], '"v1"')
         self.assertIn("합성분류태그", self.latest()["candidates"][0]["tags"])
         self.assertEqual(self.latest()["candidates"][0]["topic"], "테스트 디지털 주제")
         self.assertEqual(versions, self.rows("SELECT * FROM live_article_versions ORDER BY version_id"))

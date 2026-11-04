@@ -91,6 +91,54 @@ class AITests(unittest.TestCase):
         self.write_detail(detail)
         return candidate
 
+    def add_fsc_news(self):
+        candidate = self.add_news(812)
+        detail = self.detail(candidate)
+        source = next(row for row in read_json(self.root / "config/sources.json")["sources"] if row["adapter"] == "fsc_html")
+        for value in (candidate, detail):
+            value.update(title="토큰증권 시행령 개정안 공개", source_name=source["name"])
+        detail["evidence"][0].update(title=candidate["title"], source_id=source["id"],
+            source_name=source["name"], source_url="https://www.fsc.go.kr/no010101/99999")
+        write_json(self.root / "site/data/latest.json", self.latest)
+        self.write_detail(detail)
+        return candidate
+
+    def test_fsc_title_input_uses_official_provenance_and_preserves_cached_news(self):
+        self.run_good()
+        cached = copy.deepcopy(ai.load_state(self.root)["entries"])
+        fsc = self.add_fsc_news()
+        self.run_good(automatic=True)
+        sent = json.loads(self.calls[-1][0]["input"])["items"]
+        self.assertEqual([item["issue_id"] for item in sent], [fsc["issue_id"]])
+        self.assertEqual(sent[0]["news_metadata"][0]["source"], "금융위원회 · 보도자료")
+        self.assertNotIn("source_url", sent[0]["news_metadata"][0])
+        self.assertTrue(all(ai.load_state(self.root)["entries"].get(key) == value for key, value in cached.items()))
+        self.assertEqual(self.public()["items"][fsc["issue_id"]]["status"], "completed")
+        self.assertTrue(all(self.public()["items"][item["issue_id"]]["reason_code"] == "dart_not_sent" for item in self.dart_candidates))
+        self.assertTrue(ai.check(self.root)["ok"])
+
+    def test_fsc_requires_official_config_and_mixed_dart_stays_excluded(self):
+        fsc = self.add_fsc_news()
+        path = self.root / "config/sources.json"
+        original = read_json(path)
+        for change in ({"url": "https://example.com/no010101"}, {"type": "rss"},
+                       {"authority_name": "다른기관"}, {"allowed_hosts": ["example.com"]}):
+            config = copy.deepcopy(original)
+            next(row for row in config["sources"] if row["adapter"] == "fsc_html").update(change)
+            write_json(path, config)
+            ai.prepare(self.root, now=NOW)
+            self.assertEqual(self.public()["items"][fsc["issue_id"]]["reason_code"], "source_not_eligible")
+        write_json(path, original)
+        detail = self.detail(fsc)
+        dart_evidence = self.detail(self.dart_candidates[0])["evidence"][0]
+        detail["evidence"].append(dart_evidence)
+        fsc["evidence_ids"].append(dart_evidence["evidence_id"])
+        detail["evidence_ids"] = list(fsc["evidence_ids"])
+        self.write_detail(detail)
+        write_json(self.root / "site/data/latest.json", self.latest)
+        ai.prepare(self.root, now=NOW)
+        self.assertEqual(self.public()["items"][fsc["issue_id"]]["reason_code"], "dart_not_sent")
+
     def test_prepare_is_network_free_and_never_claims_dart_analysis(self):
         with patch("weekly_trend.ai.request_once", side_effect=AssertionError("network forbidden")):
             result = ai.prepare(self.root, now=NOW)

@@ -10,6 +10,7 @@ on:
     paths:
       - 'weekly_trend/**'
       - 'scripts/run_ingestion.py'
+      - 'scripts/run_fsc_backfill.py'
       - 'config/sources.json'
       - 'config/pipeline.json'
       - '.github/workflows/rss.yml'
@@ -68,6 +69,13 @@ jobs:
           else
             python scripts/run_ingestion.py --root .
           fi
+      - name: Summarize existing FSC press releases once after enabling the source
+        if: github.event_name == 'push'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          # User-requested migration only; the saved checkpoint prevents repeats.
+          AI_FREE_PROJECT_CONFIRMED: 'true'
+        run: python scripts/run_fsc_backfill.py --root .
       - name: Verify the publishable snapshot
         run: python -m weekly_trend verify --root .
       - name: Persist validated collection and analysis

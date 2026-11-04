@@ -212,6 +212,16 @@ def _date(evidence):
         return None
 
 
+def news_source_supported(source):
+    """Supported public news origins; DART is never an article origin."""
+    if source.get("type") == "rss" and source.get("adapter") in {"einfomax_rss", "newswire_rss"}:
+        return True
+    return (source.get("type") == "html" and source.get("adapter") == "fsc_html" and
+            source.get("url") == "https://www.fsc.go.kr/no010101" and
+            source.get("authority_name") == "금융위원회" and
+            "www.fsc.go.kr" in source.get("allowed_hosts", []))
+
+
 def _inputs(root, latest, details, config):
     sources = {source["id"]: source for source in _read(Path(root) / "config/sources.json")["sources"]}
     topics = [{"id": topic["id"], "name": topic["name"]} for topic in _read(Path(root) / "config/topics.json")["topics"]]
@@ -248,7 +258,7 @@ def _inputs(root, latest, details, config):
                 sorted(evidence_ids) != sorted(candidate.get("evidence_ids", [])) or len(set(evidence_ids)) != len(evidence_ids)):
             item["reason"] = "invalid_factual_metadata"
             continue
-        if all(origin.get("type") == "rss" and origin.get("adapter") in {"einfomax_rss", "newswire_rss"} for origin in origins):
+        if all(news_source_supported(origin) for origin in origins):
             titles = [row.get("title") for row in evidence]
             if (candidate.get("content_filter") != "topics" or any(not _valid_title(title) for title in titles) or
                     candidate.get("title") not in titles):

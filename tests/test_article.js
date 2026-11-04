@@ -138,3 +138,16 @@ test("automatic body analysis preserves pending or failed states without inventi
   for(const flag of [1,0,null,"false",undefined]){const{data,latest}=fixture();data.auto_analysis_enabled=flag;assert.throws(()=>Article.validateSidecar(data,latest));}
   const{data,latest}=fixture();data.auto_analysis_enabled=true;data.items[A].status="failed";data.items[A].reason_code="rate_limited";data.counts.pending=0;data.counts.failed=1;const validated=Article.validateSidecar(data,latest);assert.equal(Article.summary(validated).label,"일부 분석 실패");assert.equal(validated.items[A].result,null);
 });
+
+test("official FSC summaries remain bound to the numeric press release URL and current evidence",()=>{
+  const{data,latest}=fixture();complete(data);
+  const source="금융위원회 · 보도자료",url="https://www.fsc.go.kr/no010101/99999";
+  latest.candidates[0].source_name=source;Object.assign(data.items[A],{source_name:source,source_url:url});
+  const validated=Article.validateSidecar(data,latest);assert.equal(validated.items[A].status,"completed");
+  assert.equal(Article.articleURL(url+"#body",source),url);
+  const detail={evidence:[{evidence_id:E1,source_name:source,source_url:url}]};
+  assert.equal(Article.matchesDetail(validated.items[A],detail),true);
+  detail.evidence[0].source_url=url.replace("99999","99998");assert.equal(Article.matchesDetail(validated.items[A],detail),false);
+  for(const bad of ["https://fsc.go.kr/no010101/99999","https://www.fsc.go.kr/no010101","https://www.fsc.go.kr/no010101/09999",url+"?id=1",url+"/attachment",url.replace("no010101","no010102"),"https://www.fsc.go.kr/comm/getFile?srvcId=BBSTY1&upperNo=99999"]){assert.equal(Article.articleURL(bad,source),null,bad);}
+  assert.equal(Article.articleURL(url,SOURCE),null);
+});

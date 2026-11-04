@@ -188,7 +188,8 @@ def _inputs(root, latest, details, config):
             continue
         row = evidence[0]
         source = sources.get(row.get("source_id"), {})
-        if source.get("enabled") is not True or source.get("type") != "rss" or source.get("adapter") not in {"einfomax_rss", "newswire_rss"}:
+        if (source.get("enabled") is not True or not ai.news_source_supported(source) or
+                source.get("policy_status") != "verified" or source.get("retention") != "metadata_only"):
             continue
         if (not ai.ISSUE_ID.fullmatch(issue_id) or row.get("is_demo") is not False or not ai._valid_title(row.get("title")) or row.get("title") != candidate.get("title") or
                 not ai._date(row) or [row.get("evidence_id")] != candidate.get("evidence_ids")):

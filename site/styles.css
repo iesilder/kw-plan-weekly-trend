@@ -573,7 +573,6 @@ h2{font-size:16px}
 .batch-actions button:disabled{cursor:progress}
 
 /* The main desk holds report content; operational panels live on admin.html. */
-.sidebar{overflow-y:auto;scrollbar-width:thin}
 .management-current{background:var(--selected-background);box-shadow:inset 3px 0 0 var(--light-blue);border-radius:4px;font-weight:650}
 .admin-nav .topic-button{color:var(--text-on-dark)}
 .admin-nav .topic-button:hover{background:var(--selected-background)}
@@ -585,3 +584,35 @@ h2{font-size:16px}
 .mobile-admin{display:none}
 @media(max-width:650px){.admin-masthead{align-items:flex-start;flex-direction:column;gap:14px}.admin-masthead .secondary-button{font-size:10px}.admin-loaded-at{font-size:9px}.admin-nav .topic-button{gap:6px}.mobile-admin{display:inline-block;font-size:9px}}
 @media(max-width:650px){.batch-panel{padding:18px 15px}.batch-head{display:block}.batch-head h2{font-size:17px}.batch-actions{margin-top:12px;gap:10px}.batch-overview{grid-template-columns:1fr;gap:10px;margin-top:14px}.batch-overview-item{padding:12px 13px}.batch-overview-item>strong{font-size:13px}.batch-log-footer{display:block}.batch-log-footer button{margin-top:10px}.batch-table th,.batch-table td{padding:9px 10px}}
+
+/* Fit every sidebar menu item without an independently scrolling navigation. */
+@media(min-width:651px){
+  .sidebar{padding:20px 18px 16px;overflow:visible}
+  .sidebar>*{flex-shrink:0}
+  .sidebar .workspace-label{margin:18px 10px 16px}
+  .sidebar>.nav-caption{margin-bottom:8px}
+  .sidebar .topic-nav{gap:3px}
+  .sidebar .topic-button{min-height:36px;padding:6px 10px}
+  .sidebar-section{margin-top:16px;padding-top:12px}
+  .sidebar-section .nav-caption{margin-bottom:6px}
+  .sidebar .history-link{padding:8px 10px;line-height:1.5}
+  .sidebar-bottom{padding:14px 9px 0}
+}
+@media(min-width:651px) and (max-height:680px){
+  .sidebar{padding:12px 16px 10px}
+  .sidebar .brand{font-size:23px}
+  .sidebar .workspace-label{margin:12px 10px 10px}
+  .sidebar .topic-nav{gap:2px}
+  .sidebar .topic-button{min-height:30px;padding:5px 8px}
+  .sidebar-section{margin-top:10px;padding-top:8px}
+  .sidebar .history-link{padding:5px 10px}
+  .sidebar-bottom{padding-top:10px}
+  .sidebar-bottom p{margin-top:4px}
+}
+@media(min-width:651px) and (max-height:520px){
+  .sidebar{position:absolute;bottom:auto;min-height:100dvh}
+}
+@media(max-width:650px){
+  .topic-nav{flex-wrap:wrap;overflow:visible}
+  .topic-button{white-space:normal;flex:1 1 calc(50% - 3px)}
+}

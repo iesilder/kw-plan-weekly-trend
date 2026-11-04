@@ -1,0 +1,112 @@
+name: Save delivered reports and Pages
+
+# Explicit confirmed public reports only. No collection or AI. Input is JSON, not shell code.
+on:
+  workflow_dispatch:
+    inputs:
+      report_patch:
+        description: 'Paste the report JSON from the website (PUBLIC report text)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: weekly-trend-publish
+  cancel-in-progress: false
+
+jobs:
+  save:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    outputs:
+      data_sha: ${{ steps.persist.outputs.sha }}
+      artifact_name: ${{ steps.base.outputs.artifact_name }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: '3.12'
+      - name: Remember starting revision
+        id: base
+        run: |
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "artifact_name=github-pages-review-${{ github.run_id }}-${{ github.run_attempt }}" >> "$GITHUB_OUTPUT"
+      - name: Verify behavior and existing snapshot
+        run: |
+          python -m unittest discover -s tests -v
+          node --check site/app.js
+          node --check site/review.js
+          node --check site/ai.js
+          node --check site/article.js
+          node --check site/interests.js
+          node --test tests/test_*.js
+          python -m weekly_trend verify --root .
+      - name: Save the submitted review choices
+        env:
+          REPORT_PATCH: ${{ inputs.report_patch }}
+        run: printf '%s' "$REPORT_PATCH" | python scripts/apply_report_history.py --root .
+      - name: Verify saved review choices and unchanged source snapshot
+        run: |
+          python scripts/apply_report_history.py --root . --check
+          python -m weekly_trend verify --root .
+      - name: Persist only the review choices
+        id: persist
+        env:
+          START_SHA: ${{ steps.base.outputs.sha }}
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          if [ "$(git rev-parse origin/main)" != "$START_SHA" ]; then
+            echo 'Main changed during this run. Reload the website before saving again.' >&2
+            exit 1
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/delivered.json site/data/delivered-reports.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'report: save explicitly confirmed delivered history'
+            git push origin HEAD:main
+          fi
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Package the website only
+        uses: actions/upload-pages-artifact@v5.0.0
+        with:
+          name: ${{ steps.base.outputs.artifact_name }}
+          path: site
+
+  deploy:
+    needs: save
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: main
+      - name: Reject obsolete deployment
+        env:
+          DATA_SHA: ${{ needs.save.outputs.data_sha }}
+        run: |
+          if [ "$(git rev-parse HEAD)" != "$DATA_SHA" ]; then
+            echo 'A newer main revision exists. Run the manual workflow again with a current review patch.' >&2
+            exit 1
+          fi
+      - name: Deploy the verified artifact
+        id: deployment
+        uses: actions/deploy-pages@v5.0.1
+        with:
+          artifact_name: ${{ needs.save.outputs.artifact_name }}

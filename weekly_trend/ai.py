@@ -414,7 +414,7 @@ def check(root):
     return {"ok": True, "mode": "verified", "generation_id": actual["generation_id"], "counts": actual["counts"]}
 
 
-def response_schema(batch=None):
+def response_schema():
     item = {"type": "object", "additionalProperties": False,
             "properties": {"issue_id": {"type": "string"}, "suggested_topic_id": {"type": "string", "enum": sorted(TOPICS)},
                            "relevance": {"type": "string", "enum": ["relevant", "uncertain", "out_of_scope"]},
@@ -422,18 +422,13 @@ def response_schema(batch=None):
                            "check_points": {"type": "array", "maxItems": 3, "items": {"type": "string", "maxLength": 150}},
                            "duplicate_issue_ids": {"type": "array", "maxItems": 4, "items": {"type": "string"}}}}
     item["required"] = list(item["properties"])
-    if batch:
-        known = sorted({row["input"]["issue_id"] for row in batch})
-        item["properties"]["issue_id"]["enum"] = known
-        item["properties"]["duplicate_issue_ids"]["items"]["enum"] = known
-        item["properties"]["duplicate_issue_ids"]["maxItems"] = min(4, len(known) - 1)
     return {"type": "object", "additionalProperties": False, "properties": {"items": {"type": "array", "maxItems": 10, "items": item}}, "required": ["items"]}
 
 
 def request_body(batch, topics, config):
     return {"model": config["model"], "store": False, "input": _json({"topics": topics, "items": [item["input"] for item in batch]}),
             "system_instruction": SYSTEM_INSTRUCTION, "generation_config": {"max_output_tokens": config["max_output_tokens"]},
-            "response_format": {"type": "text", "mime_type": "application/json", "schema": response_schema(batch)}}
+            "response_format": {"type": "text", "mime_type": "application/json", "schema": response_schema()}}
 
 
 class _NoRedirect(urllib.request.HTTPRedirectHandler):

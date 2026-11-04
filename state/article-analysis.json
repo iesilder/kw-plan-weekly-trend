@@ -515,14 +515,14 @@
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-03T09:00:27.271398+00:00",
-    "completed_at": "2026-11-03T09:00:27.271398+00:00",
+    "attempted_at": "2026-11-04T03:10:08.445970+00:00",
+    "completed_at": "2026-11-04T03:10:08.445970+00:00",
     "status": "cached",
     "error_code": null,
     "request_count": 0,
     "fetch_count": 0,
     "completed_count": 0,
-    "cached_count": 5,
+    "cached_count": 0,
     "failed_count": 0
   }
 }

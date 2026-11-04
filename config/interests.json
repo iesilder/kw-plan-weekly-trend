@@ -1,4 +1,24 @@
 {
   "schema_version": "1.0",
-  "interests": []
+  "interests": [
+    {
+      "id": "interest-10",
+      "issue_number": 10,
+      "title": "증권사 대내외 AX 수준",
+      "question": "경쟁사는 AI를 업무에 얼마나 적용하고 있는가? 경쟁사는 최근 고객에게 어떤 AI 서비스를 제공하려 하는가?",
+      "keywords": [
+        "AI",
+        "AI 서비스",
+        "AX",
+        "AI 전환"
+      ],
+      "exclude_keywords": [],
+      "topic_id": "digital",
+      "active_from": "2026-11-04",
+      "active_until": null,
+      "updated_at": "2026-11-03T23:48:32Z",
+      "source_url": "https://github.com/iesilder/kw-plan-weekly-trend/issues/10",
+      "enabled": true
+    }
+  ]
 }

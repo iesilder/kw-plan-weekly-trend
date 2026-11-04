@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "requests": {
+    "issue-12": {
+      "request_id": "issue-12",
+      "request_url": "https://github.com/iesilder/kw-plan-weekly-trend/issues/12",
+      "started_at": "2026-11-04T03:10:08.445970+00:00",
+      "completed_at": "2026-11-04T03:10:13.276998+00:00",
+      "status": "success",
+      "stages": {
+        "collection": {
+          "status": "success",
+          "error_code": null
+        },
+        "titles": {
+          "status": "cached",
+          "error_code": null
+        },
+        "articles": {
+          "status": "cached",
+          "error_code": null
+        }
+      },
+      "matched_count": 0
+    }
+  }
+}

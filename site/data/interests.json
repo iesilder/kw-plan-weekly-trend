@@ -1,20 +1,45 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-9fa80b3dce2ab642fe68",
-  "generated_at": "2026-11-04T02:37:08.180622+00:00",
+  "generation_id": "live-6ace6e7cf569be7e452d",
+  "generated_at": "2026-11-04T03:10:08.445970+00:00",
   "registry": {
-    "status": "never_synced",
-    "last_attempt_at": null,
-    "last_success_at": null,
+    "status": "success",
+    "last_attempt_at": "2026-11-04T03:10:08.445970+00:00",
+    "last_success_at": "2026-11-04T03:10:08.445970+00:00",
     "error_code": null
   },
   "last_collection": {
-    "mode": "daily",
-    "started_at": "2026-11-03T23:44:48.965119+00:00",
-    "completed_at": "2026-11-03T23:44:48.965119+00:00",
-    "status": "skipped",
-    "request_url": null,
+    "mode": "manual",
+    "started_at": "2026-11-04T03:10:08.445970+00:00",
+    "completed_at": "2026-11-04T03:10:08.445970+00:00",
+    "status": "success",
+    "request_url": "https://github.com/iesilder/kw-plan-weekly-trend/issues/12",
     "error_code": null
   },
-  "interests": []
+  "interests": [
+    {
+      "id": "interest-10",
+      "issue_number": 10,
+      "title": "증권사 대내외 AX 수준",
+      "question": "경쟁사는 AI를 업무에 얼마나 적용하고 있는가? 경쟁사는 최근 고객에게 어떤 AI 서비스를 제공하려 하는가?",
+      "keywords": [
+        "AI",
+        "AI 서비스",
+        "AX",
+        "AI 전환"
+      ],
+      "exclude_keywords": [],
+      "topic_id": "digital",
+      "active_from": "2026-11-04",
+      "active_until": null,
+      "updated_at": "2026-11-03T23:48:32Z",
+      "source_url": "https://github.com/iesilder/kw-plan-weekly-trend/issues/10",
+      "enabled": true,
+      "state": "active",
+      "last_collected_at": "2026-11-04T03:10:08.445970+00:00",
+      "collection_status": "success",
+      "match_count": 0,
+      "matches": []
+    }
+  ]
 }

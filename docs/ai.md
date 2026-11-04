@@ -9,7 +9,7 @@ AI에는 **기사·보도자료만 전송**합니다. DART는 공시 목록과 �
 1. [Google AI Studio API 키](https://aistudio.google.com/api-keys)에서 API 키를 만듭니다. 약관을 확인하고 해당 프로젝트가 **Free**, **Cloud Billing 미연결**인지 확인합니다. 결제 연결·유료 전환은 하지 않습니다.
 2. 저장소의 **Settings → Secrets and variables → Actions → New repository secret**에서 이름 `GEMINI_API_KEY`, 값에 API 키를 등록합니다. 키를 채팅·코드·JSON·웹 화면에 붙여넣지 않습니다.
 3. [AI 수동 실행 화면](https://github.com/iesilder/kw-plan-weekly-trend/actions/workflows/analysis.yml)의 **Run workflow → main**을 선택합니다. 무료 프로젝트와 공개 데이터 이용조건을 확인했을 때만 `free_project_confirmed`를 체크하고 실행합니다.
-4. 실행 요약과 사이트의 **AI 검토 보조** 상태를 확인합니다. 워크플로의 초록색 표시는 검증·상태 저장·배포 성공입니다. API 키 누락이나 무료 한도 초과로 대기 상태만 저장했을 수도 있으므로 **실제 분석 완료 건수와 마지막 시도 상태**를 함께 확인합니다.
+4. 실행 요약과 사이트의 **관리페이지 → AI 검토 보조** 상태를 확인합니다. 워크플로의 초록색 표시는 검증·상태 저장·배포 성공입니다. API 키 누락이나 무료 한도 초과로 대기 상태만 저장했을 수도 있으므로 **실제 분석 완료 건수와 마지막 시도 상태**를 함께 확인합니다. 기사별 실제 제안과 담당자의 검토·선택은 메인 콘텐츠 상세에서 확인합니다.
 5. [일일 워크플로](https://github.com/iesilder/kw-plan-weekly-trend/actions/workflows/daily.yml)를 처음 한 번 실행해 수집·분석·배포를 확인합니다. 이후 매일 자동 실행하며 동일한 정상 입력의 AI 결과는 재사용합니다. 분석 실패 자료의 명시적 재시도는 기존 수동 워크플로를 사용합니다.
 
 API 키만으로 코드가 결제 연결 여부를 알아낼 수는 없습니다. 무료 여부 확인란은 사용자의 확인 기록이며 과금을 막는 공급자 설정을 대신하지 않습니다. 유료 프로젝트의 키를 사용하지 않아야 합니다.

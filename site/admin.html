@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0B1D39">
+  <meta name="description" content="주간 경쟁사 동향의 배치 실행 기록, 수집 상태, AI 검토 보조와 기사 요약 처리 현황을 확인하는 관리페이지입니다.">
+  <title>관리페이지 · WEEKLY</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="styles.css?v=admin-page-v1">
+  <script src="ai.js?v=phase5-article" defer></script>
+  <script src="article.js?v=phase5-article" defer></script>
+  <script src="batch_runs.js?v=batch-runs-v1" defer></script>
+  <script src="batch_runs_ui.js?v=batch-runs-v1" defer></script>
+  <script src="admin.js?v=admin-page-v1" defer></script>
+</head>
+<body class="admin-page">
+  <a class="skip-link" href="#main">본문 바로가기</a>
+  <aside class="sidebar" aria-label="관리 메뉴">
+    <a class="brand" href="index.html" aria-label="WEEKLY 메인으로"><span class="brand-mark" aria-hidden="true"></span><span>WEEKLY<span class="brand-sub">주간 경쟁사 동향</span></span></a>
+    <div class="workspace-label">STRATEGY DESK <span id="mode-badge">관리</span></div>
+    <p class="nav-caption">운영 관리</p>
+    <nav class="topic-nav admin-nav" aria-label="관리 항목">
+      <a class="topic-button" href="#batch-runs"><span class="nav-glyph" aria-hidden="true">↻</span><span>배치 실행 기록</span></a>
+      <a class="topic-button" href="#ai-assistance"><span class="nav-glyph" aria-hidden="true">✳</span><span>AI 검토 보조</span></a>
+      <a class="topic-button" href="#article-assistance"><span class="nav-glyph" aria-hidden="true">▤</span><span>기사 요약 · 개조식</span></a>
+    </nav>
+    <div class="sidebar-section"><a class="history-link" href="index.html#weekly-review"><span>주간 보고 후보</span><span aria-hidden="true">↗</span></a><p class="nav-caption">업무 기준</p><a class="history-link" href="index.html#executive-interests"><span>경영진 관심사</span><span aria-hidden="true">↗</span></a><button type="button" id="history-open" class="history-link"><span>실제 보고 이력</span><span aria-hidden="true">↗</span></button><a class="history-link management-current" href="admin.html" aria-current="page"><span>관리페이지</span><span aria-hidden="true">↗</span></a></div>
+    <div class="sidebar-bottom"><span class="status-dot" aria-hidden="true"></span><div><strong id="execution-mode">실행 상태 확인 중</strong><p id="connection-status">분석 상태 확인 중</p></div></div>
+  </aside>
+  <main id="main" class="main">
+    <div class="topline"><span>경영기획 / 운영 관리</span><a href="index.html">메인으로 돌아가기 <span aria-hidden="true">↗</span></a></div>
+    <header class="masthead admin-masthead"><div><div class="eyebrow">OPERATIONS</div><h1>관리페이지</h1><p class="intro">배치 실행과 수집·기사 분석 처리 현황을 확인합니다.</p></div><button id="admin-reload" class="secondary-button" type="button">저장 현황 새로고침 ↻</button></header>
+    <p id="admin-loaded-at" class="admin-loaded-at" role="status">저장된 처리 현황을 불러오는 중입니다.</p>
+    <div id="admin-error" class="error-banner" role="alert" hidden></div>
+    <section class="demo-notice" id="mode-notice" aria-label="자료 안내"><span class="demo-icon" aria-hidden="true">i</span><p><strong id="notice-title">자료와 수집 상태를 확인하고 있습니다</strong><span id="notice-description">수집·분석 상태와 등록된 경영진 관심사를 확인하고 있습니다.</span></p><span class="phase-label" id="phase-label">PHASE 04</span></section>
+    <section id="collection-overview" class="overview" aria-label="처리 현황"><div class="metric"><span id="issue-count-label">수집 자료</span><strong id="issue-count">—<small>건</small></strong></div><div class="metric"><span id="article-count-label">현재 범위 자료</span><strong id="article-count">—<small>건</small></strong></div><div class="metric"><span id="version-count-label">현재 범위 자료 버전</span><strong id="version-count">—<small>개</small></strong></div><div class="metric metric-run"><span><span id="last-run-label">마지막 실행</span> <b id="run-count">—회</b></span><strong id="last-run">확인 중</strong><small>한국 시간 기준</small></div></section>
+    <section id="batch-runs" class="batch-panel" aria-labelledby="batch-heading">
+      <div class="batch-head"><div><div class="eyebrow">BATCH ACTIVITY</div><h2 id="batch-heading">배치 실행 기록</h2></div><div class="batch-actions"><button id="batch-refresh" class="secondary-button" type="button">실행 상태 새로고침</button><a class="batch-log-link" href="https://github.com/iesilder/kw-plan-weekly-trend/actions" target="_blank" rel="noopener noreferrer">전체 실행 로그 ↗</a></div></div>
+      <div class="batch-overview" aria-live="polite">
+        <div class="batch-overview-item"><span id="batch-schedule-label">오늘 정기 배치 · 매일 11:00 한국 시간</span><strong id="batch-today-state">확인 중</strong><p id="batch-today-note">GitHub의 실제 예약 실행 기록을 확인합니다.</p></div>
+        <div class="batch-overview-item"><span>최근 수집 워크플로</span><strong id="batch-latest-state">확인 중</strong><p id="batch-latest-note">정기·수동·관심사 실행을 구분합니다.</p></div>
+      </div>
+      <p id="batch-checked" class="batch-checked" role="status">GitHub 실행 기록 확인 중</p>
+      <p id="batch-warning" class="batch-warning" role="status" hidden></p>
+      <details class="batch-log-details" open><summary>최근 30일 실행 이력 <span id="batch-log-count">확인 중</span></summary><div class="batch-table-wrap" tabindex="0" role="region" aria-label="배치 실행 이력 표"><table class="batch-table"><thead><tr><th scope="col">실행 종류</th><th scope="col">시작 · 한국 시간</th><th scope="col">최종 갱신 · 한국 시간</th><th scope="col">실행 결과</th><th scope="col">상세 로그</th></tr></thead><tbody id="batch-log-body"><tr><td colspan="5">실행 이력을 불러오는 중입니다.</td></tr></tbody></table></div><div class="batch-log-footer"><p>결과는 저장·배포를 포함한 전체 워크플로 기준입니다. 기사별 수집·AI 결과는 각 상태와 상세 로그를 확인하세요. 화면만 배포한 실행과 관심사 등록만 한 실행은 제외합니다.</p><button id="batch-download" class="secondary-button" type="button" disabled>실행 로그 내려받기</button></div></details>
+    </section>
+    <details id="source-status-panel" class="source-status-panel" hidden><summary><span>출처별 수집 상태</span><span id="source-status-summary">확인 중</span></summary><p id="source-status-note" class="source-status-note">각 출처의 제공 범위 안에서만 수집합니다. 실패·미분류·필터 제외 내역은 아래 상태에서 확인하세요.</p><div id="source-status-list" class="source-status-list"></div></details>
+    <section id="ai-assistance" class="ai-assistance" aria-labelledby="ai-heading">
+      <div class="ai-summary-head"><div><div class="eyebrow">ANALYSIS ASSIST</div><h2 id="ai-heading">AI 검토 보조 <span id="ai-readiness" class="ai-state-label">확인 중</span></h2></div><div class="ai-entry-links"><a class="secondary-button" href="https://github.com/iesilder/kw-plan-weekly-trend/actions/workflows/analysis.yml" target="_blank" rel="noopener noreferrer">수동 AI 실행 ↗</a><a class="ai-setup-link" href="https://github.com/iesilder/kw-plan-weekly-trend/blob/main/docs/ai.md" target="_blank" rel="noopener noreferrer">설정 방법 ↗</a></div></div>
+      <p id="ai-summary-note" class="ai-summary-note">저장된 분석 상태를 확인하고 있습니다.</p>
+      <p class="ai-summary-note">이 기능은 분석·검토용이며 별도의 모델 학습을 실행하지 않습니다. 무료 Gemini의 입력·출력은 공급자의 제품 개선에 사용될 수 있습니다.</p>
+      <div id="ai-counts" class="ai-counts" aria-label="AI 검토 보조 처리 현황"></div>
+      <p id="ai-last-run" class="ai-last-run">실제 분석 이력 확인 중</p>
+      <p id="ai-warning" class="ai-warning" role="status" hidden></p>
+    </section>
+    <section id="article-assistance" class="ai-assistance article-assistance" aria-labelledby="article-heading">
+      <div class="ai-summary-head"><div><div class="eyebrow">SOURCE BRIEF</div><h2 id="article-heading">기사 요약 · 개조식 <span id="article-readiness" class="ai-state-label">확인 중</span></h2></div></div>
+      <p class="ai-summary-note">확보한 기사 내용을 명사형 개조식으로 정리하고 짧은 참조 문단 발췌를 함께 표시합니다. 진행 단계와 보고 후보 이유는 별도 AI 검토 의견입니다. DART 공시는 AI에 전송하지 않습니다.</p>
+      <div id="article-counts" class="ai-counts" aria-label="기사 본문 요약 처리 현황"></div>
+      <p id="article-last-run" class="ai-last-run">저장된 본문 분석 상태를 확인하고 있습니다.</p>
+      <p id="article-warning" class="ai-warning" role="status" hidden></p>
+    </section>
+    <footer class="page-footer"><span>WEEKLY · 주간 경쟁사 동향</span><span>모든 시각은 한국 시간 기준</span><a href="index.html">주경동 콘텐츠로 돌아가기 ↗</a></footer>
+  </main>
+  <dialog id="history-dialog"><div class="dialog-head"><h2>실제 보고 이력</h2><button type="button" class="icon-button" id="history-close" aria-label="보고 이력 닫기">×</button></div><div class="history-empty"><span class="empty-symbol" aria-hidden="true">▤</span><h3>아직 등록된 보고가 없습니다</h3><p><span id="history-explanation">자료 확인이나 복사는 실제 보고로 기록되지 않습니다.</span><br>실제 전달한 최종 문구와 보고일을 기록하는 기능은 후속 단계에서 연결합니다.</p></div></dialog>
+</body>
+</html>

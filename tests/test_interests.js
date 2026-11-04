@@ -94,7 +94,7 @@ function appHarness() {
   const document={addEventListener(){},getElementById(id){if(!ids.has(id))ids.set(id,new Node(id.includes("filter")||id==="sort-order"?"select":"div"));return ids.get(id);},createElement:tag=>new Node(tag),createTextNode:text=>{const n=new Node("#text");n.textContent=text;return n;},querySelectorAll:selector=>all.filter(node=>selector.startsWith(".")&&node.className.split(" ").includes(selector.slice(1)))};
   const window={addEventListener(){},WeeklyInterests:Interests,WeeklyReview:Review,open:(...args)=>opened.push(args)};
   const context=vm.createContext({window,document,Option:function(label,value){const node=new Node("option",value);node.textContent=label;return node;},Intl,Date,URL,setTimeout:()=>0,clearTimeout(){},fetch:(...args)=>{fetched.push(args);throw new Error("Unexpected network");}});
-  const source=fs.readFileSync(require.resolve("../site/app.js"),"utf8").replace(/  loadData\(\);\s*\}\)\(\);\s*$/, "  window.testApp = {state,interestsState,reviewState,initializeInterests,renderInterests,renderCandidates,renderMode,renderSourceStatus};\n})();");
+  const source=fs.readFileSync(require.resolve("../site/app.js"),"utf8").replace(/  loadData\(\);\s*\}\)\(\);\s*$/, "  window.testApp = {state,interestsState,reviewState,initializeInterests,renderInterests,renderCandidates,renderMode};\n})();");
   vm.runInContext(source,context);
   return {app:window.testApp,$:document.getElementById.bind(document),all,opened,fetched};
 }
@@ -115,12 +115,4 @@ test("real filter/reset handlers restore all articles and stale selections disap
 test("missing interest data renders a clear independent warning and leaves registration and manual request available",() => {
   const {latest}=fixture(),h=appHarness();h.app.state.latest=latest;h.app.reviewState.ready=true;h.app.initializeInterests({error:new Error("missing")});h.app.renderInterests();
   assert.equal(h.app.interestsState.data,null);assert.match(h.$("interests-status").textContent,/0건으로 판단하지 않습니다/);assert.equal(h.$("interest-filter").disabled,true);assert.equal(h.$("interests-collect").disabled,false);assert.equal(h.$("interests-register").href,Interests.registrationURL());assert.equal(h.$("interests-manage").href,Interests.managementURL());assert.equal(h.fetched.length,0);assert.equal(h.app.reviewState.ready,true);
-});
-test("interest-only raw runs are labeled separately and zero active interests mean skipped rather than missing source data",() => {
-  for (const count of [0,1]) {
-    const {latest}=fixture(),h=appHarness();h.app.state.latest=latest;h.app.state.status={schedule_enabled:true,interests_only:true,interests_count:count,sources:[],publication_status:"updated"};h.app.renderMode();h.app.renderSourceStatus();
-    assert.equal(h.$("last-run-label").textContent,"마지막 관심사 별도 수집");assert.match(h.$("notice-description").textContent,/DART 공시는 이번 요청에서 갱신하지 않았습니다/);assert.match(h.$("source-status-note").textContent,/RSS 출처 상태/);
-    if (!count) { assert.equal(h.$("source-status-summary").textContent,"활성 관심사 없어 수집 생략");assert.doesNotMatch(h.$("source-status-list").textContent,/출처별 수집 상태가 제공되지 않았습니다/); }
-    else assert.match(h.$("source-status-summary").textContent,/관심사 RSS/);
-  }
 });

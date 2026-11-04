@@ -103,27 +103,14 @@
     return wrap;
   }
 
-  function metric(id, value, unit) {
-    $(id).replaceChildren(document.createTextNode(String(value)), el("small", "", unit));
-  }
-
   function renderMode() {
     const demo = state.latest.is_demo;
-    const interestOnly = state.status.interests_only === true;
-    const interestSkipped = interestOnly && state.status.interests_count === 0;
     const values = {
-      "mode-badge": demo ? "DEMO" : "PHASE 04",
+      "mode-badge": demo ? "DEMO" : "주경동",
       "nav-caption": demo ? "검토할 이슈" : "수집 주제",
       "all-topic-label": demo ? "전체 이슈" : "전체 자료",
       "page-heading": demo ? "이번 주, 살펴볼 변화" : "이번 주, 보고할 변화",
       "page-intro": demo ? "경쟁사의 움직임을 모으고, 보고할 이유를 확인합니다." : "수집한 자료를 검토하고 주간 보고 후보를 고릅니다.",
-      "notice-title": demo ? "가상 데이터 · 실제 기사/AI 분석 아님" : interestOnly ? "마지막 실행: 관심사 별도 수집" : "공개 자료 수집 · 담당자 검토",
-      "notice-description": demo ? "수집부터 화면까지의 연결을 확인하는 1단계 데모입니다. 모든 회사와 사건은 가상입니다." : interestOnly ? `${interestSkipped ? "활성 관심사가 없어 기사 수집을 생략했습니다." : "관심사에 대한 RSS 기사·보도자료만 별도로 수집을 시도한 실행입니다."} DART 공시는 이번 요청에서 갱신하지 않았습니다. 기존 자료의 발행·수집 시각과 실행 결과를 확인하세요.` : state.status.schedule_enabled === true ? "매일 11:00(한국 시간)에 자료 수집과 기사 AI 분석을 자동 실행하도록 예약했습니다. DART 공시는 목록만 수집하며 AI에 전송하지 않습니다. 실행 결과와 원문을 확인한 뒤 담당자가 채택 여부를 결정합니다." : "수동으로 수집한 자료입니다. AI 제안과 원문을 확인한 뒤 담당자가 채택 여부를 결정합니다. DART 공시는 AI에 전송하지 않습니다.",
-      "phase-label": demo ? "PHASE 01" : "PHASE 04",
-      "issue-count-label": demo ? "검토 후보" : "수집 자료",
-      "article-count-label": demo ? "원자료" : "현재 범위 자료",
-      "version-count-label": demo ? "보존한 자료 버전" : "현재 범위 자료 버전",
-      "last-run-label": demo ? "마지막 데모 실행" : interestOnly ? "마지막 관심사 별도 수집" : "마지막 수집 시도",
       "list-heading": demo ? "보고 후보" : "수집 자료",
       "review-note": demo ? "최종 보고는 담당자가 결정합니다" : "제목 기준 주제 분류 · 원문 확인 필요",
       "list-kind": demo ? "DEMO SCENARIOS" : "COLLECTED SOURCES",
@@ -131,9 +118,8 @@
       "history-explanation": demo ? "데모 초안 생성이나 복사는 실제 보고로 기록되지 않습니다." : "채택·보류·제외 및 복사·내보내기는 실제 보고 완료로 기록되지 않습니다."
     };
     Object.entries(values).forEach(([id, value]) => { $(id).textContent = value; });
-    $("mode-notice").setAttribute("aria-label", demo ? "데모 안내" : "수집 자료 안내");
-    $("execution-mode").textContent = state.status.schedule_enabled === true ? "매일 11:00 자동 실행 예약" : "수동 실행 모드";
-    $("connection-status").textContent = `${state.status.schedule_enabled === true ? "수집·기사 분석 예약 · 한국 시간" : "수동 수집"} · AI 상태 확인 중`;
+    $("execution-mode").textContent = demo ? "가상 자료 검토" : "주경동 콘텐츠 검토";
+    $("connection-status").textContent = demo ? "실제 기사와 분석 결과가 아닌 데모입니다" : "실행·분석 현황은 관리페이지에서 확인";
     $("candidate-list").setAttribute("aria-label", demo ? "보고 후보 목록" : "수집 자료 목록");
     const sort = $("sort-order");
     const previous = sort.value;
@@ -142,14 +128,9 @@
   }
 
   function renderSummary() {
-    const { latest, status } = state;
+    const { latest } = state;
     renderMode();
     Object.keys(topicNames).forEach(id => { $("topic-label-" + id).textContent = topicName(id); });
-    metric("issue-count", latest.candidates.length, "건");
-    metric("article-count", status.article_count ?? "—", "건");
-    metric("version-count", status.version_count ?? "—", "개");
-    $("last-run").textContent = formatDate(status.last_run_at || latest.generated_at, true);
-    $("run-count").textContent = `${status.run_count ?? "—"}회`;
     const week = /^(\d{4})-W(\d{1,2})$/.exec(latest.report_week || "");
     $("week-label").textContent = week ? `${week[1]} / WEEK ${week[2]}` : (latest.is_demo ? "DEMO EDITION" : "WEEKLY SOURCES");
     $("week-number").textContent = week ? week[2] : "—";
@@ -168,46 +149,6 @@
     tagSelect.replaceChildren(new Option("모든 태그", ""));
     [...new Set(latest.candidates.flatMap(recordTags))].sort((a,b) => a.localeCompare(b,"ko")).forEach(tag => tagSelect.add(new Option(tag, tag)));
     if ([...tagSelect.options].some(option => option.value === previousTag)) tagSelect.value = previousTag;
-    renderSourceStatus();
-  }
-
-  function renderSourceStatus() {
-    const panel = $("source-status-panel");
-    const list = $("source-status-list");
-    list.replaceChildren();
-    panel.hidden = state.latest.is_demo;
-    if (panel.hidden) return;
-    const sources = Array.isArray(state.status.sources) ? state.status.sources : [];
-    const failed = sources.filter(source => source.status === "failed").length;
-    const unchanged = sources.filter(source => source.status === "not_modified").length;
-    const success = sources.filter(source => source.status === "success").length;
-    const publication = state.status.publication_status;
-    const interestOnly = state.status.interests_only === true;
-    const interestSkipped = interestOnly && state.status.interests_count === 0;
-    $("source-status-note").textContent = interestOnly ? "마지막 관심사 별도 수집의 RSS 출처 상태입니다. DART는 이번 요청에 포함되지 않으며 기존 자료의 수집 시각을 확인해야 합니다." : "각 출처의 제공 범위 안에서만 수집합니다. 실패·미분류·필터 제외 내역은 아래 상태에서 확인하세요.";
-    $("source-status-summary").textContent = interestSkipped ? "활성 관심사 없어 수집 생략" : `${interestOnly ? "관심사 RSS · " : ""}성공 ${success} · 304 ${unchanged} · 실패 ${failed}${publication === "filtered" ? " · 기존 자료에 변경된 수집 범위 적용" : publication === "retained" ? " · 이전 자료 유지" : publication === "unavailable" ? " · 게시 자료 없음" : ""}`;
-    panel.open = failed > 0 || publication === "unavailable" || publication === "filtered";
-    if (publication === "filtered") list.append(el("p", "source-alert", `수집 실패 · 기존 자료에 변경된 수집 범위 적용. 이번 수집은 성공하지 않았으며, 기존에 보관한 자료에서 현재 범위에 해당하는 항목만 게시했습니다. 새로 수집된 자료가 아닙니다. 최근 성공 실행: ${formatDate(state.status.last_successful_run_at, true)}.`));
-    if (publication === "retained") list.append(el("p", "source-alert", `현재 화면은 마지막으로 게시한 자료를 유지합니다. 현재 자료 생성: ${formatDate(state.latest.generated_at, true)}. 최근 성공 실행: ${formatDate(state.status.last_successful_run_at, true)}.`));
-    if (publication === "unavailable") list.append(el("p", "source-alert", "아직 게시할 수 있는 수집 결과가 없습니다. 아래 실패 내역을 확인해주세요. 이 상태는 ‘보고할 이슈 없음’을 뜻하지 않습니다."));
-    if (Number(state.status.archived_article_count) > 0) list.append(el("p", "source-coverage", `현재 범위 자료 ${state.status.article_count ?? "—"}건을 표시합니다. 범위에서 제외된 보관 자료 ${state.status.archived_article_count}건은 목록과 현재 집계에 포함하지 않습니다.`));
-    if (interestSkipped) list.append(el("p", "source-coverage", "활성 관심사가 없어 수집을 생략하고 등록부와 화면 정보를 갱신했습니다. GitHub에서 관심사를 등록한 뒤 별도 수집을 요청할 수 있습니다."));
-    else if (!sources.length) list.append(el("p", "source-alert", "출처별 수집 상태가 제공되지 않았습니다. 실행 기록을 확인해주세요."));
-    const statusNames = { success: "수집 성공", not_modified: "변경 없음 · 304", failed: "수집 실패" };
-    sources.forEach(source => {
-      const row = el("article", "source-status-item");
-      const heading = el("div", "source-status-heading");
-      heading.append(el("h3", "", source.source_name || source.source_id || "출처 미확인"), el("span", `source-state${source.status === "failed" ? " failed" : ""}`, statusNames[source.status] || "상태 미확인"));
-      const dates = el("p", "source-status-meta", `최근 시도 ${formatDate(source.last_attempt_at, true)} · 최근 성공 ${source.last_success_at ? formatDate(source.last_success_at, true) : "성공 이력 없음"}`);
-      const conditionExcluded = source.outside_scope_count == null && source.outside_content_filter_count == null ? "—" : Number(source.outside_scope_count || 0) + Number(source.outside_content_filter_count || 0);
-      const counts = el("p", "source-status-meta", `피드 항목 ${source.fetched_count ?? "—"}건 · 조건 통과 ${source.accepted_count ?? "—"}건 · 조건 제외 ${conditionExcluded}건 · 기간 제외 ${source.outside_window_count ?? "—"}건 · 유효성 제외 ${source.rejected_count ?? "—"}건 · 중복 ${source.duplicate_count ?? "—"}건 · 새 버전 ${source.inserted_versions ?? "—"}개`);
-      row.append(heading, dates, counts);
-      if (source.status === "failed") row.append(el("p", "source-error", [source.error_code, source.error_message || "자세한 내용은 실행 기록을 확인해주세요."].filter(Boolean).join(" · ")));
-      if (source.status === "not_modified") row.append(el("p", "source-coverage", "HTTP 304: 출처가 피드 변경 없음으로 응답했습니다. 기존에 저장한 자료를 유지합니다."));
-      const range = source.coverage_start || source.coverage_end ? `조회한 날짜 범위 ${formatDate(source.coverage_start)} ~ ${formatDate(source.coverage_end)}. ` : "조회한 날짜 범위 없음. ";
-      row.append(el("p", "source-coverage", range + (source.coverage_note || "피드에서 확인 가능한 항목에 한하며 전체 기간 수집을 보장하지 않습니다.")));
-      list.append(row);
-    });
   }
 
   function visibleCandidates() {
@@ -614,39 +555,6 @@
     } catch(error) { aiState.warning = `${error.message} 수집 자료와 검토 선택 기능은 계속 사용할 수 있습니다.`; }
   }
 
-  function renderAISummary() {
-    const counts = $("ai-counts");
-    counts.replaceChildren();
-    $("ai-warning").textContent = aiState.warning;
-    $("ai-warning").hidden = !aiState.warning;
-    const scheduleText = state.status?.schedule_enabled === true ? "매일 11:00 KST 예약" : "수동 수집";
-    if (!aiState.data) {
-      $("ai-readiness").textContent = aiState.loading ? "확인 중" : "상태 확인 불가";
-      $("ai-summary-note").textContent = aiState.loading ? "저장된 분석 상태를 확인하고 있습니다. 이 화면에서 AI를 호출하지 않습니다." : "유효한 AI 결과를 확인하지 못해 제안을 표시하지 않습니다.";
-      $("ai-last-run").textContent = aiState.loading ? "실제 분석 이력 확인 중" : "실제 분석 이력: 확인할 수 없음";
-      $("connection-status").textContent = `${scheduleText} · AI ${aiState.loading ? "상태 확인 중" : "상태 확인 필요"}`;
-      return;
-    }
-    const data = aiState.data;
-    const status = AI.summary(data);
-    $("ai-readiness").textContent = status.label;
-    $("ai-summary-note").textContent = "기사·보도자료 제목의 관련성을 분석합니다. DART 공시는 AI에 전송하지 않습니다. 본문 개조식 요약은 아래 별도 영역에 표시하며 담당자의 채택·보류·제외와 기존 분류는 자동으로 변경하지 않습니다.";
-    for (const [label,value] of [["분석 가능",data.counts.eligible],["현재 결과",data.counts.completed],["재분석 필요",data.counts.stale],["아직 미분석",data.counts.not_analyzed],["입력 제외",data.counts.blocked],["분석 실패",data.counts.failed],["키·설정 확인 필요",status.keyRequiredCount === null ? "미확인" : status.keyRequiredCount]]) {
-      const count = el("div", "ai-count");
-      count.append(el("span", "", label),el("strong", "", typeof value === "number" ? `${value}건` : value));
-      counts.append(count);
-    }
-    $("ai-last-run").textContent = status.lastAnalysisAt ? `최근 실제 분석 ${formatDate(status.lastAnalysisAt,true)} · 한국 시간 기준` : "아직 실제 AI 분석 이력이 없습니다. 준비 상태를 분석 완료로 집계하지 않습니다.";
-    $("connection-status").textContent = `${scheduleText} · ${data.auto_analysis_enabled ? "기사 AI 자동 분석 설정" : "AI 수동 보조"}`;
-    const notes = [];
-    if (!data.last_attempt) notes.push("첫 분석 실행 전에는 API 키와 무료 프로젝트 설정 여부를 확인하지 않습니다.");
-    if (status.keyRequiredCount > 0) notes.push("GitHub의 키·무료 프로젝트 설정을 확인하세요. 다음 자동 실행 또는 수동 실행에서 다시 분석합니다. 이 사이트에는 비밀키를 입력하지 않습니다.");
-    if (data.counts.blocked) notes.push("DART 공시는 AI 입력에서 제외하며 목록과 원문 링크만 유지합니다. 그 밖의 제외 사유는 자료 상세에서 확인하세요.");
-    if (data.last_attempt && ["failed","partial_success"].includes(data.last_attempt.status)) notes.push("최근 실행에 실패 항목이 있습니다. GitHub 실행 기록을 확인해주세요.");
-    $("ai-warning").textContent = notes.join(" ");
-    $("ai-warning").hidden = !notes.length;
-  }
-
   function initializeArticles(result) {
     articleState.data = null;
     articleState.loading = false;
@@ -656,30 +564,6 @@
       if (!Article || result.error) throw new Error("저장된 기사 본문 요약을 불러오지 못했습니다.");
       articleState.data = Article.validateSidecar(result.value,state.latest);
     } catch(error) { articleState.warning = `${error.message} 제목 분석과 검토 선택은 계속 이용할 수 있습니다.`; }
-  }
-
-  function renderArticleSummary() {
-    const container = $("article-counts");
-    container.replaceChildren();
-    $("article-warning").textContent = articleState.warning;
-    $("article-warning").hidden = !articleState.warning;
-    if (!articleState.data) {
-      $("article-readiness").textContent = articleState.loading ? "확인 중" : "본문 요약 표시 안 함";
-      $("article-last-run").textContent = articleState.loading ? "저장된 본문 분석 상태를 확인하고 있습니다." : "유효한 본문 요약이 없어 결과를 표시하지 않습니다.";
-      return;
-    }
-    const data = articleState.data, summary = Article.summary(data);
-    $("article-readiness").textContent = summary.label;
-    for (const [label,key] of [["기사 대상","eligible"],["현재 요약","completed"],["본문 확보 실패","unavailable"],["미분석","pending"],["재분석 필요","stale"],["분석 실패","failed"]]) {
-      const metric = el("div","ai-count");
-      metric.append(el("span","",label),el("strong","",`${data.counts[key]}건`));
-      container.append(metric);
-    }
-    $("article-last-run").textContent = summary.lastAnalysisAt ? `최근 본문 분석 ${formatDate(summary.lastAnalysisAt,true)} · 한국 시간 기준` : "아직 현재 자료에 대한 본문 분석 완료 이력이 없습니다.";
-    if (data.last_attempt?.error_code || data.counts.unavailable || data.counts.failed) {
-      $("article-warning").textContent = "본문 확보 또는 분석이 끝나지 않은 자료가 있습니다. 자료 상세에서 사유를 확인하세요. 제목 분석과 담당자의 선택은 유지됩니다.";
-      $("article-warning").hidden = false;
-    }
   }
 
   function renderArticleDetail(detail) {
@@ -1058,16 +942,13 @@
     reviewState.weeklyRequest++;
     reviewState.detailCache.clear();
     aiState.data = null; aiState.loading = true; aiState.warning = "";
-    renderAISummary();
     articleState.data = null; articleState.loading = true; articleState.warning = "";
-    renderArticleSummary();
     interestsState.published = null; interestsState.loading = true; interestsState.publishedWarning = "";
     rebuildInterestView(); renderInterests();
     void refreshLiveInterests({force:forceRegistry});
     renderReviewSummary();
     renderWeekly();
     $("error-banner").hidden = true;
-    $("source-status-panel").hidden = true;
     $("candidate-list").setAttribute("aria-busy", "true");
     $("candidate-list").replaceChildren(emptyList("자료를 불러오고 있습니다", "새로운 목록과 상세 자료를 확인합니다."));
     $("detail-panel").setAttribute("aria-busy", "true");
@@ -1096,18 +977,16 @@
       rebuildInterestView(); renderInterests();
       initializeReviews(reviewsResult);
       renderSummary();
-      renderAISummary();
-      renderArticleSummary();
       renderCandidates();
       renderWeekly();
       aiResult.then(result => {
         if (loadRequest !== state.loadRequest || !state.latest) return;
-        initializeAI(result); renderAISummary();
+        initializeAI(result);
         if (state.detail) renderDetail(state.detail);
       });
       articleResult.then(result => {
         if (loadRequest !== state.loadRequest || !state.latest) return;
-        initializeArticles(result); renderArticleSummary();
+        initializeArticles(result);
         if (state.detail) renderDetail(state.detail);
       });
       interestsResult.then(result => {
@@ -1127,8 +1006,8 @@
           }
           const unavailable = status.publication_status === "unavailable";
           const filtered = status.publication_status === "filtered";
-          $("candidate-list").replaceChildren(emptyList(filtered ? "변경된 수집 범위에 맞는 기존 자료가 없습니다" : unavailable ? "게시 가능한 수집 결과가 없습니다" : "수집 조건을 통과한 자료가 없습니다", filtered ? "이번 수집은 실패했습니다. 출처별 수집 상태와 실행 기록을 확인해주세요." : unavailable ? "출처별 수집 상태와 실행 기록을 확인해주세요." : "현재 피드 범위와 회사·주제 조건에 해당하는 자료가 없습니다. 출처별 상태를 확인해주세요."));
-          $("detail-panel").replaceChildren(emptyList("분석 결과가 아닙니다", "빈 수집 목록은 ‘보고할 이슈 없음’을 의미하지 않습니다. 출처별 수집 상태를 확인해주세요."));
+          $("candidate-list").replaceChildren(emptyList(filtered ? "변경된 수집 범위에 맞는 기존 자료가 없습니다" : unavailable ? "게시 가능한 수집 결과가 없습니다" : "수집 조건을 통과한 자료가 없습니다", filtered ? "이번 수집은 실패했습니다. 관리페이지에서 출처별 수집 상태와 실행 기록을 확인해주세요." : unavailable ? "관리페이지에서 출처별 수집 상태와 실행 기록을 확인해주세요." : "현재 피드 범위와 회사·주제 조건에 해당하는 자료가 없습니다. 관리페이지에서 출처별 상태를 확인해주세요."));
+          $("detail-panel").replaceChildren(emptyList("분석 결과가 아닙니다", "빈 수집 목록은 ‘보고할 이슈 없음’을 의미하지 않습니다. 관리페이지에서 출처별 수집 상태를 확인해주세요."));
         }
       }
     } catch (error) {
@@ -1139,19 +1018,12 @@
       reviewState.problem = "자료 갱신에 실패했습니다. 선택 이력과 주간 목록을 확인하려면 다시 불러오세요.";
       renderReviewSummary(); renderWeekly();
       aiState.data = null; aiState.loading = false; aiState.warning = "수집 자료를 불러오지 못해 AI 결과의 대상과 버전을 확인할 수 없습니다.";
-      renderAISummary();
       articleState.data = null; articleState.loading = false; articleState.warning = "수집 자료를 불러오지 못해 기사 본문 요약의 근거를 확인할 수 없습니다.";
-      renderArticleSummary();
       interestsState.published = null; interestsState.loading = false; interestsState.publishedWarning = "기사 자료를 불러오지 못해 게시된 관심사 수집 결과와 관련 기사의 버전을 확인할 수 없습니다. 등록 목록은 별도로 확인합니다.";
       rebuildInterestView(); renderInterests();
-      metric("issue-count", "—", "건");
-      metric("article-count", "—", "건");
-      metric("version-count", "—", "개");
-      $("last-run").textContent = "확인 불가";
-      $("run-count").textContent = "—회";
       $("visible-count").textContent = "불러오기 실패";
-      $("candidate-list").replaceChildren(emptyList("자료를 불러오지 못했습니다", "실행 기록에서 수집·생성·배포 상태를 확인해주세요."));
-      $("detail-panel").replaceChildren(emptyList("데이터 확인이 필요합니다", "자료를 다시 불러오거나 GitHub Actions 실행 기록을 확인해주세요."));
+      $("candidate-list").replaceChildren(emptyList("자료를 불러오지 못했습니다", "관리페이지에서 수집·생성·배포 상태를 확인해주세요."));
+      $("detail-panel").replaceChildren(emptyList("데이터 확인이 필요합니다", "자료를 다시 불러오거나 관리페이지의 실행 기록을 확인해주세요."));
       $("detail-panel").setAttribute("aria-busy", "false");
       showError(error.message);
     } finally {

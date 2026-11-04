@@ -9,7 +9,7 @@
     risk: "정책·인허가·리스크"
   };
   const $ = id => document.getElementById(id);
-  const state = { latest: null, status: null, topic: "", selected: null, detail: null, request: 0, loadRequest: 0 };
+  const state = { latest: null, status: null, topic: "", selected: null, detail: null, request: 0, loadRequest: 0, selectionPaused: null, viewRevision: 0 };
   const Review = window.WeeklyReview;
   const AI = window.WeeklyAI;
   const Article = window.WeeklyArticle;
@@ -21,6 +21,7 @@
   const aiState = {data:null,loading:true,warning:""};
   const reviewState = { canonical: null, draft: null, ready: false, problem: "", storageWarning: "", localInvalid: false, duplicates: {}, detailCache: new Map(), weeklyRequest: 0, weeklyRecords: [], weeklyRange: null, memoryMode: null, unsavedStorage: false };
   let toastTimer;
+  let freshnessSequence = 0;
 
   function el(tag, className, text) {
     const node = document.createElement(tag);
@@ -78,11 +79,23 @@
     } catch { return null; }
   }
 
-  async function getJSON(path) {
-    const response = await fetch(path, { cache: "no-store" });
-    if (!response.ok) throw new Error(`자료 요청 실패 (${response.status})`);
-    try { return await response.json(); }
-    catch { throw new Error("마트 파일을 읽을 수 없습니다. JSON 형식을 확인해주세요."); }
+  function freshToken() { return `${Date.now()}-${++freshnessSequence}`; }
+
+  async function getJSON(path, fresh = null) {
+    const url = fresh ? `${path}${path.includes("?") ? "&" : "?"}refresh=${encodeURIComponent(fresh)}` : path;
+    const controller = typeof AbortController === "function" ? new AbortController() : null;
+    let timer;
+    const timeout = new Promise((_,reject) => { timer = setTimeout(() => {
+      controller?.abort(); reject(new Error("자료 확인 시간이 초과되었습니다. 다시 불러와 주세요."));
+    },15000); });
+    const request = (async () => {
+      const response = await fetch(url, {cache:"no-store",...(controller ? {signal:controller.signal} : {})});
+      if (!response.ok) throw new Error(`자료 요청 실패 (${response.status})`);
+      try { return await response.json(); }
+      catch { throw new Error("마트 파일을 읽을 수 없습니다. JSON 형식을 확인해주세요."); }
+    })();
+    try { return await Promise.race([request,timeout]); }
+    finally { clearTimeout(timer); }
   }
 
   function showError(message) {
@@ -220,7 +233,7 @@
       button.addEventListener("click", () => selectIssue(item));
       list.append(button);
     });
-    if (!items.some(item => item.issue_id === state.selected)) selectIssue(items[0]);
+    if (!state.selectionPaused && !items.some(item => item.issue_id === state.selected)) selectIssue(items[0]);
   }
 
   function detailSection(number, title) {
@@ -296,8 +309,39 @@
     panel.append(evidenceSection, actions);
   }
 
-  async function selectIssue(item) {
+  function captureView() {
+    return {revision:state.viewRevision,topic:state.topic,values:Object.fromEntries(["search","company-filter","tag-filter","interest-filter","review-filter","sort-order"].map(id => [id,{value:$(id).value,label:$(id).options ? [...$(id).options].find(option => option.value === $(id).value)?.textContent : ""}]))};
+  }
+
+  function restoreView(view) {
+    state.topic = view.topic;
+    for (const [id,saved] of Object.entries(view.values)) {
+      const control = $(id);
+      if (control.options && saved.value && ![...control.options].some(option => option.value === saved.value)) control.add(new Option(saved.label || saved.value,saved.value));
+      control.value = saved.value;
+    }
+    interestsState.filter = view.values["interest-filter"].value;
+  }
+
+  function changeView() { state.viewRevision++; state.selectionPaused = null; }
+
+  function detailFailure(item, message) {
+    const panel = $("detail-panel");
+    panel.replaceChildren(emptyList("상세를 표시할 수 없습니다",message));
+    const retry = el("button","secondary-button detail-retry","목록·상세 다시 불러오기");
+    retry.type = "button";
+    retry.addEventListener("click",() => {
+      const current = state.latest?.candidates.find(candidate => candidate.issue_id === item.issue_id);
+      if (!current) { void loadData(); return; }
+      reviewState.detailCache.delete(`${state.latest.generation_id}:${current.issue_id}`);
+      void selectIssue(current);
+    });
+    panel.append(retry);
+  }
+
+  async function selectIssue(item, {allowRecovery = true} = {}) {
     if (!state.latest || !state.latest.candidates.some(candidate => candidate === item)) return;
+    if (allowRecovery) state.selectionPaused = null;
     const request = ++state.request;
     state.selected = item.issue_id;
     state.detail = null;
@@ -313,14 +357,18 @@
       if (typeof item.detail_path !== "string" || !/^data\/issues\/[A-Za-z0-9_-]+\.json$/.test(item.detail_path)) throw new Error("상세 경로가 올바르지 않습니다.");
       const detail = await getIssueDetail(item);
       if (request !== state.request) return;
-      if (detail.is_demo !== state.latest.is_demo || detail.issue_id !== item.issue_id || detail.generation_id !== state.latest.generation_id) throw new Error("목록과 상세의 생성 버전이 다릅니다. 자료를 다시 불러와 주세요.");
+      if (detail.is_demo !== state.latest.is_demo || detail.issue_id !== item.issue_id || detail.generation_id !== state.latest.generation_id) throw detailMismatch();
       if (!Array.isArray(detail.bullets) || !Array.isArray(detail.evidence)) throw new Error("상세 자료의 형식이 올바르지 않습니다.");
       if (!detail.is_demo && (detail.analysis_status !== "pending_ai" || detail.bullets.length !== 0 || detail.evidence.some(evidence => evidence.content_level !== "metadata_only"))) throw new Error("수집 자료의 분석 상태 또는 공개 저장 범위가 예상과 다릅니다. 실행 기록을 확인해주세요.");
       state.detail = detail;
       renderDetail(detail);
     } catch (error) {
       if (request !== state.request) return;
-      panel.replaceChildren(emptyList("상세를 표시할 수 없습니다", error.message));
+      if (error.code === "detail_mismatch" && allowRecovery) {
+        await loadData({detailRecovery:{issueId:item.issue_id,originRequest:request,view:captureView()}});
+        return;
+      }
+      detailFailure(item,error.message);
     } finally {
       if (request === state.request) panel.setAttribute("aria-busy", "false");
     }
@@ -400,6 +448,7 @@
   }
 
   function ensureRegistryFreshness() {
+    if (state.selectionPaused === state.loadRequest) return;
     if (registryState.live && interestsState.published?.registry.last_success_at && Date.parse(interestsState.published.registry.last_success_at) > Date.parse(registryState.live.fetched_at) && registryState.freshnessLoad !== state.loadRequest) {
       registryState.freshnessLoad = state.loadRequest;
       void refreshLiveInterests({force:true});
@@ -532,7 +581,7 @@
         const filter = el("button","secondary-button interest-filter-button",!complete && !item.match_count ? "연결 기사 보기" : `관련 기사 보기 (${item.match_count})`);
         filter.type = "button"; filter.dataset.interest = item.id;
         filter.setAttribute("aria-pressed",String(previous === item.id));
-        filter.addEventListener("click",() => { select.value = item.id; interestsState.filter = item.id; renderCandidates(); $("list-heading").scrollIntoView({behavior:"smooth",block:"start"}); });
+        filter.addEventListener("click",() => { changeView(); select.value = item.id; interestsState.filter = item.id; renderCandidates(); $("list-heading").scrollIntoView({behavior:"smooth",block:"start"}); });
         actions.append(filter);
       }
       card.append(actions);
@@ -701,7 +750,7 @@
       button.disabled = !reviewState.ready;
       button.append(el("span", "", label), el("strong", "", count));
       button.setAttribute("aria-label", `${label} ${count}건 보기`);
-      button.addEventListener("click", () => { $("review-filter").value = status; renderCandidates(); $("list-heading").scrollIntoView({behavior:"smooth", block:"start"}); });
+      button.addEventListener("click", () => { changeView(); $("review-filter").value = status; renderCandidates(); $("list-heading").scrollIntoView({behavior:"smooth", block:"start"}); });
       counters.append(button);
     }
     const count = reviewState.ready ? Object.keys(reviewState.draft.changes).length : 0;
@@ -781,13 +830,25 @@
     const generation = state.latest.generation_id;
     const key = `${generation}:${item.issue_id}`;
     if (reviewState.detailCache.has(key)) return reviewState.detailCache.get(key);
-    const promise = getJSON(item.detail_path).then(detail => {
-      if (detail.issue_id !== item.issue_id || detail.generation_id !== generation || detail.is_demo !== item.is_demo || !Array.isArray(detail.evidence)) throw new Error("목록과 상세의 생성 버전이 다릅니다. 자료를 다시 불러와 주세요.");
+    const path = `${item.detail_path}?generation=${encodeURIComponent(generation)}`;
+    const validate = detail => {
+      if (detail.issue_id !== item.issue_id || detail.generation_id !== generation || detail.is_demo !== item.is_demo) throw detailMismatch();
+      if (!Array.isArray(detail.evidence)) throw new Error("상세 근거의 형식이 올바르지 않습니다.");
       if (!detail.is_demo && detail.evidence.some(record => record.content_level !== "metadata_only")) throw new Error("공개 저장 범위를 확인할 수 없습니다.");
       return detail;
-    }).catch(error => { reviewState.detailCache.delete(key); throw error; });
+    };
+    const promise = getJSON(path).then(validate).catch(async error => {
+      if (error.code !== "detail_mismatch") throw error;
+      return validate(await getJSON(path,freshToken()));
+    }).catch(error => { if (reviewState.detailCache.get(key) === promise) reviewState.detailCache.delete(key); throw error; });
     reviewState.detailCache.set(key, promise);
     return promise;
+  }
+
+  function detailMismatch() {
+    const error = new Error("배포 중 목록과 상세의 버전이 달라졌습니다. 최신 자료로 다시 확인해 주세요.");
+    error.code = "detail_mismatch";
+    return error;
   }
 
   function setWeekRange(range) {
@@ -931,8 +992,12 @@
     }
   }
 
-  async function loadData({forceRegistry = false} = {}) {
+  async function loadData({forceRegistry = false, detailRecovery = null} = {}) {
+    if (detailRecovery && detailRecovery.originRequest !== state.request) return;
     const loadRequest = ++state.loadRequest;
+    state.selectionPaused = detailRecovery ? loadRequest : null;
+    const fresh = detailRecovery ? freshToken() : null;
+    let keepSelectionPaused = false;
     state.request++;
     state.selected = null;
     state.detail = null;
@@ -945,7 +1010,7 @@
     articleState.data = null; articleState.loading = true; articleState.warning = "";
     interestsState.published = null; interestsState.loading = true; interestsState.publishedWarning = "";
     rebuildInterestView(); renderInterests();
-    void refreshLiveInterests({force:forceRegistry});
+    if (!detailRecovery) void refreshLiveInterests({force:forceRegistry});
     renderReviewSummary();
     renderWeekly();
     $("error-banner").hidden = true;
@@ -955,11 +1020,11 @@
     $("detail-panel").replaceChildren(emptyList("자료를 갱신하고 있습니다", "이전 선택을 정리하고 최신 마트를 확인합니다."));
     $("visible-count").textContent = "불러오는 중";
     $("reload-data").disabled = true;
-    const aiResult = getJSON("data/ai-analysis.json").then(value => ({value})).catch(error => ({error}));
-    const articleResult = getJSON("data/article-analysis.json").then(value => ({value})).catch(error => ({error}));
-    const interestsResult = getJSON("data/interests.json").then(value => ({value})).catch(error => ({error}));
+    const aiResult = getJSON("data/ai-analysis.json",fresh).then(value => ({value})).catch(error => ({error}));
+    const articleResult = getJSON("data/article-analysis.json",fresh).then(value => ({value})).catch(error => ({error}));
+    const interestsResult = getJSON("data/interests.json",fresh).then(value => ({value})).catch(error => ({error}));
     try {
-      const [latest, status, history, reviewsResult] = await Promise.all([getJSON("data/latest.json"), getJSON("data/status.json"), getJSON("data/report-history.json"), getJSON("data/reviews.json").then(value => ({value})).catch(error => ({error}))]);
+      const [latest, status, history, reviewsResult] = await Promise.all([getJSON("data/latest.json",fresh), getJSON("data/status.json",fresh), getJSON("data/report-history.json",fresh), getJSON("data/reviews.json",fresh).then(value => ({value})).catch(error => ({error}))]);
       if (loadRequest !== state.loadRequest) return;
       if (typeof latest.is_demo !== "boolean" || status.is_demo !== latest.is_demo || history.is_demo !== latest.is_demo) throw new Error("목록·상태·보고 이력의 자료 모드가 일치하지 않습니다.");
       if (!Array.isArray(latest.candidates) || !latest.generation_id || !Array.isArray(history.reports)) throw new Error("마트의 필수 항목이 없거나 형식이 올바르지 않습니다.");
@@ -969,31 +1034,57 @@
       if (!latest.candidates.every(item => typeof item.issue_id === "string" && typeof item.title === "string" && typeof item.company === "string" && Object.hasOwn(topicNames, item.topic_id) && Array.isArray(item.bullets))) throw new Error("자료 목록의 형식이 올바르지 않습니다.");
       if (!latest.is_demo && (status.ai_enabled !== false || latest.candidates.some(item => item.analysis_status !== "pending_ai" || item.priority !== "unranked" || item.bullets.length !== 0))) throw new Error("원자료 수집 상태와 별도 AI 분석 결과가 혼합되어 있습니다. 생성 상태를 확인해주세요.");
       if (typeof status.schedule_enabled !== "boolean" || (status.schedule_enabled && (!["daily_1100_kst", "daily_0800_kst"].includes(status.planned_collection_frequency) || status.timezone !== "Asia/Seoul"))) throw new Error("자동 수집 일정과 상태 정보가 일치하지 않습니다.");
+      let recoveredSidecars = null;
+      let recoveredView = null;
+      let viewChanged = false;
+      if (detailRecovery) {
+        recoveredSidecars = await Promise.all([aiResult,articleResult,interestsResult]);
+        // The public registry refresh stays independent; the matching published sidecar is enough.
+        if (loadRequest !== state.loadRequest) return;
+        viewChanged = state.viewRevision !== detailRecovery.view.revision;
+        recoveredView = viewChanged ? captureView() : detailRecovery.view;
+        state.selectionPaused = loadRequest;
+      }
       state.request++;
-      state.selected = null;
+      state.selected = detailRecovery?.issueId || null;
       state.detail = null;
       state.latest = latest;
       state.status = status;
       rebuildInterestView(); renderInterests();
       initializeReviews(reviewsResult);
       renderSummary();
+      if (detailRecovery) {
+        initializeAI(recoveredSidecars[0]); initializeArticles(recoveredSidecars[1]); initializeInterests(recoveredSidecars[2]); renderInterests();
+        restoreView(recoveredView);
+      }
       renderCandidates();
       renderWeekly();
-      aiResult.then(result => {
+      if (!detailRecovery) aiResult.then(result => {
         if (loadRequest !== state.loadRequest || !state.latest) return;
         initializeAI(result);
         if (state.detail) renderDetail(state.detail);
       });
-      articleResult.then(result => {
+      if (!detailRecovery) articleResult.then(result => {
         if (loadRequest !== state.loadRequest || !state.latest) return;
         initializeArticles(result);
         if (state.detail) renderDetail(state.detail);
       });
-      interestsResult.then(result => {
+      if (!detailRecovery) interestsResult.then(result => {
         if (loadRequest !== state.loadRequest || !state.latest) return;
         initializeInterests(result); renderInterests();
         if (state.latest.candidates.length) renderCandidates();
       });
+      if (detailRecovery) {
+        if (viewChanged) { state.selectionPaused = null; state.selected = null; renderCandidates(); return; }
+        const selected = visibleCandidates().find(item => item.issue_id === detailRecovery.issueId);
+        if (selected) await selectIssue(selected,{allowRecovery:false});
+        else {
+          state.selected = null; state.detail = null;
+          keepSelectionPaused = true;
+          $("detail-panel").replaceChildren(emptyList("자료 목록이 갱신되었습니다","선택한 기사가 최신 목록 또는 현재 필터에 없어 다른 기사를 자동으로 열지 않았습니다. 필터와 검토 선택은 유지했습니다."));
+        }
+        return;
+      }
       if (!latest.candidates.length) {
         if (latest.is_demo) {
           $("candidate-list").replaceChildren(emptyList("데모 후보가 생성되지 않았습니다", "GitHub Actions의 실행 결과를 확인해주세요."));
@@ -1028,6 +1119,7 @@
       showError(error.message);
     } finally {
       if (loadRequest === state.loadRequest) {
+        if (!keepSelectionPaused && state.selectionPaused === loadRequest) state.selectionPaused = null;
         $("candidate-list").setAttribute("aria-busy", "false");
         $("reload-data").disabled = false;
       }
@@ -1035,16 +1127,18 @@
   }
 
   document.querySelectorAll(".topic-button").forEach(button => button.addEventListener("click", () => {
+    changeView();
     state.topic = button.dataset.topic;
     if (state.latest) renderCandidates();
   }));
-  $("search").addEventListener("input", renderCandidates);
-  $("company-filter").addEventListener("change", renderCandidates);
-  $("tag-filter").addEventListener("change", renderCandidates);
-  $("interest-filter").addEventListener("change",() => { interestsState.filter = $("interest-filter").value; renderCandidates(); });
-  $("sort-order").addEventListener("change", renderCandidates);
-  $("review-filter").addEventListener("change", renderCandidates);
+  $("search").addEventListener("input",() => { changeView(); renderCandidates(); });
+  $("company-filter").addEventListener("change",() => { changeView(); renderCandidates(); });
+  $("tag-filter").addEventListener("change",() => { changeView(); renderCandidates(); });
+  $("interest-filter").addEventListener("change",() => { changeView(); interestsState.filter = $("interest-filter").value; renderCandidates(); });
+  $("sort-order").addEventListener("change",() => { changeView(); renderCandidates(); });
+  $("review-filter").addEventListener("change",() => { changeView(); renderCandidates(); });
   $("reset-filters").addEventListener("click", () => {
+    changeView();
     state.topic = "";
     $("search").value = "";
     $("company-filter").value = "";

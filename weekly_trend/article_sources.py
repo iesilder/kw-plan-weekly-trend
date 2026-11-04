@@ -1,4 +1,4 @@
-"""Bounded public article readers used only by the manual body-analysis workflow.
+"""Bounded public article readers for explicit and daily body analysis.
 
 No source HTML or complete body is written to disk by this module. Missing,
 restricted, or unexpected pages fail closed; authentication is never attempted.
@@ -38,6 +38,20 @@ class ArticleError(Exception):
 def article_url(url, source, *, resolve=False):
     """Accept one configured publisher's HTTPS article endpoint and numeric ID."""
     adapter = source.get("adapter")
+    if adapter == "fsc_html":
+        if source.get("enabled") is not True or source.get("type") != "html":
+            raise ArticleError("source_not_supported")
+        host = "www.fsc.go.kr"
+        if host not in source.get("allowed_hosts", []):
+            raise ArticleError("unsafe_url")
+        try:
+            safe = validate_url(url, {host}, resolve=resolve)
+            parts = urlsplit(safe)
+            if not re.fullmatch(r"/no010101/[1-9]\d{0,11}", parts.path) or parts.query:
+                raise ValueError("Unexpected press release identity")
+            return urlunsplit(("https", host, parts.path, "", ""))
+        except (CollectionError, ValueError):
+            raise ArticleError("unsafe_url") from None
     specs = {"einfomax_rss": ("news.einfomax.co.kr", "/news/articleView.html", "idxno"),
              "newswire_rss": ("www.newswire.co.kr", "/newsRead.php", "no")}
     if adapter not in specs or source.get("enabled") is not True or source.get("type") != "rss":

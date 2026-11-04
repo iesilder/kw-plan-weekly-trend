@@ -1,0 +1,694 @@
+{
+  "schema_version": "1.0",
+  "generation_id": "finance-92868849e293f7e8a394",
+  "generated_at": "2026-11-04T06:56:36.664101+00:00",
+  "is_demo": false,
+  "match_basis": "title_institution_name",
+  "count": 45,
+  "articles": [
+    {
+      "article_id": "article-840ea073e2a90cb9622c",
+      "version_id": "version-1f5ed0fc06e8002b41d5",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "계리가정보고서 도입 등 ｢보험업감독규정｣ 개정안 금융위원회 의결",
+      "source_url": "https://www.fsc.go.kr/no010101/88081",
+      "published_date": "2026-11-04",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T06:32:55.765603+00:00",
+      "institutions": [
+        "금융위원회"
+      ]
+    },
+    {
+      "article_id": "article-41e554f9a2ff52b884c5",
+      "version_id": "version-3466f3496d51e586f55f",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "하나證 \"LG엔솔 ESS 성장세 지속…시총 80조 초반서 강력 매수\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442859",
+      "published_date": "2026-11-04",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "하나증권"
+      ]
+    },
+    {
+      "article_id": "article-1d37af9bc99e57117e36",
+      "version_id": "version-3ba1feff5da8f3609b9c",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "'빠질 만큼 빠졌나'…하나證, 하이닉스 '빚투' 문 다시 연다",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442851",
+      "published_date": "2026-11-04",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "하나증권"
+      ]
+    },
+    {
+      "article_id": "article-e31e506643ffe479deea",
+      "version_id": "version-97249484b98add7e9002",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "한화생명, 후순위채 수요예측서 모집액의 1.25배…금리는 희망밴드 상단",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442813",
+      "published_date": "2026-11-03",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "한화생명"
+      ]
+    },
+    {
+      "article_id": "article-9a20ef61069c77078d67",
+      "version_id": "version-b134ebe5cdcb46ef37d4",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "한투증권, 회사채 수요예측서 6배 수요 확인…전 구간 민평 '언더'",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442804",
+      "published_date": "2026-11-03",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "한국투자증권"
+      ]
+    },
+    {
+      "article_id": "article-860ec60ee7efa5ccc18f",
+      "version_id": "version-5b6e7b645da387275515",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "국내 최대 '71조' 국민연금 부동산실 쇄신 시험대…핵심 과제는",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442805",
+      "published_date": "2026-11-03",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "국민연금공단"
+      ]
+    },
+    {
+      "article_id": "article-41e511008bdaade4d083",
+      "version_id": "version-44c79487fc1c17d7dca3",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "2027년 금융위원회 예산안에 대해 자세히 설명드립니다.",
+      "source_url": "https://www.fsc.go.kr/no010101/88074",
+      "published_date": "2026-11-03",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "금융위원회"
+      ]
+    },
+    {
+      "article_id": "article-04fab0313f88385a41c2",
+      "version_id": "version-a90c9815dbcdf492ba52",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "카카오페이증권, 3분기 영업익 157억원…전년 동기와 비슷",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442775",
+      "published_date": "2026-11-03",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "카카오페이증권"
+      ]
+    },
+    {
+      "article_id": "article-ec88113fec2c699faaf5",
+      "version_id": "version-6ebad5d35dba7d5a4507",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "금융위, '바이낸스 해킹' 여파에 가상자산거래소 긴급 점검",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442565",
+      "published_date": "2026-11-02",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-03T01:20:04.366921+00:00",
+      "institutions": [
+        "금융위원회",
+        "바이낸스"
+      ]
+    },
+    {
+      "article_id": "article-e958a4fb5e8cdc89c5d8",
+      "version_id": "version-c5ec4f481f19db5cb429",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "생산적 금융의 온기를 지방과 중소기업까지 이어갑니다. - 이억원 금융위원장, 제6차 생산적 금융 대전환 회의 개최",
+      "source_url": "https://www.fsc.go.kr/no010101/88052",
+      "published_date": "2026-11-02",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "금융위원회"
+      ]
+    },
+    {
+      "article_id": "article-c719d034e882d90b7bd8",
+      "version_id": "version-bd4da9cb66e688700c8c",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "금융정보분석원, 국제자금세탁방지기구(FATF) 총회 참석",
+      "source_url": "https://www.fsc.go.kr/no010101/88048",
+      "published_date": "2026-11-02",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "금융정보분석원",
+        "국제자금세탁방지기구"
+      ]
+    },
+    {
+      "article_id": "article-8cda78e7eb4a64c526cd",
+      "version_id": "version-42e8ddadcc22cab2da7a",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "카카오페이증권, 인수업 인가 후 첫 스팩 설립…IB 사업 본격화",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442601",
+      "published_date": "2026-11-02",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-03T00:29:46.082736+00:00",
+      "institutions": [
+        "카카오페이증권"
+      ]
+    },
+    {
+      "article_id": "article-193dc2f5a4e04bf16e42",
+      "version_id": "version-464a766f9624c9627a95",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "금감원, '핀플루언서 ETF 광고' 전방위 점검 나섰다",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442572",
+      "published_date": "2026-11-02",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-03T01:20:04.366921+00:00",
+      "institutions": [
+        "금융감독원"
+      ]
+    },
+    {
+      "article_id": "article-a193131581f2105fe86b",
+      "version_id": "version-0dd37a6b92fa5adca1b2",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "불법 가상자산 취급업자(특금법상 미신고 가상자산사업자)에 대한 수사의뢰(DAXA, 3건) 및 접속차단(2건) 요청",
+      "source_url": "https://www.fsc.go.kr/no010101/88039",
+      "published_date": "2026-10-30",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "디지털자산거래소 공동협의체"
+      ]
+    },
+    {
+      "article_id": "article-9a973888729e7a70dc9f",
+      "version_id": "version-098ceafb9e4a5dd41bd2",
+      "source_id": "newswire-securities",
+      "source_name": "뉴스와이어(보도자료) · 증권",
+      "title": "신한투자증권, 올해 9월까지 배당 수령 고객 143만 명… 2년 새 31% 증가",
+      "source_url": "https://www.newswire.co.kr/newsRead.php?no=1045834",
+      "published_date": null,
+      "published_at": "2026-10-29T01:55:26.000000+00:00",
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "신한투자증권"
+      ]
+    },
+    {
+      "article_id": "article-7d5f0f9fd5a6b4dee086",
+      "version_id": "version-fc5f7c60ead0000b5e81",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "☎1375(일상치료)로, 빚의 고통은 덜고 희망의 빛은 더하겠습니다. - 금융위원회·신용회복위원회, 채무상담 대표번호 ☎1375 개통식 개최 -",
+      "source_url": "https://www.fsc.go.kr/no010101/88019",
+      "published_date": "2026-10-29",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "금융위원회",
+        "신용회복위원회"
+      ]
+    },
+    {
+      "article_id": "article-292bc6cb4223b0265f1b",
+      "version_id": "version-1969c358bd9bc840cb20",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "금융위원장, ‘금융분야 재난대응 안전한국훈련’ 주관",
+      "source_url": "https://www.fsc.go.kr/no010101/88023",
+      "published_date": "2026-10-29",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "금융위원회"
+      ]
+    },
+    {
+      "article_id": "article-4531b33ad9d215c3c40c",
+      "version_id": "version-ce386a7970d2e02ac98f",
+      "source_id": "newswire-securities",
+      "source_name": "뉴스와이어(보도자료) · 증권",
+      "title": "EBC 파이낸셜 그룹, 100건 이상 사회공헌 활동 이어 재단 설립… 지속가능한 나눔 실천",
+      "source_url": "https://www.newswire.co.kr/newsRead.php?no=1045689",
+      "published_date": null,
+      "published_at": "2026-10-28T00:41:56.000000+00:00",
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "EBC 파이낸셜 그룹"
+      ]
+    },
+    {
+      "article_id": "article-fae00dadc1131e2df29e",
+      "version_id": "version-91b1da57612462b1c9e1",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "포용금융이 금융권에 뿌리내리도록 평가체계를 도입하고, 공공부문이 앞장서서 부실채권 관리체계를 개편하겠습니다. - 이억원 금융위원장, 제7차 포용적 금융 대전환 회의 주재",
+      "source_url": "https://www.fsc.go.kr/no010101/88006",
+      "published_date": "2026-10-28",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "금융위원회"
+      ]
+    },
+    {
+      "article_id": "article-c0cfd76f42aeaa8c04f8",
+      "version_id": "version-d639f059c96fa6e03700",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "미공개중요정보를 이용한 내부자등에 대한 중대범죄수사청 고발·통보 등 조치(2건) - 제19차 증권선물위원회(10.28.) 의결",
+      "source_url": "https://www.fsc.go.kr/no010101/88012",
+      "published_date": "2026-10-28",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "증권선물위원회"
+      ]
+    },
+    {
+      "article_id": "article-49697d9828e2c35c9098",
+      "version_id": "version-0d1e147fc7ea32c424f3",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "사업보고서 등에 대한 조사·감리결과 조치 - 제19차 증권선물위원회(’26.10.28.) 조치 의결",
+      "source_url": "https://www.fsc.go.kr/no010101/88013",
+      "published_date": "2026-10-28",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "증권선물위원회"
+      ]
+    },
+    {
+      "article_id": "article-34d0a1c085f04dc0c774",
+      "version_id": "version-ba4e3ee7cf45325ace23",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "빗썸 등 주요 가상자산사업자들에 대한 해킹사고에 대해 긴밀하고 신속하게 대응하고 있습니다. -「가상자산업권 등 침해사고 관련 긴급점검 회의 개최」",
+      "source_url": "https://www.fsc.go.kr/no010101/88010",
+      "published_date": "2026-10-28",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "빗썸"
+      ]
+    },
+    {
+      "article_id": "article-949932ded399a5a8b63e",
+      "version_id": "version-4acf1fc8cef81c4a315b",
+      "source_id": "newswire-securities",
+      "source_name": "뉴스와이어(보도자료) · 증권",
+      "title": "신한투자증권 ‘유진스마트셀렉션’ 사모투자재간접 공모펀드 판매",
+      "source_url": "https://www.newswire.co.kr/newsRead.php?no=1045630",
+      "published_date": null,
+      "published_at": "2026-10-27T05:22:57.000000+00:00",
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "신한투자증권"
+      ]
+    },
+    {
+      "article_id": "article-de4b99fc52eb519b93b7",
+      "version_id": "version-819a50c91b97c817b663",
+      "source_id": "newswire-securities",
+      "source_name": "뉴스와이어(보도자료) · 증권",
+      "title": "EBC 파이낸셜 그룹, 계좌 개설·입출금·관리 앱에 실시간 거래 기능 통합",
+      "source_url": "https://www.newswire.co.kr/newsRead.php?no=1045466",
+      "published_date": null,
+      "published_at": "2026-10-25T02:21:48.000000+00:00",
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "EBC 파이낸셜 그룹"
+      ]
+    },
+    {
+      "article_id": "article-10cc3663989ffdf8c66d",
+      "version_id": "version-a78d1da347dfabcc7162",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "우주항공 · 양자 산업을 국민성장펀드의 지원대상산업에 추가하고자 합니다. - 한국산업은행법 시행령 개정령안 입법예고(10.22~12.1일)",
+      "source_url": "https://www.fsc.go.kr/no010101/87977",
+      "published_date": "2026-10-22",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "한국산업은행"
+      ]
+    },
+    {
+      "article_id": "article-b6f9210f2d6785744476",
+      "version_id": "version-d4ebc971ab09628f8e64",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "신용정보법 과징금 부과의 예측 가능성을 한층 높였습니다. - ｢신용정보업감독규정｣ 개정안 제18차 정례 금융위원회 의결",
+      "source_url": "https://www.fsc.go.kr/no010101/87973",
+      "published_date": "2026-10-21",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "금융위원회"
+      ]
+    },
+    {
+      "article_id": "article-5275d83c00dde21d541c",
+      "version_id": "version-9f483b9f497fdc9a17ab",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "사업보고서 등에 대한 조사·감리결과 조치 - 제18차 금융위원회(’26.10.21.) 조치 의결",
+      "source_url": "https://www.fsc.go.kr/no010101/87976",
+      "published_date": "2026-10-21",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "금융위원회"
+      ]
+    },
+    {
+      "article_id": "article-cd745ffff8b3c4596eec",
+      "version_id": "version-2028252fb61df638a05f",
+      "source_id": "newswire-securities",
+      "source_name": "뉴스와이어(보도자료) · 증권",
+      "title": "신한투자증권, 은퇴 후 현금흐름 관리 위한 ‘신한마음편한RIF’ 판매",
+      "source_url": "https://www.newswire.co.kr/newsRead.php?no=1045049",
+      "published_date": null,
+      "published_at": "2026-10-20T02:04:51.000000+00:00",
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "신한투자증권"
+      ]
+    },
+    {
+      "article_id": "article-5af36817cbf3e4f4c8b3",
+      "version_id": "version-01c66bd550a98a8ef3ff",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "금융현장의 불편, 제3자의 눈으로 살핀다. - 제6기 금융위원회 옴부즈만 출범",
+      "source_url": "https://www.fsc.go.kr/no010101/87965",
+      "published_date": "2026-10-20",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "금융위원회"
+      ]
+    },
+    {
+      "article_id": "article-2fe40534eaa3a3ff94a6",
+      "version_id": "version-46f21fdb1bfed22cd1f2",
+      "source_id": "newswire-securities",
+      "source_name": "뉴스와이어(보도자료) · 증권",
+      "title": "MSCI Launches a Consultation on a Proposal to Reclassify Indonesia from Emerging Market to Standalone Market Status",
+      "source_url": "https://www.newswire.co.kr/newsRead.php?no=1044925",
+      "published_date": null,
+      "published_at": "2026-10-18T03:35:00.000000+00:00",
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "MSCI"
+      ]
+    },
+    {
+      "article_id": "article-1238b8e03d5790459ef2",
+      "version_id": "version-dadce3e58770e5a03c4e",
+      "source_id": "newswire-securities",
+      "source_name": "뉴스와이어(보도자료) · 증권",
+      "title": "MSCI, 인도네시아를 신흥시장에서 독립시장 지위로 재분류하는 제안에 대한 의견 수렴 시작",
+      "source_url": "https://www.newswire.co.kr/newsRead.php?no=1044924",
+      "published_date": null,
+      "published_at": "2026-10-18T03:35:00.000000+00:00",
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "MSCI"
+      ]
+    },
+    {
+      "article_id": "article-2e5bcbe62cbc307d660d",
+      "version_id": "version-2d44bf9f1c49f24ec104",
+      "source_id": "newswire-securities",
+      "source_name": "뉴스와이어(보도자료) · 증권",
+      "title": "드라이브웰스와 트루머니, 3,000만 디지털 지갑 사용자에게 미국 주식 투자 서비스 제공",
+      "source_url": "https://www.newswire.co.kr/newsRead.php?no=1044913",
+      "published_date": null,
+      "published_at": "2026-10-18T02:30:00.000000+00:00",
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "DriveWealth",
+        "TrueMoney"
+      ]
+    },
+    {
+      "article_id": "article-05f093317e0fef6eb0a9",
+      "version_id": "version-f457a43031a804e8780f",
+      "source_id": "newswire-securities",
+      "source_name": "뉴스와이어(보도자료) · 증권",
+      "title": "DriveWealth and TrueMoney to Bring U.S. Stock Investing to 30 Million Digital Wallet Users",
+      "source_url": "https://www.newswire.co.kr/newsRead.php?no=1044914",
+      "published_date": null,
+      "published_at": "2026-10-18T02:30:00.000000+00:00",
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "DriveWealth",
+        "TrueMoney"
+      ]
+    },
+    {
+      "article_id": "article-04573a4b8a47767f5f64",
+      "version_id": "version-80fb4cf90eb248d8dba8",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "금융위원회 인사보도(3급·4급 전보)",
+      "source_url": "https://www.fsc.go.kr/no010101/87949",
+      "published_date": "2026-10-16",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "금융위원회"
+      ]
+    },
+    {
+      "article_id": "article-66d105c9652cda7a649a",
+      "version_id": "version-e3f9c110abf39d0eb0f6",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "금융위원회 안창국 상임위원, 금융안정위원회(FSB) 규제·감독협력상임위(SRC) 및 ｢KOOM Week 2026｣ 참석",
+      "source_url": "https://www.fsc.go.kr/no010101/87924",
+      "published_date": "2026-10-14",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "금융위원회",
+        "금융안정위원회"
+      ]
+    },
+    {
+      "article_id": "article-48f8c3d42b23ad5f1ba0",
+      "version_id": "version-efd8735c45166d9eb8dc",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "금융권 침해사고 재발방지를 위해 금융보안 관리체계를 전면 강화하겠습니다. 금융위 사무처장 주재, 「제2차 긴급 상황대응 회의」 개최",
+      "source_url": "https://www.fsc.go.kr/no010101/87927",
+      "published_date": "2026-10-14",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "금융위원회"
+      ]
+    },
+    {
+      "article_id": "article-3c9deb3cefc2f0586f32",
+      "version_id": "version-a58a054b3f110c4a191c",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "금융정보분석원장, 국제자금세탁방지기구(FATF) 운영위원회(Steering Committee) 참여",
+      "source_url": "https://www.fsc.go.kr/no010101/87923",
+      "published_date": "2026-10-14",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "금융정보분석원",
+        "국제자금세탁방지기구"
+      ]
+    },
+    {
+      "article_id": "article-3108a2f8608f22965149",
+      "version_id": "version-dd49690da45e4662b79d",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "사업보고서 등에 대한 조사·감리결과 조치 - 제18차 증권선물위원회(10.14.) 조치 의결",
+      "source_url": "https://www.fsc.go.kr/no010101/87929",
+      "published_date": "2026-10-14",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "증권선물위원회"
+      ]
+    },
+    {
+      "article_id": "article-123ed79f9ed853c400d4",
+      "version_id": "version-5862e3f6a2dca8f9c3b0",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "이억원 금융위원장, SC그룹 CFO·CRO 면담",
+      "source_url": "https://www.fsc.go.kr/no010101/87910",
+      "published_date": "2026-10-12",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "금융위원회",
+        "스탠다드차타드"
+      ]
+    },
+    {
+      "article_id": "article-66803fb453054e876068",
+      "version_id": "version-35d1e0512f272f12190f",
+      "source_id": "newswire-securities",
+      "source_name": "뉴스와이어(보도자료) · 증권",
+      "title": "Oman Added to FTSE Russell Watch List for Potential Reclassification to Secondary Emerging Market Status",
+      "source_url": "https://www.newswire.co.kr/newsRead.php?no=1044340",
+      "published_date": null,
+      "published_at": "2026-10-11T02:00:00.000000+00:00",
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "FTSE Russell"
+      ]
+    },
+    {
+      "article_id": "article-4546b015f1f027e510e7",
+      "version_id": "version-89575d6ab66ff3de796e",
+      "source_id": "newswire-securities",
+      "source_name": "뉴스와이어(보도자료) · 증권",
+      "title": "오만, FTSE 러셀 2차 신흥시장 재분류 관찰 대상국 목록에 추가",
+      "source_url": "https://www.newswire.co.kr/newsRead.php?no=1044341",
+      "published_date": null,
+      "published_at": "2026-10-11T02:00:00.000000+00:00",
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "FTSE Russell"
+      ]
+    },
+    {
+      "article_id": "article-e1c004bbe4c868c4d80e",
+      "version_id": "version-55f378279ba915049915",
+      "source_id": "newswire-securities",
+      "source_name": "뉴스와이어(보도자료) · 증권",
+      "title": "마켓벡터, 파라곤과 함께 대표 반도체 벤치마크를 온체인으로 확장",
+      "source_url": "https://www.newswire.co.kr/newsRead.php?no=1044233",
+      "published_date": null,
+      "published_at": "2026-10-08T02:30:00.000000+00:00",
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "MarketVector"
+      ]
+    },
+    {
+      "article_id": "article-b012cd9682a9cf4ed1e4",
+      "version_id": "version-8d3d9e2b37ca0de41f11",
+      "source_id": "newswire-securities",
+      "source_name": "뉴스와이어(보도자료) · 증권",
+      "title": "MarketVector Brings Flagship Semiconductor Benchmark Onchain with Paragon",
+      "source_url": "https://www.newswire.co.kr/newsRead.php?no=1044235",
+      "published_date": null,
+      "published_at": "2026-10-08T02:30:00.000000+00:00",
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "MarketVector"
+      ]
+    },
+    {
+      "article_id": "article-4b4f782e312a454a7b88",
+      "version_id": "version-e89498246b43a05290c0",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "사업보고서 등에 대한 조사·감리결과 조치 - 제17차 금융위원회(’26.10.7.) 조치 의결 -",
+      "source_url": "https://www.fsc.go.kr/no010101/87894",
+      "published_date": "2026-10-07",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "금융위원회"
+      ]
+    },
+    {
+      "article_id": "article-c05807ad936c976af8fe",
+      "version_id": "version-37486516ad7ec12eb27d",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "全금융권이 비상한 경각심을 갖고 침해위협에 대응해 나가겠습니다. - 금융위원장 주재 금융위·금감원 합동 「全금융권 긴급 점검회의」 개최",
+      "source_url": "https://www.fsc.go.kr/no010101/87876",
+      "published_date": "2026-10-06",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-04T05:41:32.444533+00:00",
+      "institutions": [
+        "금융위원회",
+        "금융감독원"
+      ]
+    }
+  ]
+}

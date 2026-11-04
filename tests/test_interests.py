@@ -334,7 +334,7 @@ class InterestsTest(unittest.TestCase):
         self.assertIn(interests.CONSENT, registration)
         self.assertIn('title: "[관심사] 관심사항 등록"', registration)
         self.assertIn('title: "[관심사 수집 요청]"', manual)
-        self.assertIn("활성 경영진 관심사 수집을 요청합니다.", manual)
+        self.assertIn("활성 최근 관심 주제 수집을 요청합니다.", manual)
         self.assertNotIn("label: 검색어", manual)
         self.assertNotIn("labels:", registration)
 

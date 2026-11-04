@@ -36,7 +36,7 @@ def load_inputs(root):
     if {item["id"] for item in topics} != TOPIC_IDS or len(topics) != 5:
         raise ValueError("Only the five agreed topics are supported")
     if read_json(root / "config/interests.json")["interests"]:
-        raise ValueError("Phase 1 starts without executive interests")
+        raise ValueError("Phase 1 starts without registered interests")
     if read_json(root / "reports/history.json")["reports"]:
         raise ValueError("Phase 1 starts without delivered reports")
     settings = read_json(root / "config/pipeline.json")
@@ -136,7 +136,7 @@ def validate_mart(db, latest, details, status, history):
     validate_timestamp(latest["generated_at"])
     validate_timestamp(status["last_run_at"])
     if history["reports"] or status["report_count"] != 0 or status["interests_count"] != 0:
-        raise ValueError("Demo must not claim real reports or executive interests")
+        raise ValueError("Demo must not claim real reports or registered interests")
     if status["analysis_mode"] != "demo_rules" or status["collection_mode"] != "fixture":
         raise ValueError("Demo must not claim real collection or AI")
     if any(status.get(key) is not False for key in

@@ -1,4 +1,4 @@
-name: Collect executive interests and Pages
+name: Collect recent topics and Pages
 run-name: ${{ github.event_name == 'issues' && (startsWith(github.event.issue.title, '[관심사]') || startsWith(github.event.changes.title.from, '[관심사]')) && '[관심사 재분류] 등록부와 저장 원자료 반영' || github.event_name == 'issues' && github.event.issue.title || github.event_name == 'push' && 'Website controls deployment' || '[관심사 수집 요청] 수동 실행' }}
 
 on:

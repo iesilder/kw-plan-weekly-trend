@@ -30,6 +30,14 @@ class RequestEventTests(unittest.TestCase):
         self.path.write_text(json.dumps(self.event))
         return request_identity(self.env)
 
+    def test_current_neutral_confirmation_and_legacy_confirmation_are_accepted(self):
+        for label in ("최근 관심 주제", "경영진 관심사"):
+            self.event["issue"]["body"] = f"- [X] 활성 {label} 수집을 요청합니다."
+            self.assertEqual(self.submit(), ("issue-42", self.event["issue"]["html_url"]))
+            self.event["issue"]["body"] = f"- [ ] 활성 {label} 수집을 요청합니다."
+            with self.assertRaises(ValueError):
+                self.submit()
+
     def test_operator_issue_and_explicit_dispatch_are_accepted(self):
         self.assertEqual(self.submit(), ('issue-42', self.event['issue']['html_url']))
         self.env.update(GITHUB_EVENT_NAME='workflow_dispatch', GITHUB_RUN_ID='123', GITHUB_ACTOR='iesilder')

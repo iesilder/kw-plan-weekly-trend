@@ -19,5 +19,5 @@ body:
     attributes:
       label: 공개 저장 동의
       options:
-        - label: 활성 경영진 관심사 수집을 요청합니다.
+        - label: 활성 최근 관심 주제 수집을 요청합니다.
           required: true

@@ -39,9 +39,9 @@ Every factual statement must have evidence_ids referring to supplied paragraph I
 Do not output evidence quotations. The application constructs short exact excerpts directly from the referenced paragraphs.
 Preserve every numeric expression exactly as written in its cited paragraph; do not calculate, convert units, or invent missing figures or dates.
 Distinguish plans, agreements, preliminary approval, final approval, launch, results and investigations. Never turn a proposal into a completed event.
-If a stage is unclear, use 불명. why_candidate is explicitly your cautious inference for management-planning review, not a source fact or executive preference.
+If a stage is unclear, use 불명. why_candidate is explicitly your cautious inference for management-planning review, not a source fact or registered topic preference.
 Attribute claims to the article/announcement rather than independently verified facts. Securities underwriting 인수업 is not company acquisition 기업 인수.
-No investment recommendations, unsupported forecasts, executive priorities, report-history claims, personal contact details, URLs or HTML in output.
+No investment recommendations, unsupported forecasts, unprovided topic priorities, report-history claims, personal contact details, URLs or HTML in output.
 If supplied paragraphs are truncated, do not infer omitted details. Be brief: key_change<=260 characters, each fact<=180, why_candidate<=240.
 """
 

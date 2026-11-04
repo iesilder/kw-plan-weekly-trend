@@ -252,7 +252,7 @@
     const kicker = el("div", "detail-kicker");
     kicker.append(el("span", "", demo ? "ISSUE BRIEF" : "SOURCE RECORD"), el("span", "", demo ? "가상 데이터" : "원자료 · AI 제안 별도"));
     const meta = el("div", "detail-meta");
-    meta.append(el("span", "", detail.company), el("span", "", "등록된 보고 이력 없음"));
+    meta.append(el("span", "", detail.company), el("span", "", "기보고 비교는 아래에서 확인"));
     panel.append(kicker, el("div", "detail-topic", topicName(detail.topic_id) || detail.topic), el("h3", "detail-title", detail.title), meta);
     if (!demo) panel.append(reviewControls(detail));
     if (demo) {
@@ -308,6 +308,7 @@
     copy.addEventListener("click", () => copyRecord(detail));
     actions.append(copy, el("span", "", demo ? "복사한 내용은 저장되지 않으며, 실제 보고 이력에 반영되지 않습니다." : "제목·출처·URL·날짜만 복사합니다. 실제 보고 이력에는 반영되지 않습니다."));
     panel.append(evidenceSection, actions);
+    if (!demo && window.WeeklyHistoryWidget) window.WeeklyHistoryWidget.mount(panel, detail);
   }
 
   function captureView() {

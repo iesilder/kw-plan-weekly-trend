@@ -581,6 +581,8 @@ def run_collection(root, collector=None, now=None, interests_only=False, request
         write_json(mart / "status.json", status)
         write_json(mart / "report-history.json", history)
         write_json(mart / "reviews.json", reviews)
+        from .report_history import load as load_reports
+        write_json(mart / "delivered-reports.json", load_reports(root))
         write_json(state_path / "issues.json", {"schema_version": "1.0", "is_demo": False,
                    "generation_id": generation, "issues": latest["candidates"]})
         write_json(state_path / "run_status.json", status)
@@ -684,6 +686,8 @@ def validate_status(db, latest, status, source_ids=None):
 
 
 def verify_live(root):
+    from .report_history import verify as verify_reports
+    verify_reports(root)
     root = Path(root).resolve()
     from .reviews import validate_mirror
     validate_mirror(root)

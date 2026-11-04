@@ -1,0 +1,6 @@
+'use strict';
+window.WeeklyHistoryWidget={mount:async function(panel,detail){
+ const H=window.WeeklyHistory,box=document.createElement('section');box.className='detail-section';
+ const heading=document.createElement('h4');heading.textContent='기보고 중복 확인';const note=document.createElement('p');note.textContent='실제 보고 이력 확인 중…';const link=document.createElement('a');link.href=`history.html?source=${encodeURIComponent(detail.issue_id)}`;link.textContent='보고 이력 등록·정정 및 비교 →';box.append(heading,note,link);panel.append(box);
+ try{const res=await fetch('data/delivered-reports.json',{cache:'no-store'});if(!res.ok)throw Error();const data=H.validate(await res.json());if(!box.isConnected)return;const matches=H.compare(detail,data);note.textContent=matches.length?`관련 보고 ${matches.length}건 · 제목·메타데이터 기반 참고 정보입니다. 자동 제외하지 않습니다.`:H.active(data).length?'현재 규칙으로 관련 보고를 찾지 못했습니다. 신규 이슈라는 뜻은 아닙니다.':'비교할 실제 보고 이력이 없습니다. 후보 채택은 실제 보고 완료가 아닙니다.';for(const m of matches.slice(0,3)){const p=document.createElement('p');p.style.whiteSpace='pre-wrap';p.textContent=`${m.label} · ${m.report.reported_on}\n${m.report.title}\n${m.report.key_text}\n${m.reason}`;box.insertBefore(p,link);}}catch{if(box.isConnected)note.textContent='보고 이력을 확인할 수 없습니다. 중복 없음으로 판단하지 마세요.';}
+}};

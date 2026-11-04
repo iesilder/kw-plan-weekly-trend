@@ -199,6 +199,8 @@ def run_demo(root, fixture_path=None):
         write_json(mart_stage / "latest.json", latest)
         write_json(mart_stage / "status.json", status)
         write_json(mart_stage / "report-history.json", history)
+        from .report_history import load as load_reports
+        write_json(mart_stage / "delivered-reports.json", load_reports(root))
         write_json(mart_stage / "reviews.json", reviews)
         for issue_id, detail in details.items():
             write_json(mart_stage / "issues" / f"{issue_id}.json", detail)

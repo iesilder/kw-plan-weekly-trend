@@ -193,7 +193,7 @@ def validate_state(state):
 
 
 ERROR_CODES = {"missing_api_key", "free_project_not_confirmed", "rate_limited", "authentication_failed", "provider_unavailable",
-               "request_rejected", "network_error", "response_too_large", "invalid_response", "incomplete_response", "invalid_output"}
+               "request_rejected", "request_invalid", "request_not_found", "request_timeout", "network_error", "response_too_large", "invalid_response", "incomplete_response", "invalid_output"}
 
 
 def load_state(root):
@@ -415,14 +415,17 @@ def check(root):
 
 
 def response_schema():
+    # Nested bounded arrays can exceed the provider grammar compiler's limits.
+    # Keep types/required fields here, enforce cardinality strictly in
+    # parse_response/validate_result and the existing ten-item request budget.
     item = {"type": "object", "additionalProperties": False,
             "properties": {"issue_id": {"type": "string"}, "suggested_topic_id": {"type": "string", "enum": sorted(TOPICS)},
                            "relevance": {"type": "string", "enum": ["relevant", "uncertain", "out_of_scope"]},
                            "rationale": {"type": "string", "maxLength": 300},
-                           "check_points": {"type": "array", "maxItems": 3, "items": {"type": "string", "maxLength": 150}},
-                           "duplicate_issue_ids": {"type": "array", "maxItems": 4, "items": {"type": "string"}}}}
+                           "check_points": {"type": "array", "description": "At most three short verification points.", "items": {"type": "string", "maxLength": 150}},
+                           "duplicate_issue_ids": {"type": "array", "description": "At most four other issue IDs in this request.", "items": {"type": "string"}}}}
     item["required"] = list(item["properties"])
-    return {"type": "object", "additionalProperties": False, "properties": {"items": {"type": "array", "maxItems": 10, "items": item}}, "required": ["items"]}
+    return {"type": "object", "additionalProperties": False, "properties": {"items": {"type": "array", "description": "Exactly one result per supplied issue_id.", "items": item}}, "required": ["items"]}
 
 
 def request_body(batch, topics, config):
@@ -452,7 +455,11 @@ def request_once(payload, key, timeout):
     except urllib.error.HTTPError as error:
         code = error.code
         error.close()
-        raise AIError("rate_limited" if code == 429 else "authentication_failed" if code in (401, 403) else "provider_unavailable" if code >= 500 else "request_rejected") from None
+        # Preserve a useful, allowlisted distinction without logging the body,
+        # URL, headers, credential, or provider-controlled exception message.
+        reason = {400: "request_invalid", 404: "request_not_found", 408: "request_timeout",
+                  429: "rate_limited", 401: "authentication_failed", 403: "authentication_failed"}.get(code)
+        raise AIError(reason or ("provider_unavailable" if code >= 500 else "request_rejected")) from None
     except (urllib.error.URLError, TimeoutError, OSError):
         raise AIError("network_error") from None
 

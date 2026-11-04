@@ -149,7 +149,7 @@ class AITests(unittest.TestCase):
         self.assertEqual(sent[0]["format_rules"], ai.FSC_TITLE_FORMAT_RULES)
         schema = payload["response_format"]["schema"]["properties"]["items"]["items"]["properties"]
         self.assertEqual(schema["issue_id"], {"type": "string"})
-        self.assertEqual(schema["duplicate_issue_ids"], {"type": "array", "maxItems": 4, "items": {"type": "string"}})
+        self.assertEqual(schema["duplicate_issue_ids"], {"type": "array", "description": "At most four other issue IDs in this request.", "items": {"type": "string"}})
         self.assertTrue(all(ai.load_state(self.root)["entries"].get(key) == value for key, value in original.items()))
         self.assertNotIn("format_rules", json.loads(self.calls[0][0]["input"])["items"][0])
 

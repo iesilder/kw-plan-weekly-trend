@@ -22,6 +22,7 @@
   const reviewState = { canonical: null, draft: null, ready: false, problem: "", storageWarning: "", localInvalid: false, duplicates: {}, detailCache: new Map(), weeklyRequest: 0, weeklyRecords: [], weeklyRange: null, memoryMode: null, unsavedStorage: false };
   let toastTimer;
   let freshnessSequence = 0;
+  const financeActive = () => window.WeeklyFinanceAll?.controller?.isActive() === true;
 
   function el(tag, className, text) {
     const node = document.createElement(tag);
@@ -192,7 +193,7 @@
     $("active-topic-label").textContent = [topicName(state.topic) || (demo ? "전체 이슈" : "전체 자료"),selectedInterest ? `관심사: ${selectedInterest.title}` : null].filter(Boolean).join(" · ");
     document.querySelectorAll(".interest-filter-button").forEach(button => button.setAttribute("aria-pressed",String(button.dataset.interest === $("interest-filter").value)));
     document.querySelectorAll(".topic-button").forEach(button => {
-      const active = button.dataset.topic === state.topic;
+      const active = !financeActive() && button.dataset.topic === state.topic;
       button.classList.toggle("active", active);
       button.setAttribute("aria-pressed", String(active));
     });
@@ -233,7 +234,7 @@
       button.addEventListener("click", () => selectIssue(item));
       list.append(button);
     });
-    if (!state.selectionPaused && !items.some(item => item.issue_id === state.selected)) selectIssue(items[0]);
+    if (!financeActive() && !state.selectionPaused && !items.some(item => item.issue_id === state.selected)) selectIssue(items[0]);
   }
 
   function detailSection(number, title) {
@@ -340,6 +341,7 @@
   }
 
   async function selectIssue(item, {allowRecovery = true} = {}) {
+    if (financeActive()) return;
     if (!state.latest || !state.latest.candidates.some(candidate => candidate === item)) return;
     if (allowRecovery) state.selectionPaused = null;
     const request = ++state.request;
@@ -1062,12 +1064,12 @@
       if (!detailRecovery) aiResult.then(result => {
         if (loadRequest !== state.loadRequest || !state.latest) return;
         initializeAI(result);
-        if (state.detail) renderDetail(state.detail);
+        if (!financeActive() && state.detail) renderDetail(state.detail);
       });
       if (!detailRecovery) articleResult.then(result => {
         if (loadRequest !== state.loadRequest || !state.latest) return;
         initializeArticles(result);
-        if (state.detail) renderDetail(state.detail);
+        if (!financeActive() && state.detail) renderDetail(state.detail);
       });
       if (!detailRecovery) interestsResult.then(result => {
         if (loadRequest !== state.loadRequest || !state.latest) return;
@@ -1126,6 +1128,19 @@
     }
   }
 
+  window.addEventListener("weekly:finance-view",event => {
+    changeView();
+    if (event.detail?.active) {
+      // A hidden old detail must not refresh the main snapshot after this view opens.
+      state.request++;
+    } else if (state.latest) {
+      renderCandidates();
+      if (state.selected && !state.detail) {
+        const selected = visibleCandidates().find(item => item.issue_id === state.selected);
+        if (selected) void selectIssue(selected);
+      }
+    }
+  });
   document.querySelectorAll(".topic-button").forEach(button => button.addEventListener("click", () => {
     changeView();
     state.topic = button.dataset.topic;

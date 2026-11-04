@@ -62,12 +62,13 @@ function harness({data = fixture(),fetchImpl,blockStorage = false,registryLoad} 
   }
   const document = {visibilityState:"visible",getElementById(id){if(!ids.has(id))missing.push(id);return ids.get(id)||null;},createElement:tag=>new Node(tag),createTextNode:value=>{const node=new Node("#text");node.textContent=value;return node;},querySelectorAll:selector=>all.filter(node=>matches(node,selector)),addEventListener(){}};
   const paths = {"data/latest.json":data.latest,"data/status.json":data.status,"data/report-history.json":data.history,"data/reviews.json":Review.emptyCanonical(),"data/ai-analysis.json":data.ai,"data/article-analysis.json":data.article,"data/interests.json":data.interests,...Object.fromEntries((data.details||[data.detail]).map(detail=>[detail.detail_path,detail]))};
-  const window = {WeeklyReview:Review,WeeklyAI:AI,WeeklyArticle:Article,WeeklyInterests:Interests,WeeklyInterestRegistry:{...Registry,createClient:()=>({load:async()=>registryLoad ? registryLoad() : clone(liveRegistry(data))})},addEventListener(){},open(){}};
+  let financeMode=false;const windowEvents=new Map();
+  const window = {WeeklyFinanceAll:{controller:{isActive:()=>financeMode}},WeeklyReview:Review,WeeklyAI:AI,WeeklyArticle:Article,WeeklyInterests:Interests,WeeklyInterestRegistry:{...Registry,createClient:()=>({load:async()=>registryLoad ? registryLoad() : clone(liveRegistry(data))})},addEventListener:(name,fn)=>{(windowEvents.get(name)||windowEvents.set(name,[]).get(name)).push(fn);},open(){}};
   // Browser modules share one realm; parse saved drafts in the Review module's realm here too.
   const context = vm.createContext({window,document,Intl,Date,URL,JSON,Option:function(label,value){const node=new Node("option");node.textContent=label;node.value=value;return node;},localStorage:{getItem:key=>{if(blockStorage)throw Error("blocked storage");return storage.get(key)||null;},setItem:(key,value)=>{if(blockStorage)throw Error("blocked storage");storage.set(key,value);},removeItem:key=>storage.delete(key)},setTimeout:(callback,delay)=>{const id=++timerId;timers.set(id,{callback,delay});return id;},clearTimeout:id=>timers.delete(id),fetch:async(path,options)=>{fetches.push({path,options});const key=String(path).split("?")[0];const payload=fetchImpl ? await fetchImpl(String(path),options,paths) : paths[key];if(payload===undefined)throw Error(`Unexpected request: ${path}`);return {ok:true,json:async()=>clone(payload)};}});
   const source=fs.readFileSync(require.resolve("../site/app.js"),"utf8").replace(/  loadData\(\);\s*\}\)\(\);\s*$/,"  window.testApp={state,reviewState,aiState,articleState,interestsState,registryState,loadData,selectIssue,changeDecision,renderCandidates};\n  window.initialLoad=loadData();\n})();");
   vm.runInContext(source,context);
-  return {html,app:window.testApp,$:id=>ids.get(id)||null,all,fetches,storage,missing,timers,expireReads(){for(const [id,timer] of [...timers])if(timer.delay===15000){timers.delete(id);timer.callback();}},async settle(){await window.initialLoad;for(let i=0;i<15;i++)await tick();}};
+  return {html,app:window.testApp,setFinance(active){financeMode=active;for(const fn of windowEvents.get("weekly:finance-view")||[])fn({detail:{active}});},$:id=>ids.get(id)||null,all,fetches,storage,missing,timers,expireReads(){for(const [id,timer] of [...timers])if(timer.delay===15000){timers.delete(id);timer.callback();}},async settle(){await window.initialLoad;for(let i=0;i<15;i++)await tick();}};
 }
 
 
@@ -188,4 +189,14 @@ test("review counters and interest-card shortcuts supersede a pending recovered 
   waiting.resolve(after.details[1]);await old;await h.settle();assert.equal(h.app.state.selected,A);assert.equal(h.app.state.detail.issue_id,A);
   if(shortcut==="review-counter-held")assert.equal(h.$("review-filter").value,"held");else assert.equal(h.$("interest-filter").value,"interest-10");
  }
+});
+
+
+test("opening finance cancels a late detail mismatch without starting snapshot recovery",async()=>{
+ const data=generation("live-finance"),late=deferred();let detailRequests=0;
+ const h=harness({data,fetchImpl:async url=>{if(url.startsWith("data/issues/")&&++detailRequests===1)return late.promise;return value(data,url);}});
+ await h.settle();const before=h.fetches.filter(call=>call.path.startsWith("data/latest.json")).length;
+ h.setFinance(true);late.resolve({...data.details[0],generation_id:"old-generation"});await h.settle();
+ assert.equal(h.fetches.filter(call=>call.path.startsWith("data/latest.json")).length,before);assert.equal(h.app.state.detail,null);
+ h.setFinance(false);await h.settle();assert.equal(h.app.state.detail.generation_id,data.latest.generation_id);
 });

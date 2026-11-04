@@ -98,7 +98,9 @@ def main():
             result = run(args.root, request_id, url)
         else:
             from weekly_trend.interests import prepare, check
+            from weekly_trend.finance_all import prepare as prepare_finance, check as check_finance
             result = (prepare if args.prepare else check)(args.root)
+            result['finance_all'] = (prepare_finance if args.prepare else check_finance)(args.root)
     except Exception:
         parser.exit(1, 'Interest request validation failed. No unverified snapshot should be published.\n')
     print(json.dumps(result, ensure_ascii=True, indent=2))

@@ -13,6 +13,7 @@ on:
       - 'scripts/run_fsc_backfill.py'
       - 'scripts/run_fsc_repair.py'
       - 'config/sources.json'
+      - 'config/financial_institutions.json'
       - 'config/pipeline.json'
       - '.github/workflows/rss.yml'
 

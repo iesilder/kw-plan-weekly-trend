@@ -11,9 +11,9 @@
   <link rel="stylesheet" href="styles.css?v=nav-fit-v1">
   <script src="ai.js?v=phase5-article" defer></script>
   <script src="article.js?v=phase5-article" defer></script>
-  <script src="batch_runs.js?v=batch-runs-v1" defer></script>
-  <script src="batch_runs_ui.js?v=batch-runs-v1" defer></script>
-  <script src="admin.js?v=admin-page-v1" defer></script>
+  <script src="batch_runs.js?v=raw-storage-v1" defer></script>
+  <script src="batch_runs_ui.js?v=raw-storage-v1" defer></script>
+  <script src="admin.js?v=raw-metadata-v1" defer></script>
 </head>
 <body class="admin-page">
   <a class="skip-link" href="#main">본문 바로가기</a>
@@ -35,16 +35,16 @@
     <p id="admin-loaded-at" class="admin-loaded-at" role="status">저장된 처리 현황을 불러오는 중입니다.</p>
     <div id="admin-error" class="error-banner" role="alert" hidden></div>
     <section class="demo-notice" id="mode-notice" aria-label="자료 안내"><span class="demo-icon" aria-hidden="true">i</span><p><strong id="notice-title">자료와 수집 상태를 확인하고 있습니다</strong><span id="notice-description">수집·분석 상태와 등록된 경영진 관심사를 확인하고 있습니다.</span></p><span class="phase-label" id="phase-label">PHASE 04</span></section>
-    <section id="collection-overview" class="overview" aria-label="처리 현황"><div class="metric"><span id="issue-count-label">수집 자료</span><strong id="issue-count">—<small>건</small></strong></div><div class="metric"><span id="article-count-label">현재 범위 자료</span><strong id="article-count">—<small>건</small></strong></div><div class="metric"><span id="version-count-label">현재 범위 자료 버전</span><strong id="version-count">—<small>개</small></strong></div><div class="metric metric-run"><span><span id="last-run-label">마지막 실행</span> <b id="run-count">—회</b></span><strong id="last-run">확인 중</strong><small>한국 시간 기준</small></div></section>
+    <section id="collection-overview" class="overview" aria-label="처리 현황"><div class="metric"><span id="issue-count-label">대시보드 자료</span><strong id="issue-count">—<small>건</small></strong></div><div class="metric"><span id="article-count-label">누적 원자료</span><strong id="article-count">—<small>건</small></strong></div><div class="metric"><span id="version-count-label">원자료 보존 버전</span><strong id="version-count">—<small>개</small></strong></div><div class="metric metric-run"><span><span id="last-run-label">마지막 실행</span> <b id="run-count">—회</b></span><strong id="last-run">확인 중</strong><small>한국 시간 기준</small></div></section>
     <section id="batch-runs" class="batch-panel" aria-labelledby="batch-heading">
       <div class="batch-head"><div><div class="eyebrow">BATCH ACTIVITY</div><h2 id="batch-heading">배치 실행 기록</h2></div><div class="batch-actions"><button id="batch-refresh" class="secondary-button" type="button">실행 상태 새로고침</button><a class="batch-log-link" href="https://github.com/iesilder/kw-plan-weekly-trend/actions" target="_blank" rel="noopener noreferrer">전체 실행 로그 ↗</a></div></div>
       <div class="batch-overview" aria-live="polite">
         <div class="batch-overview-item"><span id="batch-schedule-label">오늘 정기 배치 · 매일 11:00 한국 시간</span><strong id="batch-today-state">확인 중</strong><p id="batch-today-note">GitHub의 실제 예약 실행 기록을 확인합니다.</p></div>
-        <div class="batch-overview-item"><span>최근 수집 워크플로</span><strong id="batch-latest-state">확인 중</strong><p id="batch-latest-note">정기·수동·관심사 실행을 구분합니다.</p></div>
+        <div class="batch-overview-item"><span>최근 수집 워크플로</span><strong id="batch-latest-state">확인 중</strong><p id="batch-latest-note">정기·수동·RSS 수집과 관심사 재분류를 구분합니다.</p></div>
       </div>
       <p id="batch-checked" class="batch-checked" role="status">GitHub 실행 기록 확인 중</p>
       <p id="batch-warning" class="batch-warning" role="status" hidden></p>
-      <details class="batch-log-details" open><summary>최근 30일 실행 이력 <span id="batch-log-count">확인 중</span></summary><div class="batch-table-wrap" tabindex="0" role="region" aria-label="배치 실행 이력 표"><table class="batch-table"><thead><tr><th scope="col">실행 종류</th><th scope="col">시작 · 한국 시간</th><th scope="col">최종 갱신 · 한국 시간</th><th scope="col">실행 결과</th><th scope="col">상세 로그</th></tr></thead><tbody id="batch-log-body"><tr><td colspan="5">실행 이력을 불러오는 중입니다.</td></tr></tbody></table></div><div class="batch-log-footer"><p>결과는 저장·배포를 포함한 전체 워크플로 기준입니다. 기사별 수집·AI 결과는 각 상태와 상세 로그를 확인하세요. 화면만 배포한 실행과 관심사 등록만 한 실행은 제외합니다.</p><button id="batch-download" class="secondary-button" type="button" disabled>실행 로그 내려받기</button></div></details>
+      <details class="batch-log-details" open><summary>최근 30일 실행 이력 <span id="batch-log-count">확인 중</span></summary><div class="batch-table-wrap" tabindex="0" role="region" aria-label="배치 실행 이력 표"><table class="batch-table"><thead><tr><th scope="col">실행 종류</th><th scope="col">시작 · 한국 시간</th><th scope="col">최종 갱신 · 한국 시간</th><th scope="col">실행 결과</th><th scope="col">상세 로그</th></tr></thead><tbody id="batch-log-body"><tr><td colspan="5">실행 이력을 불러오는 중입니다.</td></tr></tbody></table></div><div class="batch-log-footer"><p>결과는 저장·배포를 포함한 전체 워크플로 기준입니다. 기사별 수집·AI 결과는 각 상태와 상세 로그를 확인하세요. 관심사 등록에 따른 저장 원자료 재분류도 기록하며, 화면만 배포한 실행은 제외합니다.</p><button id="batch-download" class="secondary-button" type="button" disabled>실행 로그 내려받기</button></div></details>
     </section>
     <details id="source-status-panel" class="source-status-panel" hidden><summary><span>출처별 수집 상태</span><span id="source-status-summary">확인 중</span></summary><p id="source-status-note" class="source-status-note">각 출처의 제공 범위 안에서만 수집합니다. 실패·미분류·필터 제외 내역은 아래 상태에서 확인하세요.</p><div id="source-status-list" class="source-status-list"></div></details>
     <section id="ai-assistance" class="ai-assistance" aria-labelledby="ai-heading">

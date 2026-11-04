@@ -125,6 +125,18 @@ class ClassificationTests(unittest.TestCase):
                 self.assertEqual(route["topic_id"], "risk")
                 self.assertEqual(route["company_ids"], [])
 
+    def test_official_fsc_provenance_supplies_issuer_without_widening_sector_scope(self):
+        source = {"adapter": "fsc_html", "type": "html", "scope": "competitors_and_industry",
+                  "url": "https://www.fsc.go.kr/no010101", "authority_name": "금융위원회",
+                  "_classification_rules": self.rules}
+        title = "토큰증권 시행령 개정안 공개"
+        route = classify_for_source(title, source, self.companies, self.topics)
+        self.assertEqual((route["company"], route["topic_id"]), ("금융위원회", "risk"))
+        for unrelated in ["직원 체육행사 계획 발표", "주택 대출 금리 인하 추진"]:
+            self.assertIsNone(classify_for_source(unrelated, source, self.companies, self.topics))
+        untrusted = {**source, "url": "https://example.com/no010101"}
+        self.assertNotEqual(classify_for_source(title, untrusted, self.companies, self.topics)["company"], "금융위원회")
+
     def test_external_partners_need_strong_financial_intersection(self):
         included = ["가상클라우드, 증권사 AI 주문 플랫폼 공동협약 체결",
                     "가상결제기술사, 스테이블코인 결제 정산 파트너십 추진"]

@@ -9,12 +9,12 @@ const tick = () => new Promise(resolve => setImmediate(resolve));
 const copy = value => JSON.parse(JSON.stringify(value));
 
 function run(workflow = "interests", extra = {}) {
-  const raw = {id:41765377940,run_attempt:1,path:`.github/workflows/${workflow === "daily" ? "daily" : workflow === "pipeline" ? "pipeline" : "interests"}.yml`,head_branch:"main",event:workflow === "daily" ? "schedule" : "workflow_dispatch",status:"completed",conclusion:"success",created_at:"2026-11-04T03:09:55Z",run_started_at:"2026-11-04T03:09:55Z",updated_at:"2026-11-04T03:10:30Z",html_url:"https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41765377940",...extra};
+  const raw = {id:41765377940,run_attempt:1,path:`.github/workflows/${workflow === "daily" ? "daily" : workflow === "pipeline" ? "pipeline" : workflow === "rss" ? "rss" : "interests"}.yml`,head_branch:"main",event:workflow === "daily" ? "schedule" : "workflow_dispatch",status:"completed",conclusion:"success",created_at:"2026-11-04T03:09:55Z",run_started_at:"2026-11-04T03:09:55Z",updated_at:"2026-11-04T03:10:30Z",html_url:"https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/41765377940",...extra};
   raw.html_url = `https://github.com/iesilder/kw-plan-weekly-trend/actions/runs/${raw.id}`;
   return Runs.normalizeRun(raw,workflow);
 }
 function model(records = [], at = NOW) {
-  return {records,checkedAt:at,warning:"",cached:false,workflows:Object.fromEntries(["daily","pipeline","interests"].map(workflow => [workflow,{complete:true,checkedAt:at,error:null,records:records.filter(record => record.workflow === workflow)}]))};
+  return {records,checkedAt:at,warning:"",cached:false,workflows:Object.fromEntries(["daily","pipeline","interests","rss"].map(workflow => [workflow,{complete:true,checkedAt:at,error:null,records:records.filter(record => record.workflow === workflow)}]))};
 }
 function harness({load = async () => model(),at = NOW,missingPanel = false} = {}) {
   let clock = Date.parse(at);
@@ -134,4 +134,16 @@ test("pre-schedule lookup cannot become an after-schedule no-record claim withou
 
 test("missing panel does not fetch or install background timers",async () => {
   const h = harness({missingPanel:true});await h.settle();assert.equal(h.loads.length,0);assert.equal(h.intervals.length,0);
+});
+
+
+test("RSS saves and interest rebuild labels do not turn the daily schedule status into success",async () => {
+  const rss = run("rss",{id:11,event:"schedule"});
+  const rebuild = run("interests",{id:12,event:"issues",display_title:"[관심사] 관심사항 등록"});
+  const h = harness({load:async () => model([rss,rebuild])});await h.settle();
+  assert.equal(h.$("batch-today-state").textContent,"실행 기록 없음");
+  assert.equal(h.$("batch-latest-state").textContent,"RSS 정기 저장 · 성공");
+  assert.match(h.$("batch-log-body").textContent,/관심사 저장 자료 재분류/);
+  assert.match(h.$("batch-log-body").textContent,/RSS 정기 저장/);
+  assert.equal(h.fetches.length,0);
 });

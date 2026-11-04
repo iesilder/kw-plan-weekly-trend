@@ -94,7 +94,7 @@ class InterestCollectionTests(unittest.TestCase):
         self.assertIsNone(classify_for_source("반려금융 서비스 출시", dart, companies, topics))
         self.assertEqual(classify_for_source("분기보고서 (2026.09)", dart, companies, topics)["topic_id"], "performance")
 
-    def test_initial_interest_backfill_does_not_reopen_unrelated_base_records(self):
+    def test_new_interest_reuses_raw_capture_cursor_and_keeps_all_valid_response_records(self):
         self.execute([record(1, "미래에셋증권 AI 서비스 출시")])
         before = self.daily_state()
         self.configure(interest())
@@ -103,9 +103,9 @@ class InterestCollectionTests(unittest.TestCase):
         older = NOW - timedelta(days=10)
         self.execute([record(2, published=older), record(3, "미래에셋증권 AI 서비스 출시", published=older)], now=moment)
         rss_call = next(row for row in self.calls if row[0]["id"] == self.rss["id"])
-        self.assertEqual(datetime.fromisoformat(rss_call[0]["collection_start"]), moment - timedelta(days=30))
-        self.assertIsNone(rss_call[1]["etag"])
-        self.assertEqual(len(self.ids()), 2)
+        self.assertEqual(datetime.fromisoformat(rss_call[0]["collection_start"]), NOW - timedelta(hours=48))
+        self.assertEqual(rss_call[1]["etag"], '"interest-v1"')
+        self.assertEqual(len(self.ids()), 3)
         original = {sid: json.loads(value) for sid, value in before}[self.rss["id"]]
         current = {sid: json.loads(value) for sid, value in self.daily_state()}[self.rss["id"]]
         self.assertEqual(original["content_policy_version"], current["content_policy_version"])
@@ -129,7 +129,8 @@ class InterestCollectionTests(unittest.TestCase):
                      interests_only=True, request_url="https://github.com/iesilder/kw-plan-weekly-trend/issues/99")
         self.assertEqual([row[0]["id"] for row in self.calls], [self.rss["id"]])
         self.assertEqual(self.daily_state(), before)
-        self.assertEqual(len(self.ids()), 3)
+        self.assertEqual(len(self.ids()), 4)
+        self.assertIn("미래에셋증권 영업이익 실적 발표", self.ids())
         self.assertIn("분기보고서 (2026.09)", self.ids())
         self.assertEqual((self.root / "reports/reviews.json").read_bytes(), reviews)
         self.assertEqual(self.book()["last_attempt"]["mode"], "manual")
@@ -152,7 +153,7 @@ class InterestCollectionTests(unittest.TestCase):
         self.assertEqual(second["next_collection_start"], first["next_collection_start"])
         self.assertIsNone(second["last_success_at"])
 
-    def test_keyword_edit_rescans_once_while_question_edit_reuses_checkpoint(self):
+    def test_keyword_and_question_edits_reuse_raw_capture_checkpoint(self):
         self.configure(interest())
         self.execute([record()])
         original = self.book()["entries"]["interest-12"]["filter_fingerprint"]
@@ -167,8 +168,8 @@ class InterestCollectionTests(unittest.TestCase):
         moment = NOW + timedelta(days=2)
         self.execute([], now=moment)
         call = next(row for row in self.calls if row[0]["id"] == self.rss["id"])
-        self.assertEqual(datetime.fromisoformat(call[0]["collection_start"]), moment - timedelta(days=30))
-        self.assertIsNone(call[1]["etag"])
+        self.assertEqual(datetime.fromisoformat(call[0]["collection_start"]), NOW + timedelta(days=1) - timedelta(hours=48))
+        self.assertEqual(call[1]["etag"], '"interest-v1"')
         self.assertNotEqual(self.book()["entries"]["interest-12"]["filter_fingerprint"], original)
 
     def test_disabling_interest_archives_only_interest_records_without_deleting_history(self):
@@ -183,43 +184,39 @@ class InterestCollectionTests(unittest.TestCase):
             self.assertEqual(db.execute("SELECT COUNT(*) FROM live_article_versions").fetchone()[0], versions)
         self.assertTrue(verify(self.root)["ok"])
 
-    def test_reactivated_interest_does_not_reuse_another_interests_feed_validator(self):
+    def test_reactivated_interest_reclassifies_raw_without_refetching_unchanged_feed(self):
         other = interest(id="interest-13", issue_number=13, title="고객연구", keywords=["고객연구"],
                          source_url="https://github.com/iesilder/kw-plan-weekly-trend/issues/13")
-        for manual in (False, True):
-            with self.subTest(manual=manual):
-                self.configure(interest(), other)
-                self.execute([record()], now=NOW)
-                self.configure(interest(), {**other, "enabled": False})
-                def newer(source, previous_state=None, **kwargs):
-                    return response([], etag='"v2"')
-                run_collection(self.root, collector=newer, now=NOW + timedelta(days=1))
-                self.configure(interest(), other)
-                observed = []
-                target = record(80 + int(manual), "미래에셋증권 고객연구 설계 완료", NOW + timedelta(days=1))
-                def conditional(source, previous_state=None, **kwargs):
-                    if source["id"] == self.dart["id"]:
-                        return response([])
-                    observed.append(previous_state)
-                    if previous_state.get("etag"):
-                        return {"status": "not_modified", "records": [], "fetched_count": 0}
-                    return response([target], etag='"v2"')
-                result = run_collection(self.root, collector=conditional, now=NOW + timedelta(days=2), interests_only=manual)
-                self.assertTrue(result["collection_ok"])
-                self.assertIsNone(observed[0]["etag"])
-                self.assertIn(target["title"], self.ids())
-                self.assertEqual(self.book()["entries"]["interest-13"]["last_success_at"],
-                                 (NOW + timedelta(days=2)).isoformat(timespec="microseconds"))
+        target = record(80, "미래에셋증권 고객연구 설계 완료")
+        self.configure(interest(), {**other, "enabled": False})
+        self.execute([target])
+        self.assertNotIn(target["title"], self.ids())
+        self.configure(interest(), other)
+        observed = []
+        def conditional(source, previous_state=None, **kwargs):
+            observed.append(previous_state)
+            return {"status": "not_modified", "records": [], "fetched_count": 0}
+        result = run_collection(self.root, collector=conditional, now=NOW + timedelta(days=1))
+        self.assertTrue(result["collection_ok"])
+        self.assertEqual(observed[0]["etag"], '"interest-v1"')
+        self.assertIn(target["title"], self.ids())
+        self.assertEqual(result["raw_article_count"], 1)
+        self.assertEqual(result["inserted_versions"], 0)
+        self.assertTrue(verify(self.root)["ok"])
 
-    def test_new_interest_unexpected_304_does_not_claim_initial_scan_completed(self):
-        self.execute([])
+    def test_new_interest_304_reuses_complete_raw_representation(self):
+        target = record()
+        self.execute([target])
+        self.assertNotIn(target["title"], self.ids())
         self.configure(interest())
         def conditional(source, **kwargs):
             return {"status": "not_modified", "records": [], "fetched_count": 0}
         run_collection(self.root, collector=conditional, now=NOW + timedelta(days=1))
         entry = self.book()["entries"]["interest-12"]
-        self.assertIsNone(entry["last_success_at"])
-        self.assertEqual(entry["status"], "failed")
+        self.assertEqual(entry["last_success_at"], (NOW + timedelta(days=1)).isoformat(timespec="microseconds"))
+        self.assertEqual(entry["status"], "success")
+        self.assertIn(target["title"], self.ids())
+        self.assertTrue(verify(self.root)["ok"])
 
     def test_manual_without_active_interests_publishes_without_network(self):
         with patch("weekly_trend.collectors.collect_source", side_effect=AssertionError("no network")):

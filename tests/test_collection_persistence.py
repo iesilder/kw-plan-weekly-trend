@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class CollectionPersistenceTests(unittest.TestCase):
     def test_every_collection_workflow_saves_new_and_updated_interest_checkpoint_files(self):
-        for workflow in ('pipeline.yml', 'daily.yml', 'interests.yml'):
+        for workflow in ('pipeline.yml', 'daily.yml', 'rss.yml', 'interests.yml'):
             with self.subTest(workflow=workflow), tempfile.TemporaryDirectory() as temporary:
                 root = Path(temporary)
                 for name in ('config/interests.json', 'data/raw.sqlite3', 'data/daily-run.json',

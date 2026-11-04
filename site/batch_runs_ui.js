@@ -36,14 +36,14 @@
     $("batch-schedule-label").textContent = `오늘 정기 배치${today.dateKst ? ` · ${today.dateKst}` : ""} · 11:00 한국 시간`;
     setStatus("batch-today-state",today.state);
     const todayNotes = {
-      waiting:"예약 시각 전입니다. 수동 수집은 정기 배치와 별도로 기록합니다.",
+      waiting:"예약 시각 전입니다. RSS 저장·관심사 재분류는 정기 배치와 별도로 기록합니다.",
       no_record:"예정 시각 이후 확인한 예약 실행 기록이 없습니다. GitHub의 실행 지연 가능성이 있으며 실패로 확정한 상태는 아닙니다.",
       unknown:"오늘의 예약 실행 여부를 확인할 수 없습니다. 마지막 확인 시각과 전체 실행 로그를 확인하세요."
     };
     $("batch-today-note").textContent = todayNotes[today.state] || `${today.record?.label || "정기 자동 실행"} · 시작 ${stamp(today.record?.startedAt)} · 최종 갱신 ${stamp(today.record?.updatedAt)}`;
     const latest = model?.records?.[0];
     setStatus("batch-latest-state",latest?.state || "unknown",latest ? `${latest.label} · ${labels[latest.state] || labels.unknown}` : model && !model.warning ? "최근 30일 실행 기록 없음" : "확인 불가");
-    $("batch-latest-note").textContent = latest ? `시작 ${stamp(latest.startedAt)} · 실행 #${latest.id} · 시도 ${latest.attempt}` : "관심사 수동 실행을 정기 자동 실행으로 표시하지 않습니다.";
+    $("batch-latest-note").textContent = latest ? `시작 ${stamp(latest.startedAt)} · 실행 #${latest.id} · 시도 ${latest.attempt}` : "RSS 저장·관심사 재분류·수동 수집은 매일 11시 정기 배치와 별도로 기록합니다.";
     const workflowChecks = model ? Object.values(model.workflows).filter(item => item.checkedAt).map(item => new Date(item.checkedAt).getTime()) : [];
     const oldestCheck = workflowChecks.length ? new Date(Math.min(...workflowChecks)).toISOString() : null;
     $("batch-checked").textContent = pending ? "GitHub 실행 기록 확인 중…" : oldestCheck ? `실행 기록 확인 ${stamp(oldestCheck)} KST${model.cached ? " · 최근 조회 기록" : ""}` : "GitHub 실행 기록 확인 불가";

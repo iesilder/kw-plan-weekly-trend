@@ -541,13 +541,21 @@ def run_collection(root, collector=None, now=None, interests_only=False, request
                 retained = True
             else:
                 latest, details, history = build_snapshot(db, topics, stamp)
+            from .finance_all import build as build_finance, markers as finance_markers, validate as validate_finance
+            finance = build_finance(db, root, stamp, policy_sources)
+            previous_finance = root / "site/data/finance-all.json"
+            if previous_finance.exists():
+                prior = read_json(previous_finance)
+                if prior.get("generation_id") == finance["generation_id"]:
+                    finance = build_finance(db, root, prior.get("generated_at"), policy_sources)
+            validate_finance(db, root, finance, policy_sources)
             generation = latest["generation_id"]
             successful_run = db.execute("SELECT MAX(finished_at) FROM live_collection_runs WHERE status IN ('success','partial_success')").fetchone()[0]
             status = {"schema_version": "1.0", "generation_id": generation, "published_generation_id": generation,
                       "run_generation_id": "run-" + digest(stamp + str(run_id)), "is_demo": False,
                       "last_run_at": stamp, "last_successful_run_at": successful_run,
                       "published_at": latest["generated_at"] if collection_ok or retained or policy_filtered else None,
-                      **counts(db), "issue_count": len(latest["candidates"]), **totals,
+                      **counts(db), "issue_count": len(latest["candidates"]), **totals, **finance_markers(finance),
                       "capture_schema_version": CAPTURE_VERSION,
                       "execution_mode": "mart_rebuild" if rebuild_only else "collection",
                       "collection_performed": bool(source_states), "source_mode": source_mode,
@@ -569,6 +577,7 @@ def run_collection(root, collector=None, now=None, interests_only=False, request
             db.close()
         mart, state_path = stage / "mart", stage / "state"
         write_json(mart / "latest.json", latest)
+        write_json(mart / "finance-all.json", finance)
         write_json(mart / "status.json", status)
         write_json(mart / "report-history.json", history)
         write_json(mart / "reviews.json", reviews)
@@ -701,6 +710,8 @@ def verify_live(root):
         validate_policies(db, sources, companies, topics)
         validate_snapshot(db, topics, latest, details, history)
         validate_status(db, latest, status, [source["id"] for source in sources])
+    from .finance_all import check as check_finance
+    check_finance(root)
     if read_json(root / "state/run_status.json") != status:
         raise ValueError("Live state and mart status differ")
     if read_json(root / "state/issues.json") != {"schema_version": "1.0", "is_demo": False,

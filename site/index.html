@@ -8,13 +8,14 @@
   <title>WEEKLY · 주간 경쟁사 동향</title>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-  <link rel="stylesheet" href="styles.css?v=nav-fit-v1">
+  <link rel="stylesheet" href="styles.css?v=finance-all-v1">
   <script src="review.js?v=phase5-article" defer></script>
   <script src="ai.js?v=fsc-summary-v1" defer></script>
   <script src="article.js?v=fsc-summary-v1" defer></script>
   <script src="interests.js?v=interests-v1" defer></script>
   <script src="interest_registry.js?v=interests-live-v1" defer></script>
-  <script src="app.js?v=detail-recovery-v1" defer></script>
+  <script src="app.js?v=finance-all-v1" defer></script>
+  <script src="finance_all.js?v=finance-all-v1" defer></script>
 </head>
 <body class="content-page">
   <a class="skip-link" href="#main">본문 바로가기</a>
@@ -24,6 +25,7 @@
     <p class="nav-caption" id="nav-caption">수집 주제</p>
     <nav id="topic-nav" class="topic-nav" aria-label="수집 주제">
       <button type="button" class="topic-button active" data-topic="" aria-pressed="true"><span class="nav-glyph" aria-hidden="true">▦</span><span id="all-topic-label">전체 자료</span><span class="nav-count" id="all-count">—</span></button>
+      <button type="button" id="finance-all-open" class="finance-nav-button" aria-pressed="false" aria-controls="finance-all"><span class="nav-glyph" aria-hidden="true">▤</span><span>금융 전체</span><span class="nav-count" id="finance-all-count">—</span></button>
       <button type="button" class="topic-button" data-topic="performance" aria-pressed="false"><span class="nav-glyph" aria-hidden="true">↗</span><span id="topic-label-performance">실적·자본·주주정책</span><span class="nav-count" data-count="performance">—</span></button>
       <button type="button" class="topic-button" data-topic="digital" aria-pressed="false"><span class="nav-glyph" aria-hidden="true">✳</span><span id="topic-label-digital">신사업·상품·고객전략</span><span class="nav-count" data-count="digital">—</span></button>
       <button type="button" class="topic-button" data-topic="expansion" aria-pressed="false"><span class="nav-glyph" aria-hidden="true">↔</span><span id="topic-label-expansion">제휴·인수·해외사업</span><span class="nav-count" data-count="expansion">—</span></button>
@@ -47,6 +49,14 @@
       <p id="interests-warning" class="interests-warning" role="status" hidden></p>
       <div id="interest-cards" class="interest-cards" aria-live="polite"><p class="interests-empty">관심사 등록부를 불러오는 중입니다.</p></div>
       <p class="interests-footnote">승인된 RSS 기사·보도자료의 제목 키워드로 관련 자료를 찾습니다. DART 공시는 관심사 기사에 포함하지 않습니다. 기사 정보와 기존 요약을 재사용하며 담당자의 검토·선택은 별개입니다.</p>
+    </section>
+    <section id="finance-all" class="finance-all-panel" aria-labelledby="finance-all-heading" hidden>
+      <div class="section-head"><div><h2 id="finance-all-heading">금융 전체</h2><span id="finance-visible-count" class="result-count">확인 중</span></div><button id="finance-reload" type="button" class="secondary-button">목록 새로고침 ↻</button></div>
+      <p class="finance-description">보유한 기사·보도자료 중 제목에 금융권 기관명이 있는 자료입니다. 제목과 출처를 확인하고 원문을 바로 열어볼 수 있습니다.</p>
+      <div class="finance-toolbar"><label class="search-box"><span class="sr-only">금융 전체 제목·기관·출처 검색</span><input id="finance-search" type="search" placeholder="제목·기관·출처 검색" autocomplete="off"></label><label class="select-label"><span class="sr-only">금융 전체 기관 필터</span><select id="finance-institution"><option value="">모든 기관</option></select></label><label class="select-label"><span class="sr-only">금융 전체 정렬</span><select id="finance-sort"><option value="recent">최신순</option><option value="title">제목순</option></select></label></div>
+      <p id="finance-status" class="finance-status" role="status">저장된 금융 기사 목록을 확인합니다.</p>
+      <div id="finance-list" class="finance-list" aria-label="금융 전체 기사 목록" aria-live="polite"></div>
+      <div class="finance-pagination"><button id="finance-prev" type="button" class="secondary-button" disabled>이전</button><span id="finance-page" aria-live="polite">—</span><button id="finance-next" type="button" class="secondary-button" disabled>다음</button></div>
     </section>
     <section class="review-workspace" aria-labelledby="review-heading">
       <div class="review-top"><div><span class="eyebrow">REVIEW DESK</span><h2 id="review-heading">보고할 자료를 골라보세요</h2><p>채택한 자료는 아래 주간 후보 목록에 모입니다. 실제 보고 완료 이력과는 별개입니다.</p></div><a class="secondary-button" href="#weekly-review">주간 후보 보기 ↓</a></div>

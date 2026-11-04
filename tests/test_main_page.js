@@ -62,11 +62,12 @@ function harness({data = fixture(),fail = [],live = {fetched_at:STAMP,interests:
   }
   const document = {visibilityState:"visible",getElementById(id){if(!ids.has(id))missing.push(id);return ids.get(id)||null;},createElement:tag=>new Node(tag),createTextNode:value=>{const node=new Node("#text");node.textContent=value;return node;},querySelectorAll:selector=>all.filter(node=>matches(node,selector)),addEventListener(){}};
   const paths = {"data/latest.json":data.latest,"data/status.json":data.status,"data/report-history.json":data.history,"data/reviews.json":Review.emptyCanonical(),"data/ai-analysis.json":data.ai,"data/article-analysis.json":data.article,"data/interests.json":data.interests,[data.latest.candidates[0]?.detail_path]:data.detail};
-  const window = {WeeklyReview:Review,WeeklyAI:AI,WeeklyArticle:Article,WeeklyInterests:Interests,WeeklyInterestRegistry:{...Registry,createClient:()=>({load:async()=>clone(live)})},addEventListener(){},open(){}};
+  let financeMode=false;const windowEvents=new Map();
+  const window = {WeeklyFinanceAll:{controller:{isActive:()=>financeMode}},WeeklyReview:Review,WeeklyAI:AI,WeeklyArticle:Article,WeeklyInterests:Interests,WeeklyInterestRegistry:{...Registry,createClient:()=>({load:async()=>clone(live)})},addEventListener:(name,fn)=>{(windowEvents.get(name)||windowEvents.set(name,[]).get(name)).push(fn);},open(){}};
   const context = vm.createContext({window,document,Intl,Date,URL,Option:function(label,value){const node=new Node("option");node.textContent=label;node.value=value;return node;},localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)},setTimeout:()=>0,clearTimeout(){},fetch:async(path,options)=>{fetches.push({path,options});path=String(path).split("?")[0];if(fail.includes(path))throw Error("request unavailable");if(!Object.hasOwn(paths,path))throw Error(`Unexpected request: ${path}`);return {ok:true,json:async()=>clone(paths[path])};}});
   const source=fs.readFileSync(require.resolve("../site/app.js"),"utf8").replace(/  loadData\(\);\s*\}\)\(\);\s*$/,"  window.testApp={state,reviewState,aiState,articleState,loadData};\n  window.initialLoad=loadData();\n})();");
   vm.runInContext(source,context);
-  return {html,app:window.testApp,$:id=>ids.get(id)||null,all,fetches,storage,missing,async settle(){await window.initialLoad;for(let i=0;i<5;i++)await tick();}};
+  return {html,app:window.testApp,setFinance(active){financeMode=active;for(const fn of windowEvents.get("weekly:finance-view")||[])fn({detail:{active}});},$:id=>ids.get(id)||null,all,fetches,storage,missing,async settle(){await window.initialLoad;for(let i=0;i<5;i++)await tick();}};
 }
 
 test("main boots without administrative DOM, retains content summaries and lets the human select report candidates",async()=>{
@@ -103,4 +104,16 @@ test("main loading failure keeps interest registration usable and directs diagno
   assert.match(h.$("candidate-list").textContent,/관리페이지/);assert.match(h.$("detail-panel").textContent,/관리페이지/);
   assert.equal(h.$("interests-collect").disabled,false);assert.equal(h.$("interests-register").href,Interests.registrationURL());
   assert.equal(h.$("reload-data").disabled,false);assert.deepEqual(h.missing,[]);
+});
+
+
+test("finance browsing preserves review drafts and returns to the previous normal filters",async()=>{
+  const h=harness();await h.settle();
+  const accept=h.all.filter(node=>node.className.split(" ").includes("review-option-accepted")).at(-1);
+  accept.fire("click");await tick();h.app.state.topic="digital";h.$("search").value="가상";
+  const draft=JSON.stringify(h.app.reviewState.draft),before=h.fetches.length;
+  h.setFinance(true);h.app.state.latest.candidates[0].title="가상증권 AI 서비스 출시";
+  h.setFinance(false);await tick();
+  assert.equal(JSON.stringify(h.app.reviewState.draft),draft);assert.equal(h.app.state.topic,"digital");assert.equal(h.$("search").value,"가상");
+  assert.equal(h.fetches.length,before);assert.match(h.$("detail-panel").textContent,/가상증권/);
 });

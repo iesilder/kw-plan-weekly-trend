@@ -9,7 +9,7 @@ lines = ['## Fictional demo snapshot' if demo else '## Public metadata collectio
          'Valid metadata is stored before topic/interest filtering. The dashboard mart is derived from stored metadata; AI runs separately.', '', '| Item | Value |', '| --- | --- |']
 for key in ('last_run_at', 'last_successful_run_at', 'generation_id', 'capture_schema_version', 'execution_mode', 'collection_performed', 'source_mode', 'raw_article_count', 'raw_version_count', 'mart_article_count', 'mart_excluded_count', 'article_count', 'version_count', 'issue_count', 'run_count',
             'inserted_versions', 'duplicate_count', 'collection_status', 'publication_status',
-            'archived_article_count', 'total_article_count', 'report_count', 'interests_count'):
+            'archived_article_count', 'total_article_count', 'report_count', 'interests_count', 'finance_all_count'):
     if key in status:
         lines.append(f'| {key} | {status[key]} |')
 if not demo:

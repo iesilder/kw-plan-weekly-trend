@@ -8,8 +8,49 @@ const Article = require("../site/article.js");
 const copy = value => JSON.parse(JSON.stringify(value));
 const tick = () => new Promise(resolve => setImmediate(resolve));
 const paths = ["data/latest.json","data/status.json","data/ai-analysis.json","data/article-analysis.json"];
-function fixture() {
+function publishedFixture() {
   return Object.fromEntries(paths.map(path => [path,JSON.parse(fs.readFileSync(require.resolve(`../site/${path}`),"utf8"))]));
+}
+// Stable, representative legacy snapshot. Live collections change daily and must
+// not determine the source/analysis cases exercised by these behavior tests.
+function fixture() {
+  const stamp = "2026-11-04T04:35:16Z",generation = "live-admin-fixture",hash = "b".repeat(64);
+  const sourceName = "연합인포맥스(기사) · 증권",dartName = "DART · NH투자증권";
+  const candidates = Array.from({length:7},(_,index) => ({
+    issue_id:`issue-${(index+1).toString(16).padStart(20,"0")}`,
+    title:index === 6 ? "NH투자증권 분기보고서" : `증권사 AI 서비스 출시 ${index+1}`,
+    is_demo:false,source_name:index === 6 ? dartName : sourceName,
+    content_filter:index === 6 ? "earnings_only" : "topics",
+    evidence_ids:[`version-${(index+1).toString(16).padStart(20,"0")}`]
+  }));
+  const titleItems = {},articleItems = {};
+  for (const [index,candidate] of candidates.entries()) {
+    const dart = index === 6,failed = index === 5;
+    titleItems[candidate.issue_id] = {
+      status:dart ? "blocked" : "completed",reason_code:dart ? "dart_not_sent" : null,
+      input_fingerprint:dart ? null : hash,input_evidence_ids:dart ? [] : [...candidate.evidence_ids],
+      result_fingerprint:dart ? null : hash,analyzed_at:dart ? null : stamp,error_code:null,
+      result:dart ? null : {suggested_topic_id:"digital",relevance:"relevant",rationale:"고객 서비스 변화가 있어 검토할 수 있습니다.",check_points:["실제 서비스 범위를 확인하세요."],duplicate_issue_ids:[]}
+    };
+    articleItems[candidate.issue_id] = {
+      status:dart ? "not_applicable" : failed ? "failed" : "completed",
+      reason_code:dart ? "dart_not_sent" : failed ? "invalid_output" : null,evidence_ids:[...candidate.evidence_ids],
+      input_fingerprint:dart ? null : hash,result_fingerprint:dart || failed ? null : hash,
+      analyzed_at:dart || failed ? null : stamp,source_name:candidate.source_name,
+      source_url:dart ? "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261104000001" : `https://news.einfomax.co.kr/news/articleView.html?idxno=${1000000+index}`,
+      body_hash:dart ? null : hash,body_fetched_at:dart ? null : stamp,truncated:false,
+      result:dart || failed ? null : {key_change:{text:"증권사의 새 AI 고객 서비스 출시",evidence_ids:["p1"]},facts:[],stage:"출시·시행",why_candidate:"고객 접점 변화 검토 자료",evidence:[{id:"p1",quote:"새 AI 고객 서비스를 출시했다."}]}
+    };
+  }
+  const sources = [
+    ["einfomax-s1n2",sourceName],["einfomax-s1n7","연합인포맥스(기사) · IB·기업"],["newswire-securities","뉴스와이어(보도자료) · 증권"]
+  ].map(([source_id,source_name]) => ({source_id,source_name,status:"success",last_attempt_at:stamp,last_success_at:stamp,fetched_count:20,accepted_count:0,inserted_versions:0,duplicate_count:0,rejected_count:0,outside_scope_count:20,outside_window_count:0,outside_content_filter_count:0}));
+  return {
+    [paths[0]]:{schema_version:"1.0",generation_id:generation,generated_at:stamp,is_demo:false,candidates},
+    [paths[1]]:{schema_version:"1.0",generation_id:generation,published_generation_id:generation,is_demo:false,last_run_at:stamp,last_successful_run_at:stamp,article_count:7,version_count:7,run_count:16,issue_count:7,total_article_count:28,total_version_count:28,archived_article_count:21,publication_status:"updated",interests_only:true,interests_count:1,schedule_enabled:true,planned_collection_frequency:"daily_1100_kst",timezone:"Asia/Seoul",sources},
+    [paths[2]]:{schema_version:"1.0",generation_id:generation,generated_at:stamp,provider:"google_gemini",model:"gemini-3.5-flash-lite",prompt_version:"metadata-review-v2",policy_version:"public-metadata-inference-v2",auto_analysis_enabled:true,last_attempt:null,counts:{eligible:6,blocked:1,completed:6,stale:0,failed:0,not_analyzed:0},items:titleItems},
+    [paths[3]]:{schema_version:"1.0",generation_id:generation,generated_at:stamp,provider:"google_gemini",model:"gemini-3.5-flash-lite",prompt_version:"article-bullets-v1",auto_analysis_enabled:true,last_attempt:null,counts:{eligible:6,completed:5,stale:0,unavailable:0,pending:0,not_applicable:1,failed:1},items:articleItems}
+  };
 }
 function deferred() { let resolve; const promise = new Promise(yes => { resolve = yes; }); return {promise,resolve}; }
 function harness({data = fixture(),fetchImpl,missingPage = false} = {}) {
@@ -235,4 +276,17 @@ test("invalid inventory data is rejected with the same source validation as curr
   const h = harness({data});await h.settle();
   assert.equal(h.$("admin-error").hidden,false);
   assert.equal(h.$("source-status-list").textContent,"");
+});
+
+
+test("latest published snapshot renders its current counts without depending on fixed collection totals",async () => {
+  const data = publishedFixture(),latest = data[paths[0]],status = data[paths[1]],h = harness({data});await h.settle();
+  assert.equal(h.$("admin-error").hidden,true);
+  assert.equal(h.$("issue-count").textContent,`${latest.candidates.length}건`);
+  assert.equal(h.$("article-count").textContent,`${status.capture_schema_version === "raw-metadata-v1" ? status.raw_article_count : status.total_article_count ?? status.article_count}건`);
+  assert.equal(h.$("version-count").textContent,`${status.capture_schema_version === "raw-metadata-v1" ? status.raw_version_count : status.total_version_count ?? status.version_count}개`);
+  assert.notEqual(h.$("ai-readiness").textContent,"상태 확인 불가");
+  assert.notEqual(h.$("article-readiness").textContent,"상태 확인 불가");
+  for (const source of status.source_inventory ?? status.sources) assert(h.$("source-status-list").textContent.includes(source.source_name || source.source_id));
+  assert.deepEqual(h.requests.map(request => request.path),paths);
 });

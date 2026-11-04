@@ -6,12 +6,13 @@
   <meta name="theme-color" content="#0B1D39">
   <meta name="description" content="공개 출처의 경쟁사 동향을 검토하고 주간 보고 후보를 선정합니다. 매일 한국 시간 11:00 자료 수집·기사 AI 분석을 예약하며 담당자가 최종 보고 후보를 선택합니다. DART 공시는 AI에 전송하지 않습니다.">
   <title>WEEKLY · 주간 경쟁사 동향</title>
-  <link rel="stylesheet" href="styles.css?v=interests-v1">
+  <link rel="stylesheet" href="styles.css?v=interests-live-v1">
   <script src="review.js?v=phase5-article" defer></script>
   <script src="ai.js?v=phase5-article" defer></script>
   <script src="article.js?v=phase5-article" defer></script>
   <script src="interests.js?v=interests-v1" defer></script>
-  <script src="app.js?v=interests-v1" defer></script>
+  <script src="interest_registry.js?v=interests-live-v1" defer></script>
+  <script src="app.js?v=interests-live-v1" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">본문 바로가기</a>
@@ -38,10 +39,11 @@
     <section class="overview" aria-label="처리 현황"><div class="metric"><span id="issue-count-label">수집 자료</span><strong id="issue-count">—<small>건</small></strong></div><div class="metric"><span id="article-count-label">현재 범위 자료</span><strong id="article-count">—<small>건</small></strong></div><div class="metric"><span id="version-count-label">현재 범위 자료 버전</span><strong id="version-count">—<small>개</small></strong></div><div class="metric metric-run"><span><span id="last-run-label">마지막 실행</span> <b id="run-count">—회</b></span><strong id="last-run">확인 중</strong><small>한국 시간 기준</small></div></section>
     <details id="source-status-panel" class="source-status-panel" hidden><summary><span>출처별 수집 상태</span><span id="source-status-summary">확인 중</span></summary><p id="source-status-note" class="source-status-note">각 출처의 제공 범위 안에서만 수집합니다. 실패·미분류·필터 제외 내역은 아래 상태에서 확인하세요.</p><div id="source-status-list" class="source-status-list"></div></details>
     <section id="executive-interests" class="interests-panel" aria-labelledby="interests-heading">
-      <div class="interests-head"><div><div class="eyebrow">EXECUTIVE WATCH</div><h2 id="interests-heading">경영진 관심사 <span id="interests-readiness" class="ai-state-label">확인 중</span></h2></div><div class="interests-actions"><a id="interests-register" class="secondary-button" href="https://github.com/iesilder/kw-plan-weekly-trend/issues/new?template=executive-interest.yml" target="_blank" rel="noopener noreferrer">관심사 등록 ↗</a><a id="interests-manage" class="secondary-button" href="https://github.com/iesilder/kw-plan-weekly-trend/issues?q=is%3Aissue%20%22%5B%EA%B4%80%EC%8B%AC%EC%82%AC%5D%22%20in%3Atitle" target="_blank" rel="noopener noreferrer">관리 ↗</a><button id="interests-collect" class="primary-button" type="button">관심사 지금 수집 ↗</button></div></div>
-      <p class="interests-intro">GitHub에서 등록 내용을 제출하면 다음 매일 11:00(한국 시간) 정기 수집부터 반영됩니다. ‘지금 수집’은 GitHub에서 수집 요청을 제출해야 실행되는 별도 요청이며, 새 등록 내용을 먼저 확인합니다. 등록 직후에도 요청할 수 있습니다.</p>
+      <div class="interests-head"><div><div class="eyebrow">EXECUTIVE WATCH</div><h2 id="interests-heading">경영진 관심사 <span id="interests-readiness" class="ai-state-label">확인 중</span></h2></div><div class="interests-actions"><a id="interests-register" class="secondary-button" href="https://github.com/iesilder/kw-plan-weekly-trend/issues/new?template=executive-interest.yml" target="_blank" rel="noopener noreferrer">관심사 등록 ↗</a><a id="interests-manage" class="secondary-button" href="https://github.com/iesilder/kw-plan-weekly-trend/issues?q=is%3Aissue%20%22%5B%EA%B4%80%EC%8B%AC%EC%82%AC%5D%22%20in%3Atitle" target="_blank" rel="noopener noreferrer">관리 ↗</a><button id="interests-refresh" class="secondary-button" type="button">등록 목록 새로고침</button><button id="interests-collect" class="primary-button" type="button">관심사 지금 수집 ↗</button></div></div>
+      <p class="interests-intro">GitHub에 관심사를 제출한 뒤 이 화면으로 돌아오면 등록 목록을 다시 확인합니다. 기사 수집은 매일 11:00(한국 시간) 정기 실행 또는 ‘관심사 지금 수집’에서 GitHub에 별도 요청을 제출하면 진행합니다.</p>
       <p class="interests-privacy">관심사 제목·질문·키워드와 수집 요청은 공개 저장소에 기록됩니다. 공개할 수 있는 내용만 입력하세요.</p>
-      <p id="interests-status" class="interests-status" role="status">저장된 관심사를 확인하고 있습니다.</p>
+      <p id="interests-status" class="interests-status" role="status">GitHub 등록 목록과 게시된 수집 결과를 확인하고 있습니다.</p>
+      <p id="interests-registry-checked" class="interests-registry-checked">GitHub 등록 목록 확인 중</p>
       <p id="interests-last-run" class="interests-last-run">실제 관심사 수집 이력 확인 중</p>
       <p id="interests-warning" class="interests-warning" role="status" hidden></p>
       <div id="interest-cards" class="interest-cards" aria-live="polite"><p class="interests-empty">관심사 등록부를 불러오는 중입니다.</p></div>

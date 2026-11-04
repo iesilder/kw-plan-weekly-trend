@@ -91,8 +91,8 @@ function appHarness() {
     fire(type) { this.events[type]?.forEach(callback=>callback({target:this})); }
     scrollIntoView() {}
   }
-  const document={getElementById(id){if(!ids.has(id))ids.set(id,new Node(id.includes("filter")||id==="sort-order"?"select":"div"));return ids.get(id);},createElement:tag=>new Node(tag),createTextNode:text=>{const n=new Node("#text");n.textContent=text;return n;},querySelectorAll:selector=>all.filter(node=>selector.startsWith(".")&&node.className.split(" ").includes(selector.slice(1)))};
-  const window={WeeklyInterests:Interests,WeeklyReview:Review,open:(...args)=>opened.push(args)};
+  const document={addEventListener(){},getElementById(id){if(!ids.has(id))ids.set(id,new Node(id.includes("filter")||id==="sort-order"?"select":"div"));return ids.get(id);},createElement:tag=>new Node(tag),createTextNode:text=>{const n=new Node("#text");n.textContent=text;return n;},querySelectorAll:selector=>all.filter(node=>selector.startsWith(".")&&node.className.split(" ").includes(selector.slice(1)))};
+  const window={addEventListener(){},WeeklyInterests:Interests,WeeklyReview:Review,open:(...args)=>opened.push(args)};
   const context=vm.createContext({window,document,Option:function(label,value){const node=new Node("option",value);node.textContent=label;return node;},Intl,Date,URL,setTimeout:()=>0,clearTimeout(){},fetch:(...args)=>{fetched.push(args);throw new Error("Unexpected network");}});
   const source=fs.readFileSync(require.resolve("../site/app.js"),"utf8").replace(/  loadData\(\);\s*\}\)\(\);\s*$/, "  window.testApp = {state,interestsState,reviewState,initializeInterests,renderInterests,renderCandidates,renderMode,renderSourceStatus};\n})();");
   vm.runInContext(source,context);
@@ -103,7 +103,7 @@ test("real panel renderer keeps injection text inert, badges matched news and pr
   const h=appHarness();h.app.state.latest=latest;h.app.state.selected=A;const draft={choices:{[A]:"accepted"}};h.app.reviewState.draft=draft;
   h.app.initializeInterests({value:data});h.app.renderInterests();h.app.renderCandidates();
   assert(h.$("interest-cards").textContent.includes(marker));assert(h.$("candidate-list").textContent.includes(marker));assert.equal(h.all.filter(node=>["IMG","SVG","SCRIPT"].includes(node.tagName)).length,0);assert.equal(h.app.reviewState.draft,draft);
-  assert.equal(h.$("interests-collect").disabled,false);assert.match(h.$("interests-status").textContent,/마지막 게시 기준/);
+  assert.equal(h.$("interests-collect").disabled,false);assert.match(h.$("interests-status").textContent,/마지막 배포의 저장본/);
   h.$("interests-collect").fire("click");assert.deepEqual(h.opened,[[Interests.collectionURL(),"_blank","noopener,noreferrer"]]);assert.equal(h.fetched.length,0);
 });
 test("real filter/reset handlers restore all articles and stale selections disappear on registry refresh",() => {

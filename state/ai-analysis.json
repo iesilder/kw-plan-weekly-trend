@@ -196,22 +196,23 @@
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-04T06:26:45.585074+00:00",
-    "completed_at": "2026-11-04T06:26:46.195578+00:00",
+    "attempted_at": "2026-11-05T02:30:04.897298+00:00",
+    "completed_at": "2026-11-05T02:30:04.897298+00:00",
     "status": "failed",
-    "error_code": "request_rejected",
+    "error_code": "provider_unavailable",
     "request_count": 1,
-    "eligible_count": 6,
+    "eligible_count": 13,
     "completed_count": 0,
-    "cached_count": 0,
-    "failed_count": 6,
+    "cached_count": 6,
+    "failed_count": 7,
     "fingerprints": [
       "3080ce609bce42113c8a203cc33b4fe57560ceac0cc522d451c0df78aafdbea5",
       "3497874184f7ad40799107bcef5a66df655106046dd9f288c937bf9f5b1ef055",
       "38910371df348908761b9ff338a59441be5bfc48bd11d587de599e787dbc5243",
       "e37a36dbfc6f602fc65fd02952e1babe5a2e5c1cab36e983b555fdb256f68498",
       "35c1bdc9399c9c3720c43b557fdc75df7939107e15a97b56ca0119b1a6de32fa",
-      "048583c58116124b383b23245866df4e4f22b1c803cd4c8ea9f6ab30b5b5a68e"
+      "048583c58116124b383b23245866df4e4f22b1c803cd4c8ea9f6ab30b5b5a68e",
+      "9f366543acdc06277697cd14900a9515c1c3757e334bf554de2f0f6a2b723199"
     ]
   },
   "failures": {

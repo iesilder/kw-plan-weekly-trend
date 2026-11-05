@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
-  "date_kst": "2026-11-04",
-  "started_at": "2026-11-04T05:41:32.444533+00:00",
-  "completed_at": "2026-11-04T05:41:32.444533+00:00",
+  "date_kst": "2026-11-05",
+  "started_at": "2026-11-05T02:30:04.897298+00:00",
+  "completed_at": "2026-11-05T02:30:04.897298+00:00",
   "status": "partial_success",
   "stages": {
     "collection": {
@@ -10,12 +10,12 @@
       "error_code": null
     },
     "titles": {
-      "status": "cached",
-      "error_code": null
+      "status": "failed",
+      "error_code": "provider_unavailable"
     },
     "articles": {
-      "status": "partial_success",
-      "error_code": "unchanged_invalid_output"
+      "status": "failed",
+      "error_code": "provider_unavailable"
     }
   }
 }

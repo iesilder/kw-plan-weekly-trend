@@ -1,11 +1,102 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-b2ec57c25211dff19b18",
-  "generated_at": "2026-11-04T07:46:23.731958+00:00",
+  "generation_id": "finance-64e44a3fd5ced5255bc6",
+  "generated_at": "2026-11-05T02:30:04.897298+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 46,
+  "count": 52,
   "articles": [
+    {
+      "article_id": "article-e4624b09813581cd81b2",
+      "version_id": "version-68ddf30f8ec413365fce",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "예탁결제원 사모MMF 토큰화 통합테스트 내달 착수…5일 설명회 개최",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443131",
+      "published_date": "2026-11-05",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-05T02:30:04.897298+00:00",
+      "institutions": [
+        "한국예탁결제원"
+      ]
+    },
+    {
+      "article_id": "article-8f3753ce4fb673061a5e",
+      "version_id": "version-3b6309b30ddd57a5caab",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "[금융위 인사난맥②] '전성기' 맞은 자본시장…증선위원 위상 달라졌다",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443120",
+      "published_date": "2026-11-05",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-05T02:30:04.897298+00:00",
+      "institutions": [
+        "금융위원회"
+      ]
+    },
+    {
+      "article_id": "article-8841de0d45c74570553f",
+      "version_id": "version-c4cbee661d29ba379c8b",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "IM증권 \"美 블루웨이브, 금융시장에 호재…유가·금리 하락 기대\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443106",
+      "published_date": "2026-11-05",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-05T02:30:04.897298+00:00",
+      "institutions": [
+        "iM증권"
+      ]
+    },
+    {
+      "article_id": "article-721823d268f028e9eb04",
+      "version_id": "version-0e0906346a6a2f1a74e4",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "금융위 '역대급 5위' 자평에 거버넌스포럼 \"샴페인 터뜨릴 때 아냐\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443175",
+      "published_date": "2026-11-05",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-05T02:30:04.897298+00:00",
+      "institutions": [
+        "금융위원회"
+      ]
+    },
+    {
+      "article_id": "article-52f822a571aeb5458dc7",
+      "version_id": "version-267fbca7b27a36b0d8b7",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "日 치어증권 품는 토스…진입장벽 높은 일본 택한 이유는",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443156",
+      "published_date": "2026-11-05",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-05T02:30:04.897298+00:00",
+      "institutions": [
+        "치어증권",
+        "토스"
+      ]
+    },
+    {
+      "article_id": "article-427d8f787f6f9a78f897",
+      "version_id": "version-947ac00b70847f9f485d",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "[금융위 인사난맥①] 1급 인사 '연쇄방정식'…복잡한 네 자리 셈법",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443119",
+      "published_date": "2026-11-05",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-05T02:30:04.897298+00:00",
+      "institutions": [
+        "금융위원회"
+      ]
+    },
     {
       "article_id": "article-9884327dd09baee772ca",
       "version_id": "version-7a3d7725c039557bbb18",

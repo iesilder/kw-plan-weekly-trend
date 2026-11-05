@@ -886,34 +886,44 @@
       "status": "completed"
     },
     "issue-3108a2f8608f22965149": {
-      "metadata_fingerprint": "2f33b4330173cb65d956e1654e3de51643d76d58b70a6fcad3b19a42284fa194",
-      "checked_at": "2026-11-04T06:12:52.593814+00:00",
-      "reason_code": null,
-      "status": "completed"
+      "metadata_fingerprint": "a0064e4b48f2dbdaa06785c58893c57a7656368da105699eaa85d7ba9150400e",
+      "checked_at": "2026-11-05T02:30:04.897298+00:00",
+      "reason_code": "provider_unavailable",
+      "status": "failed",
+      "input_fingerprint": "b5033f2831a7f1affa6dea69ed8b3968571d7cbb693f9f0f798f3b0f1bf33c8b",
+      "body_hash": "04369dff2b40e9162604772cd8a3ea581bbfd3de58f2d5edef78ebc4ff4f835f"
     },
     "issue-34d0a1c085f04dc0c774": {
-      "metadata_fingerprint": "5a7c3c679e680e7143a069cbb1198b10e9fef11142a5f9eb452e11ef2b24d3c7",
-      "checked_at": "2026-11-04T06:12:52.593814+00:00",
-      "reason_code": null,
-      "status": "completed"
+      "metadata_fingerprint": "c5faf15e5848466df26e886615ce53dfaf97601f0bb8496446168a0ffc5878e4",
+      "checked_at": "2026-11-05T02:30:04.897298+00:00",
+      "reason_code": "provider_unavailable",
+      "status": "failed",
+      "input_fingerprint": "6688a5de39d755bfa6957bb62c4c215e2034635090dfe82862b3ba8eb9a13561",
+      "body_hash": "1cbfe184fc67c6c74d82c4cd036c9fbe016b5dfdb60f22e3a15c4ae3766ea478"
     },
     "issue-49697d9828e2c35c9098": {
-      "metadata_fingerprint": "de43099baebded5d1eeba0feb4623b97c4a7676c8ed6bdf4e79c99647f6930f5",
-      "checked_at": "2026-11-04T06:12:52.593814+00:00",
-      "reason_code": null,
-      "status": "completed"
+      "metadata_fingerprint": "3c566b62685aeaad57530298021ea3a4ac9575234a72d65a9073d89aa16cb045",
+      "checked_at": "2026-11-05T02:30:04.897298+00:00",
+      "reason_code": "provider_unavailable",
+      "status": "failed",
+      "input_fingerprint": "2315a64ca7f2429e856fb73eff264a2b033935039bcb80d05bd34034a540dbd3",
+      "body_hash": "c9f9e4cf21699822d1f1087cc8473d49b0c26153a8ea23667856d4d9afb1cdee"
     },
     "issue-0727cc1f0b22bdd5ae98": {
-      "metadata_fingerprint": "11b2f5900d5f8a2721b661414459db19e0f3d58b6d8b16c72ea2ddaf7f14234a",
-      "checked_at": "2026-11-04T06:12:52.593814+00:00",
-      "reason_code": null,
-      "status": "completed"
+      "metadata_fingerprint": "c4bff4f8ee3488b2109f525c18330f375d86a095ce5667cf7b76b1c897ddc71c",
+      "checked_at": "2026-11-05T02:30:04.897298+00:00",
+      "reason_code": "provider_unavailable",
+      "status": "failed",
+      "input_fingerprint": "23c0ab5249d23d70024957a163f240e63aaccf9b22982b03428e0e45ffd5c798",
+      "body_hash": "492f630b75f37657e6ec2384c2baceb4eca0f863773abf7c66bebbc251e61ca9"
     },
     "issue-d9fb63dca1fe16a50763": {
-      "metadata_fingerprint": "d951442f49734d89c0d9983db9066e9d62d42a769f9d1f67b04f199aab827563",
-      "checked_at": "2026-11-04T06:26:46.201671+00:00",
-      "reason_code": null,
-      "status": "completed"
+      "metadata_fingerprint": "daa9fc86b72052797efb1408e0b7b851868817634c34a63712995847c19bd062",
+      "checked_at": "2026-11-05T02:30:04.897298+00:00",
+      "reason_code": "provider_unavailable",
+      "status": "failed",
+      "input_fingerprint": "c5be86c3728e1f4dc600561af7c91744cdeaaa2e8e6d7a00c8965c923614782e",
+      "body_hash": "8073d70cfd6030db0aa8f771d285fbe2382492b40de385cc854b7a50b2f3311f"
     },
     "issue-ee1808d185516fc0bef6": {
       "metadata_fingerprint": "385650f13608cb9bfd470eb562c722649015d561e606087a882d153697d277ac",
@@ -923,14 +933,14 @@
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-04T06:26:46.201671+00:00",
-    "completed_at": "2026-11-04T06:26:56.923698+00:00",
-    "status": "success",
-    "error_code": null,
+    "attempted_at": "2026-11-05T02:30:04.897298+00:00",
+    "completed_at": "2026-11-05T02:30:04.897298+00:00",
+    "status": "failed",
+    "error_code": "provider_unavailable",
     "request_count": 1,
-    "fetch_count": 2,
-    "completed_count": 2,
+    "fetch_count": 5,
+    "completed_count": 0,
     "cached_count": 0,
-    "failed_count": 0
+    "failed_count": 5
   }
 }

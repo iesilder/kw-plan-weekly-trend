@@ -105,6 +105,24 @@ class ArticleAnalysisTests(unittest.TestCase):
         write(self.root / "site" / candidate["detail_path"], detail)
         return candidate
 
+    def test_provider_status_persists_with_one_request_and_existing_entries(self):
+        self.run_good()
+        old = read(self.root / "state/article-analysis.json")["entries"]
+        # A real instruction change invalidates freshness, not saved good results.
+        prompt = self.root / "config/article_prompt.txt"
+        prompt.write_text(prompt.read_text() + "\n테스트 지시 변경\n")
+        calls = []
+        def failed(*args):
+            calls.append(1)
+            raise ai.AIError("provider_unavailable", http_status=502)
+        result = articles.run(self.root, environ=ENV, fetcher=self.fetch,
+                              transport=failed, now=NOW + timedelta(days=1), automatic=True)
+        self.assertEqual(calls, [1])
+        self.assertEqual(result["last_attempt"]["http_status"], 502)
+        self.assertEqual(result["last_attempt"]["request_count"], 1)
+        self.assertEqual(read(self.root / "state/article-analysis.json")["entries"], old)
+        articles.check(self.root)
+
     def test_fsc_summary_is_body_grounded_without_reanalyzing_cached_news_or_dart(self):
         self.run_good()
         old_entries = copy.deepcopy(read(self.root / "state/article-analysis.json")["entries"])

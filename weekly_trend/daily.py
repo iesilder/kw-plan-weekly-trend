@@ -24,10 +24,11 @@ def _previous(path):
                 or set(value["stages"]) != set(STAGES)):
             raise ValueError
         for stage in value["stages"].values():
-            if (set(stage) != {"status", "error_code"} or stage["status"] not in STATUSES
+            if (set(stage) != {"status", "error_code"} | ({"http_status"} if "http_status" in stage else set()) or stage["status"] not in STATUSES
                     or (stage["error_code"] is not None and
                         (not isinstance(stage["error_code"], str) or not stage["error_code"].replace("_", "").isalnum() or len(stage["error_code"]) > 80))):
                 raise ValueError
+            ai.validate_http_status(stage)
     except (KeyError, TypeError, ValueError):
         raise ValueError("Invalid saved daily run status") from None
     return value
@@ -82,9 +83,13 @@ def run(root, environ=None, now=None, collector=None, title_runner=None,
             try:
                 priority = interest_issue_ids(root, moment)
                 options = {"priority_issue_ids": sorted(priority)} if priority else {}
-                result = runner(root, environ=environ, now=moment, automatic=True, **options)
+                # Explicit now freezes test/replay time; live stages use their own clock.
+                result = runner(root, environ=environ, now=now, automatic=True, **options)
                 attempt = result["last_attempt"]
                 stages[name] = {"status": attempt["status"], "error_code": attempt["error_code"]}
+                ai.validate_http_status(attempt)
+                if "http_status" in attempt:
+                    stages[name]["http_status"] = attempt["http_status"]
                 counts = result.get("counts", {})
                 if attempt["status"] in {"cached", "success"} and any(
                         counts.get(key, 0) for key in ("failed", "unavailable", "pending", "not_analyzed", "stale")):

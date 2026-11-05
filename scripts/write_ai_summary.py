@@ -22,7 +22,8 @@ def main():
              f"| 이번 실행 요청 수 | {attempt.get('request_count', 0)} |",
              f"| 이번 실행 캐시 재사용 | {attempt.get('cached_count', 0)} |",
              f"| 마지막 시도 상태 | {attempt.get('status', 'not_run')} |",
-             f"| 상태 코드 | {attempt.get('error_code') or 'none'} |", "",
+             f"| 상태 코드 | {attempt.get('error_code') or 'none'} |",
+             f"| 제공자 HTTP 상태 | {attempt.get('http_status', 'not_recorded')} |", "",
              "기사·보도자료 제목만 분류합니다. DART는 AI로 전송하지 않습니다. 본문 요약 결과는 아래 별도 항목에서 확인합니다.",
              "[설정과 범위](https://github.com/iesilder/kw-plan-weekly-trend/blob/main/docs/ai.md)", ""]
     article_path = Path("site/data/article-analysis.json")
@@ -37,7 +38,10 @@ def main():
                   f"| 본문 분석 실패 | {body_counts['failed']} |",
                   f"| 본문 확보 요청 | {body_attempt.get('fetch_count', 0)} |",
                   f"| 본문 AI 요청 | {body_attempt.get('request_count', 0)} |",
-                  f"| 본문 캐시 재사용 | {body_attempt.get('cached_count', 0)} |", "",
+                  f"| 본문 캐시 재사용 | {body_attempt.get('cached_count', 0)} |",
+                  f"| 본문 마지막 시도 상태 | {body_attempt.get('status', 'not_run')} |",
+                  f"| 본문 상태 코드 | {body_attempt.get('error_code') or 'none'} |",
+                  f"| 본문 제공자 HTTP 상태 | {body_attempt.get('http_status', 'not_recorded')} |", "",
                   "기사 전문은 저장하지 않습니다. 요약과 검증된 짧은 근거만 보존합니다.", ""]
         reasons = Counter(item["reason_code"] for item in article["items"].values()
                           if item["status"] in {"failed", "unavailable"} and item["reason_code"])

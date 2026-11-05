@@ -40,6 +40,15 @@ class IngestionTests(unittest.TestCase):
         return ingestion.run(self.root, now=now, environ={}, collector=self.collect,
                              daily_runner=self.daily, verifier=lambda root: self.calls.append("verify"), **kwargs)
 
+    def test_live_catchup_preserves_live_clock(self):
+        def runner(*args, **kwargs):
+            self.assertIsNone(kwargs["now"])
+            return {"record": {"stages": {"collection": {"status": "success"}}}}
+        with patch("weekly_trend.ingestion.datetime") as clock:
+            clock.now.return_value = ELEVEN
+            result = ingestion.run(self.root, environ={}, daily_runner=runner)
+        self.assertEqual(result["mode"], "daily_catchup")
+
     def test_rss_before_eleven_does_not_run_daily_analysis_or_advance_daily_date(self):
         result = self.execute()
         self.assertEqual(result["mode"], "rss_metadata")

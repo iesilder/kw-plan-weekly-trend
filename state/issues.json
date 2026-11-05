@@ -1,8 +1,49 @@
 {
   "schema_version": "1.0",
   "is_demo": false,
-  "generation_id": "live-0e0b7807cd735521665c",
+  "generation_id": "live-6cfb76efffe43bfa8264",
   "issues": [
+    {
+      "issue_id": "issue-0b25cbddf7d9168bba89",
+      "title": "삼성증권 0원, 한투증권 92억…홍콩ELS 과징금 희비 갈린 이유",
+      "company": "삼성증권",
+      "company_ids": [
+        "company-4"
+      ],
+      "companies": [
+        "삼성증권"
+      ],
+      "topic_id": "risk",
+      "topic": "정책·인허가·리스크",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(과징금)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-5546883cbd61816e0d3b"
+      ],
+      "detail_path": "data/issues/issue-0b25cbddf7d9168bba89.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "published_at": null,
+      "published_date": "2026-11-05",
+      "fetched_at": "2026-11-05T10:58:43.084731+00:00",
+      "matched_keywords": [
+        "과징금"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ],
+      "tags": [
+        "리스크"
+      ],
+      "event_stage": "사고·제재",
+      "classification_rules_version": "news-events-v2",
+      "content_filter": "topics",
+      "content_policy_version": "news-events-v2_4f5b3edf25e4ff4a"
+    },
     {
       "issue_id": "issue-9884327dd09baee772ca",
       "title": "홍콩 H지수 ELS 관련 은행·증권사 검사 결과 조치 - 제19차 금융위원회(11.4.) 의결",

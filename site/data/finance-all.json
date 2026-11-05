@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-64e44a3fd5ced5255bc6",
-  "generated_at": "2026-11-05T02:30:04.897298+00:00",
+  "generation_id": "finance-b689c7522564c9d05724",
+  "generated_at": "2026-11-05T10:58:43.084731+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 52,
+  "count": 55,
   "articles": [
     {
       "article_id": "article-e4624b09813581cd81b2",
@@ -95,6 +95,52 @@
       "fetched_at": "2026-11-05T02:30:04.897298+00:00",
       "institutions": [
         "금융위원회"
+      ]
+    },
+    {
+      "article_id": "article-2fa54f758ab60a892ae5",
+      "version_id": "version-6f4421322625e0b1d2bb",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "[인사] 미래에셋그룹",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443293",
+      "published_date": "2026-11-05",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-05T10:58:43.084731+00:00",
+      "institutions": [
+        "미래에셋그룹"
+      ]
+    },
+    {
+      "article_id": "article-0b25cbddf7d9168bba89",
+      "version_id": "version-5546883cbd61816e0d3b",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "삼성증권 0원, 한투증권 92억…홍콩ELS 과징금 희비 갈린 이유",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443270",
+      "published_date": "2026-11-05",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-05T10:58:43.084731+00:00",
+      "institutions": [
+        "삼성증권",
+        "한국투자증권"
+      ]
+    },
+    {
+      "article_id": "article-04a9754a90f1fe488380",
+      "version_id": "version-7dcfa6db6447a2714379",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "한국투자증권, 3분기 영업이익 3천487억…작년 대비 58.3%↓",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443288",
+      "published_date": "2026-11-05",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-05T10:58:43.084731+00:00",
+      "institutions": [
+        "한국투자증권"
       ]
     },
     {

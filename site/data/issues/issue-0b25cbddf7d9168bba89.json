@@ -1,0 +1,63 @@
+{
+  "issue_id": "issue-0b25cbddf7d9168bba89",
+  "title": "삼성증권 0원, 한투증권 92억…홍콩ELS 과징금 희비 갈린 이유",
+  "company": "삼성증권",
+  "company_ids": [
+    "company-4"
+  ],
+  "companies": [
+    "삼성증권"
+  ],
+  "topic_id": "risk",
+  "topic": "정책·인허가·리스크",
+  "priority": "unranked",
+  "report_status": "no_history",
+  "why_now": "제목의 회사·업권 정보와 주제 키워드(과징금)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+  "bullets": [],
+  "evidence_ids": [
+    "version-5546883cbd61816e0d3b"
+  ],
+  "detail_path": "data/issues/issue-0b25cbddf7d9168bba89.json",
+  "is_demo": false,
+  "analysis_status": "pending_ai",
+  "evidence_confidence": "metadata_only",
+  "source_name": "연합인포맥스(기사) · 증권",
+  "published_at": null,
+  "published_date": "2026-11-05",
+  "fetched_at": "2026-11-05T10:58:43.084731+00:00",
+  "matched_keywords": [
+    "과징금"
+  ],
+  "matched_topic_ids": [
+    "risk"
+  ],
+  "tags": [
+    "리스크"
+  ],
+  "event_stage": "사고·제재",
+  "classification_rules_version": "news-events-v2",
+  "content_filter": "topics",
+  "content_policy_version": "news-events-v2_4f5b3edf25e4ff4a",
+  "schema_version": "1.0",
+  "generation_id": "live-6cfb76efffe43bfa8264",
+  "change_summary": "본문·기보고 대비 변화는 분석하지 않았습니다.",
+  "last_report": null,
+  "evidence": [
+    {
+      "title": "삼성증권 0원, 한투증권 92억…홍콩ELS 과징금 희비 갈린 이유",
+      "published_at": null,
+      "published_date": "2026-11-05",
+      "source_updated_at": null,
+      "fetched_at": "2026-11-05T10:58:43.084731+00:00",
+      "content_level": "metadata_only",
+      "content_text": "",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "retention_basis": "공식 RSS 안내의 외부 사이트 제목·링크 표시 용도를 기준으로 제목·출처·발행일·원문 링크만 보존합니다. description·본문·이미지·요약은 저장하지 않습니다. 본문 재배포나 데이터 재판매 허가를 의미하지 않습니다.",
+      "retention_url": "https://news.einfomax.co.kr/rssIndex.html",
+      "evidence_id": "version-5546883cbd61816e0d3b",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443270",
+      "is_demo": false
+    }
+  ]
+}

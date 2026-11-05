@@ -494,6 +494,21 @@ class AITests(unittest.TestCase):
         self.assertNotIn("private response", state_text)
         self.assertNotIn("secret-provider", state_text)
 
+    def test_provider_http_status_persists_and_does_not_retry_or_erase_cache(self):
+        self.run_good()
+        old = read_json(self.root / "state/ai-analysis.json")["entries"]
+        self.add_news(1234)
+        calls = []
+        def failed(*args):
+            calls.append(1)
+            raise ai.AIError("provider_unavailable", http_status=503)
+        result = ai.run(self.root, environ=ENV, transport=failed, now=NOW, automatic=True)
+        self.assertEqual(calls, [1])
+        self.assertEqual(result["last_attempt"]["http_status"], 503)
+        self.assertEqual(result["last_attempt"]["request_count"], 1)
+        self.assertEqual(read_json(self.root / "state/ai-analysis.json")["entries"], old)
+        ai.check(self.root)
+
     def test_transport_exception_is_reduced_to_safe_code(self):
         def failing(*args):
             raise RuntimeError("should-never-log-key-or-payload")

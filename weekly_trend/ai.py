@@ -51,9 +51,19 @@ FSC_TITLE_FORMAT_RULES = [
 class AIError(Exception):
     """A safe, bounded code; provider responses and credentials are never logged."""
 
-    def __init__(self, code):
+    def __init__(self, code, http_status=None):
         self.code = code
+        # Only an HTTP status integer may cross the provider boundary.
+        self.http_status = http_status if type(http_status) is int and 400 <= http_status <= 599 else None
         super().__init__(code)
+
+
+def validate_http_status(record):
+    """Backward-compatible optional diagnostic, never arbitrary provider text."""
+    if "http_status" in record and (type(record["http_status"]) is not int or
+                                  not 400 <= record["http_status"] <= 599 or
+                                  record.get("error_code") is None):
+        raise ValueError("Invalid HTTP diagnostic")
 
 
 def _stamp(now=None):
@@ -174,7 +184,8 @@ def validate_state(state):
             raise ValueError("Invalid AI duplicate context")
     attempt = state["last_attempt"]
     if attempt is not None:
-        _keys(attempt, {"attempted_at", "completed_at", "status", "error_code", "request_count", "eligible_count", "completed_count", "cached_count", "failed_count", "fingerprints"})
+        _keys(attempt, {"attempted_at", "completed_at", "status", "error_code", "request_count", "eligible_count", "completed_count", "cached_count", "failed_count", "fingerprints"} | ({"http_status"} if "http_status" in attempt else set()))
+        validate_http_status(attempt)
         if _valid_time(attempt["completed_at"]) < _valid_time(attempt["attempted_at"]):
             raise ValueError("Invalid AI attempt times")
         if attempt["status"] not in ("success", "cached", "blocked", "failed", "partial_success"):
@@ -459,7 +470,7 @@ def request_once(payload, key, timeout):
         # URL, headers, credential, or provider-controlled exception message.
         reason = {400: "request_invalid", 404: "request_not_found", 408: "request_timeout",
                   429: "rate_limited", 401: "authentication_failed", 403: "authentication_failed"}.get(code)
-        raise AIError(reason or ("provider_unavailable" if code >= 500 else "request_rejected")) from None
+        raise AIError(reason or ("provider_unavailable" if code >= 500 else "request_rejected"), http_status=code) from None
     except (urllib.error.URLError, TimeoutError, OSError):
         raise AIError("network_error") from None
 
@@ -565,6 +576,8 @@ def run(root, environ=None, transport=None, now=None, automatic=False, issue_ids
                         state.get("failures", {}).pop(item["fingerprint"], None)
                     attempt.update(status="partial_success" if len(pending) > len(batch) else "success", completed_count=len(batch), completed_at=completed_at)
                 except AIError as error:
+                    if error.http_status is not None:
+                        attempt["http_status"] = error.http_status
                     attempt.update(status="failed", error_code=error.code, failed_count=len(batch), completed_at=_stamp(now))
                     if error.code == "invalid_output":
                         for item in batch:

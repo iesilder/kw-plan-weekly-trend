@@ -26,7 +26,7 @@ def run(root, *, bootstrap=False, environ=None, now=None, daily_runner=None,
     local = moment.astimezone(ZoneInfo("Asia/Seoul"))
     previous = daily._previous(root / "data/daily-run.json")
     if local.hour >= 11 and (previous is None or previous["date_kst"] < local.date().isoformat()):
-        result = (daily_runner or daily.run)(root, environ=environ, now=moment)
+        result = (daily_runner or daily.run)(root, environ=environ, now=now)
         return {"ok": True, "mode": "daily_catchup", "daily": result,
                 "collection_failed": result["record"]["stages"]["collection"]["status"] == "failed"}
 

@@ -29,10 +29,10 @@ def main():
         lines = ["## 일일 자동 갱신", "", f"한국 날짜: {record['date_kst']}", "",
                  "오늘 저장된 실행이 있어 재호출하지 않았습니다." if result["skipped"] else
                  "수집·기사 분석 결과를 각각 확인합니다. 사이트 게시 성공과 모든 기사 분석 성공은 다릅니다.",
-                 "", "| 처리 | 상태 | 사유 |", "|---|---|---|"]
+                 "", "| 처리 | 상태 | 사유 | HTTP |", "|---|---|---|---|"]
         for stage, label in (("collection", "수집"), ("titles", "기사 제목 분류"), ("articles", "기사 본문 요약")):
             value = record["stages"][stage]
-            lines.append(f"| {label} | {value['status']} | {value['error_code'] or 'none'} |")
+            lines.append(f"| {label} | {value['status']} | {value['error_code'] or 'none'} | {value.get('http_status', 'not_recorded')} |")
         registry = result.get("registry")
         if registry is not None:
             lines += ["", f"관심사 등록부 확인: {registry.get('status', 'unknown')} · {registry.get('error_code') or 'none'}", ""]

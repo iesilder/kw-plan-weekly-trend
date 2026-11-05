@@ -41,6 +41,32 @@ class DailyTests(unittest.TestCase):
                          article_runner=kwargs.pop('article_runner', self.analyze),
                          verifier=kwargs.pop('verifier', self.verify), **kwargs)
 
+    def test_http_diagnostics_are_saved_without_same_day_retry(self):
+        def failed(*args, **kwargs):
+            self.calls.append("ai")
+            return {"last_attempt": {"status": "failed", "error_code": "provider_unavailable", "http_status": 503}}
+        result = self.execute(title_runner=failed, article_runner=failed)
+        for name in ("titles", "articles"):
+            self.assertEqual(result["record"]["stages"][name]["http_status"], 503)
+        self.assertEqual(result["record"]["status"], "partial_success")
+        self.calls.clear()
+        self.assertTrue(self.execute(title_runner=failed, article_runner=failed)["skipped"])
+        self.assertEqual(self.calls, [])
+
+    def test_live_stages_do_not_receive_frozen_start_time(self):
+        def analyze(*args, **kwargs):
+            self.assertIsNone(kwargs["now"])
+            return {"last_attempt": {"status": "success", "error_code": None}}
+        from weekly_trend import ai
+        with patch("weekly_trend.daily.datetime") as clock, patch("weekly_trend.ai.datetime") as ai_clock:
+            clock.now.return_value = NOW
+            clock.strptime = __import__("datetime").datetime.strptime
+            ai_clock.now.return_value = NOW + timedelta(seconds=45)
+            ai_clock.fromisoformat = __import__("datetime").datetime.fromisoformat
+            result = self.execute(now=None, title_runner=analyze, article_runner=analyze)
+        self.assertEqual(result["record"]["started_at"], ai._stamp(NOW))
+        self.assertEqual(result["record"]["completed_at"], ai._stamp(NOW + timedelta(seconds=45)))
+
     def test_collect_then_both_ai_stages_and_verify_once_per_korean_date(self):
         first = self.execute()
         self.assertEqual(first['record']['date_kst'], '2026-11-04')

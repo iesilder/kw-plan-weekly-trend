@@ -24,10 +24,22 @@ class TransportDiagnostics(unittest.TestCase):
                     with self.assertRaises(ai.AIError) as caught:
                         ai.request_once({}, 'fake-test-key', 1)
                 self.assertEqual(caught.exception.code, expected)
+                self.assertEqual(caught.exception.http_status, status)
                 self.assertNotIn('SECRET', str(caught.exception))
                 self.assertTrue(error.closed)
                 factory.return_value.open.assert_called_once()
                 self.assertIn(expected, ai.ERROR_CODES)
+
+    def test_http_diagnostic_rejects_untrusted_values(self):
+        for value in (True, "503 SECRET", 399, 600, {}, None):
+            with self.subTest(value=value):
+                self.assertIsNone(ai.AIError("provider_unavailable", value).http_status)
+                with self.assertRaises(ValueError):
+                    ai.validate_http_status({"http_status": value, "error_code": "provider_unavailable"})
+        ai.validate_http_status({"error_code": "provider_unavailable"})
+        ai.validate_http_status({"http_status": 503, "error_code": "provider_unavailable"})
+        with self.assertRaises(ValueError):
+            ai.validate_http_status({"http_status": 503, "error_code": None})
 
     def test_provider_schema_avoids_nested_cardinality_expansion(self):
         schema = ai.response_schema()

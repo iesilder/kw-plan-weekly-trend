@@ -175,7 +175,8 @@ def load_state(root):
             raise ValueError("Invalid article failure code")
     if value["last_attempt"] is not None:
         attempt = value["last_attempt"]
-        ai._keys(attempt, {"attempted_at", "completed_at", "status", "error_code", "request_count", "fetch_count", "completed_count", "cached_count", "failed_count"})
+        ai._keys(attempt, {"attempted_at", "completed_at", "status", "error_code", "request_count", "fetch_count", "completed_count", "cached_count", "failed_count"} | ({"http_status"} if "http_status" in attempt else set()))
+        ai.validate_http_status(attempt)
         if ai._valid_time(attempt["completed_at"]) < ai._valid_time(attempt["attempted_at"]) or attempt["status"] not in {"success", "cached", "partial_success", "blocked", "failed"}:
             raise ValueError("Invalid article attempt status")
         for key, maximum in [("request_count", 1), ("fetch_count", 5), ("completed_count", 5), ("cached_count", 10000), ("failed_count", 5)]:
@@ -564,6 +565,8 @@ def run(root, environ=None, fetcher=None, transport=None, now=None, automatic=Fa
                         "input_fingerprint": provenance[issue_id]["input_fingerprint"], "body_hash": provenance[issue_id]["body_hash"]}
             except Exception as error:
                 code = error.code if isinstance(error, ai.AIError) else "network_error"
+                if isinstance(error, ai.AIError) and error.http_status is not None:
+                    attempt["http_status"] = error.http_status
                 attempt.update(error_code=code, failed_count=attempt["failed_count"] + len(batch))
                 for row in batch:
                     state["checks"][row["issue_id"]] = {"metadata_fingerprint": eligible[row["issue_id"]]["metadata_fingerprint"], "checked_at": stamp, "reason_code": code, "status": "failed",

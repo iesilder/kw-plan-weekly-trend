@@ -1,11 +1,41 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-b689c7522564c9d05724",
-  "generated_at": "2026-11-05T10:58:43.084731+00:00",
+  "generation_id": "finance-8d844c4b1fec21bbfdfa",
+  "generated_at": "2026-11-06T00:18:27.035572+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 55,
+  "count": 57,
   "articles": [
+    {
+      "article_id": "article-d910d8c817844a48dddf",
+      "version_id": "version-c5e39ae71fe898d68499",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "\"AI 보안 위협 상시적\"…증권사 이사회도 금융보안원 '특별 과외'",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443351",
+      "published_date": "2026-11-06",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-06T00:18:27.035572+00:00",
+      "institutions": [
+        "금융보안원"
+      ]
+    },
+    {
+      "article_id": "article-70e4f96173d2f5db8de3",
+      "version_id": "version-3de2f10dcdf0cd9480dc",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "[부고] 선형렬(에이원자산운용 대표)씨 빙부상",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443380",
+      "published_date": "2026-11-06",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-06T00:18:27.035572+00:00",
+      "institutions": [
+        "에이원자산운용"
+      ]
+    },
     {
       "article_id": "article-e4624b09813581cd81b2",
       "version_id": "version-68ddf30f8ec413365fce",

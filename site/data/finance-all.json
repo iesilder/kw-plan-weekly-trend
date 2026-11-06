@@ -1,11 +1,26 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-0e7859d5f71178e9b3ce",
-  "generated_at": "2026-11-06T07:57:00.916247+00:00",
+  "generation_id": "finance-b3eddc023649447afba1",
+  "generated_at": "2026-11-06T15:56:58.081918+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 63,
+  "count": 64,
   "articles": [
+    {
+      "article_id": "article-ecf542fb90b246fe9a32",
+      "version_id": "version-0504988e56a827ed16d8",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "[인사] 한국예탁결제원",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443541",
+      "published_date": "2026-11-06",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-06T15:56:58.081918+00:00",
+      "institutions": [
+        "한국예탁결제원"
+      ]
+    },
     {
       "article_id": "article-e69c1b5fb91fe37fe1d8",
       "version_id": "version-708f4af3c8b552ccedce",

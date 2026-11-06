@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-6d876c6db464a0f474ce",
-  "generated_at": "2026-11-06T00:18:27.035572+00:00",
+  "generation_id": "live-8d39ac4d40a5e7338c20",
+  "generated_at": "2026-11-06T07:57:51.811123+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "article-bullets-v1",
@@ -9,22 +9,22 @@
   "counts": {
     "not_applicable": 1,
     "pending": 2,
-    "failed": 5,
+    "failed": 6,
+    "completed": 4,
+    "stale": 2,
     "unavailable": 0,
-    "stale": 7,
-    "completed": 0,
     "eligible": 14
   },
   "last_attempt": {
-    "attempted_at": "2026-11-05T02:30:04.897298+00:00",
-    "completed_at": "2026-11-05T02:30:04.897298+00:00",
-    "status": "failed",
-    "error_code": "provider_unavailable",
+    "attempted_at": "2026-11-06T07:57:30.307357+00:00",
+    "completed_at": "2026-11-06T07:57:51.808368+00:00",
+    "status": "partial_success",
+    "error_code": "partial_invalid_output",
     "request_count": 1,
     "fetch_count": 5,
-    "completed_count": 0,
+    "completed_count": 4,
     "cached_count": 0,
-    "failed_count": 5
+    "failed_count": 1
   },
   "items": {
     "issue-0b25cbddf7d9168bba89": {
@@ -108,84 +108,369 @@
       "result": null
     },
     "issue-ec88113fec2c699faaf5": {
-      "status": "stale",
+      "status": "completed",
       "reason_code": null,
       "evidence_ids": [
         "version-6ebad5d35dba7d5a4507"
       ],
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442565",
       "source_name": "연합인포맥스(기사) · 증권",
-      "input_fingerprint": null,
-      "result_fingerprint": "d6cc50575cbcb5957c7d0343dac20867f4e5e9433aad6b44d5c75d84838995e2",
-      "analyzed_at": "2026-11-03T06:27:51.277080+00:00",
+      "input_fingerprint": "5890a829daa561456ef45c1e38b92d8c4a6cc94afee6400fb31f6a78165d5cf5",
+      "result_fingerprint": "5890a829daa561456ef45c1e38b92d8c4a6cc94afee6400fb31f6a78165d5cf5",
+      "analyzed_at": "2026-11-06T07:57:51.808360+00:00",
       "body_hash": "4a2f12f5f3c3104be0fae7ad9a611c43f522c4880b37babd07eff19b6c023a8b",
-      "body_fetched_at": "2026-11-03T06:27:38.702311+00:00",
+      "body_fetched_at": "2026-11-06T07:57:30.307357+00:00",
       "truncated": false,
-      "result": null
+      "result": {
+        "key_change": {
+          "text": "금융위원회가 세계 최대 가상자산거래소 바이낸스의 대규모 해킹 사고 여파로 국내 가상자산사업자를 대상으로 긴급 점검을 실시함.",
+          "evidence_ids": [
+            "p1"
+          ]
+        },
+        "facts": [
+          {
+            "text": "금융위원회는 2일 유영준 디지털금융정책관 주재로 금감원, 금융보안원, 디지털자산거래소공동협의체 및 주요 사업자와 긴급회의를 개최함.",
+            "evidence_ids": [
+              "p2"
+            ]
+          },
+          {
+            "text": "바이낸스는 지난달 30일 핫월렛에서 약 63억 달러 규모의 가상자산이 무단 출고되는 해킹 사고가 발생했다고 발표한 바 있음.",
+            "evidence_ids": [
+              "p4"
+            ]
+          },
+          {
+            "text": "금융위는 국내 사업자들의 전산 시스템 접근 통제 상황과 지갑 출고 승인 및 서명 체계, 관리자 권한 부여 현황을 집중 점검함.",
+            "evidence_ids": [
+              "p6"
+            ]
+          },
+          {
+            "text": "콜드월렛 자산 보관 비중 상향, 준비금 추가 적립, 입출고 상시 모니터링 강화 등의 즉실행 보안 조치를 주문함.",
+            "evidence_ids": [
+              "p8"
+            ]
+          },
+          {
+            "text": "전산망 비정상 접근 시도 시 즉각적인 보고와 정보 공유를 통해 신속한 대응 체계를 가동할 것을 요구함.",
+            "evidence_ids": [
+              "p9"
+            ]
+          }
+        ],
+        "stage": "점검·조사",
+        "why_candidate": "해외 대형 거래소 해킹 사고를 계기로 국내 가상자산 시장의 보안 취약점을 점검하고 유사 사고 발생을 선제적으로 예방하기 위함.",
+        "evidence": [
+          {
+            "id": "p1",
+            "quote": "사고와 관련해 국내 가상자산사업자를 대상으로 긴급 점검에"
+          },
+          {
+            "id": "p2",
+            "quote": "금융위원회는 2일 유영준 디지털금융정책관 주재로 금융감독원,"
+          },
+          {
+            "id": "p4",
+            "quote": "서 바이낸스는 지난달 30일 핫월렛에서 약 63억 달러(한화"
+          },
+          {
+            "id": "p6",
+            "quote": "이에 금융위는 국내 사업자들의 전산 시스템 접근 통제 상황을"
+          },
+          {
+            "id": "p8",
+            "quote": "소에 인터넷과 분리된 콜드월렛의 자산 보관 비중을 상향하고,"
+          },
+          {
+            "id": "p9",
+            "quote": "시도가 발생할 경우 즉각적인 보고와 정보 공유를 통해 신속"
+          }
+        ]
+      }
     },
     "issue-a99980f5c72b33d80750": {
-      "status": "stale",
+      "status": "completed",
       "reason_code": null,
       "evidence_ids": [
         "version-00420f96778c5d8a0d0d"
       ],
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442483",
       "source_name": "연합인포맥스(기사) · 증권",
-      "input_fingerprint": null,
-      "result_fingerprint": "846eca7a36768948f8175ab611a6fc43c57f2b2234aeaad5c46707330d12bb80",
-      "analyzed_at": "2026-11-03T06:27:51.277071+00:00",
+      "input_fingerprint": "5cc2aa9237d2b85b11b8bfd11ca26933ec5dda4f5fc90e4f5f224daccb721d61",
+      "result_fingerprint": "5cc2aa9237d2b85b11b8bfd11ca26933ec5dda4f5fc90e4f5f224daccb721d61",
+      "analyzed_at": "2026-11-06T07:57:51.808351+00:00",
       "body_hash": "f75f7a9deb199bc45dd1f76d2ff7c72d1ee3b3d0bfc7c995cd7c731737e2d9a3",
-      "body_fetched_at": "2026-11-03T06:27:38.702311+00:00",
+      "body_fetched_at": "2026-11-06T07:57:30.307357+00:00",
       "truncated": false,
-      "result": null
+      "result": {
+        "key_change": {
+          "text": "국내 증권유관기관이 오는 2028년 시행을 목표로 증권시장 결제주기 T+1 단축을 추진함.",
+          "evidence_ids": [
+            "p3"
+          ]
+        },
+        "facts": [
+          {
+            "text": "한국거래소, 예탁결제원, 한국증권금융, 한국금융투자협회는 2일 8대 분야와 22개 과제로 구성된 로드맵 초안을 발표함.",
+            "evidence_ids": [
+              "p4"
+            ]
+          },
+          {
+            "text": "해외 주요국의 사례를 고려하여 로드맵 발표 후 시행까지 약 2.1년이 소요되도록 준비할 계획임.",
+            "evidence_ids": [
+              "p6",
+              "p7"
+            ]
+          },
+          {
+            "text": "올해 1분기 관계기관과 태스크포스 및 프로젝트 관리 조직을 설치하고 내년 10월까지 인프라 개편을 마칠 예정임.",
+            "evidence_ids": [
+              "p9",
+              "p10"
+            ]
+          },
+          {
+            "text": "시스템 안정성 확보를 위해 9개월 이상의 통합테스트를 진행할 방침임.",
+            "evidence_ids": [
+              "p12"
+            ]
+          },
+          {
+            "text": "오는 12월 18일까지 의견 수렴을 거치며 매도대금담보대출 금리 인하 등 선제 지원 조치도 병행함.",
+            "evidence_ids": [
+              "p13",
+              "p14"
+            ]
+          }
+        ],
+        "stage": "추진·협약",
+        "why_candidate": "아시아 권역 내 시장 변화 대응과 거래 편의 제고를 위해 T+1 결제주기 도입 로드맵을 구체화하고 이행 절차에 돌입함.",
+        "evidence": [
+          {
+            "id": "p3",
+            "quote": "증권유관기관이 오는 2028년 시행을"
+          },
+          {
+            "id": "p4",
+            "quote": "공동으로 8대 분야·22개 과제를 바탕"
+          },
+          {
+            "id": "p6",
+            "quote": "고려해 국내에선 약 2.1년 후 전환한"
+          },
+          {
+            "id": "p7",
+            "quote": "맵 발표 후 시행까지 2.1년이 소요된다"
+          },
+          {
+            "id": "p9",
+            "quote": "유관기관은 올해 1분기 관계기관과 태스크"
+          },
+          {
+            "id": "p10",
+            "quote": "인 투자자들과 내후년 1분기까지 전산개발"
+          },
+          {
+            "id": "p12",
+            "quote": "결제주기 단축에 앞서 9개월 이상의 통합"
+          },
+          {
+            "id": "p13",
+            "quote": "를 통해 오는 12월 18일까지 의견 수"
+          },
+          {
+            "id": "p14",
+            "quote": "이들은 선제 조치로서 매도대금담보대출 금"
+          }
+        ]
+      }
     },
     "issue-a7a9b220314dfbd5acef": {
-      "status": "stale",
+      "status": "completed",
       "reason_code": null,
       "evidence_ids": [
         "version-d186b5f800ee576eb345"
       ],
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442518",
       "source_name": "연합인포맥스(기사) · 증권",
-      "input_fingerprint": null,
-      "result_fingerprint": "89acebab6221b03de86e0784ddd91c51ba1c29e90531b931cffca4296e8414c1",
-      "analyzed_at": "2026-11-03T06:27:51.277061+00:00",
+      "input_fingerprint": "f04b6ac49db7b6df5279064a0ec3ee06f9d55110e4d5ff40e1c85de5c4128e69",
+      "result_fingerprint": "f04b6ac49db7b6df5279064a0ec3ee06f9d55110e4d5ff40e1c85de5c4128e69",
+      "analyzed_at": "2026-11-06T07:57:51.808337+00:00",
       "body_hash": "d65bb9731681d063527994c01e44fa17faf2a7c4d904d453b9199b9cd4db5e48",
-      "body_fetched_at": "2026-11-03T06:27:38.702311+00:00",
+      "body_fetched_at": "2026-11-06T07:57:30.307357+00:00",
       "truncated": false,
-      "result": null
+      "result": {
+        "key_change": {
+          "text": "국내 증권유관기관이 오는 2028년 시행을 목표로 결제주기 T+1 단축 로드맵 초안을 발표함.",
+          "evidence_ids": [
+            "p4"
+          ]
+        },
+        "facts": [
+          {
+            "text": "한국거래소, 예탁결제원, 한국증권금융, 한국금융투자협회는 2일 공동으로 8대 분야와 22개 과제를 바탕으로 한 로드맵을 발표함.",
+            "evidence_ids": [
+              "p6"
+            ]
+          },
+          {
+            "text": "미국과 유럽연합 등 해외 주요국이 2.5년 이상의 개발 기간을 부여한 점을 고려해 국내에선 약 2.1년 후 전환한다는 계획임.",
+            "evidence_ids": [
+              "p8"
+            ]
+          },
+          {
+            "text": "올해 1분기 태스크포스와 프로젝트 관리 조직을 설치하며, 내년 10월까지 청산결제 인프라 개편을 완료할 예정임.",
+            "evidence_ids": [
+              "p14",
+              "p15"
+            ]
+          },
+          {
+            "text": "내후년 1분기까지 전산개발 및 업무체계 개편을 마치기 위해 올해 12월 업권별 가이드라인 및 이행점검표를 제공함.",
+            "evidence_ids": [
+              "p15"
+            ]
+          },
+          {
+            "text": "결제주기 단축 이전에 선제 조치로 매도대금담보대출 금리 인하를 지원하며 20일 키움증권을 시작으로 순차 확대함.",
+            "evidence_ids": [
+              "p19",
+              "p21"
+            ]
+          },
+          {
+            "text": "오는 12월 18일까지 홈페이지를 통해 의견 수렴 절차를 거치고 공청회와 태스크포스를 통해 보완과제를 지속 발굴함.",
+            "evidence_ids": [
+              "p24"
+            ]
+          }
+        ],
+        "stage": "추진·협약",
+        "why_candidate": "글로벌 자본시장 경쟁력 강화와 결제 리스크 축소를 위해 T+1 결제주기 도입 일정을 공식화하고 사전 준비와 이해관계자 의견 수렴에 착수함.",
+        "evidence": [
+          {
+            "id": "p4",
+            "quote": "증권유관기관이 오는 2028년 시행을 목표로"
+          },
+          {
+            "id": "p6",
+            "quote": "공동으로 8대 분야·22개 과제를 바탕으로"
+          },
+          {
+            "id": "p8",
+            "quote": "등 해외 주요국에서 2.5년 이상의 로드맵"
+          },
+          {
+            "id": "p14",
+            "quote": "유관기관은 올해 1분기 관계기관과 태스크포스("
+          },
+          {
+            "id": "p15",
+            "quote": "인 투자자들과 내후년 1분기까지 전산개발 및"
+          },
+          {
+            "id": "p19",
+            "quote": "이전에 선제 조치로 매도대금담보대출 금리 인"
+          },
+          {
+            "id": "p21",
+            "quote": "이날 미래에셋증권과 20일 키움증권을 시작으"
+          },
+          {
+            "id": "p24",
+            "quote": "를 통해 오는 12월 18일까지 의견 수렴 절"
+          }
+        ]
+      }
     },
     "issue-193dc2f5a4e04bf16e42": {
-      "status": "stale",
-      "reason_code": null,
+      "status": "failed",
+      "reason_code": "output_number_mismatch",
       "evidence_ids": [
         "version-464a766f9624c9627a95"
       ],
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442572",
       "source_name": "연합인포맥스(기사) · 증권",
       "input_fingerprint": null,
-      "result_fingerprint": "1e44520e7f0951521b0351eececc7e03fb0a2588cf31f3f440bbe24e448925b2",
-      "analyzed_at": "2026-11-03T06:06:41.516575+00:00",
+      "result_fingerprint": null,
+      "analyzed_at": null,
       "body_hash": "e0c0bc22419bb7d572a946d1fa81daf91169f2b1f07253d057fa57ca184f1df9",
       "body_fetched_at": "2026-11-03T06:06:32.310257+00:00",
       "truncated": false,
       "result": null
     },
     "issue-8cda78e7eb4a64c526cd": {
-      "status": "stale",
+      "status": "completed",
       "reason_code": null,
       "evidence_ids": [
         "version-42e8ddadcc22cab2da7a"
       ],
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442601",
       "source_name": "연합인포맥스(기사) · 증권",
-      "input_fingerprint": null,
-      "result_fingerprint": "eac5f67422bc0b35b8b22a3cde4a0c7517192633c8de358bc9bccdd7cc9c962b",
-      "analyzed_at": "2026-11-03T06:27:51.277041+00:00",
+      "input_fingerprint": "cae6dd6c68e382f069448bef424ca3aed6e3a0f313085c2a1cf816e41ce8f52a",
+      "result_fingerprint": "cae6dd6c68e382f069448bef424ca3aed6e3a0f313085c2a1cf816e41ce8f52a",
+      "analyzed_at": "2026-11-06T07:57:51.808310+00:00",
       "body_hash": "9f19597b90f688a344fe0460082a6583ce5d62ba5d9a45b9882d1b84ccf91d06",
-      "body_fetched_at": "2026-11-03T06:27:38.702311+00:00",
+      "body_fetched_at": "2026-11-06T07:57:30.307357+00:00",
       "truncated": false,
-      "result": null
+      "result": {
+        "key_change": {
+          "text": "카카오페이증권이 첫 기업인수목적회사를 설립하며 기업금융 사업 확대에 나섬.",
+          "evidence_ids": [
+            "p2"
+          ]
+        },
+        "facts": [
+          {
+            "text": "2일 금융감독원 전자공시시스템 및 관련 업계에 따르면 회사는 카카오페이증권제1호기업인수목적 주를 설립함.",
+            "evidence_ids": [
+              "p3"
+            ]
+          },
+          {
+            "text": "지난 7월 투자매매업 인수업 포함 본인가를 취득한 데 따른 후속 행보임.",
+            "evidence_ids": [
+              "p3"
+            ]
+          },
+          {
+            "text": "상장예비심사와 공모 등 이후 절차는 관련 법령과 규정에 따라 진행할 예정임.",
+            "evidence_ids": [
+              "p5"
+            ]
+          },
+          {
+            "text": "앞서 신호철 대표는 지난 7월에 열린 간담회에서 향후 6~12개월간 기업공개 공모주 주관 청약 업무와 스타트업 모험자본 투자에 집중하겠다고 밝힌 바 있음.",
+            "evidence_ids": [
+              "p6"
+            ]
+          }
+        ],
+        "stage": "추진·협약",
+        "why_candidate": "신규 인가 취득 이후 첫 스팩 설립을 통해 IB 포트폴리오를 다각화하고 본격적인 기업금융 영업에 돌입하는 과정임.",
+        "evidence": [
+          {
+            "id": "p2",
+            "quote": "스) 전병훈 기자 = 카카오페이증권이 첫 기업인수목적회사(SPAC·스팩)를 설립하며 기업금"
+          },
+          {
+            "id": "p3",
+            "quote": "사'를 설립했다. 지난 7월 투자매매업(인수업 포함)본인가를 취득한 데 따른 후속 행보다."
+          },
+          {
+            "id": "p5",
+            "quote": "과정의 일환\"이라며 \"상장예비심사와 공모 등 이후 절차는 관련 법령과 규정에 따라 진행할"
+          },
+          {
+            "id": "p6",
+            "quote": "자간담회에서 향후 6~12개월간 기업공개(IPO) 공모주 주관·청약 업무와 스타트업 모험자"
+          }
+        ]
+      }
     },
     "issue-d9fb63dca1fe16a50763": {
       "status": "failed",

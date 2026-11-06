@@ -1,11 +1,41 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-8d844c4b1fec21bbfdfa",
-  "generated_at": "2026-11-06T00:18:27.035572+00:00",
+  "generation_id": "finance-0e7859d5f71178e9b3ce",
+  "generated_at": "2026-11-06T07:57:00.916247+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 57,
+  "count": 63,
   "articles": [
+    {
+      "article_id": "article-e69c1b5fb91fe37fe1d8",
+      "version_id": "version-708f4af3c8b552ccedce",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "MSCI 회장 \"韓, 지수 편입 위해선 개혁 노력·법제화 실행으로 이어져야\"(종합)",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443479",
+      "published_date": "2026-11-06",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-06T07:57:00.916247+00:00",
+      "institutions": [
+        "MSCI"
+      ]
+    },
+    {
+      "article_id": "article-da0c031236eaf1e3c481",
+      "version_id": "version-f90faafcbfdcbf7a82ef",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "[증시바닥 진단] 하나證 황승택 \"과매도 국면…韓 반도체 우려 과도\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443429",
+      "published_date": "2026-11-06",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-06T07:57:00.916247+00:00",
+      "institutions": [
+        "하나증권"
+      ]
+    },
     {
       "article_id": "article-d910d8c817844a48dddf",
       "version_id": "version-c5e39ae71fe898d68499",
@@ -22,6 +52,51 @@
       ]
     },
     {
+      "article_id": "article-908433064eaeac726a70",
+      "version_id": "version-6a7c7b23c6e773a6f6b9",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "\"KTB 외국인 투자자 잡는다\"…하나證 첫 亞설명회, 인바운드 본격화",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443413",
+      "published_date": "2026-11-06",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-06T07:57:00.916247+00:00",
+      "institutions": [
+        "하나증권"
+      ]
+    },
+    {
+      "article_id": "article-8bde4a6c1e60c1c1a861",
+      "version_id": "version-751d7802e5f6abc15546",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "[증시 바닥 진단] KB證 김동원 \"5천피 붕괴 과민반응, 추세조정 아니다\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443446",
+      "published_date": "2026-11-06",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-06T07:57:00.916247+00:00",
+      "institutions": [
+        "KB증권"
+      ]
+    },
+    {
+      "article_id": "article-88d923babc9ddf44491a",
+      "version_id": "version-9667f603c5f1f89b0b75",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "MSCI 회장 \"韓, 지수 편입 위해선 개혁 노력·법제화 실행으로 이어져야\"(상보)",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443445",
+      "published_date": "2026-11-06",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-06T07:57:00.916247+00:00",
+      "institutions": [
+        "MSCI"
+      ]
+    },
+    {
       "article_id": "article-70e4f96173d2f5db8de3",
       "version_id": "version-3de2f10dcdf0cd9480dc",
       "source_id": "einfomax-s1n2",
@@ -34,6 +109,21 @@
       "fetched_at": "2026-11-06T00:18:27.035572+00:00",
       "institutions": [
         "에이원자산운용"
+      ]
+    },
+    {
+      "article_id": "article-5cf351aa50df851b76ca",
+      "version_id": "version-2217a673d615c4cccff7",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "[증시바닥 진단] iM증권 고태봉 \"심리적 패닉 상황…반도체 산업은 문제없어\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443423",
+      "published_date": "2026-11-06",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-06T07:57:00.916247+00:00",
+      "institutions": [
+        "iM증권"
       ]
     },
     {

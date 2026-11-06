@@ -193,18 +193,214 @@
         "duplicate_issue_ids": []
       },
       "duplicate_context": {}
+    },
+    "3080ce609bce42113c8a203cc33b4fe57560ceac0cc522d451c0df78aafdbea5": {
+      "issue_id": "issue-3108a2f8608f22965149",
+      "input_fingerprint": "3080ce609bce42113c8a203cc33b4fe57560ceac0cc522d451c0df78aafdbea5",
+      "input_evidence_ids": [
+        "version-dd49690da45e4662b79d"
+      ],
+      "provider": "google_gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "metadata-review-v2",
+      "policy_version": "public-metadata-inference-v2",
+      "analyzed_at": "2026-11-06T07:57:30.301600+00:00",
+      "result": {
+        "suggested_topic_id": "risk",
+        "relevance": "relevant",
+        "rationale": "증권선물위원회 회의를 통해 사업보고서 등에 대한 조사 및 감리 결과 조치가 의결되어 규제 및 감리 관련 점검이 필요합니다.",
+        "check_points": [
+          "사업보고서 조사 감리 결과에 따른 조치 대상 확인",
+          "위원회 회의에서 논의된 위반 사항 점검"
+        ],
+        "duplicate_issue_ids": []
+      },
+      "duplicate_context": {}
+    },
+    "3497874184f7ad40799107bcef5a66df655106046dd9f288c937bf9f5b1ef055": {
+      "issue_id": "issue-34d0a1c085f04dc0c774",
+      "input_fingerprint": "3497874184f7ad40799107bcef5a66df655106046dd9f288c937bf9f5b1ef055",
+      "input_evidence_ids": [
+        "version-ba4e3ee7cf45325ace23"
+      ],
+      "provider": "google_gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "metadata-review-v2",
+      "policy_version": "public-metadata-inference-v2",
+      "analyzed_at": "2026-11-06T07:57:30.301600+00:00",
+      "result": {
+        "suggested_topic_id": "risk",
+        "relevance": "relevant",
+        "rationale": "가상자산업권 등 침해사고 관련 긴급점검 회의 개최를 통해 주요 가상자산사업자들의 해킹사고 대응 상황을 점검하는 내용의 보도자료입니다.",
+        "check_points": [
+          "가상자산사업자 대상 해킹사고 대응 현황 확인",
+          "긴급점검 회의에서 논의된 보안 리스크 점검"
+        ],
+        "duplicate_issue_ids": [
+          "issue-0727cc1f0b22bdd5ae98"
+        ]
+      },
+      "duplicate_context": {
+        "issue-0727cc1f0b22bdd5ae98": "35c1bdc9399c9c3720c43b557fdc75df7939107e15a97b56ca0119b1a6de32fa"
+      }
+    },
+    "38910371df348908761b9ff338a59441be5bfc48bd11d587de599e787dbc5243": {
+      "issue_id": "issue-49697d9828e2c35c9098",
+      "input_fingerprint": "38910371df348908761b9ff338a59441be5bfc48bd11d587de599e787dbc5243",
+      "input_evidence_ids": [
+        "version-0d1e147fc7ea32c424f3"
+      ],
+      "provider": "google_gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "metadata-review-v2",
+      "policy_version": "public-metadata-inference-v2",
+      "analyzed_at": "2026-11-06T07:57:30.301600+00:00",
+      "result": {
+        "suggested_topic_id": "risk",
+        "relevance": "relevant",
+        "rationale": "증권선물위원회 회의를 통해 사업보고서 등에 대한 조사 및 감리 결과 조치가 의결됨에 따라 관련 규제 이행 여부를 검토해야 합니다.",
+        "check_points": [
+          "사업보고서 감리 결과에 따른 조치 내용 확인",
+          "해당 위원회 발표에 따른 후속 조치 점검"
+        ],
+        "duplicate_issue_ids": [
+          "issue-3108a2f8608f22965149"
+        ]
+      },
+      "duplicate_context": {
+        "issue-3108a2f8608f22965149": "3080ce609bce42113c8a203cc33b4fe57560ceac0cc522d451c0df78aafdbea5"
+      }
+    },
+    "e37a36dbfc6f602fc65fd02952e1babe5a2e5c1cab36e983b555fdb256f68498": {
+      "issue_id": "issue-d9fb63dca1fe16a50763",
+      "input_fingerprint": "e37a36dbfc6f602fc65fd02952e1babe5a2e5c1cab36e983b555fdb256f68498",
+      "input_evidence_ids": [
+        "version-fbed5fbf5b4e474423c4"
+      ],
+      "provider": "google_gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "metadata-review-v2",
+      "policy_version": "public-metadata-inference-v2",
+      "analyzed_at": "2026-11-06T07:57:30.301600+00:00",
+      "result": {
+        "suggested_topic_id": "risk",
+        "relevance": "relevant",
+        "rationale": "금융회사의 부실 확산에 대응하여 금융시장 안정 및 소비자 보호를 위한 금융회사 신속정리제도 도입을 추진한다는 내용입니다.",
+        "check_points": [
+          "금융회사 신속정리제도 도입 추진 배경 확인",
+          "제도 도입에 따른 금융회사 영향 점검"
+        ],
+        "duplicate_issue_ids": []
+      },
+      "duplicate_context": {}
+    },
+    "35c1bdc9399c9c3720c43b557fdc75df7939107e15a97b56ca0119b1a6de32fa": {
+      "issue_id": "issue-0727cc1f0b22bdd5ae98",
+      "input_fingerprint": "35c1bdc9399c9c3720c43b557fdc75df7939107e15a97b56ca0119b1a6de32fa",
+      "input_evidence_ids": [
+        "version-eee51b793385ecc43965"
+      ],
+      "provider": "google_gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "metadata-review-v2",
+      "policy_version": "public-metadata-inference-v2",
+      "analyzed_at": "2026-11-06T07:57:30.301600+00:00",
+      "result": {
+        "suggested_topic_id": "risk",
+        "relevance": "relevant",
+        "rationale": "글로벌 해킹 위협에 대비하여 국내 가상자산사업자의 사고대응력을 높이기 위한 대응 방안을 다루고 있습니다.",
+        "check_points": [
+          "가상자산사업자의 사고대응력 제고 방안 확인",
+          "글로벌 해킹 위협 대응 관련 후속 조치 점검"
+        ],
+        "duplicate_issue_ids": [
+          "issue-34d0a1c085f04dc0c774"
+        ]
+      },
+      "duplicate_context": {
+        "issue-34d0a1c085f04dc0c774": "3497874184f7ad40799107bcef5a66df655106046dd9f288c937bf9f5b1ef055"
+      }
+    },
+    "048583c58116124b383b23245866df4e4f22b1c803cd4c8ea9f6ab30b5b5a68e": {
+      "issue_id": "issue-ee1808d185516fc0bef6",
+      "input_fingerprint": "048583c58116124b383b23245866df4e4f22b1c803cd4c8ea9f6ab30b5b5a68e",
+      "input_evidence_ids": [
+        "version-04cc4b05f9102f43b121"
+      ],
+      "provider": "google_gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "metadata-review-v2",
+      "policy_version": "public-metadata-inference-v2",
+      "analyzed_at": "2026-11-06T07:57:30.301600+00:00",
+      "result": {
+        "suggested_topic_id": "strategy",
+        "relevance": "relevant",
+        "rationale": "코너스톤투자자 제도 등의 도입을 위한 자본시장법 시행령 개정안이 국무회의에서 의결되어 관련 법제 변화를 검토해야 합니다.",
+        "check_points": [
+          "자본시장법 시행령 개정안의 주요 내용 확인",
+          "코너스톤투자자 제도 도입에 따른 영향 점검"
+        ],
+        "duplicate_issue_ids": []
+      },
+      "duplicate_context": {}
+    },
+    "9f366543acdc06277697cd14900a9515c1c3757e334bf554de2f0f6a2b723199": {
+      "issue_id": "issue-9884327dd09baee772ca",
+      "input_fingerprint": "9f366543acdc06277697cd14900a9515c1c3757e334bf554de2f0f6a2b723199",
+      "input_evidence_ids": [
+        "version-7a3d7725c039557bbb18"
+      ],
+      "provider": "google_gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "metadata-review-v2",
+      "policy_version": "public-metadata-inference-v2",
+      "analyzed_at": "2026-11-06T07:57:30.301600+00:00",
+      "result": {
+        "suggested_topic_id": "risk",
+        "relevance": "relevant",
+        "rationale": "금융위원회 회의를 통해 홍콩 에이치지수 주가지수연계증권 관련 은행 및 증권사 검사 결과 조치가 의결되었습니다.",
+        "check_points": [
+          "홍콩 에이치지수 연계증권 검사 결과에 따른 조치 내용 확인",
+          "관련 금융회사별 제재 사항 점검"
+        ],
+        "duplicate_issue_ids": []
+      },
+      "duplicate_context": {}
+    },
+    "ecfdd658869e5cd122169f3178a901097a4ee8b51b4099370d80435708f3b5d0": {
+      "issue_id": "issue-0b25cbddf7d9168bba89",
+      "input_fingerprint": "ecfdd658869e5cd122169f3178a901097a4ee8b51b4099370d80435708f3b5d0",
+      "input_evidence_ids": [
+        "version-5546883cbd61816e0d3b"
+      ],
+      "provider": "google_gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "metadata-review-v2",
+      "policy_version": "public-metadata-inference-v2",
+      "analyzed_at": "2026-11-06T07:57:30.301600+00:00",
+      "result": {
+        "suggested_topic_id": "performance",
+        "relevance": "relevant",
+        "rationale": "제목에 따르면 홍콩 에이치지수 연계증권 과징금과 관련하여 증권사별로 차이가 발생한 배경을 다루고 있습니다.",
+        "check_points": [
+          "홍콩 에이치지수 연계증권 관련 과징금 부과 현황 확인",
+          "증권사별 과징금 규모 차이의 원인 점검"
+        ],
+        "duplicate_issue_ids": []
+      },
+      "duplicate_context": {}
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-05T02:30:04.897298+00:00",
-    "completed_at": "2026-11-05T02:30:04.897298+00:00",
-    "status": "failed",
-    "error_code": "provider_unavailable",
+    "attempted_at": "2026-11-06T07:57:26.350359+00:00",
+    "completed_at": "2026-11-06T07:57:30.301600+00:00",
+    "status": "success",
+    "error_code": null,
     "request_count": 1,
-    "eligible_count": 13,
-    "completed_count": 0,
+    "eligible_count": 14,
+    "completed_count": 8,
     "cached_count": 6,
-    "failed_count": 7,
+    "failed_count": 0,
     "fingerprints": [
       "3080ce609bce42113c8a203cc33b4fe57560ceac0cc522d451c0df78aafdbea5",
       "3497874184f7ad40799107bcef5a66df655106046dd9f288c937bf9f5b1ef055",
@@ -212,7 +408,8 @@
       "e37a36dbfc6f602fc65fd02952e1babe5a2e5c1cab36e983b555fdb256f68498",
       "35c1bdc9399c9c3720c43b557fdc75df7939107e15a97b56ca0119b1a6de32fa",
       "048583c58116124b383b23245866df4e4f22b1c803cd4c8ea9f6ab30b5b5a68e",
-      "9f366543acdc06277697cd14900a9515c1c3757e334bf554de2f0f6a2b723199"
+      "9f366543acdc06277697cd14900a9515c1c3757e334bf554de2f0f6a2b723199",
+      "ecfdd658869e5cd122169f3178a901097a4ee8b51b4099370d80435708f3b5d0"
     ]
   },
   "failures": {

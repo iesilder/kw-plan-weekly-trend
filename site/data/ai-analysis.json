@@ -1,55 +1,79 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-ab6b1e82cd60870b66c0",
-  "generated_at": "2026-11-07T01:57:12.229240+00:00",
+  "generation_id": "live-d78dba198eddd522d348",
+  "generated_at": "2026-11-07T08:17:47.578891+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "metadata-review-v2",
   "policy_version": "public-metadata-inference-v2",
   "auto_analysis_enabled": true,
   "last_attempt": {
-    "attempted_at": "2026-11-06T07:57:26.350359+00:00",
-    "completed_at": "2026-11-06T07:57:30.301600+00:00",
+    "attempted_at": "2026-11-07T08:17:44.546268+00:00",
+    "completed_at": "2026-11-07T08:17:47.575854+00:00",
     "status": "success",
     "error_code": null,
     "request_count": 1,
-    "eligible_count": 14,
-    "completed_count": 8,
-    "cached_count": 6,
+    "eligible_count": 16,
+    "completed_count": 2,
+    "cached_count": 14,
     "failed_count": 0
   },
   "counts": {
     "blocked": 1,
-    "completed": 14,
+    "completed": 16,
     "stale": 0,
     "failed": 0,
-    "not_analyzed": 2,
+    "not_analyzed": 0,
     "eligible": 16
   },
   "items": {
     "issue-c5ddf7ec861b668ca10d": {
-      "status": "not_analyzed",
+      "status": "completed",
       "reason_code": null,
       "input_fingerprint": "d87fbb513f2f7e4099eaf4118ac9a1cb152ce36e01d4be97005b982fa3967293",
       "input_evidence_ids": [
         "version-b533cac10330df20d7dd"
       ],
-      "result_fingerprint": null,
-      "analyzed_at": null,
+      "result_fingerprint": "d87fbb513f2f7e4099eaf4118ac9a1cb152ce36e01d4be97005b982fa3967293",
+      "analyzed_at": "2026-11-07T08:17:47.575854+00:00",
       "error_code": null,
-      "result": null
+      "result": {
+        "suggested_topic_id": "risk",
+        "relevance": "relevant",
+        "rationale": "제공된 뉴스 기사 제목(종합)에 따르면, 미래에셋증권에서 고객 계좌번호 및 임직원 정보 유출 관련 내용이 보도되어 관련 리스크 점검이 필요합니다.",
+        "check_points": [
+          "종합 기사에서 추가로 확인된 유출 인원 및 정보 내역 점검",
+          "사고 관련 회사의 공식 입장 및 사과 여부 확인",
+          "재발 방지 대책 관련 공시나 보도 내용 확인"
+        ],
+        "duplicate_issue_ids": [
+          "issue-c0aa71ed0d9305a3bb74"
+        ]
+      }
     },
     "issue-c0aa71ed0d9305a3bb74": {
-      "status": "not_analyzed",
+      "status": "completed",
       "reason_code": null,
       "input_fingerprint": "3e3505506477468b4d8e2363cf6c827708d3e2c83806245c3dd6e6d772bab7cb",
       "input_evidence_ids": [
         "version-b1034d80f9b609d4ffda"
       ],
-      "result_fingerprint": null,
-      "analyzed_at": null,
+      "result_fingerprint": "3e3505506477468b4d8e2363cf6c827708d3e2c83806245c3dd6e6d772bab7cb",
+      "analyzed_at": "2026-11-07T08:17:47.575854+00:00",
       "error_code": null,
-      "result": null
+      "result": {
+        "suggested_topic_id": "risk",
+        "relevance": "relevant",
+        "rationale": "제공된 뉴스 기사 제목에 따르면, 미래에셋증권에서 고객 계좌번호 및 임직원 정보가 유출되는 해킹 사고가 발생하여 보안 및 리스크 관리 측면의 검토 후보로 파악됩니다.",
+        "check_points": [
+          "기사에 언급된 정보 유출 규모와 범위 확인",
+          "해킹 발생 경위 및 회사의 대응 조치 확인",
+          "고객 계좌번호 유출에 따른 후속 대책 점검"
+        ],
+        "duplicate_issue_ids": [
+          "issue-c5ddf7ec861b668ca10d"
+        ]
+      }
     },
     "issue-0b25cbddf7d9168bba89": {
       "status": "completed",

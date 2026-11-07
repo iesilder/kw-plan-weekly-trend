@@ -400,103 +400,113 @@
       }
     },
     "issue-b37f533f8536327de29d": {
-      "metadata_fingerprint": "bd6786844079c82b394241eaf3b7a4cacbf2efcbe10d2b01f51b37c9664949cd",
-      "input_fingerprint": "55395c92c04c270215e46dc18694d382a655b470fed16a7d01cd22f499d9771c",
+      "metadata_fingerprint": "c84baeb8161a58821abf7b571cdf6b154499bb24e010e1f96a21a061919c838e",
+      "input_fingerprint": "cb10ef22d2a43ef00174d6501d85a07e0ef8552d78538ff0172778903493838c",
       "evidence_ids": [
         "version-4684945a97b42a87b99d"
       ],
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442768",
       "source_name": "연합인포맥스(기사) · 증권",
       "body_hash": "d55ec6cc956b91f9db6c9997b3fff0ee42ff2fcb33badb65b16844f8393933fc",
-      "body_fetched_at": "2026-11-03T06:30:52.438683+00:00",
+      "body_fetched_at": "2026-11-07T08:17:47.582194+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
-      "analyzed_at": "2026-11-03T06:31:00.923275+00:00",
+      "analyzed_at": "2026-11-07T08:18:04.689996+00:00",
       "result": {
         "key_change": {
-          "text": "기업공개(IPO) 공모가 산정의 합리성을 높이고 상장 직후 오버행 리스크를 줄이기 위해 사전수요예측 제도와 코너스톤투자자 제도가 본격 도입됨.",
+          "text": "이달 중순부터 기업공개(IPO) 시장에 코너스톤투자자 제도와 사전수요예측 제도가 본격 도입됨",
           "evidence_ids": [
-            "p3",
-            "p4"
+            "p3"
           ]
         },
         "facts": [
           {
-            "text": "자본시장과 금융투자업에 관한 법률 시행령 개정안이 국무회의에서 의결되어 이달 13일에 시행될 예정임.",
+            "text": "금융위원회는 3일 국무회의에서 자본시장과 금융투자업에 관한 법률 시행령 개정안이 의결되었다고 밝혔으며, 개정안은 이달 중 공포되어 13일에 맞춰 시행될 예정임",
             "evidence_ids": [
               "p5"
             ]
           },
           {
-            "text": "사전수요예측 제도를 통해 증권신고서 제출 전에 자격 요건을 갖춘 기관투자자를 상대로 공시 전 정보를 제공하고 매입 희망 가격과 물량을 파악함.",
+            "text": "사전수요예측 제도는 주관사가 증권신고서 제출 이전에 자격 요건을 갖춘 기관투자자에게 공시 전 정보를 제공하고 매입 희망 가격과 물량 등을 문의할 수 있도록 함",
             "evidence_ids": [
               "p6",
               "p7"
             ]
           },
           {
-            "text": "코너스톤투자자 제도를 통해 공모주 기관 배정 물량 중 일부를 6개월 이상 의무보유하는 조건으로 사전에 배정함.",
+            "text": "일반 사모운용사나 투자일임업자의 사전수요예측 참여 자격은 총 위탁재산 300억원 이상 요건만 적용하고 2년 경과 시 50억원으로 낮추는 완화 조항은 배제함",
             "evidence_ids": [
-              "p10"
+              "p9"
             ]
           },
           {
-            "text": "보호예수 기간은 배정 물량의 50%는 6개월, 30%는 8개월, 20%는 10개월로 분산됨.",
+            "text": "코너스톤투자자는 공모주 기관 배정 물량 중 일부를 6개월 이상 의무보유하는 조건으로 사전에 배정받으며, 배정물량의 50%는 6개월, 30%는 8개월, 20%는 10개월 동안 팔 수 없음",
             "evidence_ids": [
+              "p10",
               "p13"
             ]
           },
           {
-            "text": "코너스톤 배정 한도는 일반 기관 배정 물량 내에서 코스피 시장은 전체 상한 20%·개별 상한 10%, 코스닥 시장은 전체 상한 30%·개별 상한 20%로 차등 적용됨.",
+            "text": "코너스톤투자자 참여 자격은 사전 청약하는 공모주 물량의 20배 이상에 달하는 자기자본이나 위탁재산을 보유해야 함",
+            "evidence_ids": [
+              "p12"
+            ]
+          },
+          {
+            "text": "코너스톤 배정 한도는 코스피 시장 전체 상한 20% 및 개별 상한 10%, 코스닥 시장 전체 상한 30% 및 개별 상한 20%로 차등 적용함",
             "evidence_ids": [
               "p14"
             ]
           },
           {
-            "text": "발행사의 대주주 및 특수관계인의 코너스톤 참여와 사전 배정을 대가로 한 이면계약은 엄격히 금지됨.",
+            "text": "발행사의 대주주나 특수관계인 등 이해관계가 있는 기관투자자의 코너스톤투자자 참여와 이면계약은 원천 금지됨",
             "evidence_ids": [
               "p15"
             ]
           }
         ],
         "stage": "출시·시행",
-        "why_candidate": "IPO 시장의 가격 결정 방식과 기관 배정 제도가 크게 개편되므로, 증권사의 인수업 및 ECM 사업 전략과 내부 통제 기준 정비를 위해 핵심 참고 자료로 활용됨.",
+        "why_candidate": "IPO 공모가 가격 합리성을 높이고 상장 직후 오버행 리스크를 완화하기 위한 제도 도입 건으로 경영기획팀 모니터링 필요",
         "evidence": [
           {
             "id": "p3",
-            "quote": "공개(IPO) 시장에 코너스톤투자자(Co"
-          },
-          {
-            "id": "p4",
-            "quote": "수요를 반영해 가격 합리성을 높이고,"
+            "quote": "공개(IPO) 시장에 코너스톤투자자("
           },
           {
             "id": "p5",
-            "quote": "개정안 시행일인 오는 13일에 맞춰 시행"
+            "quote": "개정안 시행일인 오는 13일에 맞춰"
           },
           {
             "id": "p6",
-            "quote": "를 파악할 수 있는 '사전수요예측' 제도"
+            "quote": "를 파악할 수 있는 '사전수요예측'"
           },
           {
             "id": "p7",
-            "quote": "에게 공시 전 정보를 제공하고 매입 희망"
+            "quote": "뒤 자격 요건을 갖춘 기관투자자에게"
+          },
+          {
+            "id": "p9",
+            "quote": "건만 적용되며, 등록 2년 경과 시"
           },
           {
             "id": "p10",
-            "quote": "배정 물량 중 일부를 6개월 이상 의무보"
+            "quote": "배정 물량 중 일부를 6개월 이상 의"
           },
           {
             "id": "p13",
-            "quote": "는 8개월, 20%는 10개월 동안 팔"
+            "quote": "는 8개월, 20%는 10개월 동안"
+          },
+          {
+            "id": "p12",
+            "quote": "약하는 공모주 물량의 20배 이상에"
           },
           {
             "id": "p14",
-            "quote": "닥 시장은 전체 상한 30%, 개별 상한"
+            "quote": "닥 시장은 전체 상한 30%, 개별"
           },
           {
             "id": "p15",
-            "quote": "가 있는 기관투자자는 코너스톤투자자로 참"
+            "quote": "가 있는 기관투자자는 코너스톤투자자로"
           }
         ]
       }
@@ -776,83 +786,75 @@
       }
     },
     "issue-ee1808d185516fc0bef6": {
-      "metadata_fingerprint": "385650f13608cb9bfd470eb562c722649015d561e606087a882d153697d277ac",
-      "input_fingerprint": "ca7135ebedaab8c71e23f4d7695ded1e1bd48705e9a1a61f82322094c3b4551b",
+      "metadata_fingerprint": "1154fa5b49cd210bfbb87ef32bbc1d6677a61b14184f70e051164fba4b56dde2",
+      "input_fingerprint": "d0fd903fa15399ffcc26a3b4e2f991397d99a80a25770a1ed306500c7ba5fd1c",
       "evidence_ids": [
         "version-04cc4b05f9102f43b121"
       ],
       "source_url": "https://www.fsc.go.kr/no010101/88071",
       "source_name": "금융위원회 · 보도자료",
       "body_hash": "5af1dfd9e0a2d3869ad39029c6712d07201f992b809a7647c97e1213555431ee",
-      "body_fetched_at": "2026-11-04T06:26:46.201671+00:00",
+      "body_fetched_at": "2026-11-07T08:17:47.582194+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
-      "analyzed_at": "2026-11-04T06:26:56.923691+00:00",
+      "analyzed_at": "2026-11-07T08:18:04.690029+00:00",
       "result": {
         "key_change": {
-          "text": "국무회의에서 IPO 사전수요예측과 코너스톤투자자 제도를 도입하는 자본시장법 시행령 개정안이 의결됨",
+          "text": "사전수요예측 및 코너스톤투자자 제도 도입을 위한 자본시장법 시행령 개정안이 국무회의에서 의결됨",
           "evidence_ids": [
-            "p1",
-            "p2"
+            "p1"
           ]
         },
         "facts": [
           {
-            "text": "사전수요예측은 증권신고서 공시 및 희망 공모가 밴드 확정 전에 주관사가 기관투자자 수요를 파악하도록 허용하는 제도임",
+            "text": "개정안은 11월 중 공포되며 법률 시행일인 13일부터 시행될 예정임",
             "evidence_ids": [
-              "p1",
+              "p5"
+            ]
+          },
+          {
+            "text": "사전수요예측 참여 자격 중 일반 사모집합투자업자 및 투자일임업자는 총 위탁재산 300억원 이상 요건만 적용하고 50억원 완화요건은 적용하지 않음",
+            "evidence_ids": [
               "p2"
             ]
           },
           {
-            "text": "사전수요예측 참여자격은 일반 사모집합투자업자 및 투자일임업자의 총 위탁재산 300억원 이상 요건을 적용함",
+            "text": "코너스톤투자자는 사전 청약하는 공모주 물량의 20배 이상 자기자본 또는 위탁재산을 보유해야 함",
             "evidence_ids": [
-              "p2",
               "p3"
             ]
           },
           {
-            "text": "코너스톤투자자는 공모주 기관투자자 배정물량 중 일부를 6개월 이상 보호예수하는 기관투자자에게 사전 배정하는 제도임",
-            "evidence_ids": [
-              "p1",
-              "p2"
-            ]
-          },
-          {
-            "text": "코너스톤투자자 보호예수기간 및 수량은 50%는 6개월, 30%는 8개월, 20%는 10개월로 설정함",
+            "text": "코너스톤투자자 보호예수기간은 50%가 6개월, 30%가 8개월, 20%가 10개월로 설정됨",
             "evidence_ids": [
               "p1",
               "p3"
             ]
           },
           {
-            "text": "코너스톤투자자 배정 물량 상한은 일반 기관투자자 물량 중 코스피 전체 20%·개별 10%, 코스닥 전체 30%·개별 20%로 설정함",
+            "text": "코너스톤투자자 배정물량 상한은 일반 기관투자자 배정 물량 중 코스피 전체 20%·개별 10%, 코스닥 전체 30%·개별 20%로 설정됨",
             "evidence_ids": [
               "p1",
               "p4"
             ]
           },
           {
-            "text": "이해관계 있는 기관투자자의 코너스톤투자자 계약과 직접적·간접적 이익 교환을 통한 이면계약을 원천 금지함",
+            "text": "이해관계가 있는 기관투자자의 코너스톤투자자 계약 체결 및 이면계약을 통한 이익 교환 행위는 금지됨",
             "evidence_ids": [
-              "p4",
-              "p5"
-            ]
-          },
-          {
-            "text": "개정안은 11월 중 공포되며 법률 시행일인 ʼ26.11.13일부터 시행될 예정임",
-            "evidence_ids": [
-              "p1",
-              "p5"
+              "p4"
             ]
           }
         ],
-        "stage": "출시·시행",
-        "why_candidate": "자본시장법 시행령 개정에 따른 IPO 제도 변화와 세부 요건을 파악하기 위함",
+        "stage": "인가·승인",
+        "why_candidate": "자본시장법 시행령 개정안 국무회의 의결에 따른 IPO 제도 변경 사항 확인 필요",
         "evidence": [
           {
             "id": "p1",
-            "quote": "국무회의 의결 □ ʼ26.11.13일 시행예정인 ｢자본시장법｣에서 대통"
+            "quote": "는 8개월, 20%는 10개월의 보호예수 의무 부여 - 배정물량 상한은"
+          },
+          {
+            "id": "p5",
+            "quote": "월 중 공포되며, 법률 시행일인 ʼ26.11.13일부터 시행될 예정이다."
           },
           {
             "id": "p2",
@@ -864,11 +866,114 @@
           },
           {
             "id": "p4",
-            "quote": "20%, 개별* 한도 10%, 코스닥은 전체 한도 30%, 개별 한도 2"
+            "quote": "코스닥은 전체 한도 30%, 개별 한도 20%로 설정한다. * [전체"
+          }
+        ]
+      }
+    },
+    "issue-c0aa71ed0d9305a3bb74": {
+      "metadata_fingerprint": "a63aa8de57d59d55f3a1a236a9a2006fc62fd7599be0f313535263ede4e38bfb",
+      "input_fingerprint": "8c1fcf2daf240c01dd2f5aae3835f7e1f93d03006ab5ab050e5caa0cd66c654e",
+      "evidence_ids": [
+        "version-b1034d80f9b609d4ffda"
+      ],
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443581",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "body_hash": "653da901e0cf3ee3983c7a404394d8d0323179b43fe767d3ebf888ebe59c52f5",
+      "body_fetched_at": "2026-11-07T08:17:47.582194+00:00",
+      "truncated": false,
+      "prompt_version": "article-bullets-v1",
+      "analyzed_at": "2026-11-07T08:18:04.690042+00:00",
+      "result": {
+        "key_change": {
+          "text": "미래에셋증권이 외부 해킹 공격으로 고객 계좌번호와 임직원 3만5천여 명의 개인정보를 유출한 사실이 확인됨",
+          "evidence_ids": [
+            "p3"
+          ]
+        },
+        "facts": [
+          {
+            "text": "미래에셋증권은 4일 모바일웹 휴대폰 인증 로그인 서비스에서 외부 비정상적인 접근을 확인하여 고객 계좌번호가 유출됨",
+            "evidence_ids": [
+              "p6",
+              "p7"
+            ]
           },
           {
-            "id": "p5",
-            "quote": "월 중 공포되며, 법률 시행일인 ʼ26.11.13일부터 시행될 예정이다."
+            "text": "5일에는 사내 그룹웨어 서버를 대상으로 외부 공격이 발생해 퇴직자와 외주직원을 포함한 임직원 3만5천255명의 성명, 사번, 이메일주소, 휴대전화번호, 암호화된 비밀번호 등이 유출됨",
+            "evidence_ids": [
+              "p10",
+              "p11"
+            ]
+          },
+          {
+            "text": "미래에셋그룹에서 사이버 공격이 확인된 계열사는 미래에셋증권, 미래에셋생명, 미래에셋자산운용, 에너지인프라자산운용 등 네 곳으로 늘어남",
+            "evidence_ids": [
+              "p14"
+            ]
+          },
+          {
+            "text": "미래에셋증권은 유출 정보를 악용한 2차 피해 가능성을 경고하며 관련 시스템의 접근통제와 이상행위 탐지 체계를 강화하겠다고 밝힘",
+            "evidence_ids": [
+              "p20",
+              "p21"
+            ]
+          },
+          {
+            "text": "미래에셋증권은 오전 10시부터 오후 5시까지 고객 개인정보 유출 관련 임시 상담창구를 운영할 예정임",
+            "evidence_ids": [
+              "p22"
+            ]
+          },
+          {
+            "text": "미래에셋증권은 사고 인지 즉시 접근 경로를 차단하고 금융위원회와 금융감독원, 개인정보보호위원회에 신고를 완료함",
+            "evidence_ids": [
+              "p23"
+            ]
+          }
+        ],
+        "stage": "점검·조사",
+        "why_candidate": "대형 증권사의 연이은 해킹 사고 및 개인정보 유출에 따른 IT 보안 리스크 점검 필요",
+        "evidence": [
+          {
+            "id": "p3",
+            "quote": "객 계좌번호와 임직원 3만5천여 명의"
+          },
+          {
+            "id": "p6",
+            "quote": "미래에셋증권은 지난 4일 모바일웹의"
+          },
+          {
+            "id": "p7",
+            "quote": "이번 공격으로 고객의 계좌번호가 유출"
+          },
+          {
+            "id": "p10",
+            "quote": "이튿날인 5일에는 사내 그룹웨어인 '"
+          },
+          {
+            "id": "p11",
+            "quote": "한 임직원 약 3만5천255명의 개인"
+          },
+          {
+            "id": "p14",
+            "quote": "이번 사고로 미래에셋그룹에서 사이버"
+          },
+          {
+            "id": "p20",
+            "quote": "용한 피싱·스미싱 등 2차 피해 가능"
+          },
+          {
+            "id": "p21",
+            "quote": "이상행위 탐지 체계를 강화하겠다고 밝"
+          },
+          {
+            "id": "p22",
+            "quote": "에셋증권은 이날 오전 10시부터 오후"
+          },
+          {
+            "id": "p23",
+            "quote": "위원회와 금융감독원, 개인정보보호위원"
           }
         ]
       }
@@ -908,8 +1013,8 @@
       "status": "completed"
     },
     "issue-b37f533f8536327de29d": {
-      "metadata_fingerprint": "bd6786844079c82b394241eaf3b7a4cacbf2efcbe10d2b01f51b37c9664949cd",
-      "checked_at": "2026-11-03T06:30:52.438683+00:00",
+      "metadata_fingerprint": "c84baeb8161a58821abf7b571cdf6b154499bb24e010e1f96a21a061919c838e",
+      "checked_at": "2026-11-07T08:17:47.582194+00:00",
       "reason_code": null,
       "status": "completed"
     },
@@ -954,21 +1059,43 @@
       "body_hash": "8073d70cfd6030db0aa8f771d285fbe2382492b40de385cc854b7a50b2f3311f"
     },
     "issue-ee1808d185516fc0bef6": {
-      "metadata_fingerprint": "385650f13608cb9bfd470eb562c722649015d561e606087a882d153697d277ac",
-      "checked_at": "2026-11-04T06:26:46.201671+00:00",
+      "metadata_fingerprint": "1154fa5b49cd210bfbb87ef32bbc1d6677a61b14184f70e051164fba4b56dde2",
+      "checked_at": "2026-11-07T08:17:47.582194+00:00",
       "reason_code": null,
       "status": "completed"
+    },
+    "issue-c0aa71ed0d9305a3bb74": {
+      "metadata_fingerprint": "a63aa8de57d59d55f3a1a236a9a2006fc62fd7599be0f313535263ede4e38bfb",
+      "checked_at": "2026-11-07T08:17:47.582194+00:00",
+      "reason_code": null,
+      "status": "completed"
+    },
+    "issue-9884327dd09baee772ca": {
+      "metadata_fingerprint": "056fdba5a04564bdaf248feb6c588e2d76b22362c0af80a160b682f283a4cb11",
+      "checked_at": "2026-11-07T08:17:47.582194+00:00",
+      "reason_code": "output_number_mismatch",
+      "status": "failed",
+      "input_fingerprint": "b182e488eeb441ed69d3b977ff53788463dcdb9b48f2a0c01c43d792c161a0eb",
+      "body_hash": "84225d1da1e6f146e145f2be6955340ca366ada990a04788510ad368ffe33189"
+    },
+    "issue-0b25cbddf7d9168bba89": {
+      "metadata_fingerprint": "33d68e5ae78d6a31b6a7f7142ceb99d5c70d3d302655d48a1f37ecfb39302737",
+      "checked_at": "2026-11-07T08:17:47.582194+00:00",
+      "reason_code": "output_number_mismatch",
+      "status": "failed",
+      "input_fingerprint": "84d3c576e795629c4d242edf1ce935ee7d6729322e6fc929bfec1f6ae3d9a0fa",
+      "body_hash": "daa5aebd94e37fb4ac36c7fa641290ffdf9ac763fce44009d467e68b78e0b9b3"
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-06T07:57:30.307357+00:00",
-    "completed_at": "2026-11-06T07:57:51.808368+00:00",
+    "attempted_at": "2026-11-07T08:17:47.582194+00:00",
+    "completed_at": "2026-11-07T08:18:04.690051+00:00",
     "status": "partial_success",
     "error_code": "partial_invalid_output",
     "request_count": 1,
     "fetch_count": 5,
-    "completed_count": 4,
+    "completed_count": 3,
     "cached_count": 0,
-    "failed_count": 1
+    "failed_count": 2
   }
 }

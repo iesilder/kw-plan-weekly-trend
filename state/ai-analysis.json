@@ -389,27 +389,77 @@
         "duplicate_issue_ids": []
       },
       "duplicate_context": {}
+    },
+    "3e3505506477468b4d8e2363cf6c827708d3e2c83806245c3dd6e6d772bab7cb": {
+      "issue_id": "issue-c0aa71ed0d9305a3bb74",
+      "input_fingerprint": "3e3505506477468b4d8e2363cf6c827708d3e2c83806245c3dd6e6d772bab7cb",
+      "input_evidence_ids": [
+        "version-b1034d80f9b609d4ffda"
+      ],
+      "provider": "google_gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "metadata-review-v2",
+      "policy_version": "public-metadata-inference-v2",
+      "analyzed_at": "2026-11-07T08:17:47.575854+00:00",
+      "result": {
+        "suggested_topic_id": "risk",
+        "relevance": "relevant",
+        "rationale": "제공된 뉴스 기사 제목에 따르면, 미래에셋증권에서 고객 계좌번호 및 임직원 정보가 유출되는 해킹 사고가 발생하여 보안 및 리스크 관리 측면의 검토 후보로 파악됩니다.",
+        "check_points": [
+          "기사에 언급된 정보 유출 규모와 범위 확인",
+          "해킹 발생 경위 및 회사의 대응 조치 확인",
+          "고객 계좌번호 유출에 따른 후속 대책 점검"
+        ],
+        "duplicate_issue_ids": [
+          "issue-c5ddf7ec861b668ca10d"
+        ]
+      },
+      "duplicate_context": {
+        "issue-c5ddf7ec861b668ca10d": "d87fbb513f2f7e4099eaf4118ac9a1cb152ce36e01d4be97005b982fa3967293"
+      }
+    },
+    "d87fbb513f2f7e4099eaf4118ac9a1cb152ce36e01d4be97005b982fa3967293": {
+      "issue_id": "issue-c5ddf7ec861b668ca10d",
+      "input_fingerprint": "d87fbb513f2f7e4099eaf4118ac9a1cb152ce36e01d4be97005b982fa3967293",
+      "input_evidence_ids": [
+        "version-b533cac10330df20d7dd"
+      ],
+      "provider": "google_gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "metadata-review-v2",
+      "policy_version": "public-metadata-inference-v2",
+      "analyzed_at": "2026-11-07T08:17:47.575854+00:00",
+      "result": {
+        "suggested_topic_id": "risk",
+        "relevance": "relevant",
+        "rationale": "제공된 뉴스 기사 제목(종합)에 따르면, 미래에셋증권에서 고객 계좌번호 및 임직원 정보 유출 관련 내용이 보도되어 관련 리스크 점검이 필요합니다.",
+        "check_points": [
+          "종합 기사에서 추가로 확인된 유출 인원 및 정보 내역 점검",
+          "사고 관련 회사의 공식 입장 및 사과 여부 확인",
+          "재발 방지 대책 관련 공시나 보도 내용 확인"
+        ],
+        "duplicate_issue_ids": [
+          "issue-c0aa71ed0d9305a3bb74"
+        ]
+      },
+      "duplicate_context": {
+        "issue-c0aa71ed0d9305a3bb74": "3e3505506477468b4d8e2363cf6c827708d3e2c83806245c3dd6e6d772bab7cb"
+      }
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-06T07:57:26.350359+00:00",
-    "completed_at": "2026-11-06T07:57:30.301600+00:00",
+    "attempted_at": "2026-11-07T08:17:44.546268+00:00",
+    "completed_at": "2026-11-07T08:17:47.575854+00:00",
     "status": "success",
     "error_code": null,
     "request_count": 1,
-    "eligible_count": 14,
-    "completed_count": 8,
-    "cached_count": 6,
+    "eligible_count": 16,
+    "completed_count": 2,
+    "cached_count": 14,
     "failed_count": 0,
     "fingerprints": [
-      "3080ce609bce42113c8a203cc33b4fe57560ceac0cc522d451c0df78aafdbea5",
-      "3497874184f7ad40799107bcef5a66df655106046dd9f288c937bf9f5b1ef055",
-      "38910371df348908761b9ff338a59441be5bfc48bd11d587de599e787dbc5243",
-      "e37a36dbfc6f602fc65fd02952e1babe5a2e5c1cab36e983b555fdb256f68498",
-      "35c1bdc9399c9c3720c43b557fdc75df7939107e15a97b56ca0119b1a6de32fa",
-      "048583c58116124b383b23245866df4e4f22b1c803cd4c8ea9f6ab30b5b5a68e",
-      "9f366543acdc06277697cd14900a9515c1c3757e334bf554de2f0f6a2b723199",
-      "ecfdd658869e5cd122169f3178a901097a4ee8b51b4099370d80435708f3b5d0"
+      "3e3505506477468b4d8e2363cf6c827708d3e2c83806245c3dd6e6d772bab7cb",
+      "d87fbb513f2f7e4099eaf4118ac9a1cb152ce36e01d4be97005b982fa3967293"
     ]
   },
   "failures": {

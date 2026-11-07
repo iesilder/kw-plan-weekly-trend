@@ -1,11 +1,41 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-b3eddc023649447afba1",
-  "generated_at": "2026-11-06T15:56:58.081918+00:00",
+  "generation_id": "finance-4c2e761fee3b7734491f",
+  "generated_at": "2026-11-07T01:57:12.229240+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 64,
+  "count": 66,
   "articles": [
+    {
+      "article_id": "article-c5ddf7ec861b668ca10d",
+      "version_id": "version-b533cac10330df20d7dd",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "미래에셋증권, 고객 3천800명 계좌번호·임직원 3만5천명 정보 유출(종합)",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443587",
+      "published_date": "2026-11-07",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-07T01:57:12.229240+00:00",
+      "institutions": [
+        "미래에셋증권"
+      ]
+    },
+    {
+      "article_id": "article-c0aa71ed0d9305a3bb74",
+      "version_id": "version-b1034d80f9b609d4ffda",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "미래에셋증권도 해킹…고객 계좌번호·임직원 3만5천명 정보 유출",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443581",
+      "published_date": "2026-11-07",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-07T01:57:12.229240+00:00",
+      "institutions": [
+        "미래에셋증권"
+      ]
+    },
     {
       "article_id": "article-ecf542fb90b246fe9a32",
       "version_id": "version-0504988e56a827ed16d8",

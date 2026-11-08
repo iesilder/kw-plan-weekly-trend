@@ -512,85 +512,85 @@
       }
     },
     "issue-3108a2f8608f22965149": {
-      "metadata_fingerprint": "2f33b4330173cb65d956e1654e3de51643d76d58b70a6fcad3b19a42284fa194",
-      "input_fingerprint": "9909b4b14de6e246bb2ea1129951a73ecf3e7f7abb9a94391cac02a923222bb9",
+      "metadata_fingerprint": "a0064e4b48f2dbdaa06785c58893c57a7656368da105699eaa85d7ba9150400e",
+      "input_fingerprint": "b5033f2831a7f1affa6dea69ed8b3968571d7cbb693f9f0f798f3b0f1bf33c8b",
       "evidence_ids": [
         "version-dd49690da45e4662b79d"
       ],
       "source_url": "https://www.fsc.go.kr/no010101/87929",
       "source_name": "금융위원회 · 보도자료",
       "body_hash": "04369dff2b40e9162604772cd8a3ea581bbfd3de58f2d5edef78ebc4ff4f835f",
-      "body_fetched_at": "2026-11-04T06:12:52.593814+00:00",
+      "body_fetched_at": "2026-11-08T06:04:57.233012+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
-      "analyzed_at": "2026-11-04T06:13:13.086676+00:00",
+      "analyzed_at": "2026-11-08T06:05:15.549147+00:00",
       "result": {
         "key_change": {
-          "text": "증권선물위원회가 회계처리기준 위반 재무제표 작성 및 공시를 한 한주에이알티㈜에 감사인지정 조치를 의결함",
+          "text": "증권선물위원회가 10월 14일 제18차 회의를 열고 회계처리기준을 위반한 한주에이알티㈜에 감사인지정 등의 조치를 의결함",
           "evidence_ids": [
             "p1"
           ]
         },
         "facts": [
           {
-            "text": "해당 회사의 감사절차를 소홀히 한 정진세림회계법인과 선진회계법인 및 소속공인회계사에 당해회사 감사업무 제한 조치를 의결함",
+            "text": "한주에이알티㈜의 감사인으로서 감사절차를 소홀히 한 정진세림회계법인과 선진회계법인 및 소속공인회계사에 대해 당해회사 감사업무 제한 등의 조치를 의결함",
             "evidence_ids": [
               "p1"
             ]
           }
         ],
         "stage": "인가·승인",
-        "why_candidate": "회계기준 위반 기업 및 부실 감사 회계법인에 대한 증선위 제재 조치 사항으로 증권사 감사·리스크 관리에 참고가 필요함.",
+        "why_candidate": "회계처리 위반 기업 및 부실 감사를 수행한 회계법인에 대한 제재 조치를 통해 자본시장 회계 투명성을 제고하는 사안입니다.",
         "evidence": [
           {
             "id": "p1",
-            "quote": ", 선진회계법인) 및 소속공인회계사에 대해서는 당해회사 감사업무 제한 등의 조치를 의결하였습니다. ※ (붙임) 조사·감리결과 지적사항 및 조치내"
+            "quote": ": 박민우]는 10월 14일 제18차 회의에서, 회계처리기준을 위반하여 재무제표를 작성·공시한 한주에이알티㈜에 대하여 감사인지정 등의 조치를 의"
           }
         ]
       }
     },
     "issue-34d0a1c085f04dc0c774": {
-      "metadata_fingerprint": "5a7c3c679e680e7143a069cbb1198b10e9fef11142a5f9eb452e11ef2b24d3c7",
-      "input_fingerprint": "bea0eab9fcbf818b79b5a0bffd9441b28e084d658a318808653c65fe7200b29a",
+      "metadata_fingerprint": "c5faf15e5848466df26e886615ce53dfaf97601f0bb8496446168a0ffc5878e4",
+      "input_fingerprint": "6688a5de39d755bfa6957bb62c4c215e2034635090dfe82862b3ba8eb9a13561",
       "evidence_ids": [
         "version-ba4e3ee7cf45325ace23"
       ],
       "source_url": "https://www.fsc.go.kr/no010101/88010",
       "source_name": "금융위원회 · 보도자료",
       "body_hash": "1cbfe184fc67c6c74d82c4cd036c9fbe016b5dfdb60f22e3a15c4ae3766ea478",
-      "body_fetched_at": "2026-11-04T06:12:52.593814+00:00",
+      "body_fetched_at": "2026-11-08T06:04:57.233012+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
-      "analyzed_at": "2026-11-04T06:13:13.086700+00:00",
+      "analyzed_at": "2026-11-08T06:05:15.549153+00:00",
       "result": {
         "key_change": {
-          "text": "금융위원회가 빗썸 등 주요 가상자산사업자의 침해사고와 관련하여 긴급점검 회의를 개최하고 현장조사에 착수함",
+          "text": "금융위원회가 빗썸 등 주요 가상자산사업자의 해킹 사고 대응 및 소비자 보호 조치를 점검하기 위한 긴급점검 회의를 개최함",
           "evidence_ids": [
             "p1"
           ]
         },
         "facts": [
           {
-            "text": "빗썸의 임직원 정보 유출 정황이 확인되었으나 가상자산지갑 주소 등 부정결제 정보 유출은 아직 확인되지 않음",
+            "text": "빗썸 측은 임직원 정보가 유출된 정황을 확인하였으며 가상자산 이전 등에 활용될 정보 유출은 아직 확인되지 않았다고 보고함",
             "evidence_ids": [
               "p1"
             ]
           },
           {
-            "text": "금융당국은 소비자 피해 발생 시 전액배상 등 소비자 보호 조치가 이루어지도록 관리·감독할 계획임",
+            "text": "금융당국은 현장조사 착수와 관계기관 간 신속한 정보공유를 수행하며 피해 발생 시 전액배상 등 소비자 보호 조치가 이루어지도록 관리·감독할 계획임",
             "evidence_ids": [
               "p1"
             ]
           },
           {
-            "text": "전자금융거래법 미적용 업권의 보안조치를 강화하고 제2금융권 주요 회사에 대한 사고조사와 피해자 보호 조치를 추진함",
+            "text": "전자금융거래법이 적용되지 않는 업권에 대해 보안조치를 강화하고 미래에셋생명·자산운용 및 대신증권 등 제2금융권 주요 금융회사에 대해서도 면밀한 사고조사와 피해자 보호 조치를 추진함",
             "evidence_ids": [
               "p1"
             ]
           }
         ],
         "stage": "점검·조사",
-        "why_candidate": "가상자산사업자 및 제2금융권 해킹사고에 따른 금융당국의 긴급 점검 및 보안 강화 추진 상황임.",
+        "why_candidate": "가상자산사업자 및 제2금융권에서 잇따라 발생한 해킹 사고와 관련하여 금융당국의 현장조사 및 보안 강화 동향을 모니터링하기 위한 사안입니다.",
         "evidence": [
           {
             "id": "p1",
@@ -600,39 +600,39 @@
       }
     },
     "issue-49697d9828e2c35c9098": {
-      "metadata_fingerprint": "de43099baebded5d1eeba0feb4623b97c4a7676c8ed6bdf4e79c99647f6930f5",
-      "input_fingerprint": "addbd3cc24566cf5d0ff925cdd7c9e25b47476fc6cc3fde66993ceb5e542ecd6",
+      "metadata_fingerprint": "3c566b62685aeaad57530298021ea3a4ac9575234a72d65a9073d89aa16cb045",
+      "input_fingerprint": "2315a64ca7f2429e856fb73eff264a2b033935039bcb80d05bd34034a540dbd3",
       "evidence_ids": [
         "version-0d1e147fc7ea32c424f3"
       ],
       "source_url": "https://www.fsc.go.kr/no010101/88013",
       "source_name": "금융위원회 · 보도자료",
       "body_hash": "c9f9e4cf21699822d1f1087cc8473d49b0c26153a8ea23667856d4d9afb1cdee",
-      "body_fetched_at": "2026-11-04T06:12:52.593814+00:00",
+      "body_fetched_at": "2026-11-08T06:04:57.233012+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
-      "analyzed_at": "2026-11-04T06:13:13.086706+00:00",
+      "analyzed_at": "2026-11-08T06:05:15.549162+00:00",
       "result": {
         "key_change": {
-          "text": "증권선물위원회가 재무제표를 위법 작성·공시한 ㈜피델릭스에 대하여 감사인지정 등의 조치를 의결함",
+          "text": "증권선물위원회가 10월 28일 제19차 회의를 열고 회계처리기준을 위반한 ㈜피델릭스에 감사인지정 등의 조치를 의결함",
           "evidence_ids": [
             "p1"
           ]
         },
         "facts": [
           {
-            "text": "중요 감사절차를 위반한 현대회계법인과 동일이사 연속감사업무제한 등 외감법을 위반한 위드회계법인에 감사업무제한 조치를 결정함",
+            "text": "현대회계법인과 위드회계법인에 대해 동일이사 연속감사업무제한 등 외부감사법 위반에 따른 감사업무제한 등의 조치를 결정함",
             "evidence_ids": [
               "p1"
             ]
           }
         ],
         "stage": "인가·승인",
-        "why_candidate": "상장사 회계위반 및 부실 감사법인에 대한 증선위의 제재 결정 사항임.",
+        "why_candidate": "회계기준 위반 법인과 감사절차를 위반한 회계법인에 대한 증선위의 제재 결정 내용을 파악하기 위한 사안입니다.",
         "evidence": [
           {
             "id": "p1",
-            "quote": "대회계법인과 동일이사 연속감사업무제한 등「주식회사 등의 외부감사에 관한 법률」을 위반한 위드회계법인에 대하여 감사업무제한 등의 조치를 결정*하였"
+            "quote": ": 신진창)는 10월 28일 제19차 회의에서, 회계처리기준을 위반하여 재무제표를 작성·공시한 ㈜피델릭스에 대하여 감사인지정 등의 조치를 의결하"
           }
         ]
       }
@@ -977,6 +977,113 @@
           }
         ]
       }
+    },
+    "issue-c5ddf7ec861b668ca10d": {
+      "metadata_fingerprint": "71e1022017bacaf1a03f35cfbadfb7a6c0545997cc7c799d766409154ec49e76",
+      "input_fingerprint": "6447aa648d4efd7f245e16aa6fe5e22dfb767573d9c2343b069035f9e19a9350",
+      "evidence_ids": [
+        "version-b533cac10330df20d7dd"
+      ],
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443587",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "body_hash": "f400c83724dbf289d52867a873072a9e8b146a8939cadd56dc30dfff70d09f7c",
+      "body_fetched_at": "2026-11-08T06:04:57.233012+00:00",
+      "truncated": false,
+      "prompt_version": "article-bullets-v1",
+      "analyzed_at": "2026-11-08T06:05:15.549125+00:00",
+      "result": {
+        "key_change": {
+          "text": "미래에셋증권이 외부 해킹 공격으로 고객 약 3천800명의 계좌번호와 임직원 3만5천여 명의 개인정보를 유출한 사실을 확인하고 금융당국에 신고함",
+          "evidence_ids": [
+            "p4"
+          ]
+        },
+        "facts": [
+          {
+            "text": "지난 4일 모바일웹의 휴대폰 인증 로그인 서비스에서 외부 비정상 접근을 확인하였으며 계좌번호 외 다른 정보 유출은 없음",
+            "evidence_ids": [
+              "p7",
+              "p8"
+            ]
+          },
+          {
+            "text": "이튿날인 5일 사내 그룹웨어 공격으로 퇴직자와 외주직원을 포함한 임직원 약 3만5천255명의 개인정보가 유출됨",
+            "evidence_ids": [
+              "p9",
+              "p10"
+            ]
+          },
+          {
+            "text": "사고 인지 직후 관련 서버 네트워크 연결을 차단하고 비상대응체계를 가동하였으며 금융당국 신고와 개별 통지를 완료함",
+            "evidence_ids": [
+              "p14",
+              "p17"
+            ]
+          },
+          {
+            "text": "미래에셋그룹 내에서 사이버 공격이 확인된 계열사는 미래에셋생명, 미래에셋자산운용, 에너지인프라자산운용을 포함해 네 곳으로 늘어남",
+            "evidence_ids": [
+              "p5",
+              "p18"
+            ]
+          },
+          {
+            "text": "유출 정보 악용한 2차 피해 가능성에 대비해 고객과 임직원에게 주의를 당부하고 이날 오전 10시부터 오후 5시까지 임시 상담창구를 운영함",
+            "evidence_ids": [
+              "p26",
+              "p27"
+            ]
+          }
+        ],
+        "stage": "점검·조사",
+        "why_candidate": "미래에셋증권 등 그룹 계열사에서 연쇄적인 해킹 및 개인정보 유출 사고가 발생함에 따라 정보보안 체계와 내부 통제 실태를 점검할 필요가 있습니다.",
+        "evidence": [
+          {
+            "id": "p4",
+            "quote": "공격으로 고객 약 3천800명의"
+          },
+          {
+            "id": "p7",
+            "quote": "미래에셋증권은 지난 4일 모바일웹"
+          },
+          {
+            "id": "p8",
+            "quote": "객 약 3천800명의 계좌번호가"
+          },
+          {
+            "id": "p9",
+            "quote": "이튿날인 5일에는 사내 그룹웨어인"
+          },
+          {
+            "id": "p10",
+            "quote": "한 임직원 약 3만5천255명의"
+          },
+          {
+            "id": "p14",
+            "quote": "워크 연결을 차단하고 비상대응체계"
+          },
+          {
+            "id": "p17",
+            "quote": "금융위원회와 금융감독원, 개인정보"
+          },
+          {
+            "id": "p5",
+            "quote": "미래에셋생명과 미래에셋자산운용,"
+          },
+          {
+            "id": "p18",
+            "quote": "이번 사고로 미래에셋그룹에서 사이"
+          },
+          {
+            "id": "p26",
+            "quote": "용한 피싱·스미싱 등 2차 피해"
+          },
+          {
+            "id": "p27",
+            "quote": "또 이날 오전 10시부터 오후 5"
+          }
+        ]
+      }
     }
   },
   "checks": {
@@ -1020,27 +1127,21 @@
     },
     "issue-3108a2f8608f22965149": {
       "metadata_fingerprint": "a0064e4b48f2dbdaa06785c58893c57a7656368da105699eaa85d7ba9150400e",
-      "checked_at": "2026-11-05T02:30:04.897298+00:00",
-      "reason_code": "provider_unavailable",
-      "status": "failed",
-      "input_fingerprint": "b5033f2831a7f1affa6dea69ed8b3968571d7cbb693f9f0f798f3b0f1bf33c8b",
-      "body_hash": "04369dff2b40e9162604772cd8a3ea581bbfd3de58f2d5edef78ebc4ff4f835f"
+      "checked_at": "2026-11-08T06:04:57.233012+00:00",
+      "reason_code": null,
+      "status": "completed"
     },
     "issue-34d0a1c085f04dc0c774": {
       "metadata_fingerprint": "c5faf15e5848466df26e886615ce53dfaf97601f0bb8496446168a0ffc5878e4",
-      "checked_at": "2026-11-05T02:30:04.897298+00:00",
-      "reason_code": "provider_unavailable",
-      "status": "failed",
-      "input_fingerprint": "6688a5de39d755bfa6957bb62c4c215e2034635090dfe82862b3ba8eb9a13561",
-      "body_hash": "1cbfe184fc67c6c74d82c4cd036c9fbe016b5dfdb60f22e3a15c4ae3766ea478"
+      "checked_at": "2026-11-08T06:04:57.233012+00:00",
+      "reason_code": null,
+      "status": "completed"
     },
     "issue-49697d9828e2c35c9098": {
       "metadata_fingerprint": "3c566b62685aeaad57530298021ea3a4ac9575234a72d65a9073d89aa16cb045",
-      "checked_at": "2026-11-05T02:30:04.897298+00:00",
-      "reason_code": "provider_unavailable",
-      "status": "failed",
-      "input_fingerprint": "2315a64ca7f2429e856fb73eff264a2b033935039bcb80d05bd34034a540dbd3",
-      "body_hash": "c9f9e4cf21699822d1f1087cc8473d49b0c26153a8ea23667856d4d9afb1cdee"
+      "checked_at": "2026-11-08T06:04:57.233012+00:00",
+      "reason_code": null,
+      "status": "completed"
     },
     "issue-0727cc1f0b22bdd5ae98": {
       "metadata_fingerprint": "c4bff4f8ee3488b2109f525c18330f375d86a095ce5667cf7b76b1c897ddc71c",
@@ -1052,8 +1153,8 @@
     },
     "issue-d9fb63dca1fe16a50763": {
       "metadata_fingerprint": "daa9fc86b72052797efb1408e0b7b851868817634c34a63712995847c19bd062",
-      "checked_at": "2026-11-05T02:30:04.897298+00:00",
-      "reason_code": "provider_unavailable",
+      "checked_at": "2026-11-08T06:04:57.233012+00:00",
+      "reason_code": "output_number_mismatch",
       "status": "failed",
       "input_fingerprint": "c5be86c3728e1f4dc600561af7c91744cdeaaa2e8e6d7a00c8965c923614782e",
       "body_hash": "8073d70cfd6030db0aa8f771d285fbe2382492b40de385cc854b7a50b2f3311f"
@@ -1085,17 +1186,23 @@
       "status": "failed",
       "input_fingerprint": "84d3c576e795629c4d242edf1ce935ee7d6729322e6fc929bfec1f6ae3d9a0fa",
       "body_hash": "daa5aebd94e37fb4ac36c7fa641290ffdf9ac763fce44009d467e68b78e0b9b3"
+    },
+    "issue-c5ddf7ec861b668ca10d": {
+      "metadata_fingerprint": "71e1022017bacaf1a03f35cfbadfb7a6c0545997cc7c799d766409154ec49e76",
+      "checked_at": "2026-11-08T06:04:57.233012+00:00",
+      "reason_code": null,
+      "status": "completed"
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-07T08:17:47.582194+00:00",
-    "completed_at": "2026-11-07T08:18:04.690051+00:00",
+    "attempted_at": "2026-11-08T06:04:57.233012+00:00",
+    "completed_at": "2026-11-08T06:05:15.549174+00:00",
     "status": "partial_success",
     "error_code": "partial_invalid_output",
     "request_count": 1,
     "fetch_count": 5,
-    "completed_count": 3,
-    "cached_count": 0,
-    "failed_count": 2
+    "completed_count": 4,
+    "cached_count": 3,
+    "failed_count": 1
   }
 }

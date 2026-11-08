@@ -1,11 +1,26 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-4c2e761fee3b7734491f",
-  "generated_at": "2026-11-07T01:57:12.229240+00:00",
+  "generation_id": "finance-d13376311369d31ab673",
+  "generated_at": "2026-11-08T06:04:35.674134+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 66,
+  "count": 67,
   "articles": [
+    {
+      "article_id": "article-467f5ea41548271413a0",
+      "version_id": "version-7b6c613dff3bfafcd855",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "이번주 코스닥 새내기 3곳…에스에프씨, 케이뱅크 이어 코스피 입성 도전",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443634",
+      "published_date": "2026-11-08",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-08T06:04:35.674134+00:00",
+      "institutions": [
+        "케이뱅크"
+      ]
+    },
     {
       "article_id": "article-c5ddf7ec861b668ca10d",
       "version_id": "version-b533cac10330df20d7dd",

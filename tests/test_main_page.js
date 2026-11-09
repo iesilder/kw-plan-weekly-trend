@@ -26,7 +26,7 @@ function fixture() {
 }
 
 // Use real HTML identities: unlike older UI harnesses, missing moved panels stay null.
-function harness({data = fixture(),fail = [],live = {fetched_at:STAMP,interests:[]}} = {}) {
+function harness({data = fixture(),fail = [],live = {fetched_at:STAMP,interests:[]},now = STAMP} = {}) {
   const html = fs.readFileSync(require.resolve("../site/index.html"),"utf8");
   const ids = new Map(),all = [],fetches = [],storage = new Map(),missing = [];
   class Node {
@@ -63,7 +63,7 @@ function harness({data = fixture(),fail = [],live = {fetched_at:STAMP,interests:
   const document = {visibilityState:"visible",getElementById(id){if(!ids.has(id))missing.push(id);return ids.get(id)||null;},createElement:tag=>new Node(tag),createTextNode:value=>{const node=new Node("#text");node.textContent=value;return node;},querySelectorAll:selector=>all.filter(node=>matches(node,selector)),addEventListener(){}};
   const paths = {"data/latest.json":data.latest,"data/status.json":data.status,"data/report-history.json":data.history,"data/reviews.json":Review.emptyCanonical(),"data/ai-analysis.json":data.ai,"data/article-analysis.json":data.article,"data/interests.json":data.interests,[data.latest.candidates[0]?.detail_path]:data.detail};
   let financeMode=false;const windowEvents=new Map();
-  const window = {WeeklyFinanceAll:{controller:{isActive:()=>financeMode}},WeeklyReview:Review,WeeklyAI:AI,WeeklyArticle:Article,WeeklyInterests:Interests,WeeklyInterestRegistry:{...Registry,createClient:()=>({load:async()=>clone(live)})},addEventListener:(name,fn)=>{(windowEvents.get(name)||windowEvents.set(name,[]).get(name)).push(fn);},open(){}};
+  const window = {WeeklyFinanceAll:{controller:{isActive:()=>financeMode}},WeeklyReview:{...Review,weekRange:(value = now)=>Review.weekRange(value)},WeeklyAI:AI,WeeklyArticle:Article,WeeklyInterests:Interests,WeeklyInterestRegistry:{...Registry,createClient:()=>({load:async()=>clone(live)})},addEventListener:(name,fn)=>{(windowEvents.get(name)||windowEvents.set(name,[]).get(name)).push(fn);},open(){}};
   const context = vm.createContext({window,document,Intl,Date,URL,Option:function(label,value){const node=new Node("option");node.textContent=label;node.value=value;return node;},localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)},setTimeout:()=>0,clearTimeout(){},fetch:async(path,options)=>{fetches.push({path,options});path=String(path).split("?")[0];if(fail.includes(path))throw Error("request unavailable");if(!Object.hasOwn(paths,path))throw Error(`Unexpected request: ${path}`);return {ok:true,json:async()=>clone(paths[path])};}});
   const source=fs.readFileSync(require.resolve("../site/app.js"),"utf8").replace(/  loadData\(\);\s*\}\)\(\);\s*$/,"  window.testApp={state,reviewState,aiState,articleState,loadData};\n  window.initialLoad=loadData();\n})();");
   vm.runInContext(source,context);
@@ -116,4 +116,26 @@ test("finance browsing preserves review drafts and returns to the previous norma
   h.setFinance(false);await tick();
   assert.equal(JSON.stringify(h.app.reviewState.draft),draft);assert.equal(h.app.state.topic,"digital");assert.equal(h.$("search").value,"가상");
   assert.equal(h.fetches.length,before);assert.match(h.$("detail-panel").textContent,/가상증권/);
+});
+
+// Freeze the default week only at the harness boundary; exercise real KST/date filtering.
+test("weekly selection respects the Korean Monday boundary without depending on the runner clock",async()=>{
+  for(const [now,start,visible] of [
+    ["2026-11-08T14:59:59Z","2026-11-02",true],
+    ["2026-11-08T15:00:00Z","2026-11-09",false],
+    ["2027-01-01T00:00:00Z","2026-12-28",false]
+  ]) {
+    const h=harness({now});await h.settle();
+    assert.equal(h.$("week-start").value,start);
+    const accept=h.all.filter(node=>node.className.split(" ").includes("review-option-accepted")).at(-1);
+    accept.fire("click");await tick();
+    assert.equal(h.$("weekly-list").textContent.includes("가상증권 AI 서비스 출시"),visible);
+    assert.equal(h.app.reviewState.draft.changes[A],"accepted");
+    h.$("week-start").value="2026-11-02";h.$("week-end").value="2026-11-08";
+    h.$("week-start").fire("change");await tick();
+    assert.match(h.$("weekly-list").textContent,/가상증권 AI 서비스 출시/);
+    h.$("week-current").fire("click");await tick();
+    assert.equal(h.$("week-start").value,start);
+    assert.equal(h.$("weekly-list").textContent.includes("가상증권 AI 서비스 출시"),visible);
+  }
 });

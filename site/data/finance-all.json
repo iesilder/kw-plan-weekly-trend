@@ -1,11 +1,56 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-d13376311369d31ab673",
-  "generated_at": "2026-11-08T06:04:35.674134+00:00",
+  "generation_id": "finance-b2f26deeed4ee5f5d69b",
+  "generated_at": "2026-11-09T00:27:05.939317+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 67,
+  "count": 70,
   "articles": [
+    {
+      "article_id": "article-eda924394db91cd0a5e9",
+      "version_id": "version-6d459dc1107911744852",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "\"자사주 꼼수 찬성 땐 자금 뺀다\"…국민연금 강수에 40조 위탁운용사 '긴장'",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443695",
+      "published_date": "2026-11-09",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-09T00:27:05.939317+00:00",
+      "institutions": [
+        "국민연금공단"
+      ]
+    },
+    {
+      "article_id": "article-cadcd2604fcddc3d3e76",
+      "version_id": "version-8c70f71e689e47907f50",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "iM증권 \"美블루웨이브 이차전지엔 기회\"…'비중확대' 권고",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443665",
+      "published_date": "2026-11-09",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-09T00:27:05.939317+00:00",
+      "institutions": [
+        "iM증권"
+      ]
+    },
+    {
+      "article_id": "article-7ce9ea5b5255b709ab0e",
+      "version_id": "version-683ab71d0ba178ad5b01",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "신한증권 \"K-인디뷰티 수출 수요 강세…한국콜마 호실적 지속\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443688",
+      "published_date": "2026-11-09",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-09T00:27:05.939317+00:00",
+      "institutions": [
+        "신한증권"
+      ]
+    },
     {
       "article_id": "article-467f5ea41548271413a0",
       "version_id": "version-7b6c613dff3bfafcd855",

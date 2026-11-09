@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-b2f26deeed4ee5f5d69b",
-  "generated_at": "2026-11-09T00:27:05.939317+00:00",
+  "generation_id": "finance-eb04e1e9214d8b6796f3",
+  "generated_at": "2026-11-09T02:41:21.807848+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 70,
+  "count": 72,
   "articles": [
     {
       "article_id": "article-eda924394db91cd0a5e9",
@@ -37,6 +37,21 @@
       ]
     },
     {
+      "article_id": "article-b841a65112bb4ec41cb4",
+      "version_id": "version-56ed5cb49baa11559409",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "금감원, '계열사 4곳 해킹' 미래에셋 현장점검 착수",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443740",
+      "published_date": "2026-11-09",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-09T02:41:21.807848+00:00",
+      "institutions": [
+        "금융감독원"
+      ]
+    },
+    {
       "article_id": "article-7ce9ea5b5255b709ab0e",
       "version_id": "version-683ab71d0ba178ad5b01",
       "source_id": "einfomax-s1n2",
@@ -49,6 +64,21 @@
       "fetched_at": "2026-11-09T00:27:05.939317+00:00",
       "institutions": [
         "신한증권"
+      ]
+    },
+    {
+      "article_id": "article-7c04581bcf9d93da4e2c",
+      "version_id": "version-0171a43750854932eca2",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "유진투자증권, 국내 첫 월정액 美주식 수수료 구독제 출시",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443718",
+      "published_date": "2026-11-09",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-09T02:41:21.807848+00:00",
+      "institutions": [
+        "유진투자증권"
       ]
     },
     {

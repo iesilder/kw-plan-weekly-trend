@@ -10,7 +10,7 @@
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442601",
       "source_name": "연합인포맥스(기사) · 증권",
       "body_hash": "9f19597b90f688a344fe0460082a6583ce5d62ba5d9a45b9882d1b84ccf91d06",
-      "body_fetched_at": "2026-11-06T07:57:30.307357+00:00",
+      "body_fetched_at": "2026-11-09T02:41:45.385416+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-06T07:57:51.808310+00:00",
@@ -213,7 +213,7 @@
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442518",
       "source_name": "연합인포맥스(기사) · 증권",
       "body_hash": "d65bb9731681d063527994c01e44fa17faf2a7c4d904d453b9199b9cd4db5e48",
-      "body_fetched_at": "2026-11-06T07:57:30.307357+00:00",
+      "body_fetched_at": "2026-11-09T02:41:45.385416+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-06T07:57:51.808337+00:00",
@@ -311,7 +311,7 @@
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442483",
       "source_name": "연합인포맥스(기사) · 증권",
       "body_hash": "f75f7a9deb199bc45dd1f76d2ff7c72d1ee3b3d0bfc7c995cd7c731737e2d9a3",
-      "body_fetched_at": "2026-11-06T07:57:30.307357+00:00",
+      "body_fetched_at": "2026-11-09T02:41:45.385416+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-06T07:57:51.808351+00:00",
@@ -638,47 +638,47 @@
       }
     },
     "issue-0727cc1f0b22bdd5ae98": {
-      "metadata_fingerprint": "11b2f5900d5f8a2721b661414459db19e0f3d58b6d8b16c72ea2ddaf7f14234a",
-      "input_fingerprint": "882c328819d6a8d86b8c7f09a32880e6a6c2d809d046c7ab5609b028be4d1ef0",
+      "metadata_fingerprint": "c4bff4f8ee3488b2109f525c18330f375d86a095ce5667cf7b76b1c897ddc71c",
+      "input_fingerprint": "23c0ab5249d23d70024957a163f240e63aaccf9b22982b03428e0e45ffd5c798",
       "evidence_ids": [
         "version-eee51b793385ecc43965"
       ],
       "source_url": "https://www.fsc.go.kr/no010101/88054",
       "source_name": "금융위원회 · 보도자료",
       "body_hash": "492f630b75f37657e6ec2384c2baceb4eca0f863773abf7c66bebbc251e61ca9",
-      "body_fetched_at": "2026-11-04T06:12:52.593814+00:00",
+      "body_fetched_at": "2026-11-09T02:41:45.385416+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
-      "analyzed_at": "2026-11-04T06:13:13.086710+00:00",
+      "analyzed_at": "2026-11-09T02:41:57.518730+00:00",
       "result": {
         "key_change": {
-          "text": "금융위원회가 바이낸스 해킹사고와 관련하여 국내 가상자산사업자의 사고대응력 제고를 위한 긴급 점검회의를 개최함",
+          "text": "금융위원회는 최근 바이낸스 해킹사고와 관련하여 국내 가상자산시장 영향 및 가상자산사업자 대응체계 점검 등을 위한 긴급회의를 개최함",
           "evidence_ids": [
             "p1"
           ]
         },
         "facts": [
           {
-            "text": "바이낸스는 핫월렛에서 약 63억달러 규모의 가상자산이 무단 출고되는 사고가 발생했다고 발표함",
+            "text": "바이낸스는 핫월렛에서 약 63억달러 규모의 가상자산이 무단 출고되는 사고가 발생하였다고 10월 30일에 발표함",
             "evidence_ids": [
               "p1"
             ]
           },
           {
-            "text": "사고 주원인으로 임직원 업무용 노트북 침해 및 거래승인·서명 시스템 비인가 접근 가능성이 제기됨",
+            "text": "금융위원회는 국내 가상자산사업자의 전산 시스템 접근통제 및 지갑 출고 승인·서명체계 현황 등을 중점 점검함",
             "evidence_ids": [
               "p1"
             ]
           },
           {
-            "text": "금융당국은 콜드월렛 비중 상향, 입출고 상시 모니터링, 비정상 접근 보고체계 운영, 준비금 추가 적립을 당부함",
+            "text": "금융위원회는 콜드월렛 비중 상향과 준비금 추가 적립 등 즉시 실행 가능한 추가 보안강화 조치 실시를 당부함",
             "evidence_ids": [
               "p1"
             ]
           }
         ],
         "stage": "점검·조사",
-        "why_candidate": "글로벌 가상자산 해킹 사고에 따른 국내 업권의 보안 점검 및 즉시 실행 가능한 추가 보안 강화 조치 요구 사항임.",
+        "why_candidate": "글로벌 대형 가상자산거래소 해킹 발생에 따른 국내 업계 영향 점검 및 보안 강화 조치 요구 사항을 파악하기 위해 검토함",
         "evidence": [
           {
             "id": "p1",
@@ -1089,7 +1089,7 @@
   "checks": {
     "issue-193dc2f5a4e04bf16e42": {
       "metadata_fingerprint": "024fff796db09cd9eb62f0a7767a58c5b3fe24cc2513753a8eaeed8a50553e2e",
-      "checked_at": "2026-11-06T07:57:30.307357+00:00",
+      "checked_at": "2026-11-09T02:41:45.385416+00:00",
       "reason_code": "output_number_mismatch",
       "status": "failed",
       "input_fingerprint": "81150e1273a3958b334df596fd44f227daef2026216333669b3465f0eb8ad0f0",
@@ -1097,19 +1097,19 @@
     },
     "issue-8cda78e7eb4a64c526cd": {
       "metadata_fingerprint": "861b5477be15223c416ce62e546c80ee19b3ed6a62c10fcaa4ec035b7f43f099",
-      "checked_at": "2026-11-06T07:57:30.307357+00:00",
+      "checked_at": "2026-11-09T02:41:45.385416+00:00",
       "reason_code": null,
       "status": "completed"
     },
     "issue-a7a9b220314dfbd5acef": {
       "metadata_fingerprint": "1d5daa6ffcd84c518fe16f5981662c7a7194760b0882b28347a6f78ae4986c06",
-      "checked_at": "2026-11-06T07:57:30.307357+00:00",
+      "checked_at": "2026-11-09T02:41:45.385416+00:00",
       "reason_code": null,
       "status": "completed"
     },
     "issue-a99980f5c72b33d80750": {
       "metadata_fingerprint": "52e761b9a35c7cfa230252d55b84fdd7770a2ba1b8ca81a8d40712d94111b1f7",
-      "checked_at": "2026-11-06T07:57:30.307357+00:00",
+      "checked_at": "2026-11-09T02:41:45.385416+00:00",
       "reason_code": null,
       "status": "completed"
     },
@@ -1145,11 +1145,9 @@
     },
     "issue-0727cc1f0b22bdd5ae98": {
       "metadata_fingerprint": "c4bff4f8ee3488b2109f525c18330f375d86a095ce5667cf7b76b1c897ddc71c",
-      "checked_at": "2026-11-05T02:30:04.897298+00:00",
-      "reason_code": "provider_unavailable",
-      "status": "failed",
-      "input_fingerprint": "23c0ab5249d23d70024957a163f240e63aaccf9b22982b03428e0e45ffd5c798",
-      "body_hash": "492f630b75f37657e6ec2384c2baceb4eca0f863773abf7c66bebbc251e61ca9"
+      "checked_at": "2026-11-09T02:41:45.385416+00:00",
+      "reason_code": null,
+      "status": "completed"
     },
     "issue-d9fb63dca1fe16a50763": {
       "metadata_fingerprint": "daa9fc86b72052797efb1408e0b7b851868817634c34a63712995847c19bd062",
@@ -1195,14 +1193,14 @@
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-08T06:04:57.233012+00:00",
-    "completed_at": "2026-11-08T06:05:15.549174+00:00",
+    "attempted_at": "2026-11-09T02:41:45.385416+00:00",
+    "completed_at": "2026-11-09T02:41:57.518759+00:00",
     "status": "partial_success",
-    "error_code": "partial_invalid_output",
+    "error_code": null,
     "request_count": 1,
     "fetch_count": 5,
-    "completed_count": 4,
-    "cached_count": 3,
-    "failed_count": 1
+    "completed_count": 1,
+    "cached_count": 7,
+    "failed_count": 0
   }
 }

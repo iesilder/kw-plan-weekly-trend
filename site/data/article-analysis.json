@@ -1,30 +1,30 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-dd18093f38ab10607ad0",
-  "generated_at": "2026-11-09T00:27:05.939317+00:00",
+  "generation_id": "live-7c2f618cf65d71e4beaf",
+  "generated_at": "2026-11-09T02:41:57.524394+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "article-bullets-v1",
   "auto_analysis_enabled": true,
   "counts": {
-    "completed": 11,
-    "not_applicable": 1,
-    "pending": 0,
-    "failed": 5,
     "unavailable": 0,
+    "failed": 4,
+    "completed": 12,
+    "pending": 0,
     "stale": 0,
+    "not_applicable": 1,
     "eligible": 16
   },
   "last_attempt": {
-    "attempted_at": "2026-11-08T06:04:57.233012+00:00",
-    "completed_at": "2026-11-08T06:05:15.549174+00:00",
+    "attempted_at": "2026-11-09T02:41:45.385416+00:00",
+    "completed_at": "2026-11-09T02:41:57.518759+00:00",
     "status": "partial_success",
-    "error_code": "partial_invalid_output",
+    "error_code": null,
     "request_count": 1,
     "fetch_count": 5,
-    "completed_count": 4,
-    "cached_count": 3,
-    "failed_count": 1
+    "completed_count": 1,
+    "cached_count": 7,
+    "failed_count": 0
   },
   "items": {
     "issue-c5ddf7ec861b668ca10d": {
@@ -476,20 +476,55 @@
       }
     },
     "issue-0727cc1f0b22bdd5ae98": {
-      "status": "failed",
-      "reason_code": "provider_unavailable",
+      "status": "completed",
+      "reason_code": null,
       "evidence_ids": [
         "version-eee51b793385ecc43965"
       ],
       "source_url": "https://www.fsc.go.kr/no010101/88054",
       "source_name": "금융위원회 · 보도자료",
-      "input_fingerprint": null,
-      "result_fingerprint": null,
-      "analyzed_at": null,
+      "input_fingerprint": "23c0ab5249d23d70024957a163f240e63aaccf9b22982b03428e0e45ffd5c798",
+      "result_fingerprint": "23c0ab5249d23d70024957a163f240e63aaccf9b22982b03428e0e45ffd5c798",
+      "analyzed_at": "2026-11-09T02:41:57.518730+00:00",
       "body_hash": "492f630b75f37657e6ec2384c2baceb4eca0f863773abf7c66bebbc251e61ca9",
-      "body_fetched_at": "2026-11-04T06:12:52.593814+00:00",
+      "body_fetched_at": "2026-11-09T02:41:45.385416+00:00",
       "truncated": false,
-      "result": null
+      "result": {
+        "key_change": {
+          "text": "금융위원회는 최근 바이낸스 해킹사고와 관련하여 국내 가상자산시장 영향 및 가상자산사업자 대응체계 점검 등을 위한 긴급회의를 개최함",
+          "evidence_ids": [
+            "p1"
+          ]
+        },
+        "facts": [
+          {
+            "text": "바이낸스는 핫월렛에서 약 63억달러 규모의 가상자산이 무단 출고되는 사고가 발생하였다고 10월 30일에 발표함",
+            "evidence_ids": [
+              "p1"
+            ]
+          },
+          {
+            "text": "금융위원회는 국내 가상자산사업자의 전산 시스템 접근통제 및 지갑 출고 승인·서명체계 현황 등을 중점 점검함",
+            "evidence_ids": [
+              "p1"
+            ]
+          },
+          {
+            "text": "금융위원회는 콜드월렛 비중 상향과 준비금 추가 적립 등 즉시 실행 가능한 추가 보안강화 조치 실시를 당부함",
+            "evidence_ids": [
+              "p1"
+            ]
+          }
+        ],
+        "stage": "점검·조사",
+        "why_candidate": "글로벌 대형 가상자산거래소 해킹 발생에 따른 국내 업계 영향 점검 및 보안 강화 조치 요구 사항을 파악하기 위해 검토함",
+        "evidence": [
+          {
+            "id": "p1",
+            "quote": "낸스는 핫월렛에서 약 63억달러(한화 약 8조원) 규모의 가상자산이 무단 출고되는 사고가 발생 하였다고 발표하였다. 사고 직후 바이낸스는 탈취된"
+          }
+        ]
+      }
     },
     "issue-ec88113fec2c699faaf5": {
       "status": "completed",
@@ -586,7 +621,7 @@
       "result_fingerprint": "5cc2aa9237d2b85b11b8bfd11ca26933ec5dda4f5fc90e4f5f224daccb721d61",
       "analyzed_at": "2026-11-06T07:57:51.808351+00:00",
       "body_hash": "f75f7a9deb199bc45dd1f76d2ff7c72d1ee3b3d0bfc7c995cd7c731737e2d9a3",
-      "body_fetched_at": "2026-11-06T07:57:30.307357+00:00",
+      "body_fetched_at": "2026-11-09T02:41:45.385416+00:00",
       "truncated": false,
       "result": {
         "key_change": {
@@ -684,7 +719,7 @@
       "result_fingerprint": "f04b6ac49db7b6df5279064a0ec3ee06f9d55110e4d5ff40e1c85de5c4128e69",
       "analyzed_at": "2026-11-06T07:57:51.808337+00:00",
       "body_hash": "d65bb9731681d063527994c01e44fa17faf2a7c4d904d453b9199b9cd4db5e48",
-      "body_fetched_at": "2026-11-06T07:57:30.307357+00:00",
+      "body_fetched_at": "2026-11-09T02:41:45.385416+00:00",
       "truncated": false,
       "result": {
         "key_change": {
@@ -799,7 +834,7 @@
       "result_fingerprint": "cae6dd6c68e382f069448bef424ca3aed6e3a0f313085c2a1cf816e41ce8f52a",
       "analyzed_at": "2026-11-06T07:57:51.808310+00:00",
       "body_hash": "9f19597b90f688a344fe0460082a6583ce5d62ba5d9a45b9882d1b84ccf91d06",
-      "body_fetched_at": "2026-11-06T07:57:30.307357+00:00",
+      "body_fetched_at": "2026-11-09T02:41:45.385416+00:00",
       "truncated": false,
       "result": {
         "key_change": {

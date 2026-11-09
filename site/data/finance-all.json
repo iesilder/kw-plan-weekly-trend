@@ -1,11 +1,41 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-eb04e1e9214d8b6796f3",
-  "generated_at": "2026-11-09T02:41:21.807848+00:00",
+  "generation_id": "finance-6754782db51533849071",
+  "generated_at": "2026-11-09T11:36:32.975237+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 72,
+  "count": 76,
   "articles": [
+    {
+      "article_id": "article-fe1ff91312060a0ac245",
+      "version_id": "version-c24372d96e66f43b73ae",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "대신증권, 3분기 영업손실 22억…적자 전환",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443801",
+      "published_date": "2026-11-09",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-09T11:36:32.975237+00:00",
+      "institutions": [
+        "대신증권"
+      ]
+    },
+    {
+      "article_id": "article-f5baecca18885565f21e",
+      "version_id": "version-0a2313c223d07eba83a7",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "대신증권, 3분기 영업손실 22억…보유 유가증권 평가손실 여파(종합)",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443810",
+      "published_date": "2026-11-09",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-09T11:36:32.975237+00:00",
+      "institutions": [
+        "대신증권"
+      ]
+    },
     {
       "article_id": "article-eda924394db91cd0a5e9",
       "version_id": "version-6d459dc1107911744852",
@@ -79,6 +109,36 @@
       "fetched_at": "2026-11-09T02:41:21.807848+00:00",
       "institutions": [
         "유진투자증권"
+      ]
+    },
+    {
+      "article_id": "article-78afb11c81f9ea99767f",
+      "version_id": "version-1d5790afc49b0951da71",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "신영증권 2분기 영업이익 542억 원…전분기比 50.4% 증가",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443809",
+      "published_date": "2026-11-09",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-09T11:36:32.975237+00:00",
+      "institutions": [
+        "신영증권"
+      ]
+    },
+    {
+      "article_id": "article-18166c4abcbc41e0b4b4",
+      "version_id": "version-b92bd96077430d47feb3",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "대신증권, 개인정보 유출 피해자에 1만원 지급…수수료 한달 면제",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443777",
+      "published_date": "2026-11-09",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-09T11:36:32.975237+00:00",
+      "institutions": [
+        "대신증권"
       ]
     },
     {

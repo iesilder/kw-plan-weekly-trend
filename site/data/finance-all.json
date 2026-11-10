@@ -1,11 +1,56 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-6754782db51533849071",
-  "generated_at": "2026-11-09T11:36:32.975237+00:00",
+  "generation_id": "finance-399e0af52c0841085c0e",
+  "generated_at": "2026-11-10T04:38:54.514044+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 76,
+  "count": 79,
   "articles": [
+    {
+      "article_id": "article-beb48b1bb64a65ef8cb7",
+      "version_id": "version-a5d900d3f370825bf25f",
+      "source_id": "newswire-securities",
+      "source_name": "뉴스와이어(보도자료) · 증권",
+      "title": "신한투자증권, 저평가 가치주 투자하는 ‘신영K순수가치’ 펀드 판매",
+      "source_url": "https://www.newswire.co.kr/newsRead.php?no=1046795",
+      "published_date": null,
+      "published_at": "2026-11-10T01:24:57.000000+00:00",
+      "source_updated_at": null,
+      "fetched_at": "2026-11-10T04:38:54.514044+00:00",
+      "institutions": [
+        "신한투자증권"
+      ]
+    },
+    {
+      "article_id": "article-bbf12ef948ec57243c68",
+      "version_id": "version-0f78d32809edbc0b8434",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "미래에셋證, 3Q 수천억대 순손실 전망…스페이스X·해킹 '겹악재'",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443855",
+      "published_date": "2026-11-10",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-10T04:38:54.514044+00:00",
+      "institutions": [
+        "미래에셋증권"
+      ]
+    },
+    {
+      "article_id": "article-150535716e900886bd55",
+      "version_id": "version-1f1bdba0625ac52e4355",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "증권사 CEO들은 왜 금감원 편지를 기다릴까",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443921",
+      "published_date": "2026-11-10",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-10T04:38:54.514044+00:00",
+      "institutions": [
+        "금융감독원"
+      ]
+    },
     {
       "article_id": "article-fe1ff91312060a0ac245",
       "version_id": "version-c24372d96e66f43b73ae",

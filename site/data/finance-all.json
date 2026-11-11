@@ -1,11 +1,26 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-986e0cdd0be29cc9045c",
-  "generated_at": "2026-11-11T16:13:05.596338+00:00",
+  "generation_id": "finance-9cd58d33346c7e8cfac5",
+  "generated_at": "2026-11-11T22:43:12.971479+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 89,
+  "count": 90,
   "articles": [
+    {
+      "article_id": "article-3f483e95c15c56f9b831",
+      "version_id": "version-368687e3fe2ec854b048",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "'국고채 담합' 청구서 반영하는 증권사들…KB증권 3분기 적자전환",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444286",
+      "published_date": "2026-11-12",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-11T22:43:12.971479+00:00",
+      "institutions": [
+        "KB증권"
+      ]
+    },
     {
       "article_id": "article-e7f91cca460a695ed464",
       "version_id": "version-7c32f3823e5f130906e9",

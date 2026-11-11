@@ -1,11 +1,41 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-d6975a6a3e171f9a02e6",
-  "generated_at": "2026-11-11T07:48:33.002452+00:00",
+  "generation_id": "finance-986e0cdd0be29cc9045c",
+  "generated_at": "2026-11-11T16:13:05.596338+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 86,
+  "count": 89,
   "articles": [
+    {
+      "article_id": "article-e7f91cca460a695ed464",
+      "version_id": "version-7c32f3823e5f130906e9",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "금투협 \"공정위 국고채 담합 제재 유감…국채 발행 지장 우려\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444253",
+      "published_date": "2026-11-11",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-11T16:13:05.596338+00:00",
+      "institutions": [
+        "금융투자협회"
+      ]
+    },
+    {
+      "article_id": "article-cf1e90fc55eb8dd65805",
+      "version_id": "version-1d12883f0425dd1df6f0",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "증선위, '무상증자 미공개 정보 이용' VC 대표 등 중수청 고발",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444256",
+      "published_date": "2026-11-11",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-11T16:13:05.596338+00:00",
+      "institutions": [
+        "증권선물위원회"
+      ]
+    },
     {
       "article_id": "article-bea21caac6c606445447",
       "version_id": "version-962e56d464e7b41c4934",
@@ -36,6 +66,21 @@
         "금융감독원",
         "삼성증권",
         "NH농협은행"
+      ]
+    },
+    {
+      "article_id": "article-865c6288d59d51dc6822",
+      "version_id": "version-3dbb3336ed5d8e980cdd",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "[부고] 김우석(삼성자산운용 대표)씨 모친상",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444267",
+      "published_date": "2026-11-11",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-11T16:13:05.596338+00:00",
+      "institutions": [
+        "삼성자산운용"
       ]
     },
     {

@@ -520,7 +520,7 @@
       "source_url": "https://www.fsc.go.kr/no010101/87929",
       "source_name": "금융위원회 · 보도자료",
       "body_hash": "04369dff2b40e9162604772cd8a3ea581bbfd3de58f2d5edef78ebc4ff4f835f",
-      "body_fetched_at": "2026-11-08T06:04:57.233012+00:00",
+      "body_fetched_at": "2026-11-11T07:48:58.042661+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-08T06:05:15.549147+00:00",
@@ -880,7 +880,7 @@
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4443581",
       "source_name": "연합인포맥스(기사) · 증권",
       "body_hash": "653da901e0cf3ee3983c7a404394d8d0323179b43fe767d3ebf888ebe59c52f5",
-      "body_fetched_at": "2026-11-07T08:17:47.582194+00:00",
+      "body_fetched_at": "2026-11-11T07:48:58.042661+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-07T08:18:04.690042+00:00",
@@ -1084,6 +1084,297 @@
           }
         ]
       }
+    },
+    "issue-58ca23d8b67c0c120f13": {
+      "metadata_fingerprint": "64c10ad828d3bdf5a91b1c2f9af245dd34f8e3663b7897e51aba29358fbc0188",
+      "input_fingerprint": "ec60b0e0632d3ea15c39e27c7b9dcfe123abb2c5a4f407dd8cead7c688ea8c3e",
+      "evidence_ids": [
+        "version-256eaf1c8feab1b08df9"
+      ],
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444088",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "body_hash": "d5f34346de45f8d12d2724905a0ddc6a40d9208bec4e4d75f9ea3d7629ffce4f",
+      "body_fetched_at": "2026-11-11T07:48:58.042661+00:00",
+      "truncated": true,
+      "prompt_version": "article-bullets-v1",
+      "analyzed_at": "2026-11-11T07:49:12.277599+00:00",
+      "result": {
+        "key_change": {
+          "text": "금융감독원 검사 과정에서 직원의 위법행위 및 내부통제 부실 자료를 조직적으로 삭제·수정해 허위 제출한 삼성증권이 기관 경고 중징계와 함께 과징금 및 과태료를 부과받음",
+          "evidence_ids": [
+            "p5",
+            "p9"
+          ]
+        },
+        "facts": [
+          {
+            "text": "금감원은 삼성증권의 허위자료 제출로 인해 검사기간이 7일에서 35일로 지연되었다고 밝힘",
+            "evidence_ids": [
+              "p2"
+            ]
+          },
+          {
+            "text": "삼성증권은 거점점포 검사 관련 허위자료 5건을 제출해 검사업무를 방해한 정황이 제재내용 공개안에 담김",
+            "evidence_ids": [
+              "p8"
+            ]
+          },
+          {
+            "text": "금감원의 검사방해 처분은 2020년 하나은행과 2023년 국민은행 사례 이후 이례적으로 적발된 대형 금융사 제재임",
+            "evidence_ids": [
+              "p6"
+            ]
+          },
+          {
+            "text": "삼성증권은 지점 정기감사 결과보고서의 위법행위 내용과 행위자 신원 정보를 삭제하고 7장 분량의 보고서를 2장만 남기는 등 조직적으로 자료를 누락함",
+            "evidence_ids": [
+              "p20"
+            ]
+          },
+          {
+            "text": "삼성증권은 징계양정 소명 과정에서 1쪽의 세부양정 매뉴얼 원본에서 과당매매 징계가중 부분을 삭제하여 제출함",
+            "evidence_ids": [
+              "p24"
+            ]
+          },
+          {
+            "text": "금감원은 삼성증권이 징계위원회 녹취록과 직원 A씨의 과거 징계 이력도 축소 및 선별적으로 삭제하여 제출했다고 지적함",
+            "evidence_ids": [
+              "p27",
+              "p30"
+            ]
+          }
+        ],
+        "stage": "성과",
+        "why_candidate": "대형 증권사의 조직적인 감사 자료 조작 및 검사 방해 행위가 금감원 검사를 통해 적발되고 중징계로 이어진 사안으로 경영기획 부문에서 내부통제 및 리스크 관리 체계 점검이 요구됨",
+        "evidence": [
+          {
+            "id": "p5",
+            "quote": "기자 = 삼성증권이 금융감독원의 초고액"
+          },
+          {
+            "id": "p9",
+            "quote": "관 경고'를 받았다. 과징금 43억1천6"
+          },
+          {
+            "id": "p2",
+            "quote": "방해로 검사기간 7일→35일 지연·차질\""
+          },
+          {
+            "id": "p8",
+            "quote": "는 검사반에 허위자료 5건을 제출해 검사"
+          },
+          {
+            "id": "p6",
+            "quote": "대형 금융사 중에선 2020년 하나은행"
+          },
+          {
+            "id": "p20",
+            "quote": "등을 삭제했다. 당초 7장 분량이었던 원"
+          },
+          {
+            "id": "p24",
+            "quote": "자체적으로 운영해 온 1쪽의 '세부양정"
+          },
+          {
+            "id": "p27",
+            "quote": "출했다. 일부 내용이 선별적으로 삭제된"
+          },
+          {
+            "id": "p30",
+            "quote": "A씨의 과거 징계 이력도 축소해 제출된"
+          }
+        ]
+      }
+    },
+    "issue-93c517fdfeaf40cf4dcd": {
+      "metadata_fingerprint": "aea083317d2c92cce515a4bf39e3e764ae399702cce60bf9ceea70901fc8fb6f",
+      "input_fingerprint": "b7549faa956f380abb36ad8fe68c12688c3e36f84c6a23bafd414d65064e46a5",
+      "evidence_ids": [
+        "version-cec27a85c662e30ff15c"
+      ],
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444106",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "body_hash": "bbdd7e0e462a952096ad95a49d0b8ce2a544374b83a13c87d6d62cf626533974",
+      "body_fetched_at": "2026-11-11T07:48:58.042661+00:00",
+      "truncated": true,
+      "prompt_version": "article-bullets-v1",
+      "analyzed_at": "2026-11-11T07:49:12.277620+00:00",
+      "result": {
+        "key_change": {
+          "text": "금융감독원 검사 과정에서 삼성증권과 농협은행이 조직적인 자료 조작과 은폐로 검사업무를 방해한 사실이 드러나 기관경고 등 제재를 받음",
+          "evidence_ids": [
+            "p5",
+            "p7"
+          ]
+        },
+        "facts": [
+          {
+            "text": "삼성증권은 특정 PB의 위법행위와 내부통제 실태를 숨기기 위해 지정 정기감사 결과보고서 및 녹취록 등 허위 자료 5건을 제출함",
+            "evidence_ids": [
+              "p10",
+              "p11"
+            ]
+          },
+          {
+            "text": "금감원은 삼성증권의 검사방해 행위로 인해 검사기간이 종전 7영업일에서 35영업일로 늘어났다고 설명함",
+            "evidence_ids": [
+              "p14"
+            ]
+          },
+          {
+            "text": "농협은행은 자금세탁방지 검사에 앞서 직원 22명이 고객확인 자료 2만7천808건을 임의 변경하고 전산시스템 조회 권한을 제한함",
+            "evidence_ids": [
+              "p16",
+              "p17"
+            ]
+          },
+          {
+            "text": "농협은행은 2024년 정기검사에서도 직원 6명이 고객확인 자료 1만9천527건을 임의 수정 제출하는 등 2년 연속으로 자료를 조작함",
+            "evidence_ids": [
+              "p18"
+            ]
+          },
+          {
+            "text": "삼성증권과 농협은행 측은 금감원 판단과 입장이 엇갈리며 검사 방해 목적이 아니었다고 해명함",
+            "evidence_ids": [
+              "p19"
+            ]
+          },
+          {
+            "text": "금감원의 평균 검사 처리기간은 2021년 113일에서 올해 상반기 237일로 두 배 이상 증가함",
+            "evidence_ids": [
+              "p30"
+            ]
+          }
+        ],
+        "stage": "성과",
+        "why_candidate": "금융사의 조직적인 검사 방해 및 허위 자료 제출 관행에 대해 당국이 이례적으로 강도 높은 제재를 부과함에 따라 업계 전반의 수검 대응 및 내부통제 리스크 관리에 시사점이 큼",
+        "evidence": [
+          {
+            "id": "p5",
+            "quote": "스) 신민경 기자 = 금융감독원 검사"
+          },
+          {
+            "id": "p7",
+            "quote": "부터 기관경고를 받은 삼성증권과 농협"
+          },
+          {
+            "id": "p10",
+            "quote": "추기 위해 허위 자료 5건을 제출했다"
+          },
+          {
+            "id": "p11",
+            "quote": "지정 정기감사 결과보고서와 징계위원회"
+          },
+          {
+            "id": "p14",
+            "quote": "을 종전 7영업일에서 35영업일로 늘"
+          },
+          {
+            "id": "p16",
+            "quote": "고객확인 자료 2만7천808건을 임의"
+          },
+          {
+            "id": "p17",
+            "quote": "를 알아채지 못하도록 전산시스템의 조"
+          },
+          {
+            "id": "p18",
+            "quote": "농협은행은 앞선 2024년 정기검사에"
+          },
+          {
+            "id": "p19",
+            "quote": "다만 삼성증권과 NH농협은행 측은 제"
+          },
+          {
+            "id": "p30",
+            "quote": "평균 검사 처리기간은 2021년 11"
+          }
+        ]
+      }
+    },
+    "issue-bea21caac6c606445447": {
+      "metadata_fingerprint": "0f0a34383ee5fd12cd4fd098f8884770abeae715fe7d46ce96145f66a750603b",
+      "input_fingerprint": "aa034a26119b964702fe808e18ad5db0da4a857b497aa263cfa135ac106814c8",
+      "evidence_ids": [
+        "version-962e56d464e7b41c4934"
+      ],
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444240",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "body_hash": "2f87b9d20adabc4c06a421e0c161603b1a11cf3ba82a65a3e4d228ac1d0d3874",
+      "body_fetched_at": "2026-11-11T07:48:58.042661+00:00",
+      "truncated": false,
+      "prompt_version": "article-bullets-v1",
+      "analyzed_at": "2026-11-11T07:49:12.277625+00:00",
+      "result": {
+        "key_change": {
+          "text": "메리츠증권은 올해 3분기 연결기준 영업이익 1천400억원과 당기순이익 2천64억원을 기록함",
+          "evidence_ids": [
+            "p3"
+          ]
+        },
+        "facts": [
+          {
+            "text": "메리츠증권의 3분기 누적 당기순이익은 7천205억원으로 전년 동기 대비 12.0% 증가함",
+            "evidence_ids": [
+              "p4"
+            ]
+          },
+          {
+            "text": "기업금융 부문은 건전성 관리와 다수의 대기업 맞춤형 구조화금융 딜 성사를 바탕으로 견조한 실적을 이어감",
+            "evidence_ids": [
+              "p5"
+            ]
+          },
+          {
+            "text": "자산운용 부문은 시장 변동성 확대에도 우수한 운용 성과를 거두며 이익 성장을 견인함",
+            "evidence_ids": [
+              "p6"
+            ]
+          },
+          {
+            "text": "리테일 부문은 안정적인 분기 실적을 기록하며 전 사업 부문에서 고른 성과를 거둠",
+            "evidence_ids": [
+              "p7"
+            ]
+          },
+          {
+            "text": "메리츠증권은 확대된 고객 기반과 디지털 플랫폼 경쟁력을 바탕으로 리테일 사업의 질적 성장을 추진함",
+            "evidence_ids": [
+              "p8"
+            ]
+          }
+        ],
+        "stage": "성과",
+        "why_candidate": "증권사의 3분기 실적 발표 내용으로 전 사업 부문의 고른 성장과 누적 순이익 증가 추이를 파악하여 동종 업계 경쟁력 비교 분석 자료로 활용 가능함",
+        "evidence": [
+          {
+            "id": "p3",
+            "quote": "연결기준 영업이익 1천400억원과 당기순이익 2천64억원을"
+          },
+          {
+            "id": "p4",
+            "quote": "누적 당기순이익은 7천205억원으로 전년 동기 대비 12.0"
+          },
+          {
+            "id": "p5",
+            "quote": "다수의 대기업 맞춤형 구조화금융 딜 성사를 바탕으로 견조한"
+          },
+          {
+            "id": "p6",
+            "quote": "부문은 시장 변동성 확대에도 우수한 운용 성과를 거두며 이"
+          },
+          {
+            "id": "p7",
+            "quote": "실적을 기록하는 등 전 사업 부문에서 고른 성과를 거뒀다."
+          },
+          {
+            "id": "p8",
+            "quote": "기반과 디지털 플랫폼 경쟁력을 바탕으로 리테일 사업의 질적"
+          }
+        ]
+      }
     }
   },
   "checks": {
@@ -1127,7 +1418,7 @@
     },
     "issue-3108a2f8608f22965149": {
       "metadata_fingerprint": "a0064e4b48f2dbdaa06785c58893c57a7656368da105699eaa85d7ba9150400e",
-      "checked_at": "2026-11-08T06:04:57.233012+00:00",
+      "checked_at": "2026-11-11T07:48:58.042661+00:00",
       "reason_code": null,
       "status": "completed"
     },
@@ -1165,7 +1456,7 @@
     },
     "issue-c0aa71ed0d9305a3bb74": {
       "metadata_fingerprint": "a63aa8de57d59d55f3a1a236a9a2006fc62fd7599be0f313535263ede4e38bfb",
-      "checked_at": "2026-11-07T08:17:47.582194+00:00",
+      "checked_at": "2026-11-11T07:48:58.042661+00:00",
       "reason_code": null,
       "status": "completed"
     },
@@ -1190,17 +1481,35 @@
       "checked_at": "2026-11-08T06:04:57.233012+00:00",
       "reason_code": null,
       "status": "completed"
+    },
+    "issue-58ca23d8b67c0c120f13": {
+      "metadata_fingerprint": "64c10ad828d3bdf5a91b1c2f9af245dd34f8e3663b7897e51aba29358fbc0188",
+      "checked_at": "2026-11-11T07:48:58.042661+00:00",
+      "reason_code": null,
+      "status": "completed"
+    },
+    "issue-93c517fdfeaf40cf4dcd": {
+      "metadata_fingerprint": "aea083317d2c92cce515a4bf39e3e764ae399702cce60bf9ceea70901fc8fb6f",
+      "checked_at": "2026-11-11T07:48:58.042661+00:00",
+      "reason_code": null,
+      "status": "completed"
+    },
+    "issue-bea21caac6c606445447": {
+      "metadata_fingerprint": "0f0a34383ee5fd12cd4fd098f8884770abeae715fe7d46ce96145f66a750603b",
+      "checked_at": "2026-11-11T07:48:58.042661+00:00",
+      "reason_code": null,
+      "status": "completed"
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-10T04:39:15.716796+00:00",
-    "completed_at": "2026-11-10T04:39:25.537577+00:00",
+    "attempted_at": "2026-11-11T07:48:58.042661+00:00",
+    "completed_at": "2026-11-11T07:49:12.277632+00:00",
     "status": "partial_success",
     "error_code": null,
-    "request_count": 0,
+    "request_count": 1,
     "fetch_count": 5,
-    "completed_count": 0,
-    "cached_count": 3,
+    "completed_count": 3,
+    "cached_count": 2,
     "failed_count": 0
   }
 }

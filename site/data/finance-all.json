@@ -1,11 +1,26 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-ade6edf0c0900d181847",
-  "generated_at": "2026-11-11T01:16:01.289107+00:00",
+  "generation_id": "finance-d6975a6a3e171f9a02e6",
+  "generated_at": "2026-11-11T07:48:33.002452+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 84,
+  "count": 86,
   "articles": [
+    {
+      "article_id": "article-bea21caac6c606445447",
+      "version_id": "version-962e56d464e7b41c4934",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "메리츠증권, 3분기 누적 순이익 7천205억원…전년比 12% 증가",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444240",
+      "published_date": "2026-11-11",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-11T07:48:33.002452+00:00",
+      "institutions": [
+        "메리츠증권"
+      ]
+    },
     {
       "article_id": "article-93c517fdfeaf40cf4dcd",
       "version_id": "version-cec27a85c662e30ff15c",
@@ -52,6 +67,21 @@
       "institutions": [
         "금융감독원",
         "삼성증권"
+      ]
+    },
+    {
+      "article_id": "article-476f224c372b524a0ace",
+      "version_id": "version-8ae9837b86f1efd9f37f",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "[PD 제재 후폭풍] 금투협 \"WGBI 70조 호재에 찬물…'대외신인도' 경고등\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444185",
+      "published_date": "2026-11-11",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-11T07:48:33.002452+00:00",
+      "institutions": [
+        "금융투자협회"
       ]
     },
     {

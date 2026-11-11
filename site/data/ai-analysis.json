@@ -1,55 +1,98 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-0169450c206069baa280",
-  "generated_at": "2026-11-11T01:16:01.289107+00:00",
+  "generation_id": "live-6056261264d7e4c65c07",
+  "generated_at": "2026-11-11T07:48:58.038407+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "metadata-review-v2",
   "policy_version": "public-metadata-inference-v2",
   "auto_analysis_enabled": true,
   "last_attempt": {
-    "attempted_at": "2026-11-10T04:39:15.713024+00:00",
-    "completed_at": "2026-11-10T04:39:15.713024+00:00",
-    "status": "cached",
+    "attempted_at": "2026-11-11T07:48:56.095902+00:00",
+    "completed_at": "2026-11-11T07:48:58.034162+00:00",
+    "status": "success",
     "error_code": null,
-    "request_count": 0,
-    "eligible_count": 16,
-    "completed_count": 0,
+    "request_count": 1,
+    "eligible_count": 19,
+    "completed_count": 3,
     "cached_count": 16,
     "failed_count": 0
   },
   "counts": {
     "blocked": 1,
-    "completed": 16,
+    "completed": 19,
     "stale": 0,
     "failed": 0,
-    "not_analyzed": 2,
-    "eligible": 18
+    "not_analyzed": 0,
+    "eligible": 19
   },
   "items": {
+    "issue-bea21caac6c606445447": {
+      "status": "completed",
+      "reason_code": null,
+      "input_fingerprint": "fd2ecb2c08f8453e18345cf6af4df1391d158730ed89f795bc7522dddd70bdb3",
+      "input_evidence_ids": [
+        "version-962e56d464e7b41c4934"
+      ],
+      "result_fingerprint": "fd2ecb2c08f8453e18345cf6af4df1391d158730ed89f795bc7522dddd70bdb3",
+      "analyzed_at": "2026-11-11T07:48:58.034162+00:00",
+      "error_code": null,
+      "result": {
+        "suggested_topic_id": "performance",
+        "relevance": "relevant",
+        "rationale": "제공된 기사 제목에서 분기 누적 순이익 실적 수치가 언급되어 있어 실적 부문 검토 후보입니다.",
+        "check_points": [
+          "기사 제목에 적힌 누적 순이익 및 증감 관련 내용 확인",
+          "실제 공시된 실적 데이터와 일치 여부 확인"
+        ],
+        "duplicate_issue_ids": []
+      }
+    },
     "issue-93c517fdfeaf40cf4dcd": {
-      "status": "not_analyzed",
+      "status": "completed",
       "reason_code": null,
       "input_fingerprint": "cb5301f64a4345e6ed60ab7b36d8cbbd8fe068c4c2280f8d12cd17712fdd3eaf",
       "input_evidence_ids": [
         "version-cec27a85c662e30ff15c"
       ],
-      "result_fingerprint": null,
-      "analyzed_at": null,
+      "result_fingerprint": "cb5301f64a4345e6ed60ab7b36d8cbbd8fe068c4c2280f8d12cd17712fdd3eaf",
+      "analyzed_at": "2026-11-11T07:48:58.034162+00:00",
       "error_code": null,
-      "result": null
+      "result": {
+        "suggested_topic_id": "risk",
+        "relevance": "relevant",
+        "rationale": "제공된 기사 제목에 따르면, 검사 방해와 관련된 중징계 가능성 및 금감원 관련 내용이 포함되어 있어 리스크 점검이 필요합니다.",
+        "check_points": [
+          "기사 제목에 명시된 중징계 관련 내용 확인",
+          "언급된 기관들의 관련 조치 여부 확인"
+        ],
+        "duplicate_issue_ids": [
+          "issue-58ca23d8b67c0c120f13"
+        ]
+      }
     },
     "issue-58ca23d8b67c0c120f13": {
-      "status": "not_analyzed",
+      "status": "completed",
       "reason_code": null,
       "input_fingerprint": "274588947a2691ba61190648a0681e51e9a205a45f20d35cd14c659624601a2c",
       "input_evidence_ids": [
         "version-256eaf1c8feab1b08df9"
       ],
-      "result_fingerprint": null,
-      "analyzed_at": null,
+      "result_fingerprint": "274588947a2691ba61190648a0681e51e9a205a45f20d35cd14c659624601a2c",
+      "analyzed_at": "2026-11-11T07:48:58.034162+00:00",
       "error_code": null,
-      "result": null
+      "result": {
+        "suggested_topic_id": "risk",
+        "relevance": "relevant",
+        "rationale": "제공된 기사 제목에 따르면, 금감원 검사 방해 및 허위자료 제출 관련 적발 내용이 언급되어 있어 리스크 관리 측면의 검토 후보로 적합합니다.",
+        "check_points": [
+          "기사 제목에 언급된 금감원 검사 방해 및 허위자료 제출 관련 내용 확인",
+          "실제 적발 배경과 관련 조치 사항 확인"
+        ],
+        "duplicate_issue_ids": [
+          "issue-93c517fdfeaf40cf4dcd"
+        ]
+      }
     },
     "issue-c5ddf7ec861b668ca10d": {
       "status": "completed",

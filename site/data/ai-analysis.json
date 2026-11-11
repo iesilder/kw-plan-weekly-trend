@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-2b23466564d31acd593d",
-  "generated_at": "2026-11-10T20:51:22.716684+00:00",
+  "generation_id": "live-0169450c206069baa280",
+  "generated_at": "2026-11-11T01:16:01.289107+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "metadata-review-v2",
@@ -23,10 +23,34 @@
     "completed": 16,
     "stale": 0,
     "failed": 0,
-    "not_analyzed": 0,
-    "eligible": 16
+    "not_analyzed": 2,
+    "eligible": 18
   },
   "items": {
+    "issue-93c517fdfeaf40cf4dcd": {
+      "status": "not_analyzed",
+      "reason_code": null,
+      "input_fingerprint": "cb5301f64a4345e6ed60ab7b36d8cbbd8fe068c4c2280f8d12cd17712fdd3eaf",
+      "input_evidence_ids": [
+        "version-cec27a85c662e30ff15c"
+      ],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
+    "issue-58ca23d8b67c0c120f13": {
+      "status": "not_analyzed",
+      "reason_code": null,
+      "input_fingerprint": "274588947a2691ba61190648a0681e51e9a205a45f20d35cd14c659624601a2c",
+      "input_evidence_ids": [
+        "version-256eaf1c8feab1b08df9"
+      ],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
     "issue-c5ddf7ec861b668ca10d": {
       "status": "completed",
       "reason_code": null,

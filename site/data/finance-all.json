@@ -1,11 +1,59 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-b967f01ea2bac8855098",
-  "generated_at": "2026-11-10T13:30:03.721575+00:00",
+  "generation_id": "finance-ade6edf0c0900d181847",
+  "generated_at": "2026-11-11T01:16:01.289107+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 81,
+  "count": 84,
   "articles": [
+    {
+      "article_id": "article-93c517fdfeaf40cf4dcd",
+      "version_id": "version-cec27a85c662e30ff15c",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "검사방해만으로도 '중징계감'…금감원도 속인 삼성증권·농협은행",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444106",
+      "published_date": "2026-11-11",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-11T01:16:01.289107+00:00",
+      "institutions": [
+        "금융감독원",
+        "삼성증권",
+        "NH농협은행"
+      ]
+    },
+    {
+      "article_id": "article-84dfac5af38e33d8ed8f",
+      "version_id": "version-16fad5786fa747375913",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "자본확충 협상 이견 '평행선'…한투의 KDB생명 인수 딜 무산되나",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444073",
+      "published_date": "2026-11-11",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-11T01:16:01.289107+00:00",
+      "institutions": [
+        "KDB생명"
+      ]
+    },
+    {
+      "article_id": "article-58ca23d8b67c0c120f13",
+      "version_id": "version-256eaf1c8feab1b08df9",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "금감원에 허위자료 냈다 '검사방해' 적발…삼성증권에 무슨 일이",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444088",
+      "published_date": "2026-11-11",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-11T01:16:01.289107+00:00",
+      "institutions": [
+        "금융감독원",
+        "삼성증권"
+      ]
+    },
     {
       "article_id": "article-beb48b1bb64a65ef8cb7",
       "version_id": "version-a5d900d3f370825bf25f",

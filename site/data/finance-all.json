@@ -1,11 +1,56 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-9cd58d33346c7e8cfac5",
-  "generated_at": "2026-11-11T22:43:12.971479+00:00",
+  "generation_id": "finance-7b580bc2fbaf26d3f513",
+  "generated_at": "2026-11-12T03:50:33.720370+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 90,
+  "count": 95,
   "articles": [
+    {
+      "article_id": "article-d6887c58da146767d7e3",
+      "version_id": "version-2e3541b8da4bee324291",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "VIP자산운용 \"TPG 롯데렌탈 공개매수 환영…의무공개매수법은 보완해야\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444344",
+      "published_date": "2026-11-12",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-12T03:50:33.720370+00:00",
+      "institutions": [
+        "VIP자산운용"
+      ]
+    },
+    {
+      "article_id": "article-9afe8a3580c201c9f1bf",
+      "version_id": "version-cd1c552c769f3873364a",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "미래에셋증권 CFO \"선진시장 온라인 자산관리 집중…M&A 추가 검토\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444404",
+      "published_date": "2026-11-12",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-12T03:50:33.720370+00:00",
+      "institutions": [
+        "미래에셋증권"
+      ]
+    },
+    {
+      "article_id": "article-8675add6529b6fd887f0",
+      "version_id": "version-f2579249fce131d0124d",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "역대 최저 밸류에이션…SK증권, 반도체 비중 확대 주문",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444309",
+      "published_date": "2026-11-12",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-12T03:50:33.720370+00:00",
+      "institutions": [
+        "SK증권"
+      ]
+    },
     {
       "article_id": "article-3f483e95c15c56f9b831",
       "version_id": "version-368687e3fe2ec854b048",
@@ -19,6 +64,36 @@
       "fetched_at": "2026-11-11T22:43:12.971479+00:00",
       "institutions": [
         "KB증권"
+      ]
+    },
+    {
+      "article_id": "article-2d8852af4c9bea7a57bf",
+      "version_id": "version-a52a8957e2c04c00c2f5",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "미래에셋증권 CFO \"자사주 전량 소각 땐 자본 4천600억↓…주주가치 극대화 모색\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444407",
+      "published_date": "2026-11-12",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-12T03:50:33.720370+00:00",
+      "institutions": [
+        "미래에셋증권"
+      ]
+    },
+    {
+      "article_id": "article-196c7f9718e42c64d862",
+      "version_id": "version-c396c6ef19c9cc9230f6",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "미래에셋증권, 3분기 누적 순이익 2.5조…자사주 1.4조 소각키로",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444358",
+      "published_date": "2026-11-12",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-12T03:50:33.720370+00:00",
+      "institutions": [
+        "미래에셋증권"
       ]
     },
     {

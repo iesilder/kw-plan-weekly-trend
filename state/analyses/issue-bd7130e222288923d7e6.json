@@ -1,0 +1,63 @@
+{
+  "issue_id": "issue-bd7130e222288923d7e6",
+  "title": "연결재무제표기준영업(잠정)실적(공정공시)",
+  "company": "미래에셋증권",
+  "company_ids": [
+    "company-1"
+  ],
+  "companies": [
+    "미래에셋증권"
+  ],
+  "topic_id": "performance",
+  "topic": "실적·자본·주주정책",
+  "priority": "unranked",
+  "report_status": "no_history",
+  "why_now": "공시 서식명(영업(잠정)실적)이 잠정·실제 실적 수집 범위에 해당합니다. 본문·실적 수치·중요도는 아직 분석하지 않았습니다.",
+  "bullets": [],
+  "evidence_ids": [
+    "version-52951e23c909bd540902"
+  ],
+  "detail_path": "data/issues/issue-bd7130e222288923d7e6.json",
+  "is_demo": false,
+  "analysis_status": "pending_ai",
+  "evidence_confidence": "metadata_only",
+  "source_name": "DART · 미래에셋증권",
+  "published_at": null,
+  "published_date": "2026-11-12",
+  "fetched_at": "2026-11-12T03:50:33.720370+00:00",
+  "matched_keywords": [
+    "영업(잠정)실적"
+  ],
+  "matched_topic_ids": [
+    "performance"
+  ],
+  "tags": [
+    "실적"
+  ],
+  "event_stage": "실적 공시",
+  "classification_rules_version": "dart-earnings-v1",
+  "content_filter": "earnings_only",
+  "content_policy_version": "dart-earnings-v1_597c90ceb374959d",
+  "schema_version": "1.0",
+  "generation_id": "live-e5442e6b6afe187ed456",
+  "change_summary": "본문·기보고 대비 변화는 분석하지 않았습니다.",
+  "last_report": null,
+  "evidence": [
+    {
+      "title": "연결재무제표기준영업(잠정)실적(공정공시)",
+      "published_at": null,
+      "published_date": "2026-11-12",
+      "source_updated_at": null,
+      "fetched_at": "2026-11-12T03:50:33.720370+00:00",
+      "content_level": "metadata_only",
+      "content_text": "",
+      "source_id": "dart-company-1",
+      "source_name": "DART · 미래에셋증권",
+      "retention_basis": "공시 식별에 필요한 회사명·법정 서식명·접수번호·접수일·원문 링크만 보존합니다. 본문·첨부·제출인 개인정보는 수집하지 않으며 DART 콘텐츠 전체의 재배포 허가를 주장하지 않습니다.",
+      "retention_url": "https://dart.fss.or.kr/introduction/content5.do",
+      "evidence_id": "version-52951e23c909bd540902",
+      "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800178",
+      "is_demo": false
+    }
+  ]
+}

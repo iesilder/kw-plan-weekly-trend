@@ -522,22 +522,67 @@
         "duplicate_issue_ids": []
       },
       "duplicate_context": {}
+    },
+    "0b8e84d5caf29f9d5f0e308a422d58cb3845abdfb9045c900760cbcfabfc4b30": {
+      "issue_id": "issue-196c7f9718e42c64d862",
+      "input_fingerprint": "0b8e84d5caf29f9d5f0e308a422d58cb3845abdfb9045c900760cbcfabfc4b30",
+      "input_evidence_ids": [
+        "version-c396c6ef19c9cc9230f6"
+      ],
+      "provider": "google_gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "metadata-review-v2",
+      "policy_version": "public-metadata-inference-v2",
+      "analyzed_at": "2026-11-12T03:51:02.215013+00:00",
+      "result": {
+        "suggested_topic_id": "performance",
+        "relevance": "relevant",
+        "rationale": "기사에 따르면 미래에셋증권의 누적 순이익 및 자사주 소각 관련 내용이 언급되어 실적 및 주주환원 정책 변화를 검토할 수 있다.",
+        "check_points": [
+          "누적 순이익 규모와 실적 산정 기준 확인",
+          "자사주 소각 규모 및 일정 확인"
+        ],
+        "duplicate_issue_ids": []
+      },
+      "duplicate_context": {}
+    },
+    "9184f6fb9d6530b2a3abb423746593821fb570b2722788b9968c39101d746171": {
+      "issue_id": "issue-9afe8a3580c201c9f1bf",
+      "input_fingerprint": "9184f6fb9d6530b2a3abb423746593821fb570b2722788b9968c39101d746171",
+      "input_evidence_ids": [
+        "version-cd1c552c769f3873364a"
+      ],
+      "provider": "google_gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "metadata-review-v2",
+      "policy_version": "public-metadata-inference-v2",
+      "analyzed_at": "2026-11-12T03:51:02.215013+00:00",
+      "result": {
+        "suggested_topic_id": "strategy",
+        "relevance": "relevant",
+        "rationale": "기사에 따르면 CFO가 선진시장 온라인 자산관리 집중과 추가 인수합병 검토 입장을 밝혀 경영 전략 변화를 살펴볼 필요가 있다.",
+        "check_points": [
+          "선진시장 온라인 자산관리 추진 방향 확인",
+          "추가 인수합병 검토 대상 및 범위 확인"
+        ],
+        "duplicate_issue_ids": []
+      },
+      "duplicate_context": {}
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-11T07:48:56.095902+00:00",
-    "completed_at": "2026-11-11T07:48:58.034162+00:00",
+    "attempted_at": "2026-11-12T03:51:00.747089+00:00",
+    "completed_at": "2026-11-12T03:51:02.215013+00:00",
     "status": "success",
     "error_code": null,
     "request_count": 1,
-    "eligible_count": 19,
-    "completed_count": 3,
-    "cached_count": 16,
+    "eligible_count": 21,
+    "completed_count": 2,
+    "cached_count": 19,
     "failed_count": 0,
     "fingerprints": [
-      "274588947a2691ba61190648a0681e51e9a205a45f20d35cd14c659624601a2c",
-      "cb5301f64a4345e6ed60ab7b36d8cbbd8fe068c4c2280f8d12cd17712fdd3eaf",
-      "fd2ecb2c08f8453e18345cf6af4df1391d158730ed89f795bc7522dddd70bdb3"
+      "0b8e84d5caf29f9d5f0e308a422d58cb3845abdfb9045c900760cbcfabfc4b30",
+      "9184f6fb9d6530b2a3abb423746593821fb570b2722788b9968c39101d746171"
     ]
   },
   "failures": {

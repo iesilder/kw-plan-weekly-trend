@@ -1,32 +1,80 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-4138ec824b3cad2e4a19",
-  "generated_at": "2026-11-11T22:43:12.971479+00:00",
+  "generation_id": "live-e5442e6b6afe187ed456",
+  "generated_at": "2026-11-12T03:51:18.300795+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "article-bullets-v1",
   "auto_analysis_enabled": true,
   "counts": {
-    "pending": 0,
-    "completed": 15,
-    "failed": 4,
-    "unavailable": 0,
-    "not_applicable": 1,
+    "failed": 5,
     "stale": 0,
-    "eligible": 19
+    "not_applicable": 2,
+    "pending": 0,
+    "unavailable": 1,
+    "completed": 15,
+    "eligible": 21
   },
   "last_attempt": {
-    "attempted_at": "2026-11-11T07:48:58.042661+00:00",
-    "completed_at": "2026-11-11T07:49:12.277632+00:00",
+    "attempted_at": "2026-11-12T03:51:02.221159+00:00",
+    "completed_at": "2026-11-12T03:51:18.296849+00:00",
     "status": "partial_success",
-    "error_code": null,
+    "error_code": "invalid_output",
     "request_count": 1,
     "fetch_count": 5,
-    "completed_count": 3,
-    "cached_count": 2,
-    "failed_count": 0
+    "completed_count": 0,
+    "cached_count": 7,
+    "failed_count": 2
   },
   "items": {
+    "issue-bd7130e222288923d7e6": {
+      "status": "not_applicable",
+      "reason_code": "not_article",
+      "evidence_ids": [
+        "version-52951e23c909bd540902"
+      ],
+      "source_url": null,
+      "source_name": null,
+      "input_fingerprint": null,
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "body_hash": null,
+      "body_fetched_at": null,
+      "truncated": false,
+      "result": null
+    },
+    "issue-9afe8a3580c201c9f1bf": {
+      "status": "unavailable",
+      "reason_code": "article_identity_mismatch",
+      "evidence_ids": [
+        "version-cd1c552c769f3873364a"
+      ],
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444404",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "input_fingerprint": null,
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "body_hash": null,
+      "body_fetched_at": null,
+      "truncated": false,
+      "result": null
+    },
+    "issue-196c7f9718e42c64d862": {
+      "status": "failed",
+      "reason_code": "output_number_mismatch",
+      "evidence_ids": [
+        "version-c396c6ef19c9cc9230f6"
+      ],
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444358",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "input_fingerprint": null,
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "body_hash": null,
+      "body_fetched_at": null,
+      "truncated": false,
+      "result": null
+    },
     "issue-bea21caac6c606445447": {
       "status": "completed",
       "reason_code": null,
@@ -1213,7 +1261,7 @@
       "result_fingerprint": "2315a64ca7f2429e856fb73eff264a2b033935039bcb80d05bd34034a540dbd3",
       "analyzed_at": "2026-11-08T06:05:15.549162+00:00",
       "body_hash": "c9f9e4cf21699822d1f1087cc8473d49b0c26153a8ea23667856d4d9afb1cdee",
-      "body_fetched_at": "2026-11-08T06:04:57.233012+00:00",
+      "body_fetched_at": "2026-11-12T03:51:02.221159+00:00",
       "truncated": false,
       "result": {
         "key_change": {
@@ -1252,7 +1300,7 @@
       "result_fingerprint": "6688a5de39d755bfa6957bb62c4c215e2034635090dfe82862b3ba8eb9a13561",
       "analyzed_at": "2026-11-08T06:05:15.549153+00:00",
       "body_hash": "1cbfe184fc67c6c74d82c4cd036c9fbe016b5dfdb60f22e3a15c4ae3766ea478",
-      "body_fetched_at": "2026-11-08T06:04:57.233012+00:00",
+      "body_fetched_at": "2026-11-12T03:51:02.221159+00:00",
       "truncated": false,
       "result": {
         "key_change": {

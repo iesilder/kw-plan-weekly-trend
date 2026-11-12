@@ -1,11 +1,41 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-7b580bc2fbaf26d3f513",
-  "generated_at": "2026-11-12T03:50:33.720370+00:00",
+  "generation_id": "finance-e93a4ec0439bee504bfe",
+  "generated_at": "2026-11-12T12:46:01.610796+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 95,
+  "count": 99,
   "articles": [
+    {
+      "article_id": "article-fbc4946e540a4c2d61ff",
+      "version_id": "version-f5f1dbcaa6d6bc8d833c",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "삼성증권, 3분기 순이익 3천528억…전년비 14.1% 증가",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444475",
+      "published_date": "2026-11-12",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-12T12:46:01.610796+00:00",
+      "institutions": [
+        "삼성증권"
+      ]
+    },
+    {
+      "article_id": "article-e5e92791f7805c68441c",
+      "version_id": "version-18ac15607d3dba889eb4",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "한화투자증권, 3분기 순익 116억…전분기·전년比 '반토막'",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444478",
+      "published_date": "2026-11-12",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-12T12:46:01.610796+00:00",
+      "institutions": [
+        "한화투자증권"
+      ]
+    },
     {
       "article_id": "article-d6887c58da146767d7e3",
       "version_id": "version-2e3541b8da4bee324291",
@@ -19,6 +49,21 @@
       "fetched_at": "2026-11-12T03:50:33.720370+00:00",
       "institutions": [
         "VIP자산운용"
+      ]
+    },
+    {
+      "article_id": "article-a2e4449997653a6b8b32",
+      "version_id": "version-137e02e4ba40e9f0eec2",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "종투사들 소집한 금감원…발행어음 고금리 경쟁에 \"건전성 챙겨야\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444450",
+      "published_date": "2026-11-12",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-12T12:46:01.610796+00:00",
+      "institutions": [
+        "금융감독원"
       ]
     },
     {
@@ -49,6 +94,21 @@
       "fetched_at": "2026-11-12T03:50:33.720370+00:00",
       "institutions": [
         "SK증권"
+      ]
+    },
+    {
+      "article_id": "article-5fa7f190d3d4f92ccdea",
+      "version_id": "version-479e1759763def29d27a",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "유안타증권 3분기 순이익 436억 원…전년比 46.4% 증가",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444454",
+      "published_date": "2026-11-12",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-12T12:46:01.610796+00:00",
+      "institutions": [
+        "유안타증권"
       ]
     },
     {

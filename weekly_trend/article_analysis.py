@@ -2,6 +2,7 @@
 
 import copy
 import hashlib
+from html import unescape
 import json
 import os
 from pathlib import Path
@@ -491,7 +492,12 @@ def run(root, environ=None, fetcher=None, transport=None, now=None, automatic=Fa
                 fetched_title = body.get("title", "")
                 if data["source"]["adapter"] == "newswire_rss":
                     fetched_title = re.sub(r" - 뉴스와이어$", "", fetched_title)
-                if " ".join(fetched_title.split()) != " ".join(data["title"].split()):
+                # Some publishers double-escape og:title attributes. HTMLParser
+                # already decodes the HTML layer; decode one remaining entity
+                # layer only for identity comparison, not the body/cache hash.
+                expected_title = " ".join(data["title"].split())
+                if (" ".join(fetched_title.split()) != expected_title and
+                        " ".join(unescape(fetched_title).split()) != expected_title):
                     raise ArticleError("article_identity_mismatch")
                 paragraphs, size, truncated = [], 0, body["truncated"]
                 for row in body["paragraphs"]:

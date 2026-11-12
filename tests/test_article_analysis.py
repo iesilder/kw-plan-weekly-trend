@@ -306,6 +306,28 @@ class ArticleAnalysisTests(unittest.TestCase):
         self.assertEqual(result["last_attempt"]["status"], "partial_success")
         self.assertEqual(read(self.root / "site/data/ai-analysis.json"), title_before)
 
+    def test_entity_encoded_title_matches_without_changing_body_or_cache_hash(self):
+        def encoded(url, source):
+            body = self.fetch(url, source)
+            body["title"] = "".join(f"&#{ord(char)};" for char in body["title"])
+            return body
+        result = articles.run(self.root, environ=ENV, fetcher=encoded,
+                              transport=self.transport, now=NOW)
+        self.assertEqual(result["counts"]["completed"], 5)
+        self.assertEqual(result["last_attempt"]["request_count"], 1)
+        for entry in read(self.root / "state/article-analysis.json")["entries"].values():
+            self.assertEqual(entry["body_hash"], self.body["content_hash"])
+
+    def test_entity_decoding_does_not_accept_different_title(self):
+        def wrong(url, source):
+            body = self.fetch(url, source)
+            body["title"] += " &quot;다른 기사&quot;"
+            return body
+        result = articles.run(self.root, environ=ENV, fetcher=wrong,
+                              transport=self.transport, now=NOW)
+        self.assertEqual(result["counts"]["unavailable"], 5)
+        self.assertEqual(self.calls, [])
+
     def test_wrong_article_title_is_not_sent_to_ai(self):
         def wrong(url, source):
             return copy.deepcopy(self.body)

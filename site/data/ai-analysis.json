@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-0b682190d1573a923381",
-  "generated_at": "2026-11-13T09:34:21.398231+00:00",
+  "generation_id": "live-b40a5c3d8a08fd8abf0e",
+  "generated_at": "2026-11-13T17:46:34.882977+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "metadata-review-v2",

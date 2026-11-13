@@ -1,11 +1,41 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-e93a4ec0439bee504bfe",
-  "generated_at": "2026-11-12T12:46:01.610796+00:00",
+  "generation_id": "finance-0e88c8cd0be32fe40bfa",
+  "generated_at": "2026-11-13T01:51:21.006154+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 99,
+  "count": 101,
   "articles": [
+    {
+      "article_id": "article-a2492beaf35d9951ad8b",
+      "version_id": "version-9b24d81236ccde07956a",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "JYP엔터, 3분기 '어닝 서프'에 주가 급등…미리캐피탈 지분 매집 영향도",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444545",
+      "published_date": "2026-11-13",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-13T01:51:21.006154+00:00",
+      "institutions": [
+        "미리캐피탈"
+      ]
+    },
+    {
+      "article_id": "article-2b743112baf60b487151",
+      "version_id": "version-7b88a5f3cb9ffb5ccead",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "라이프자산운용 공모펀드 출사표…'라이프 보이저' 출시",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444539",
+      "published_date": "2026-11-13",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-13T01:51:21.006154+00:00",
+      "institutions": [
+        "라이프자산운용"
+      ]
+    },
     {
       "article_id": "article-fbc4946e540a4c2d61ff",
       "version_id": "version-f5f1dbcaa6d6bc8d833c",

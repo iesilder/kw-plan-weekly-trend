@@ -1,8 +1,213 @@
 {
   "schema_version": "1.0",
   "is_demo": false,
-  "generation_id": "live-802357bc417da428b152",
+  "generation_id": "live-4ccb689d42b2487eedf9",
   "issues": [
+    {
+      "issue_id": "issue-bd654a1275bb643fba52",
+      "title": "분기보고서 (2026.09)",
+      "company": "NH투자증권",
+      "company_ids": [
+        "company-3"
+      ],
+      "companies": [
+        "NH투자증권"
+      ],
+      "topic_id": "performance",
+      "topic": "실적·자본·주주정책",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "공시 서식명(분기보고서)이 잠정·실제 실적 수집 범위에 해당합니다. 본문·실적 수치·중요도는 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-cda2f9cde334804887d3"
+      ],
+      "detail_path": "data/issues/issue-bd654a1275bb643fba52.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · NH투자증권",
+      "published_at": null,
+      "published_date": "2026-11-13",
+      "fetched_at": "2026-11-13T09:03:22.951102+00:00",
+      "matched_keywords": [
+        "분기보고서"
+      ],
+      "matched_topic_ids": [
+        "performance"
+      ],
+      "tags": [
+        "실적"
+      ],
+      "event_stage": "실적 공시",
+      "classification_rules_version": "dart-earnings-v1",
+      "content_filter": "earnings_only",
+      "content_policy_version": "dart-earnings-v1_af85d7227c67f62d"
+    },
+    {
+      "issue_id": "issue-79626efd7bea367cb96b",
+      "title": "분기보고서 (2026.09)",
+      "company": "한국투자증권",
+      "company_ids": [
+        "company-2"
+      ],
+      "companies": [
+        "한국투자증권"
+      ],
+      "topic_id": "performance",
+      "topic": "실적·자본·주주정책",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "공시 서식명(분기보고서)이 잠정·실제 실적 수집 범위에 해당합니다. 본문·실적 수치·중요도는 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-93886d98874793a726f3"
+      ],
+      "detail_path": "data/issues/issue-79626efd7bea367cb96b.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 한국투자증권",
+      "published_at": null,
+      "published_date": "2026-11-13",
+      "fetched_at": "2026-11-13T09:03:22.951102+00:00",
+      "matched_keywords": [
+        "분기보고서"
+      ],
+      "matched_topic_ids": [
+        "performance"
+      ],
+      "tags": [
+        "실적"
+      ],
+      "event_stage": "실적 공시",
+      "classification_rules_version": "dart-earnings-v1",
+      "content_filter": "earnings_only",
+      "content_policy_version": "dart-earnings-v1_ecfb4a1df3204788"
+    },
+    {
+      "issue_id": "issue-067732b9359c63f9f2d2",
+      "title": "분기보고서 (2026.09)",
+      "company": "하나증권",
+      "company_ids": [
+        "company-7"
+      ],
+      "companies": [
+        "하나증권"
+      ],
+      "topic_id": "performance",
+      "topic": "실적·자본·주주정책",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "공시 서식명(분기보고서)이 잠정·실제 실적 수집 범위에 해당합니다. 본문·실적 수치·중요도는 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-dea6ff548090dc659c21"
+      ],
+      "detail_path": "data/issues/issue-067732b9359c63f9f2d2.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 하나증권",
+      "published_at": null,
+      "published_date": "2026-11-13",
+      "fetched_at": "2026-11-13T09:03:22.951102+00:00",
+      "matched_keywords": [
+        "분기보고서"
+      ],
+      "matched_topic_ids": [
+        "performance"
+      ],
+      "tags": [
+        "실적"
+      ],
+      "event_stage": "실적 공시",
+      "classification_rules_version": "dart-earnings-v1",
+      "content_filter": "earnings_only",
+      "content_policy_version": "dart-earnings-v1_a5a4fc6159e40e2a"
+    },
+    {
+      "issue_id": "issue-90f894eed7013af341a8",
+      "title": "[기재정정] 연결재무제표기준영업(잠정)실적(공정공시)",
+      "company": "미래에셋증권",
+      "company_ids": [
+        "company-1"
+      ],
+      "companies": [
+        "미래에셋증권"
+      ],
+      "topic_id": "performance",
+      "topic": "실적·자본·주주정책",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "공시 서식명(영업(잠정)실적)이 잠정·실제 실적 수집 범위에 해당합니다. 본문·실적 수치·중요도는 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-ee3ea86abb66741625bd"
+      ],
+      "detail_path": "data/issues/issue-90f894eed7013af341a8.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 미래에셋증권",
+      "published_at": null,
+      "published_date": "2026-11-12",
+      "fetched_at": "2026-11-13T09:03:22.951102+00:00",
+      "matched_keywords": [
+        "영업(잠정)실적"
+      ],
+      "matched_topic_ids": [
+        "performance"
+      ],
+      "tags": [
+        "실적"
+      ],
+      "event_stage": "실적 공시",
+      "classification_rules_version": "dart-earnings-v1",
+      "content_filter": "earnings_only",
+      "content_policy_version": "dart-earnings-v1_597c90ceb374959d"
+    },
+    {
+      "issue_id": "issue-545439ee7229b8f95aac",
+      "title": "연결재무제표기준영업(잠정)실적(공정공시)",
+      "company": "삼성증권",
+      "company_ids": [
+        "company-4"
+      ],
+      "companies": [
+        "삼성증권"
+      ],
+      "topic_id": "performance",
+      "topic": "실적·자본·주주정책",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "공시 서식명(영업(잠정)실적)이 잠정·실제 실적 수집 범위에 해당합니다. 본문·실적 수치·중요도는 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-b649d404e2bdea322c7e"
+      ],
+      "detail_path": "data/issues/issue-545439ee7229b8f95aac.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 삼성증권",
+      "published_at": null,
+      "published_date": "2026-11-12",
+      "fetched_at": "2026-11-13T09:03:22.951102+00:00",
+      "matched_keywords": [
+        "영업(잠정)실적"
+      ],
+      "matched_topic_ids": [
+        "performance"
+      ],
+      "tags": [
+        "실적"
+      ],
+      "event_stage": "실적 공시",
+      "classification_rules_version": "dart-earnings-v1",
+      "content_filter": "earnings_only",
+      "content_policy_version": "dart-earnings-v1_9c66c9fcbd7f04a4"
+    },
     {
       "issue_id": "issue-fbc4946e540a4c2d61ff",
       "title": "삼성증권, 3분기 순이익 3천528억…전년비 14.1% 증가",

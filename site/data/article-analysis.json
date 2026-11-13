@@ -1,40 +1,40 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-802357bc417da428b152",
-  "generated_at": "2026-11-13T01:51:21.006154+00:00",
+  "generation_id": "live-4ccb689d42b2487eedf9",
+  "generated_at": "2026-11-13T09:04:05.074998+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "article-bullets-v1",
   "auto_analysis_enabled": true,
   "counts": {
-    "unavailable": 1,
     "stale": 0,
+    "unavailable": 0,
+    "completed": 17,
+    "not_applicable": 7,
     "failed": 5,
-    "not_applicable": 2,
-    "pending": 1,
-    "completed": 15,
+    "pending": 0,
     "eligible": 22
   },
   "last_attempt": {
-    "attempted_at": "2026-11-12T03:51:02.221159+00:00",
-    "completed_at": "2026-11-12T03:51:18.296849+00:00",
+    "attempted_at": "2026-11-13T09:03:55.640692+00:00",
+    "completed_at": "2026-11-13T09:04:05.070781+00:00",
     "status": "partial_success",
-    "error_code": "invalid_output",
+    "error_code": null,
     "request_count": 1,
     "fetch_count": 5,
-    "completed_count": 0,
-    "cached_count": 7,
-    "failed_count": 2
+    "completed_count": 2,
+    "cached_count": 2,
+    "failed_count": 0
   },
   "items": {
-    "issue-fbc4946e540a4c2d61ff": {
-      "status": "pending",
-      "reason_code": null,
+    "issue-bd654a1275bb643fba52": {
+      "status": "not_applicable",
+      "reason_code": "not_article",
       "evidence_ids": [
-        "version-f5f1dbcaa6d6bc8d833c"
+        "version-cda2f9cde334804887d3"
       ],
-      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444475",
-      "source_name": "연합인포맥스(기사) · 증권",
+      "source_url": null,
+      "source_name": null,
       "input_fingerprint": null,
       "result_fingerprint": null,
       "analyzed_at": null,
@@ -42,6 +42,159 @@
       "body_fetched_at": null,
       "truncated": false,
       "result": null
+    },
+    "issue-79626efd7bea367cb96b": {
+      "status": "not_applicable",
+      "reason_code": "not_article",
+      "evidence_ids": [
+        "version-93886d98874793a726f3"
+      ],
+      "source_url": null,
+      "source_name": null,
+      "input_fingerprint": null,
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "body_hash": null,
+      "body_fetched_at": null,
+      "truncated": false,
+      "result": null
+    },
+    "issue-067732b9359c63f9f2d2": {
+      "status": "not_applicable",
+      "reason_code": "not_article",
+      "evidence_ids": [
+        "version-dea6ff548090dc659c21"
+      ],
+      "source_url": null,
+      "source_name": null,
+      "input_fingerprint": null,
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "body_hash": null,
+      "body_fetched_at": null,
+      "truncated": false,
+      "result": null
+    },
+    "issue-90f894eed7013af341a8": {
+      "status": "not_applicable",
+      "reason_code": "not_article",
+      "evidence_ids": [
+        "version-ee3ea86abb66741625bd"
+      ],
+      "source_url": null,
+      "source_name": null,
+      "input_fingerprint": null,
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "body_hash": null,
+      "body_fetched_at": null,
+      "truncated": false,
+      "result": null
+    },
+    "issue-545439ee7229b8f95aac": {
+      "status": "not_applicable",
+      "reason_code": "not_article",
+      "evidence_ids": [
+        "version-b649d404e2bdea322c7e"
+      ],
+      "source_url": null,
+      "source_name": null,
+      "input_fingerprint": null,
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "body_hash": null,
+      "body_fetched_at": null,
+      "truncated": false,
+      "result": null
+    },
+    "issue-fbc4946e540a4c2d61ff": {
+      "status": "completed",
+      "reason_code": null,
+      "evidence_ids": [
+        "version-f5f1dbcaa6d6bc8d833c"
+      ],
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444475",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "input_fingerprint": "9d52136126b623d8aecd940305e42f69424b941dddf5c7bc055839fae688e9c7",
+      "result_fingerprint": "9d52136126b623d8aecd940305e42f69424b941dddf5c7bc055839fae688e9c7",
+      "analyzed_at": "2026-11-13T09:04:05.070749+00:00",
+      "body_hash": "c5c91abd3f77d464bbe5aa883f16c7ede12d757c7d50250f922ca974e1e43500",
+      "body_fetched_at": "2026-11-13T09:03:55.640692+00:00",
+      "truncated": false,
+      "result": {
+        "key_change": {
+          "text": "삼성증권은 올해 3분기 연결 기준 당기순이익 3천528억원을 기록하며 전년 동기 대비 14.1% 증가",
+          "evidence_ids": [
+            "p3"
+          ]
+        },
+        "facts": [
+          {
+            "text": "영업이익은 4천490억원으로 전년 동기 대비 11.7% 증가",
+            "evidence_ids": [
+              "p5"
+            ]
+          },
+          {
+            "text": "세전이익은 전년 동기 대비 16.5% 증가한 4천804억원으로 집계",
+            "evidence_ids": [
+              "p6"
+            ]
+          },
+          {
+            "text": "올 3분기 리테일 고객자산은 578조7천억원으로 지난해 동기 대비 47.1% 증가",
+            "evidence_ids": [
+              "p9"
+            ]
+          },
+          {
+            "text": "HNW 고객 수는 52만4천명으로 1년 전보다 52.7% 증가",
+            "evidence_ids": [
+              "p9"
+            ]
+          },
+          {
+            "text": "랩어카운트 순수수료는 201억원으로 전년 동기 대비 75.9% 증가",
+            "evidence_ids": [
+              "p10"
+            ]
+          },
+          {
+            "text": "3분기 전체 IB 부문 수익은 818억원을 기록",
+            "evidence_ids": [
+              "p12"
+            ]
+          }
+        ],
+        "stage": "성과",
+        "why_candidate": "국내 증시 조정기에도 WM 및 IB 부문의 선전에 힘입어 양호한 실적을 거둔 점을 경영기획 차원에서 참고할 필요가 있음.",
+        "evidence": [
+          {
+            "id": "p3",
+            "quote": "기준 당기순이익은 3천528억원으로 전년 동기 대비 14.1"
+          },
+          {
+            "id": "p5",
+            "quote": "영업이익은 4천490억원으로 전년 동기 대비 11.7% 증가"
+          },
+          {
+            "id": "p6",
+            "quote": "년 동기 대비 16.5% 증가한 4천804억원으로 나타났다."
+          },
+          {
+            "id": "p9",
+            "quote": "고객 수도 52만4천명으로 1년 전보다 52.7% 늘었다."
+          },
+          {
+            "id": "p10",
+            "quote": "로, 전년 동기 대비 75.9% 증가했다. 펀드 판매수익은"
+          },
+          {
+            "id": "p12",
+            "quote": "체 IB 부문 수익은 818억원으로 집계됐다. 주식자본시장("
+          }
+        ]
+      }
     },
     "issue-bd7130e222288923d7e6": {
       "status": "not_applicable",
@@ -60,20 +213,75 @@
       "result": null
     },
     "issue-9afe8a3580c201c9f1bf": {
-      "status": "unavailable",
-      "reason_code": "article_identity_mismatch",
+      "status": "completed",
+      "reason_code": null,
       "evidence_ids": [
         "version-cd1c552c769f3873364a"
       ],
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444404",
       "source_name": "연합인포맥스(기사) · 증권",
-      "input_fingerprint": null,
-      "result_fingerprint": null,
-      "analyzed_at": null,
-      "body_hash": null,
-      "body_fetched_at": null,
+      "input_fingerprint": "549020f5d1c5c53cf0add687b2aaccacc7da31d1e0c3d066a704ba124e3b7ddd",
+      "result_fingerprint": "549020f5d1c5c53cf0add687b2aaccacc7da31d1e0c3d066a704ba124e3b7ddd",
+      "analyzed_at": "2026-11-13T09:04:05.070773+00:00",
+      "body_hash": "108282bdcd194a6edc23cc976b7246c0b6393adbe9915555368802be987205e0",
+      "body_fetched_at": "2026-11-13T09:03:55.640692+00:00",
       "truncated": false,
-      "result": null
+      "result": {
+        "key_change": {
+          "text": "미래에셋증권은 선진시장 증권사 인수를 통해 현지 개인투자자 대상 온라인 자산관리 사업에 진출하는 구상을 추진",
+          "evidence_ids": [
+            "p2",
+            "p3"
+          ]
+        },
+        "facts": [
+          {
+            "text": "미래에셋증권은 일본 산코증권 인수를 공식화하고 후속 절차를 진행 중",
+            "evidence_ids": [
+              "p3",
+              "p4"
+            ]
+          },
+          {
+            "text": "일본 산코증권 인수 규모는 약 50억엔이며 미국 중간지주회사를 통해 지분 100%를 취득",
+            "evidence_ids": [
+              "p4"
+            ]
+          },
+          {
+            "text": "미래에셋증권은 향후 미국 등에 대한 추가 인수합병 옵션도 지속 검토",
+            "evidence_ids": [
+              "p3"
+            ]
+          },
+          {
+            "text": "모바일트레이딩시스템은 인수 완료 이후 1년 6개월에서 2년 정도 뒤 출시를 구상",
+            "evidence_ids": [
+              "p8"
+            ]
+          }
+        ],
+        "stage": "추진·협약",
+        "why_candidate": "해외 증권사 인수를 통한 글로벌 온라인 WM 시장 진출 및 추가 M&A 전략을 파악하기 위해 검토가 필요함.",
+        "evidence": [
+          {
+            "id": "p2",
+            "quote": "사 인수를 통해 현지 개인투자자 대상 온라인 자산관리(WM) 사업에 진출하겠다는 구상을 강"
+          },
+          {
+            "id": "p3",
+            "quote": "추진하는 목적은 현지 개인투자자를 대상으로 온라인 자산관리 사업에 진출하는 데 있다\"고 전"
+          },
+          {
+            "id": "p4",
+            "quote": "규모는 약 50억엔(약 425억원)이며 미국 중간지주회사를 통해 지분 100%를 취득한다."
+          },
+          {
+            "id": "p8",
+            "quote": "TS)은 인수 완료 이후 1년 6개월에서 2년 정도 뒤 출시를 생각하고 있다고도 언급했다."
+          }
+        ]
+      }
     },
     "issue-196c7f9718e42c64d862": {
       "status": "failed",
@@ -397,7 +605,7 @@
       "result_fingerprint": "6447aa648d4efd7f245e16aa6fe5e22dfb767573d9c2343b069035f9e19a9350",
       "analyzed_at": "2026-11-08T06:05:15.549125+00:00",
       "body_hash": "f400c83724dbf289d52867a873072a9e8b146a8939cadd56dc30dfff70d09f7c",
-      "body_fetched_at": "2026-11-08T06:04:57.233012+00:00",
+      "body_fetched_at": "2026-11-13T09:03:55.640692+00:00",
       "truncated": false,
       "result": {
         "key_change": {
@@ -845,7 +1053,7 @@
       "result_fingerprint": "23c0ab5249d23d70024957a163f240e63aaccf9b22982b03428e0e45ffd5c798",
       "analyzed_at": "2026-11-09T02:41:57.518730+00:00",
       "body_hash": "492f630b75f37657e6ec2384c2baceb4eca0f863773abf7c66bebbc251e61ca9",
-      "body_fetched_at": "2026-11-09T02:41:45.385416+00:00",
+      "body_fetched_at": "2026-11-13T09:03:55.640692+00:00",
       "truncated": false,
       "result": {
         "key_change": {

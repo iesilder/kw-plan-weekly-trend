@@ -1,43 +1,102 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-802357bc417da428b152",
-  "generated_at": "2026-11-13T01:51:21.006154+00:00",
+  "generation_id": "live-4ccb689d42b2487eedf9",
+  "generated_at": "2026-11-13T09:03:55.636487+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "metadata-review-v2",
   "policy_version": "public-metadata-inference-v2",
   "auto_analysis_enabled": true,
   "last_attempt": {
-    "attempted_at": "2026-11-12T03:51:00.747089+00:00",
-    "completed_at": "2026-11-12T03:51:02.215013+00:00",
+    "attempted_at": "2026-11-13T09:03:53.005928+00:00",
+    "completed_at": "2026-11-13T09:03:55.633915+00:00",
     "status": "success",
     "error_code": null,
     "request_count": 1,
-    "eligible_count": 21,
-    "completed_count": 2,
-    "cached_count": 19,
+    "eligible_count": 22,
+    "completed_count": 1,
+    "cached_count": 21,
     "failed_count": 0
   },
   "counts": {
-    "blocked": 2,
-    "completed": 21,
+    "blocked": 7,
+    "completed": 22,
     "stale": 0,
     "failed": 0,
-    "not_analyzed": 1,
+    "not_analyzed": 0,
     "eligible": 22
   },
   "items": {
+    "issue-bd654a1275bb643fba52": {
+      "status": "blocked",
+      "reason_code": "dart_not_sent",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
+    "issue-79626efd7bea367cb96b": {
+      "status": "blocked",
+      "reason_code": "dart_not_sent",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
+    "issue-067732b9359c63f9f2d2": {
+      "status": "blocked",
+      "reason_code": "dart_not_sent",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
+    "issue-90f894eed7013af341a8": {
+      "status": "blocked",
+      "reason_code": "dart_not_sent",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
+    "issue-545439ee7229b8f95aac": {
+      "status": "blocked",
+      "reason_code": "dart_not_sent",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
     "issue-fbc4946e540a4c2d61ff": {
-      "status": "not_analyzed",
+      "status": "completed",
       "reason_code": null,
       "input_fingerprint": "ee0d1fb916cc9a11df099427ccd36476c4c0d732a7c686b5a07c1c16e65ba8d4",
       "input_evidence_ids": [
         "version-f5f1dbcaa6d6bc8d833c"
       ],
-      "result_fingerprint": null,
-      "analyzed_at": null,
+      "result_fingerprint": "ee0d1fb916cc9a11df099427ccd36476c4c0d732a7c686b5a07c1c16e65ba8d4",
+      "analyzed_at": "2026-11-13T09:03:55.633915+00:00",
       "error_code": null,
-      "result": null
+      "result": {
+        "suggested_topic_id": "performance",
+        "relevance": "relevant",
+        "rationale": "기사에 따르면 삼성증권의 분기 순이익 변동 내역이 보도되었으므로 실적 관련 검토 후보로 적합합니다.",
+        "check_points": [
+          "기사에 언급된 순이익 규모와 증감률이 원본 공시나 실적 발표 자료와 일치하는지 확인",
+          "해당 기간의 실적 변동 요인으로 명시된 부분이 있는지 원본 기사나 공시를 통해 대조"
+        ],
+        "duplicate_issue_ids": []
+      }
     },
     "issue-bd7130e222288923d7e6": {
       "status": "blocked",

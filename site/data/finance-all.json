@@ -1,11 +1,26 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-0e88c8cd0be32fe40bfa",
-  "generated_at": "2026-11-13T01:51:21.006154+00:00",
+  "generation_id": "finance-7df4ee3389c2f712cb99",
+  "generated_at": "2026-11-13T09:03:22.951102+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 101,
+  "count": 104,
   "articles": [
+    {
+      "article_id": "article-ee8b461c9f5b4739a894",
+      "version_id": "version-374bda1e008fc39edf38",
+      "source_id": "einfomax-s1n7",
+      "source_name": "연합인포맥스(기사) · IB·기업",
+      "title": "JP모건 \"HBM 탑재량 약간 줄이려는 신호 포착\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444690",
+      "published_date": "2026-11-13",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-13T09:03:22.951102+00:00",
+      "institutions": [
+        "JP모건"
+      ]
+    },
     {
       "article_id": "article-a2492beaf35d9951ad8b",
       "version_id": "version-9b24d81236ccde07956a",
@@ -19,6 +34,37 @@
       "fetched_at": "2026-11-13T01:51:21.006154+00:00",
       "institutions": [
         "미리캐피탈"
+      ]
+    },
+    {
+      "article_id": "article-4645d90413b4afc94401",
+      "version_id": "version-584e787306a66574574a",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "교보증권, 3분기 순익 85억으로 '급감'…전분기 대비 90.6%↓",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444710",
+      "published_date": "2026-11-13",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-13T09:03:22.951102+00:00",
+      "institutions": [
+        "교보증권"
+      ]
+    },
+    {
+      "article_id": "article-3fda202f3cf7408ea4d5",
+      "version_id": "version-ea61daaecdc057813e5d",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "신진창 금융위원회 부위원장, 씨티그룹 국제부문 총 책임자 면담",
+      "source_url": "https://www.fsc.go.kr/no010101/88146",
+      "published_date": "2026-11-13",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-13T09:03:22.951102+00:00",
+      "institutions": [
+        "금융위원회",
+        "씨티그룹"
       ]
     },
     {

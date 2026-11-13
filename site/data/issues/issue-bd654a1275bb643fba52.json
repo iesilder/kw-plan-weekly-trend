@@ -1,0 +1,63 @@
+{
+  "issue_id": "issue-bd654a1275bb643fba52",
+  "title": "분기보고서 (2026.09)",
+  "company": "NH투자증권",
+  "company_ids": [
+    "company-3"
+  ],
+  "companies": [
+    "NH투자증권"
+  ],
+  "topic_id": "performance",
+  "topic": "실적·자본·주주정책",
+  "priority": "unranked",
+  "report_status": "no_history",
+  "why_now": "공시 서식명(분기보고서)이 잠정·실제 실적 수집 범위에 해당합니다. 본문·실적 수치·중요도는 아직 분석하지 않았습니다.",
+  "bullets": [],
+  "evidence_ids": [
+    "version-cda2f9cde334804887d3"
+  ],
+  "detail_path": "data/issues/issue-bd654a1275bb643fba52.json",
+  "is_demo": false,
+  "analysis_status": "pending_ai",
+  "evidence_confidence": "metadata_only",
+  "source_name": "DART · NH투자증권",
+  "published_at": null,
+  "published_date": "2026-11-13",
+  "fetched_at": "2026-11-13T09:03:22.951102+00:00",
+  "matched_keywords": [
+    "분기보고서"
+  ],
+  "matched_topic_ids": [
+    "performance"
+  ],
+  "tags": [
+    "실적"
+  ],
+  "event_stage": "실적 공시",
+  "classification_rules_version": "dart-earnings-v1",
+  "content_filter": "earnings_only",
+  "content_policy_version": "dart-earnings-v1_af85d7227c67f62d",
+  "schema_version": "1.0",
+  "generation_id": "live-4ccb689d42b2487eedf9",
+  "change_summary": "본문·기보고 대비 변화는 분석하지 않았습니다.",
+  "last_report": null,
+  "evidence": [
+    {
+      "title": "분기보고서 (2026.09)",
+      "published_at": null,
+      "published_date": "2026-11-13",
+      "source_updated_at": null,
+      "fetched_at": "2026-11-13T09:03:22.951102+00:00",
+      "content_level": "metadata_only",
+      "content_text": "",
+      "source_id": "dart-company-3",
+      "source_name": "DART · NH투자증권",
+      "retention_basis": "공시 식별에 필요한 회사명·법정 서식명·접수번호·접수일·원문 링크만 보존합니다. 본문·첨부·제출인 개인정보는 수집하지 않으며 DART 콘텐츠 전체의 재배포 허가를 주장하지 않습니다.",
+      "retention_url": "https://dart.fss.or.kr/introduction/content5.do",
+      "evidence_id": "version-cda2f9cde334804887d3",
+      "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113000872",
+      "is_demo": false
+    }
+  ]
+}

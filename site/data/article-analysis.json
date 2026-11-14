@@ -1,18 +1,18 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-abd3b193229b67f65387",
-  "generated_at": "2026-11-14T19:12:27.515481+00:00",
+  "generation_id": "live-3071a233c0c4557e2cb1",
+  "generated_at": "2026-11-14T23:00:18.003557+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "article-bullets-v1",
   "auto_analysis_enabled": true,
   "counts": {
-    "stale": 0,
-    "completed": 17,
     "unavailable": 0,
-    "not_applicable": 7,
     "failed": 5,
+    "completed": 17,
     "pending": 0,
+    "stale": 0,
+    "not_applicable": 7,
     "eligible": 22
   },
   "last_attempt": {

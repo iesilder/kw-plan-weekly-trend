@@ -1,29 +1,29 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-bca089766be2ead0fd09",
-  "generated_at": "2026-11-13T23:36:56.639938+00:00",
+  "generation_id": "live-88118c50a9d425515551",
+  "generated_at": "2026-11-14T06:27:42.803380+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "article-bullets-v1",
   "auto_analysis_enabled": true,
   "counts": {
-    "stale": 0,
+    "pending": 0,
+    "unavailable": 0,
     "completed": 17,
     "failed": 5,
     "not_applicable": 7,
-    "unavailable": 0,
-    "pending": 0,
+    "stale": 0,
     "eligible": 22
   },
   "last_attempt": {
-    "attempted_at": "2026-11-13T09:03:55.640692+00:00",
-    "completed_at": "2026-11-13T09:04:05.070781+00:00",
+    "attempted_at": "2026-11-14T06:27:37.540807+00:00",
+    "completed_at": "2026-11-14T06:27:42.800031+00:00",
     "status": "partial_success",
     "error_code": null,
-    "request_count": 1,
+    "request_count": 0,
     "fetch_count": 5,
-    "completed_count": 2,
-    "cached_count": 2,
+    "completed_count": 0,
+    "cached_count": 9,
     "failed_count": 0
   },
   "items": {
@@ -940,7 +940,7 @@
       "result_fingerprint": "cb10ef22d2a43ef00174d6501d85a07e0ef8552d78538ff0172778903493838c",
       "analyzed_at": "2026-11-07T08:18:04.689996+00:00",
       "body_hash": "d55ec6cc956b91f9db6c9997b3fff0ee42ff2fcb33badb65b16844f8393933fc",
-      "body_fetched_at": "2026-11-10T04:39:15.716796+00:00",
+      "body_fetched_at": "2026-11-14T06:27:37.540807+00:00",
       "truncated": false,
       "result": {
         "key_change": {
@@ -1104,7 +1104,7 @@
       "result_fingerprint": "5890a829daa561456ef45c1e38b92d8c4a6cc94afee6400fb31f6a78165d5cf5",
       "analyzed_at": "2026-11-06T07:57:51.808360+00:00",
       "body_hash": "4a2f12f5f3c3104be0fae7ad9a611c43f522c4880b37babd07eff19b6c023a8b",
-      "body_fetched_at": "2026-11-10T04:39:15.716796+00:00",
+      "body_fetched_at": "2026-11-14T06:27:37.540807+00:00",
       "truncated": false,
       "result": {
         "key_change": {
@@ -1187,7 +1187,7 @@
       "result_fingerprint": "5cc2aa9237d2b85b11b8bfd11ca26933ec5dda4f5fc90e4f5f224daccb721d61",
       "analyzed_at": "2026-11-06T07:57:51.808351+00:00",
       "body_hash": "f75f7a9deb199bc45dd1f76d2ff7c72d1ee3b3d0bfc7c995cd7c731737e2d9a3",
-      "body_fetched_at": "2026-11-09T02:41:45.385416+00:00",
+      "body_fetched_at": "2026-11-14T06:27:37.540807+00:00",
       "truncated": false,
       "result": {
         "key_change": {
@@ -1285,7 +1285,7 @@
       "result_fingerprint": "f04b6ac49db7b6df5279064a0ec3ee06f9d55110e4d5ff40e1c85de5c4128e69",
       "analyzed_at": "2026-11-06T07:57:51.808337+00:00",
       "body_hash": "d65bb9731681d063527994c01e44fa17faf2a7c4d904d453b9199b9cd4db5e48",
-      "body_fetched_at": "2026-11-09T02:41:45.385416+00:00",
+      "body_fetched_at": "2026-11-14T06:27:37.540807+00:00",
       "truncated": false,
       "result": {
         "key_change": {
@@ -1400,7 +1400,7 @@
       "result_fingerprint": "cae6dd6c68e382f069448bef424ca3aed6e3a0f313085c2a1cf816e41ce8f52a",
       "analyzed_at": "2026-11-06T07:57:51.808310+00:00",
       "body_hash": "9f19597b90f688a344fe0460082a6583ce5d62ba5d9a45b9882d1b84ccf91d06",
-      "body_fetched_at": "2026-11-09T02:41:45.385416+00:00",
+      "body_fetched_at": "2026-11-14T06:27:37.540807+00:00",
       "truncated": false,
       "result": {
         "key_change": {

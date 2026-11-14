@@ -594,18 +594,16 @@
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-13T09:03:53.005928+00:00",
-    "completed_at": "2026-11-13T09:03:55.633915+00:00",
-    "status": "success",
+    "attempted_at": "2026-11-14T06:27:37.535631+00:00",
+    "completed_at": "2026-11-14T06:27:37.535631+00:00",
+    "status": "cached",
     "error_code": null,
-    "request_count": 1,
+    "request_count": 0,
     "eligible_count": 22,
-    "completed_count": 1,
-    "cached_count": 21,
+    "completed_count": 0,
+    "cached_count": 22,
     "failed_count": 0,
-    "fingerprints": [
-      "ee0d1fb916cc9a11df099427ccd36476c4c0d732a7c686b5a07c1c16e65ba8d4"
-    ]
+    "fingerprints": []
   },
   "failures": {
     "101df6aece80efda1804316fe3517d5260db894c3f51acb3521fa0f7b116dbf3": {

@@ -1,11 +1,26 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-24f371c31f77a210499d",
-  "generated_at": "2026-11-13T09:34:21.398231+00:00",
+  "generation_id": "finance-e4e6476ccc2e28f6594b",
+  "generated_at": "2026-11-15T17:45:17.688362+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 106,
+  "count": 107,
   "articles": [
+    {
+      "article_id": "article-051ab729a281899ea81b",
+      "version_id": "version-5b450a12450c7d937c45",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "코인원, 상담 외주업체 해킹에 고객 개인정보 유출",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444826",
+      "published_date": "2026-11-15",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-15T17:45:17.688362+00:00",
+      "institutions": [
+        "코인원"
+      ]
+    },
     {
       "article_id": "article-ee8b461c9f5b4739a894",
       "version_id": "version-374bda1e008fc39edf38",

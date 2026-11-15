@@ -3,45 +3,45 @@
   "entries": {
     "interest-10": {
       "filter_fingerprint": "a9718ce4779c91651ac6b6eff281fef28917eb20f15aa030142db774974c0088",
-      "last_success_at": "2026-11-15T02:42:19.859915+00:00",
+      "last_success_at": "2026-11-15T17:45:17.688362+00:00",
       "sources": {
         "einfomax-s1n2": {
           "filter_fingerprint": "a9718ce4779c91651ac6b6eff281fef28917eb20f15aa030142db774974c0088",
-          "last_success_at": "2026-11-15T02:42:19.859915+00:00",
-          "next_collection_start": "2026-11-13T02:42:19.859915+00:00",
-          "etag": "\"54ac-66047a6a37a9d\"",
-          "last_modified": "Sun, 15 Nov 2026 02:45:14 GMT",
-          "status": "failed",
-          "error_code": "http_error"
+          "last_success_at": "2026-11-15T17:45:17.688362+00:00",
+          "next_collection_start": "2026-11-13T17:45:17.688362+00:00",
+          "etag": "\"5464-660542812a31e\"",
+          "last_modified": "Sun, 15 Nov 2026 17:40:26 GMT",
+          "status": "success",
+          "error_code": null
         },
         "einfomax-s1n7": {
           "filter_fingerprint": "a9718ce4779c91651ac6b6eff281fef28917eb20f15aa030142db774974c0088",
-          "last_success_at": "2026-11-15T02:42:19.859915+00:00",
-          "next_collection_start": "2026-11-13T02:42:19.859915+00:00",
-          "etag": "\"569d-66047a6a3a5aa\"",
-          "last_modified": "Sun, 15 Nov 2026 02:45:14 GMT",
-          "status": "failed",
-          "error_code": "http_error"
+          "last_success_at": "2026-11-15T17:45:17.688362+00:00",
+          "next_collection_start": "2026-11-13T17:45:17.688362+00:00",
+          "etag": "\"56ee-660542812ca36\"",
+          "last_modified": "Sun, 15 Nov 2026 17:40:26 GMT",
+          "status": "success",
+          "error_code": null
         },
         "newswire-securities": {
           "filter_fingerprint": "a9718ce4779c91651ac6b6eff281fef28917eb20f15aa030142db774974c0088",
-          "last_success_at": "2026-11-15T10:57:27.503819+00:00",
-          "next_collection_start": "2026-11-13T10:57:27.503819+00:00",
+          "last_success_at": "2026-11-15T17:45:17.688362+00:00",
+          "next_collection_start": "2026-11-13T17:45:17.688362+00:00",
           "etag": null,
           "last_modified": null,
           "status": "success",
           "error_code": null
         }
       },
-      "status": "partial_success"
+      "status": "success"
     }
   },
   "last_attempt": {
     "mode": "daily",
-    "started_at": "2026-11-15T10:57:27.503819+00:00",
-    "completed_at": "2026-11-15T10:57:27.503819+00:00",
-    "status": "partial_success",
+    "started_at": "2026-11-15T17:45:17.688362+00:00",
+    "completed_at": "2026-11-15T17:45:17.688362+00:00",
+    "status": "success",
     "request_url": null,
-    "error_code": "interest_sources_incomplete"
+    "error_code": null
   }
 }

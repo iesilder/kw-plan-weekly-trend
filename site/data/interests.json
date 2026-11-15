@@ -1,20 +1,20 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-81bcd39c78ff7cbe2820",
-  "generated_at": "2026-11-15T02:42:19.859915+00:00",
+  "generation_id": "live-df5b8fbaaf862455ac7b",
+  "generated_at": "2026-11-15T10:57:27.503819+00:00",
   "registry": {
     "status": "success",
-    "last_attempt_at": "2026-11-15T02:42:19.859915+00:00",
-    "last_success_at": "2026-11-15T02:42:19.859915+00:00",
+    "last_attempt_at": "2026-11-15T10:57:27.503819+00:00",
+    "last_success_at": "2026-11-15T10:57:27.503819+00:00",
     "error_code": null
   },
   "last_collection": {
     "mode": "daily",
-    "started_at": "2026-11-15T02:42:19.859915+00:00",
-    "completed_at": "2026-11-15T02:42:19.859915+00:00",
-    "status": "success",
+    "started_at": "2026-11-15T10:57:27.503819+00:00",
+    "completed_at": "2026-11-15T10:57:27.503819+00:00",
+    "status": "partial_success",
     "request_url": null,
-    "error_code": null
+    "error_code": "interest_sources_incomplete"
   },
   "interests": [
     {
@@ -37,7 +37,7 @@
       "enabled": true,
       "state": "active",
       "last_collected_at": "2026-11-15T02:42:19.859915+00:00",
-      "collection_status": "success",
+      "collection_status": "partial_success",
       "match_count": 0,
       "matches": []
     }

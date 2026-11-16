@@ -650,6 +650,7 @@
     section.append(review);
     const evidence = el("details","article-evidence");
     evidence.append(el("summary","","참조 문단 발췌 보기"));
+    evidence.append(el("p","ai-advisory-note","아래는 참조 문단의 짧은 미리보기입니다. 기존 저장 결과를 포함해 모든 수치·내용이 표시되지는 않습니다. [p번호]는 전체 참조 문단을 가리키며, 발췌만으로 확인되지 않는 내용은 원문에서 확인하세요."));
     result.evidence.forEach(row=>{
       const quote = el("blockquote","article-quote");
       quote.append(el("span","article-paragraph",`참조 문단 발췌 ${row.id}`),el("p","",`“${row.quote}”`));

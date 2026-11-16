@@ -2,6 +2,10 @@
 
 import copy
 import json
+import os
+from pathlib import Path
+import subprocess
+import sys
 import unittest
 
 from weekly_trend import article_analysis as articles
@@ -78,6 +82,44 @@ class ArticleOutputTests(unittest.TestCase):
         self.assertLessEqual(sum(len(row["quote"]) for row in value["evidence"]), 200)
         self.assertTrue(all(len(row["quote"]) <= 50 for row in value["evidence"]))
         articles.validate_result(value, paragraphs)
+
+    def test_shared_paragraph_preview_prefers_both_claims_when_they_fit(self):
+        paragraph = "배경 설명입니다. " * 15 + "고객자산 578조7천억원, 고객 수 52만4천명으로 증가했다. " + "추가 설명입니다. " * 15
+        claims = ["고객자산 578조7천억원", "고객 수 52만4천명"]
+        quote = articles._paragraph_preview(paragraph, claims, 80)
+        self.assertIn("578조7천억원", quote)
+        self.assertIn("52만4천명", quote)
+        self.assertIn(quote, paragraph)
+        self.assertLessEqual(len(quote), 80)
+
+    def test_preview_is_identical_across_independent_hash_seeds(self):
+        code = """from weekly_trend.article_analysis import _paragraph_preview
+p = '매출은 100억원이고 순이익은 200억원이며 전년 대비 10.0% 증가했다. ' + '배경 설명. ' * 30
+print(_paragraph_preview(p, ['매출 100억원, 순이익 200억원, 증가율 10.0%'], 80))
+"""
+        outputs = [subprocess.check_output([sys.executable, "-c", code],
+                   cwd=Path(__file__).resolve().parents[1],
+                   env={**os.environ, "PYTHONHASHSEED": str(seed)}, text=True)
+                   for seed in (1, 2, 3, 42)]
+        self.assertEqual(len(set(outputs)), 1)
+        self.assertIn("100억원", outputs[0])
+        self.assertIn("200억원", outputs[0])
+        self.assertIn("10.0%", outputs[0])
+
+    def test_limited_preview_does_not_replace_full_paragraph_numeric_validation(self):
+        paragraph = "매출은 100억원으로 집계됐다. " + "사업 배경 설명입니다. " * 30 + "순이익은 200억원으로 집계됐다."
+        result = {"key_change": {"text": "매출은 100억원이다.", "evidence_ids": ["p1"]},
+                  "facts": [{"text": "순이익은 200억원이다.", "evidence_ids": ["p1"]}],
+                  "stage": "성과", "why_candidate": "실적 변화 검토 자료입니다."}
+        paragraphs = {"p1": paragraph}
+        result["evidence"] = articles._source_excerpts(result, paragraphs)
+        quote = result["evidence"][0]["quote"]
+        self.assertFalse("100억원" in quote and "200억원" in quote)
+        articles.validate_result(result, paragraphs)
+        result["facts"][0]["text"] = "순이익은 999억원이다."
+        with self.assertRaises(articles.OutputError) as raised:
+            articles.validate_result(result, paragraphs)
+        self.assertEqual(raised.exception.code, "output_number_mismatch")
 
     def test_new_model_schema_does_not_require_generated_quotations(self):
         props = articles.response_schema()["properties"]["items"]["items"]["properties"]

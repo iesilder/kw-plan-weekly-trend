@@ -200,3 +200,17 @@ test("opening finance cancels a late detail mismatch without starting snapshot r
  assert.equal(h.fetches.filter(call=>call.path.startsWith("data/latest.json")).length,before);assert.equal(h.app.state.detail,null);
  h.setFinance(false);await h.settle();assert.equal(h.app.state.detail.generation_id,data.latest.generation_id);
 });
+
+
+test("legacy saved excerpts disclose preview limits without changing claims or stored evidence",async()=>{
+ const data=fixture(),original=clone(data.article.items[A].result);
+ const h=harness({data});await h.settle();
+ const panel=h.$("detail-panel").textContent;
+ assert.match(panel,/참조 문단의 짧은 미리보기/);
+ assert.match(panel,/기존 저장 결과를 포함해 모든 수치·내용이 표시되지는 않습니다/);
+ assert.match(panel,/전체 참조 문단을 가리키며/);
+ assert.match(panel,/발췌만으로 확인되지 않는 내용은 원문에서 확인/);
+ assert.match(panel,/새 AI 고객 서비스를 출시했다/);
+ assert.deepEqual(data.article.items[A].result,original);
+ assert.deepEqual(h.app.articleState.data.items[A].result,original);
+});

@@ -1,11 +1,101 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-e4e6476ccc2e28f6594b",
-  "generated_at": "2026-11-15T17:45:17.688362+00:00",
+  "generation_id": "finance-c6301f0bffa669b83503",
+  "generated_at": "2026-11-16T02:45:35.588508+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 107,
+  "count": 113,
   "articles": [
+    {
+      "article_id": "article-eb21f92b7da8d2a58867",
+      "version_id": "version-704ea4b8708bf9f83859",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "하나證 \"젠슨 황 스캔들, 단기악재…中기술추격 제한은 韓 반도체 기회\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444856",
+      "published_date": "2026-11-16",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-16T02:45:35.588508+00:00",
+      "institutions": [
+        "하나증권"
+      ]
+    },
+    {
+      "article_id": "article-e94f4edb33b6a44f95cf",
+      "version_id": "version-a946beb1dd2b051ce14c",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "KB운용 '최저 보수' 앞세워 美대표지수 2종 ETF 연말 이벤트",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444881",
+      "published_date": "2026-11-16",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-16T02:45:35.588508+00:00",
+      "institutions": [
+        "KB자산운용"
+      ]
+    },
+    {
+      "article_id": "article-d721b7bf4a3ea3615e7c",
+      "version_id": "version-eabfa3fd7930e69fdd42",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "KB證 \"삼성전자, 탈엔비디아 시대 최대 수혜주\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444854",
+      "published_date": "2026-11-16",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-16T02:45:35.588508+00:00",
+      "institutions": [
+        "KB증권"
+      ]
+    },
+    {
+      "article_id": "article-6be33daac761cf494ffb",
+      "version_id": "version-260b1f53ce46c9057f7b",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "정부는 최근 발생한 금융보안원의 침해사고와 관련하여 철저한 원인조사 및 재발방지 대책 마련을 지시하였습니다.",
+      "source_url": "https://www.fsc.go.kr/no010101/88152",
+      "published_date": "2026-11-16",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-16T02:45:35.588508+00:00",
+      "institutions": [
+        "금융보안원"
+      ]
+    },
+    {
+      "article_id": "article-2f7e779156ec0ce21dc6",
+      "version_id": "version-ef5fcc2a5693165ada08",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "팰리서캐피탈, LG화학에 주주서한…\"자사주 매입부족, 이사회 개편해야\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444868",
+      "published_date": "2026-11-16",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-16T02:45:35.588508+00:00",
+      "institutions": [
+        "팰리서캐피탈"
+      ]
+    },
+    {
+      "article_id": "article-05b30cb192531b0eaaa7",
+      "version_id": "version-f22d0eb339f7743446aa",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "이억원 금융위원장, 글로벌 금융안정 공조 및 유럽 주요 금융당국과 협력 강화 나선다",
+      "source_url": "https://www.fsc.go.kr/no010101/88151",
+      "published_date": "2026-11-16",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-16T02:45:35.588508+00:00",
+      "institutions": [
+        "금융위원회"
+      ]
+    },
     {
       "article_id": "article-051ab729a281899ea81b",
       "version_id": "version-5b450a12450c7d937c45",

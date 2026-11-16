@@ -594,8 +594,8 @@
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-15T02:47:54.537451+00:00",
-    "completed_at": "2026-11-15T02:47:54.537451+00:00",
+    "attempted_at": "2026-11-16T02:46:01.766988+00:00",
+    "completed_at": "2026-11-16T02:46:01.766988+00:00",
     "status": "cached",
     "error_code": null,
     "request_count": 0,

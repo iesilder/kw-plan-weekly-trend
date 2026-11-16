@@ -558,7 +558,7 @@
       "source_url": "https://www.fsc.go.kr/no010101/88010",
       "source_name": "금융위원회 · 보도자료",
       "body_hash": "1cbfe184fc67c6c74d82c4cd036c9fbe016b5dfdb60f22e3a15c4ae3766ea478",
-      "body_fetched_at": "2026-11-12T03:51:02.221159+00:00",
+      "body_fetched_at": "2026-11-16T02:46:01.772256+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-08T06:05:15.549153+00:00",
@@ -608,7 +608,7 @@
       "source_url": "https://www.fsc.go.kr/no010101/88013",
       "source_name": "금융위원회 · 보도자료",
       "body_hash": "c9f9e4cf21699822d1f1087cc8473d49b0c26153a8ea23667856d4d9afb1cdee",
-      "body_fetched_at": "2026-11-12T03:51:02.221159+00:00",
+      "body_fetched_at": "2026-11-16T02:46:01.772256+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-08T06:05:15.549162+00:00",
@@ -1094,7 +1094,7 @@
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444088",
       "source_name": "연합인포맥스(기사) · 증권",
       "body_hash": "d5f34346de45f8d12d2724905a0ddc6a40d9208bec4e4d75f9ea3d7629ffce4f",
-      "body_fetched_at": "2026-11-11T07:48:58.042661+00:00",
+      "body_fetched_at": "2026-11-16T02:46:01.772256+00:00",
       "truncated": true,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-11T07:49:12.277599+00:00",
@@ -1196,7 +1196,7 @@
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444106",
       "source_name": "연합인포맥스(기사) · 증권",
       "body_hash": "bbdd7e0e462a952096ad95a49d0b8ce2a544374b83a13c87d6d62cf626533974",
-      "body_fetched_at": "2026-11-11T07:48:58.042661+00:00",
+      "body_fetched_at": "2026-11-16T02:46:01.772256+00:00",
       "truncated": true,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-11T07:49:12.277620+00:00",
@@ -1303,7 +1303,7 @@
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444240",
       "source_name": "연합인포맥스(기사) · 증권",
       "body_hash": "2f87b9d20adabc4c06a421e0c161603b1a11cf3ba82a65a3e4d228ac1d0d3874",
-      "body_fetched_at": "2026-11-11T07:48:58.042661+00:00",
+      "body_fetched_at": "2026-11-16T02:46:01.772256+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-11T07:49:12.277625+00:00",
@@ -1582,13 +1582,13 @@
     },
     "issue-34d0a1c085f04dc0c774": {
       "metadata_fingerprint": "c5faf15e5848466df26e886615ce53dfaf97601f0bb8496446168a0ffc5878e4",
-      "checked_at": "2026-11-12T03:51:02.221159+00:00",
+      "checked_at": "2026-11-16T02:46:01.772256+00:00",
       "reason_code": null,
       "status": "completed"
     },
     "issue-49697d9828e2c35c9098": {
       "metadata_fingerprint": "3c566b62685aeaad57530298021ea3a4ac9575234a72d65a9073d89aa16cb045",
-      "checked_at": "2026-11-12T03:51:02.221159+00:00",
+      "checked_at": "2026-11-16T02:46:01.772256+00:00",
       "reason_code": null,
       "status": "completed"
     },
@@ -1642,19 +1642,19 @@
     },
     "issue-58ca23d8b67c0c120f13": {
       "metadata_fingerprint": "64c10ad828d3bdf5a91b1c2f9af245dd34f8e3663b7897e51aba29358fbc0188",
-      "checked_at": "2026-11-11T07:48:58.042661+00:00",
+      "checked_at": "2026-11-16T02:46:01.772256+00:00",
       "reason_code": null,
       "status": "completed"
     },
     "issue-93c517fdfeaf40cf4dcd": {
       "metadata_fingerprint": "aea083317d2c92cce515a4bf39e3e764ae399702cce60bf9ceea70901fc8fb6f",
-      "checked_at": "2026-11-11T07:48:58.042661+00:00",
+      "checked_at": "2026-11-16T02:46:01.772256+00:00",
       "reason_code": null,
       "status": "completed"
     },
     "issue-bea21caac6c606445447": {
       "metadata_fingerprint": "0f0a34383ee5fd12cd4fd098f8884770abeae715fe7d46ce96145f66a750603b",
-      "checked_at": "2026-11-11T07:48:58.042661+00:00",
+      "checked_at": "2026-11-16T02:46:01.772256+00:00",
       "reason_code": null,
       "status": "completed"
     },
@@ -1680,8 +1680,8 @@
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-15T02:47:54.546053+00:00",
-    "completed_at": "2026-11-15T02:48:04.184498+00:00",
+    "attempted_at": "2026-11-16T02:46:01.772256+00:00",
+    "completed_at": "2026-11-16T02:46:10.999164+00:00",
     "status": "partial_success",
     "error_code": null,
     "request_count": 0,

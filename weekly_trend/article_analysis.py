@@ -330,6 +330,39 @@ def response_schema(batch=None):
     return {"type": "object", "additionalProperties": False, "properties": {"items": {"type": "array", "maxItems": 5, "items": item}}, "required": ["items"]}
 
 
+def _paragraph_preview(paragraph, claims, budget):
+    """Choose one deterministic, bounded preview; it is not full claim evidence.
+
+    Prefer a window covering the numeric context of more linked claims. Keep
+    the original paragraph untouched for validation, and never expand the quote
+    budget to make a preview look complete.
+    """
+    available_numbers = _numbers(paragraph)
+    claim_numbers = [_numbers(text) & available_numbers for text in claims]
+    wanted_numbers = set().union(*claim_numbers)
+    words = sorted(set(re.findall(r"[가-힣A-Za-z]{3,}", " ".join(claims))),
+                   key=lambda word: (-len(word), word))
+    spans = [(match.start(), match.end()) for match in NUMBER.finditer(paragraph)
+             if _numbers(match.group()) & wanted_numbers]
+    for word in words:
+        spans.extend((match.start(), match.end())
+                     for match in re.finditer(re.escape(word), paragraph))
+    last_start = max(0, len(paragraph) - budget)
+    starts = {0}
+    for begin, end in spans:
+        starts.update(max(0, min(start, last_start))
+                      for start in (begin - 12, begin, end - budget))
+
+    def rank(start):
+        window = paragraph[start:start + budget]
+        numbers = _numbers(window) & wanted_numbers
+        return (sum(bool(required) and required <= numbers for required in claim_numbers),
+                len(numbers), sum(len(word) for word in words if word in window), -start)
+
+    start = max(sorted(starts), key=rank)
+    return paragraph[start:start + budget].strip()
+
+
 def _source_excerpts(result, paragraphs):
     """Build exact bounded paragraph previews; never ask a model to copy text."""
     claims = [result["key_change"], *result["facts"]]
@@ -348,14 +381,8 @@ def _source_excerpts(result, paragraphs):
     evidence = []
     for ref in references:
         paragraph = paragraphs[ref]
-        related = " ".join(claim["text"] for claim in claims if ref in claim["evidence_ids"])
-        # Prefer a window containing an exact numeric expression or long shared
-        # word; the UI identifies this as an excerpt of the cited paragraph.
-        terms = sorted(_numbers(related), key=len, reverse=True)
-        terms += sorted(set(re.findall(r"[가-힣A-Za-z]{3,}", related)), key=len, reverse=True)
-        position = next((paragraph.find(term) for term in terms if term in paragraph), 0)
-        start = max(0, min(position - 12, len(paragraph) - budget))
-        quote = paragraph[start:start + budget].strip()
+        related = [claim["text"] for claim in claims if ref in claim["evidence_ids"]]
+        quote = _paragraph_preview(paragraph, related, budget)
         if len(quote) < 8:
             raise OutputError("output_quote_invalid")
         evidence.append({"id": ref, "quote": quote})

@@ -1,8 +1,213 @@
 {
   "schema_version": "1.0",
   "is_demo": false,
-  "generation_id": "live-921b1e98ef9824560632",
+  "generation_id": "live-b1830200c1efb679adb9",
   "issues": [
+    {
+      "issue_id": "issue-ef5f4b099bf4f1197fd2",
+      "title": "분기보고서 (2026.09)",
+      "company": "미래에셋증권",
+      "company_ids": [
+        "company-1"
+      ],
+      "companies": [
+        "미래에셋증권"
+      ],
+      "topic_id": "performance",
+      "topic": "실적·자본·주주정책",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "공시 서식명(분기보고서)이 잠정·실제 실적 수집 범위에 해당합니다. 본문·실적 수치·중요도는 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-92f7086eed17b04ebca0"
+      ],
+      "detail_path": "data/issues/issue-ef5f4b099bf4f1197fd2.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 미래에셋증권",
+      "published_at": null,
+      "published_date": "2026-11-16",
+      "fetched_at": "2026-11-16T11:06:03.569949+00:00",
+      "matched_keywords": [
+        "분기보고서"
+      ],
+      "matched_topic_ids": [
+        "performance"
+      ],
+      "tags": [
+        "실적"
+      ],
+      "event_stage": "실적 공시",
+      "classification_rules_version": "dart-earnings-v1",
+      "content_filter": "earnings_only",
+      "content_policy_version": "dart-earnings-v1_597c90ceb374959d"
+    },
+    {
+      "issue_id": "issue-ce106e9c39df83602ff8",
+      "title": "분기보고서 (2026.09)",
+      "company": "메리츠증권",
+      "company_ids": [
+        "company-8"
+      ],
+      "companies": [
+        "메리츠증권"
+      ],
+      "topic_id": "performance",
+      "topic": "실적·자본·주주정책",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "공시 서식명(분기보고서)이 잠정·실제 실적 수집 범위에 해당합니다. 본문·실적 수치·중요도는 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-0ab237ae3f11eb3193e4"
+      ],
+      "detail_path": "data/issues/issue-ce106e9c39df83602ff8.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 메리츠증권",
+      "published_at": null,
+      "published_date": "2026-11-16",
+      "fetched_at": "2026-11-16T11:06:03.569949+00:00",
+      "matched_keywords": [
+        "분기보고서"
+      ],
+      "matched_topic_ids": [
+        "performance"
+      ],
+      "tags": [
+        "실적"
+      ],
+      "event_stage": "실적 공시",
+      "classification_rules_version": "dart-earnings-v1",
+      "content_filter": "earnings_only",
+      "content_policy_version": "dart-earnings-v1_b7f8cf51031b9ab2"
+    },
+    {
+      "issue_id": "issue-c67bdc8962da112709eb",
+      "title": "분기보고서 (2026.09)",
+      "company": "KB증권",
+      "company_ids": [
+        "company-5"
+      ],
+      "companies": [
+        "KB증권"
+      ],
+      "topic_id": "performance",
+      "topic": "실적·자본·주주정책",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "공시 서식명(분기보고서)이 잠정·실제 실적 수집 범위에 해당합니다. 본문·실적 수치·중요도는 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-21716685354fc4fd3b9d"
+      ],
+      "detail_path": "data/issues/issue-c67bdc8962da112709eb.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · KB증권",
+      "published_at": null,
+      "published_date": "2026-11-16",
+      "fetched_at": "2026-11-16T11:06:03.569949+00:00",
+      "matched_keywords": [
+        "분기보고서"
+      ],
+      "matched_topic_ids": [
+        "performance"
+      ],
+      "tags": [
+        "실적"
+      ],
+      "event_stage": "실적 공시",
+      "classification_rules_version": "dart-earnings-v1",
+      "content_filter": "earnings_only",
+      "content_policy_version": "dart-earnings-v1_8d4ee8099d8dcf5a"
+    },
+    {
+      "issue_id": "issue-b81188378571889aa92a",
+      "title": "분기보고서 (2026.09)",
+      "company": "삼성증권",
+      "company_ids": [
+        "company-4"
+      ],
+      "companies": [
+        "삼성증권"
+      ],
+      "topic_id": "performance",
+      "topic": "실적·자본·주주정책",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "공시 서식명(분기보고서)이 잠정·실제 실적 수집 범위에 해당합니다. 본문·실적 수치·중요도는 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-55803eb6decd01f46330"
+      ],
+      "detail_path": "data/issues/issue-b81188378571889aa92a.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 삼성증권",
+      "published_at": null,
+      "published_date": "2026-11-16",
+      "fetched_at": "2026-11-16T11:06:03.569949+00:00",
+      "matched_keywords": [
+        "분기보고서"
+      ],
+      "matched_topic_ids": [
+        "performance"
+      ],
+      "tags": [
+        "실적"
+      ],
+      "event_stage": "실적 공시",
+      "classification_rules_version": "dart-earnings-v1",
+      "content_filter": "earnings_only",
+      "content_policy_version": "dart-earnings-v1_9c66c9fcbd7f04a4"
+    },
+    {
+      "issue_id": "issue-5ed69ffc03885945d317",
+      "title": "분기보고서 (2026.09)",
+      "company": "신한투자증권",
+      "company_ids": [
+        "company-6"
+      ],
+      "companies": [
+        "신한투자증권"
+      ],
+      "topic_id": "performance",
+      "topic": "실적·자본·주주정책",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "공시 서식명(분기보고서)이 잠정·실제 실적 수집 범위에 해당합니다. 본문·실적 수치·중요도는 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-71b3862dd52f6b5057e0"
+      ],
+      "detail_path": "data/issues/issue-5ed69ffc03885945d317.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "DART · 신한투자증권",
+      "published_at": null,
+      "published_date": "2026-11-16",
+      "fetched_at": "2026-11-16T11:06:03.569949+00:00",
+      "matched_keywords": [
+        "분기보고서"
+      ],
+      "matched_topic_ids": [
+        "performance"
+      ],
+      "tags": [
+        "실적"
+      ],
+      "event_stage": "실적 공시",
+      "classification_rules_version": "dart-earnings-v1",
+      "content_filter": "earnings_only",
+      "content_policy_version": "dart-earnings-v1_d465373063c26628"
+    },
     {
       "issue_id": "issue-bd654a1275bb643fba52",
       "title": "분기보고서 (2026.09)",

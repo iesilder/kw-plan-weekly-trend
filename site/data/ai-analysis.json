@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-921b1e98ef9824560632",
-  "generated_at": "2026-11-16T02:46:01.768985+00:00",
+  "generation_id": "live-b1830200c1efb679adb9",
+  "generated_at": "2026-11-16T11:06:03.569949+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "metadata-review-v2",
@@ -19,7 +19,7 @@
     "failed_count": 0
   },
   "counts": {
-    "blocked": 7,
+    "blocked": 12,
     "completed": 22,
     "stale": 0,
     "failed": 0,
@@ -27,6 +27,56 @@
     "eligible": 22
   },
   "items": {
+    "issue-ef5f4b099bf4f1197fd2": {
+      "status": "blocked",
+      "reason_code": "dart_not_sent",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
+    "issue-ce106e9c39df83602ff8": {
+      "status": "blocked",
+      "reason_code": "dart_not_sent",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
+    "issue-c67bdc8962da112709eb": {
+      "status": "blocked",
+      "reason_code": "dart_not_sent",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
+    "issue-b81188378571889aa92a": {
+      "status": "blocked",
+      "reason_code": "dart_not_sent",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
+    "issue-5ed69ffc03885945d317": {
+      "status": "blocked",
+      "reason_code": "dart_not_sent",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
     "issue-bd654a1275bb643fba52": {
       "status": "blocked",
       "reason_code": "dart_not_sent",

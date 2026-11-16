@@ -1,11 +1,41 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-c6301f0bffa669b83503",
-  "generated_at": "2026-11-16T02:45:35.588508+00:00",
+  "generation_id": "finance-e2025e94c9ab8ab4ffad",
+  "generated_at": "2026-11-16T11:06:03.569949+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 113,
+  "count": 122,
   "articles": [
+    {
+      "article_id": "article-fc63e11924b8e13ede19",
+      "version_id": "version-93dd0c3389665636f369",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "빗썸, 3분기 당기순손실 15억…거래대금 감소 탓",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445019",
+      "published_date": "2026-11-16",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-16T11:06:03.569949+00:00",
+      "institutions": [
+        "빗썸"
+      ]
+    },
+    {
+      "article_id": "article-fc4c607f2562841a62ee",
+      "version_id": "version-6d60b98e4e248d236a70",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "DB증권, 3분기 당기순익 69억원…전년比 80.6% 급감",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444974",
+      "published_date": "2026-11-16",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-16T11:06:03.569949+00:00",
+      "institutions": [
+        "DB증권"
+      ]
+    },
     {
       "article_id": "article-eb21f92b7da8d2a58867",
       "version_id": "version-704ea4b8708bf9f83859",
@@ -19,6 +49,21 @@
       "fetched_at": "2026-11-16T02:45:35.588508+00:00",
       "institutions": [
         "하나증권"
+      ]
+    },
+    {
+      "article_id": "article-eaa3d782a95b30a9d125",
+      "version_id": "version-b8b7a35aa45e6de8f599",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "한국거래소 상반기 신입 채용서 'AI 안경' 부정행위 적발",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445013",
+      "published_date": "2026-11-16",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-16T11:06:03.569949+00:00",
+      "institutions": [
+        "한국거래소"
       ]
     },
     {
@@ -37,6 +82,21 @@
       ]
     },
     {
+      "article_id": "article-e44f388e57288688fe7f",
+      "version_id": "version-804728d8e08738d7f54c",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "유진투자증권 3분기 순이익 156억…전분기比 76.8% 급감",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445024",
+      "published_date": "2026-11-16",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-16T11:06:03.569949+00:00",
+      "institutions": [
+        "유진투자증권"
+      ]
+    },
+    {
       "article_id": "article-d721b7bf4a3ea3615e7c",
       "version_id": "version-eabfa3fd7930e69fdd42",
       "source_id": "einfomax-s1n2",
@@ -49,6 +109,21 @@
       "fetched_at": "2026-11-16T02:45:35.588508+00:00",
       "institutions": [
         "KB증권"
+      ]
+    },
+    {
+      "article_id": "article-c70978326c280337d1e6",
+      "version_id": "version-e56fb0f3d82e93abe516",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "미래에셋운용, 3분기 당기순익 743억…전분기比 87% 급감",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445004",
+      "published_date": "2026-11-16",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-16T11:06:03.569949+00:00",
+      "institutions": [
+        "미래에셋자산운용"
       ]
     },
     {
@@ -67,6 +142,36 @@
       ]
     },
     {
+      "article_id": "article-6556c67dc7c8cce572eb",
+      "version_id": "version-2c6b20aea8fc0b479bcb",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "모건스탠리 \"韓, 향후 5년간 주식시장 최고 스토리…코스피 1만선 지속가능\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444992",
+      "published_date": "2026-11-16",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-16T11:06:03.569949+00:00",
+      "institutions": [
+        "모건스탠리"
+      ]
+    },
+    {
+      "article_id": "article-461373e65ffbd4922aae",
+      "version_id": "version-34bd3a37cdcf6ab4584d",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "증권사 랩 어카운트 가입한다면…금감원 \"이것만은 꼭\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444942",
+      "published_date": "2026-11-16",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-16T11:06:03.569949+00:00",
+      "institutions": [
+        "금융감독원"
+      ]
+    },
+    {
       "article_id": "article-2f7e779156ec0ce21dc6",
       "version_id": "version-ef5fcc2a5693165ada08",
       "source_id": "einfomax-s1n2",
@@ -79,6 +184,36 @@
       "fetched_at": "2026-11-16T02:45:35.588508+00:00",
       "institutions": [
         "팰리서캐피탈"
+      ]
+    },
+    {
+      "article_id": "article-2b2ff1e167efabe22623",
+      "version_id": "version-76df9bff08a19f4683d0",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "SK증권, 3분기 영업손실 전환…순이익도 90% 급감",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445020",
+      "published_date": "2026-11-16",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-16T11:06:03.569949+00:00",
+      "institutions": [
+        "SK증권"
+      ]
+    },
+    {
+      "article_id": "article-1254a2b7a93c51384f9c",
+      "version_id": "version-a798c450ae3c6afc762b",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "한양증권, 3분기 영업익 101억…전년比 46.7%↓",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445016",
+      "published_date": "2026-11-16",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-16T11:06:03.569949+00:00",
+      "institutions": [
+        "한양증권"
       ]
     },
     {

@@ -1,19 +1,19 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-daab322a3b2172eb36ea",
-  "generated_at": "2026-11-17T04:31:23.952172+00:00",
+  "generation_id": "live-1ac801917d7a6f69c3c4",
+  "generated_at": "2026-11-17T14:27:25.215041+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "article-bullets-v1",
   "auto_analysis_enabled": true,
   "counts": {
     "not_applicable": 12,
-    "pending": 0,
-    "completed": 17,
-    "stale": 0,
-    "unavailable": 0,
+    "pending": 1,
     "failed": 5,
-    "eligible": 22
+    "unavailable": 0,
+    "stale": 0,
+    "completed": 17,
+    "eligible": 23
   },
   "last_attempt": {
     "attempted_at": "2026-11-17T04:31:11.127786+00:00",
@@ -27,6 +27,22 @@
     "failed_count": 0
   },
   "items": {
+    "issue-7949ba6c7cb3b24211e2": {
+      "status": "pending",
+      "reason_code": null,
+      "evidence_ids": [
+        "version-4872612b531ae85fbcf2"
+      ],
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445205",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "input_fingerprint": null,
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "body_hash": null,
+      "body_fetched_at": null,
+      "truncated": false,
+      "result": null
+    },
     "issue-ef5f4b099bf4f1197fd2": {
       "status": "not_applicable",
       "reason_code": "not_article",

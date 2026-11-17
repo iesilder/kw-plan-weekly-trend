@@ -1,11 +1,56 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-0c7f894d715dfb49f44d",
-  "generated_at": "2026-11-17T04:30:40.559934+00:00",
+  "generation_id": "finance-9c048bacb3d05b0412eb",
+  "generated_at": "2026-11-17T14:27:25.215041+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 123,
+  "count": 126,
   "articles": [
+    {
+      "article_id": "article-fa0796ff1d000dd01169",
+      "version_id": "version-54855fa85cec017aa694",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "한국투자증권, ELW 258종목 신규 상장…지수형·종목형 혼합",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445171",
+      "published_date": "2026-11-17",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-17T14:27:25.215041+00:00",
+      "institutions": [
+        "한국투자증권"
+      ]
+    },
+    {
+      "article_id": "article-b539fb8c59104c124fc2",
+      "version_id": "version-f670e6fe09eaedbbf385",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "美 터톤캐피탈 \"韓 자본시장 개혁, 내년 주총이 시험대\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445180",
+      "published_date": "2026-11-17",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-17T14:27:25.215041+00:00",
+      "institutions": [
+        "터톤캐피탈"
+      ]
+    },
+    {
+      "article_id": "article-7949ba6c7cb3b24211e2",
+      "version_id": "version-4872612b531ae85fbcf2",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "KB증권 베트남법인 계좌서 '비정상 출금' 사고…현지 당국 조사",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445205",
+      "published_date": "2026-11-17",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-17T14:27:25.215041+00:00",
+      "institutions": [
+        "KB증권"
+      ]
+    },
     {
       "article_id": "article-6785aab02824c5615e02",
       "version_id": "version-5a7c43011f0cef4ca4a4",

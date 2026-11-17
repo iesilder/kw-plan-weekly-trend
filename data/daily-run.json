@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
-  "date_kst": "2026-11-16",
-  "started_at": "2026-11-16T02:45:35.588508+00:00",
-  "completed_at": "2026-11-16T02:46:12.293204+00:00",
+  "date_kst": "2026-11-17",
+  "started_at": "2026-11-17T04:30:40.559934+00:00",
+  "completed_at": "2026-11-17T04:31:25.654496+00:00",
   "status": "partial_success",
   "stages": {
     "collection": {

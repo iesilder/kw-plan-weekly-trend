@@ -1,29 +1,29 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-210fee01560e61117f01",
-  "generated_at": "2026-11-16T22:06:04.602763+00:00",
+  "generation_id": "live-daab322a3b2172eb36ea",
+  "generated_at": "2026-11-17T04:31:23.952172+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "article-bullets-v1",
   "auto_analysis_enabled": true,
   "counts": {
-    "completed": 17,
-    "failed": 5,
-    "stale": 0,
-    "pending": 0,
-    "unavailable": 0,
     "not_applicable": 12,
+    "pending": 0,
+    "completed": 17,
+    "stale": 0,
+    "unavailable": 0,
+    "failed": 5,
     "eligible": 22
   },
   "last_attempt": {
-    "attempted_at": "2026-11-16T02:46:01.772256+00:00",
-    "completed_at": "2026-11-16T02:46:10.999164+00:00",
+    "attempted_at": "2026-11-17T04:31:11.127786+00:00",
+    "completed_at": "2026-11-17T04:31:23.945700+00:00",
     "status": "partial_success",
     "error_code": null,
     "request_count": 0,
     "fetch_count": 5,
     "completed_count": 0,
-    "cached_count": 8,
+    "cached_count": 2,
     "failed_count": 0
   },
   "items": {
@@ -685,7 +685,7 @@
       "result_fingerprint": "6447aa648d4efd7f245e16aa6fe5e22dfb767573d9c2343b069035f9e19a9350",
       "analyzed_at": "2026-11-08T06:05:15.549125+00:00",
       "body_hash": "f400c83724dbf289d52867a873072a9e8b146a8939cadd56dc30dfff70d09f7c",
-      "body_fetched_at": "2026-11-13T09:03:55.640692+00:00",
+      "body_fetched_at": "2026-11-17T04:31:11.127786+00:00",
       "truncated": false,
       "result": {
         "key_change": {
@@ -1133,7 +1133,7 @@
       "result_fingerprint": "23c0ab5249d23d70024957a163f240e63aaccf9b22982b03428e0e45ffd5c798",
       "analyzed_at": "2026-11-09T02:41:57.518730+00:00",
       "body_hash": "492f630b75f37657e6ec2384c2baceb4eca0f863773abf7c66bebbc251e61ca9",
-      "body_fetched_at": "2026-11-13T09:03:55.640692+00:00",
+      "body_fetched_at": "2026-11-17T04:31:11.127786+00:00",
       "truncated": false,
       "result": {
         "key_change": {

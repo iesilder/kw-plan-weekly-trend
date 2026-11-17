@@ -1,11 +1,26 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-e2025e94c9ab8ab4ffad",
-  "generated_at": "2026-11-16T11:06:03.569949+00:00",
+  "generation_id": "finance-0c7f894d715dfb49f44d",
+  "generated_at": "2026-11-17T04:30:40.559934+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 122,
+  "count": 123,
   "articles": [
+    {
+      "article_id": "article-6785aab02824c5615e02",
+      "version_id": "version-5a7c43011f0cef4ca4a4",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "ETF 큰손 된 빗썸에셋, 투자 성적은 낙제점…손실만 433억",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445125",
+      "published_date": "2026-11-17",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-17T04:30:40.559934+00:00",
+      "institutions": [
+        "빗썸"
+      ]
+    },
     {
       "article_id": "article-fc63e11924b8e13ede19",
       "version_id": "version-93dd0c3389665636f369",

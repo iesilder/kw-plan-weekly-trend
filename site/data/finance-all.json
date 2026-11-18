@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-b9c8bebf1ab721e391c6",
-  "generated_at": "2026-11-18T04:25:15.539310+00:00",
+  "generation_id": "finance-855071e0848c24e0118d",
+  "generated_at": "2026-11-18T05:34:33.220939+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 133,
+  "count": 134,
   "articles": [
     {
       "article_id": "article-9eb4f1fc3390e757db88",
@@ -34,6 +34,21 @@
       "fetched_at": "2026-11-18T04:25:15.539310+00:00",
       "institutions": [
         "우투증권"
+      ]
+    },
+    {
+      "article_id": "article-8a8380dd98be3e92da51",
+      "version_id": "version-61f5e59b4bae7871e449",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "금감원 \"운용사, 금융권 '약한 고리'…외부접점 빠짐없이 점검\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445370",
+      "published_date": "2026-11-18",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-18T05:34:33.220939+00:00",
+      "institutions": [
+        "금융감독원"
       ]
     },
     {

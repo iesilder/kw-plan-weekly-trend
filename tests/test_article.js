@@ -151,3 +151,16 @@ test("official FSC summaries remain bound to the numeric press release URL and c
   for(const bad of ["https://fsc.go.kr/no010101/99999","https://www.fsc.go.kr/no010101","https://www.fsc.go.kr/no010101/09999",url+"?id=1",url+"/attachment",url.replace("no010101","no010102"),"https://www.fsc.go.kr/comm/getFile?srvcId=BBSTY1&upperNo=99999"]){assert.equal(Article.articleURL(bad,source),null,bad);}
   assert.equal(Article.articleURL(url,SOURCE),null);
 });
+
+test("retained summaries disclose failed refresh and validate warning metadata",()=>{
+  const {data,latest}=fixture();complete(data);
+  data.items[A].refresh_failure={reason_code:"timeout",checked_at:STAMP};
+  const item=Article.validateSidecar(data,latest).items[A];
+  assert.ok(item.result);
+  assert.match(Article.itemMessage(item),/이전 요약/);
+  assert.match(Article.itemMessage(item),/변경 여부는 확인하지 못/);
+  for(const refresh of [{reason_code:"output_number_mismatch",checked_at:STAMP},{reason_code:"timeout",checked_at:"bad"},{reason_code:"timeout",checked_at:"2020-01-01T00:00:00Z"}]){
+    data.items[A].refresh_failure=refresh;
+    assert.throws(()=>Article.validateSidecar(data,latest));
+  }
+});

@@ -110,7 +110,9 @@
       } else if (item.status==="stale") {
         if (item.result!==null) fail("재분석 대상에는 과거 본문 요약을 표시하지 않습니다.");
       } else if (item.result!==null || item.result_fingerprint!==null || item.analyzed_at!==null) fail("본문 분석이 완료되지 않은 자료에 요약 결과가 포함되어 있습니다.");
-      result.items[id] = {status:item.status,reason_code:item.reason_code,evidence_ids:[...item.evidence_ids],input_fingerprint:item.input_fingerprint,result_fingerprint:item.result_fingerprint,analyzed_at:item.analyzed_at,source_url:item.source_url,source_name:item.source_name,body_hash:item.body_hash,body_fetched_at:item.body_fetched_at,truncated:item.truncated,result:brief};
+      const refresh = item.refresh_failure;
+      if (refresh!==undefined && (!object(refresh) || item.status!=="completed" || !["timeout","network_error"].includes(refresh.reason_code) || !instant(refresh.checked_at) || new Date(refresh.checked_at)<new Date(item.body_fetched_at))) fail("본문 재확인 상태가 올바르지 않습니다.");
+      result.items[id] = {...(refresh===undefined?{}:{refresh_failure:{reason_code:refresh.reason_code,checked_at:refresh.checked_at}}),status:item.status,reason_code:item.reason_code,evidence_ids:[...item.evidence_ids],input_fingerprint:item.input_fingerprint,result_fingerprint:item.result_fingerprint,analyzed_at:item.analyzed_at,source_url:item.source_url,source_name:item.source_name,body_hash:item.body_hash,body_fetched_at:item.body_fetched_at,truncated:item.truncated,result:brief};
     }
     for (const [key,count] of Object.entries(result.counts)) if (value.counts[key]!==count) fail("본문 요약의 처리 건수가 자료별 상태와 일치하지 않습니다.");
     if (value.last_attempt!==null) {
@@ -127,6 +129,7 @@
     return canonical!==null && detail.evidence.some(row=>row.source_name===item.source_name&&articleURL(row.source_url,row.source_name)===canonical);
   }
   function itemMessage(item) {
+    if (item.status==="completed" && item.refresh_failure) return "최근 원문 재확인에 실패해 마지막으로 검증한 이전 요약을 표시합니다. 이후 본문 변경 여부는 확인하지 못했습니다." + (item.truncated ? " 확보한 본문의 일부만 분석한 결과입니다." : "");
     if (item.status==="completed") return item.truncated ? "확보한 본문의 일부를 분석한 AI 요약입니다. 기사 전체를 읽은 결과가 아니므로 원문을 함께 확인하세요." : "확보한 기사 본문에 근거한 AI 요약입니다. 원문 근거와 담당자의 판단을 함께 확인하세요.";
     if (item.status==="stale") return "수집 자료 또는 분석 기준이 바뀌어 이전 본문 요약을 표시하지 않습니다. 다음 자동 실행 또는 수동 실행에서 재분석합니다.";
     if (REASONS[item.reason_code]) return REASONS[item.reason_code];

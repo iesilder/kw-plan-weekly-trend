@@ -1,8 +1,49 @@
 {
   "schema_version": "1.0",
   "is_demo": false,
-  "generation_id": "live-b25d6d0221a8f116fd0c",
+  "generation_id": "live-8d00118794cfdef45d28",
   "issues": [
+    {
+      "issue_id": "issue-0ee76b1052e424819526",
+      "title": "한국투자증권, 지주서 6천500억 조달…\"자본 확충 통한 재무구조 개선\"",
+      "company": "한국투자증권",
+      "company_ids": [
+        "company-2"
+      ],
+      "companies": [
+        "한국투자증권"
+      ],
+      "topic_id": "performance",
+      "topic": "실적·자본·주주정책",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(자본확충)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-7d6de3cada946d516a87"
+      ],
+      "detail_path": "data/issues/issue-0ee76b1052e424819526.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "published_at": null,
+      "published_date": "2026-11-18",
+      "fetched_at": "2026-11-18T14:01:21.289263+00:00",
+      "matched_keywords": [
+        "자본확충"
+      ],
+      "matched_topic_ids": [
+        "performance"
+      ],
+      "tags": [
+        "자본"
+      ],
+      "event_stage": "투자·인수",
+      "classification_rules_version": "news-events-v2",
+      "content_filter": "topics",
+      "content_policy_version": "news-events-v2_4f5b3edf25e4ff4a"
+    },
     {
       "issue_id": "issue-7949ba6c7cb3b24211e2",
       "title": "KB증권 베트남법인 계좌서 '비정상 출금' 사고…현지 당국 조사",

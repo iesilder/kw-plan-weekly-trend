@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-855071e0848c24e0118d",
-  "generated_at": "2026-11-18T05:34:33.220939+00:00",
+  "generation_id": "finance-481a9662ae8bb6cafc88",
+  "generated_at": "2026-11-18T14:01:21.289263+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 134,
+  "count": 137,
   "articles": [
     {
       "article_id": "article-9eb4f1fc3390e757db88",
@@ -22,16 +22,46 @@
       ]
     },
     {
-      "article_id": "article-92cba5c5640f60fe51a0",
-      "version_id": "version-1319d4084aaca513fe20",
+      "article_id": "article-be648fcb00853ae5961a",
+      "version_id": "version-16ca49b5dee2a8959a74",
       "source_id": "einfomax-s1n2",
       "source_name": "연합인포맥스(기사) · 증권",
-      "title": "[표류하는 우투증권] 대표 연임 두고 공개 성토…조직 내홍 '이중고'",
+      "title": "국민연금, 신임 부동산투자실장에 내부 출신 한성희 발탁",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445406",
+      "published_date": "2026-11-18",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-18T14:01:21.289263+00:00",
+      "institutions": [
+        "국민연금공단"
+      ]
+    },
+    {
+      "article_id": "article-9f3c815dac491ceb212f",
+      "version_id": "version-726a12b1278e54b6b8bd",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "금감원, PEF 운용사 10여곳 내부통제 현장점검 착수",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445405",
+      "published_date": "2026-11-18",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-18T14:01:21.289263+00:00",
+      "institutions": [
+        "금융감독원"
+      ]
+    },
+    {
+      "article_id": "article-92cba5c5640f60fe51a0",
+      "version_id": "version-d847c58a860f6ab32cc0",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "[표류하는 우투증권] 대표 임기말 인사 문제 성토…조직 내홍 '이중고'",
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445280",
       "published_date": "2026-11-18",
       "published_at": null,
       "source_updated_at": null,
-      "fetched_at": "2026-11-18T04:25:15.539310+00:00",
+      "fetched_at": "2026-11-18T14:01:21.289263+00:00",
       "institutions": [
         "우투증권"
       ]
@@ -113,16 +143,31 @@
       ]
     },
     {
-      "article_id": "article-04b02d9f51d5d47388c1",
-      "version_id": "version-d9fb1ceea26846732e96",
+      "article_id": "article-0ee76b1052e424819526",
+      "version_id": "version-7d6de3cada946d516a87",
       "source_id": "einfomax-s1n2",
       "source_name": "연합인포맥스(기사) · 증권",
-      "title": "[표류하는 우투증권] 종금 시절보다 못하다…증자에도 '수익성' 저조",
+      "title": "한국투자증권, 지주서 6천500억 조달…\"자본 확충 통한 재무구조 개선\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445401",
+      "published_date": "2026-11-18",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-18T14:01:21.289263+00:00",
+      "institutions": [
+        "한국투자증권"
+      ]
+    },
+    {
+      "article_id": "article-04b02d9f51d5d47388c1",
+      "version_id": "version-48436265972dbf94e05b",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "[표류하는 우투증권] 종금사 부실 부담 지속…증자에도 '수익성' 저조",
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445281",
       "published_date": "2026-11-18",
       "published_at": null,
       "source_updated_at": null,
-      "fetched_at": "2026-11-18T04:25:15.539310+00:00",
+      "fetched_at": "2026-11-18T14:01:21.289263+00:00",
       "institutions": [
         "우투증권"
       ]

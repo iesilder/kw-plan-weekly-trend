@@ -1748,7 +1748,9 @@
       "metadata_fingerprint": "c1b2ad50687186c37ae1faeeefe31e5b15e13b60db759e052210ea7e69229204",
       "checked_at": "2026-11-18T04:26:23.952185+00:00",
       "reason_code": "timeout",
-      "status": "unavailable"
+      "status": "unavailable",
+      "input_fingerprint": "9d52136126b623d8aecd940305e42f69424b941dddf5c7bc055839fae688e9c7",
+      "body_hash": "c5c91abd3f77d464bbe5aa883f16c7ede12d757c7d50250f922ca974e1e43500"
     },
     "issue-7949ba6c7cb3b24211e2": {
       "metadata_fingerprint": "3ff61ffe063b6fb1dd2b2d72f869c3e791c1a7b9817641655f368dab160e2589",

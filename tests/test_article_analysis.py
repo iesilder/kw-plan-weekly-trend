@@ -105,6 +105,51 @@ class ArticleAnalysisTests(unittest.TestCase):
         write(self.root / "site" / candidate["detail_path"], detail)
         return candidate
 
+    def test_transient_refetch_preserves_verified_summary_without_advancing_freshness(self):
+        self.run_good(issue_ids=[self.id])
+        saved = copy.deepcopy(read(self.root / "state/article-analysis.json")["entries"][self.id])
+        self.calls.clear()
+        for day, code in [(2, "timeout"), (3, "network_error")]:
+            with patch("weekly_trend.article_analysis.fetch_article", side_effect=ArticleError(code)):
+                result = articles.run(self.root, environ=ENV, transport=self.transport,
+                                      now=NOW + timedelta(days=day), issue_ids=[self.id])
+            item = self.public()["items"][self.id]
+            self.assertEqual(item["status"], "completed")
+            self.assertEqual(item["result"], saved["result"])
+            self.assertEqual(item["body_fetched_at"], saved["body_fetched_at"])
+            self.assertEqual(item["analyzed_at"], saved["analyzed_at"])
+            self.assertEqual(item["refresh_failure"]["reason_code"], code)
+            self.assertEqual(result["last_attempt"]["request_count"], 0)
+            self.assertEqual(result["last_attempt"]["failed_count"], 1)
+            self.assertEqual(read(self.root / "state/article-analysis.json")["entries"][self.id], saved)
+            articles.check(self.root)
+        self.assertEqual(self.calls, [])
+        self.run_good(now=NOW + timedelta(days=4), issue_ids=[self.id])
+        self.assertNotIn("refresh_failure", self.public()["items"][self.id])
+        self.assertEqual(self.calls, [])
+
+    def test_fetch_failure_never_resurrects_invalidated_or_unverified_results(self):
+        for prior in ("changed_body", "changed_metadata", "identity_mismatch", "legacy_timeout"):
+            with self.subTest(prior=prior):
+                self.run_good(now=NOW, issue_ids=[self.id])
+                state = read(self.root / "state/article-analysis.json")
+                check = state["checks"][self.id]
+                if prior == "changed_body":
+                    check.update(status="failed", reason_code="output_number_mismatch",
+                                 input_fingerprint="e" * 64, body_hash="f" * 64)
+                elif prior == "changed_metadata":
+                    state["entries"][self.id]["metadata_fingerprint"] = "e" * 64
+                else:
+                    check.update(status="unavailable", reason_code="article_identity_mismatch" if prior == "identity_mismatch" else "timeout")
+                write(self.root / "state/article-analysis.json", state)
+                with patch("weekly_trend.article_analysis.fetch_article", side_effect=ArticleError("timeout")):
+                    articles.run(self.root, environ=ENV, now=NOW + timedelta(days=2), issue_ids=[self.id])
+                item = self.public()["items"][self.id]
+                self.assertIsNone(item["result"])
+                self.assertNotIn("refresh_failure", item)
+                articles.check(self.root)
+                write(self.root / "state/article-analysis.json", articles.empty_state())
+
     def test_provider_status_persists_with_one_request_and_existing_entries(self):
         self.run_good()
         old = read(self.root / "state/article-analysis.json")["entries"]

@@ -221,6 +221,17 @@ def _inputs(root, latest, details, config):
     return inputs
 
 
+TRANSIENT_FETCH_ERRORS = {"timeout", "network_error"}
+
+
+def _retained_fetch_failure(check, entry):
+    return (check and entry and check.get("status") == "unavailable" and
+            check.get("reason_code") in TRANSIENT_FETCH_ERRORS and
+            check.get("metadata_fingerprint") == entry["metadata_fingerprint"] and
+            check.get("input_fingerprint") == entry["input_fingerprint"] and
+            check.get("body_hash") == entry["body_hash"])
+
+
 def _public(root, latest, details, state, now=None):
     config = load_config(root)
     inputs = _inputs(root, latest, details, config)
@@ -239,7 +250,11 @@ def _public(root, latest, details, state, now=None):
             item.update(status="completed", input_fingerprint=cache["input_fingerprint"], result=copy.deepcopy(cache["result"]))
         check = state["checks"].get(issue_id)
         if not data["reason"] and check and check["metadata_fingerprint"] == data["metadata_fingerprint"] and check["status"] != "completed":
-            if check["status"] != "pending" or not current:
+            if current and _retained_fetch_failure(check, cache):
+                # Keep the verified historical result, but disclose that its
+                # source could not be checked again. Do not advance freshness.
+                item["refresh_failure"] = {"reason_code": check["reason_code"], "checked_at": check["checked_at"]}
+            elif check["status"] != "pending" or not current:
                 item.update(status=check["status"], reason_code=check["reason_code"], result=None,
                             input_fingerprint=None, result_fingerprint=None, analyzed_at=None)
         items[issue_id] = item
@@ -576,7 +591,15 @@ def run(root, environ=None, fetcher=None, transport=None, now=None, automatic=Fa
                     # quarantine and cause another API request on the next day.
                     state["checks"][issue_id] = {**previous_failure, "checked_at": stamp}
                 else:
-                    state["checks"][issue_id] = {"metadata_fingerprint": data["metadata_fingerprint"], "checked_at": stamp, "reason_code": code, "status": "unavailable"}
+                    failed_check = {"metadata_fingerprint": data["metadata_fingerprint"], "checked_at": stamp, "reason_code": code, "status": "unavailable"}
+                    old = state["entries"].get(issue_id)
+                    if (code in TRANSIENT_FETCH_ERRORS and old and
+                            old["metadata_fingerprint"] == data["metadata_fingerprint"] and
+                            previous_failure.get("metadata_fingerprint") == data["metadata_fingerprint"] and
+                            (previous_failure.get("status") == "completed" or
+                             _retained_fetch_failure(previous_failure, old))):
+                        failed_check.update(input_fingerprint=old["input_fingerprint"], body_hash=old["body_hash"])
+                    state["checks"][issue_id] = failed_check
                 attempt["failed_count"] += 1
         if batch:
             attempt["request_count"] = 1

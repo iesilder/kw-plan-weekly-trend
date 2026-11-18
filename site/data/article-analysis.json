@@ -1,18 +1,18 @@
 {
   "schema_version": "1.0",
   "generation_id": "live-a3f3561c708947eb9a49",
-  "generated_at": "2026-11-18T04:26:54.643008+00:00",
+  "generated_at": "2026-11-18T05:30:37.291574+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "article-bullets-v1",
   "auto_analysis_enabled": true,
   "counts": {
-    "unavailable": 1,
-    "failed": 5,
     "not_applicable": 12,
-    "stale": 0,
+    "failed": 5,
+    "unavailable": 0,
     "pending": 0,
-    "completed": 17,
+    "stale": 0,
+    "completed": 18,
     "eligible": 23
   },
   "last_attempt": {
@@ -261,20 +261,97 @@
       "result": null
     },
     "issue-fbc4946e540a4c2d61ff": {
-      "status": "unavailable",
-      "reason_code": "timeout",
+      "status": "completed",
+      "reason_code": null,
       "evidence_ids": [
         "version-f5f1dbcaa6d6bc8d833c"
       ],
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444475",
       "source_name": "연합인포맥스(기사) · 증권",
-      "input_fingerprint": null,
-      "result_fingerprint": null,
-      "analyzed_at": null,
+      "input_fingerprint": "9d52136126b623d8aecd940305e42f69424b941dddf5c7bc055839fae688e9c7",
+      "result_fingerprint": "9d52136126b623d8aecd940305e42f69424b941dddf5c7bc055839fae688e9c7",
+      "analyzed_at": "2026-11-13T09:04:05.070749+00:00",
       "body_hash": "c5c91abd3f77d464bbe5aa883f16c7ede12d757c7d50250f922ca974e1e43500",
       "body_fetched_at": "2026-11-13T09:03:55.640692+00:00",
       "truncated": false,
-      "result": null
+      "result": {
+        "key_change": {
+          "text": "삼성증권은 올해 3분기 연결 기준 당기순이익 3천528억원을 기록하며 전년 동기 대비 14.1% 증가",
+          "evidence_ids": [
+            "p3"
+          ]
+        },
+        "facts": [
+          {
+            "text": "영업이익은 4천490억원으로 전년 동기 대비 11.7% 증가",
+            "evidence_ids": [
+              "p5"
+            ]
+          },
+          {
+            "text": "세전이익은 전년 동기 대비 16.5% 증가한 4천804억원으로 집계",
+            "evidence_ids": [
+              "p6"
+            ]
+          },
+          {
+            "text": "올 3분기 리테일 고객자산은 578조7천억원으로 지난해 동기 대비 47.1% 증가",
+            "evidence_ids": [
+              "p9"
+            ]
+          },
+          {
+            "text": "HNW 고객 수는 52만4천명으로 1년 전보다 52.7% 증가",
+            "evidence_ids": [
+              "p9"
+            ]
+          },
+          {
+            "text": "랩어카운트 순수수료는 201억원으로 전년 동기 대비 75.9% 증가",
+            "evidence_ids": [
+              "p10"
+            ]
+          },
+          {
+            "text": "3분기 전체 IB 부문 수익은 818억원을 기록",
+            "evidence_ids": [
+              "p12"
+            ]
+          }
+        ],
+        "stage": "성과",
+        "why_candidate": "국내 증시 조정기에도 WM 및 IB 부문의 선전에 힘입어 양호한 실적을 거둔 점을 경영기획 차원에서 참고할 필요가 있음.",
+        "evidence": [
+          {
+            "id": "p3",
+            "quote": "기준 당기순이익은 3천528억원으로 전년 동기 대비 14.1"
+          },
+          {
+            "id": "p5",
+            "quote": "영업이익은 4천490억원으로 전년 동기 대비 11.7% 증가"
+          },
+          {
+            "id": "p6",
+            "quote": "년 동기 대비 16.5% 증가한 4천804억원으로 나타났다."
+          },
+          {
+            "id": "p9",
+            "quote": "고객 수도 52만4천명으로 1년 전보다 52.7% 늘었다."
+          },
+          {
+            "id": "p10",
+            "quote": "로, 전년 동기 대비 75.9% 증가했다. 펀드 판매수익은"
+          },
+          {
+            "id": "p12",
+            "quote": "체 IB 부문 수익은 818억원으로 집계됐다. 주식자본시장("
+          }
+        ]
+      },
+      "refresh_failure": {
+        "reason_code": "timeout",
+        "checked_at": "2026-11-18T04:26:23.952185+00:00"
+      }
     },
     "issue-bd7130e222288923d7e6": {
       "status": "not_applicable",

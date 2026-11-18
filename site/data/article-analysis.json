@@ -1,47 +1,104 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-5b35fb60d2e0684c7ceb",
-  "generated_at": "2026-11-17T22:54:28.941636+00:00",
+  "generation_id": "live-a3f3561c708947eb9a49",
+  "generated_at": "2026-11-18T04:26:54.643008+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "article-bullets-v1",
   "auto_analysis_enabled": true,
   "counts": {
+    "unavailable": 1,
     "failed": 5,
-    "stale": 0,
     "not_applicable": 12,
-    "unavailable": 0,
+    "stale": 0,
+    "pending": 0,
     "completed": 17,
-    "pending": 1,
     "eligible": 23
   },
   "last_attempt": {
-    "attempted_at": "2026-11-17T04:31:11.127786+00:00",
-    "completed_at": "2026-11-17T04:31:23.945700+00:00",
+    "attempted_at": "2026-11-18T04:26:23.952185+00:00",
+    "completed_at": "2026-11-18T04:26:54.631058+00:00",
     "status": "partial_success",
     "error_code": null,
-    "request_count": 0,
+    "request_count": 1,
     "fetch_count": 5,
-    "completed_count": 0,
-    "cached_count": 2,
-    "failed_count": 0
+    "completed_count": 1,
+    "cached_count": 5,
+    "failed_count": 1
   },
   "items": {
     "issue-7949ba6c7cb3b24211e2": {
-      "status": "pending",
+      "status": "completed",
       "reason_code": null,
       "evidence_ids": [
         "version-4872612b531ae85fbcf2"
       ],
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445205",
       "source_name": "연합인포맥스(기사) · 증권",
-      "input_fingerprint": null,
-      "result_fingerprint": null,
-      "analyzed_at": null,
-      "body_hash": null,
-      "body_fetched_at": null,
+      "input_fingerprint": "732f682a5275ec9679689f7ec6a90d71053fc10c60a7f4e3208923070c6fe16b",
+      "result_fingerprint": "732f682a5275ec9679689f7ec6a90d71053fc10c60a7f4e3208923070c6fe16b",
+      "analyzed_at": "2026-11-18T04:26:54.631032+00:00",
+      "body_hash": "f8452be1ec323c83ecc85673e427df86523795f73f63404bcd2afc4a1aaba933",
+      "body_fetched_at": "2026-11-18T04:26:23.952185+00:00",
       "truncated": false,
-      "result": null
+      "result": {
+        "key_change": {
+          "text": "KB증권 베트남법인의 현지 은행 계좌에서 비정상적인 자금 출금 사고가 발생해 당국이 조사에 착수함.",
+          "evidence_ids": [
+            "p1"
+          ]
+        },
+        "facts": [
+          {
+            "text": "17일 금융투자업계에 따르면 지난 6일 KB증권 베트남법인 명의의 현지 은행 계좌에서 원인을 알 수 없는 자금 유출이 발생함.",
+            "evidence_ids": [
+              "p2"
+            ]
+          },
+          {
+            "text": "유출된 자금은 현지 복수의 은행으로 분산 이체되었으며 정확한 송금 액수와 피해 규모를 특정하는 데 시일이 소요될 전망임.",
+            "evidence_ids": [
+              "p3"
+            ]
+          },
+          {
+            "text": "이번 사고로 빠져나간 돈은 현지 법인의 고유 자금으로 고객 피해는 발생하지 않음.",
+            "evidence_ids": [
+              "p5"
+            ]
+          },
+          {
+            "text": "KB증권은 내부 보안 전문 인력을 베트남 현지로 급파했으며 최종 피해 규모가 확정되는 대로 영업외손실로 반영할 예정임.",
+            "evidence_ids": [
+              "p6"
+            ]
+          }
+        ],
+        "stage": "점검·조사",
+        "why_candidate": "해외 법인 내부 통제 및 보안 사고 발생에 따른 리스크 점검 필요성 대두",
+        "evidence": [
+          {
+            "id": "p1",
+            "quote": "= KB증권 베트남법인의 현지 은행 계좌에서 비정상적인 자금 출금 사고가"
+          },
+          {
+            "id": "p2",
+            "quote": "17일 금융투자업계에 따르면 지난 6일 KB증권 베트남법인 명의의 현지"
+          },
+          {
+            "id": "p3",
+            "quote": "얽혀 있어, 정확한 송금 액수와 피해 규모를 특정하는 데는 다소 시일이"
+          },
+          {
+            "id": "p5",
+            "quote": "사고로 빠져나간 돈은 현지 법인의 고유 자금으로, 고객 피해는 발생하지"
+          },
+          {
+            "id": "p6",
+            "quote": "문 인력을 베트남 현지로 급파했다. 회사는 최종적인 피해 규모가 확정되는"
+          }
+        ]
+      }
     },
     "issue-ef5f4b099bf4f1197fd2": {
       "status": "not_applicable",
@@ -204,93 +261,20 @@
       "result": null
     },
     "issue-fbc4946e540a4c2d61ff": {
-      "status": "completed",
-      "reason_code": null,
+      "status": "unavailable",
+      "reason_code": "timeout",
       "evidence_ids": [
         "version-f5f1dbcaa6d6bc8d833c"
       ],
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444475",
       "source_name": "연합인포맥스(기사) · 증권",
-      "input_fingerprint": "9d52136126b623d8aecd940305e42f69424b941dddf5c7bc055839fae688e9c7",
-      "result_fingerprint": "9d52136126b623d8aecd940305e42f69424b941dddf5c7bc055839fae688e9c7",
-      "analyzed_at": "2026-11-13T09:04:05.070749+00:00",
+      "input_fingerprint": null,
+      "result_fingerprint": null,
+      "analyzed_at": null,
       "body_hash": "c5c91abd3f77d464bbe5aa883f16c7ede12d757c7d50250f922ca974e1e43500",
       "body_fetched_at": "2026-11-13T09:03:55.640692+00:00",
       "truncated": false,
-      "result": {
-        "key_change": {
-          "text": "삼성증권은 올해 3분기 연결 기준 당기순이익 3천528억원을 기록하며 전년 동기 대비 14.1% 증가",
-          "evidence_ids": [
-            "p3"
-          ]
-        },
-        "facts": [
-          {
-            "text": "영업이익은 4천490억원으로 전년 동기 대비 11.7% 증가",
-            "evidence_ids": [
-              "p5"
-            ]
-          },
-          {
-            "text": "세전이익은 전년 동기 대비 16.5% 증가한 4천804억원으로 집계",
-            "evidence_ids": [
-              "p6"
-            ]
-          },
-          {
-            "text": "올 3분기 리테일 고객자산은 578조7천억원으로 지난해 동기 대비 47.1% 증가",
-            "evidence_ids": [
-              "p9"
-            ]
-          },
-          {
-            "text": "HNW 고객 수는 52만4천명으로 1년 전보다 52.7% 증가",
-            "evidence_ids": [
-              "p9"
-            ]
-          },
-          {
-            "text": "랩어카운트 순수수료는 201억원으로 전년 동기 대비 75.9% 증가",
-            "evidence_ids": [
-              "p10"
-            ]
-          },
-          {
-            "text": "3분기 전체 IB 부문 수익은 818억원을 기록",
-            "evidence_ids": [
-              "p12"
-            ]
-          }
-        ],
-        "stage": "성과",
-        "why_candidate": "국내 증시 조정기에도 WM 및 IB 부문의 선전에 힘입어 양호한 실적을 거둔 점을 경영기획 차원에서 참고할 필요가 있음.",
-        "evidence": [
-          {
-            "id": "p3",
-            "quote": "기준 당기순이익은 3천528억원으로 전년 동기 대비 14.1"
-          },
-          {
-            "id": "p5",
-            "quote": "영업이익은 4천490억원으로 전년 동기 대비 11.7% 증가"
-          },
-          {
-            "id": "p6",
-            "quote": "년 동기 대비 16.5% 증가한 4천804억원으로 나타났다."
-          },
-          {
-            "id": "p9",
-            "quote": "고객 수도 52만4천명으로 1년 전보다 52.7% 늘었다."
-          },
-          {
-            "id": "p10",
-            "quote": "로, 전년 동기 대비 75.9% 증가했다. 펀드 판매수익은"
-          },
-          {
-            "id": "p12",
-            "quote": "체 IB 부문 수익은 818억원으로 집계됐다. 주식자본시장("
-          }
-        ]
-      }
+      "result": null
     },
     "issue-bd7130e222288923d7e6": {
       "status": "not_applicable",
@@ -320,7 +304,7 @@
       "result_fingerprint": "549020f5d1c5c53cf0add687b2aaccacc7da31d1e0c3d066a704ba124e3b7ddd",
       "analyzed_at": "2026-11-13T09:04:05.070773+00:00",
       "body_hash": "108282bdcd194a6edc23cc976b7246c0b6393adbe9915555368802be987205e0",
-      "body_fetched_at": "2026-11-13T09:03:55.640692+00:00",
+      "body_fetched_at": "2026-11-18T04:26:23.952185+00:00",
       "truncated": false,
       "result": {
         "key_change": {
@@ -1381,7 +1365,7 @@
       "result_fingerprint": "f04b6ac49db7b6df5279064a0ec3ee06f9d55110e4d5ff40e1c85de5c4128e69",
       "analyzed_at": "2026-11-06T07:57:51.808337+00:00",
       "body_hash": "d65bb9731681d063527994c01e44fa17faf2a7c4d904d453b9199b9cd4db5e48",
-      "body_fetched_at": "2026-11-14T06:27:37.540807+00:00",
+      "body_fetched_at": "2026-11-18T04:26:23.952185+00:00",
       "truncated": false,
       "result": {
         "key_change": {
@@ -1496,7 +1480,7 @@
       "result_fingerprint": "cae6dd6c68e382f069448bef424ca3aed6e3a0f313085c2a1cf816e41ce8f52a",
       "analyzed_at": "2026-11-06T07:57:51.808310+00:00",
       "body_hash": "9f19597b90f688a344fe0460082a6583ce5d62ba5d9a45b9882d1b84ccf91d06",
-      "body_fetched_at": "2026-11-14T06:27:37.540807+00:00",
+      "body_fetched_at": "2026-11-18T04:26:23.952185+00:00",
       "truncated": false,
       "result": {
         "key_change": {

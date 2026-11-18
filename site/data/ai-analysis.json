@@ -1,43 +1,53 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-5b35fb60d2e0684c7ceb",
-  "generated_at": "2026-11-17T22:54:28.941636+00:00",
+  "generation_id": "live-a3f3561c708947eb9a49",
+  "generated_at": "2026-11-18T04:26:23.945786+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "metadata-review-v2",
   "policy_version": "public-metadata-inference-v2",
   "auto_analysis_enabled": true,
   "last_attempt": {
-    "attempted_at": "2026-11-17T04:31:11.121220+00:00",
-    "completed_at": "2026-11-17T04:31:11.121220+00:00",
-    "status": "cached",
+    "attempted_at": "2026-11-18T04:26:22.628482+00:00",
+    "completed_at": "2026-11-18T04:26:23.941001+00:00",
+    "status": "success",
     "error_code": null,
-    "request_count": 0,
-    "eligible_count": 22,
-    "completed_count": 0,
+    "request_count": 1,
+    "eligible_count": 23,
+    "completed_count": 1,
     "cached_count": 22,
     "failed_count": 0
   },
   "counts": {
     "blocked": 12,
-    "completed": 22,
+    "completed": 23,
     "stale": 0,
     "failed": 0,
-    "not_analyzed": 1,
+    "not_analyzed": 0,
     "eligible": 23
   },
   "items": {
     "issue-7949ba6c7cb3b24211e2": {
-      "status": "not_analyzed",
+      "status": "completed",
       "reason_code": null,
       "input_fingerprint": "4cf08846a82f840026e2fedc901a4cc030599523b91cccc25d25b99881974de6",
       "input_evidence_ids": [
         "version-4872612b531ae85fbcf2"
       ],
-      "result_fingerprint": null,
-      "analyzed_at": null,
+      "result_fingerprint": "4cf08846a82f840026e2fedc901a4cc030599523b91cccc25d25b99881974de6",
+      "analyzed_at": "2026-11-18T04:26:23.941001+00:00",
       "error_code": null,
-      "result": null
+      "result": {
+        "suggested_topic_id": "risk",
+        "relevance": "relevant",
+        "rationale": "연합인포맥스(기사) · 증권의 보도에 따르면 KB증권 베트남법인 계좌에서 비정상 출금 사고가 발생하여 현지 당국이 조사 중인 것으로 나타나 리스크 관리 점검 후보로 검토할 수 있습니다. 원문 내용을 확인하지 않았으므로 기사 제목에 기반하여 서술합니다.",
+        "check_points": [
+          "베트남법인 계좌 비정상 출금 사고의 경위와 피해 규모",
+          "현지 당국 조사 진행 상황 및 결과",
+          "당사의 내부 통제 및 대응 방안"
+        ],
+        "duplicate_issue_ids": []
+      }
     },
     "issue-ef5f4b099bf4f1197fd2": {
       "status": "blocked",

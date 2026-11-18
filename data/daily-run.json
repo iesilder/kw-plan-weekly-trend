@@ -1,16 +1,16 @@
 {
   "schema_version": "1.0",
-  "date_kst": "2026-11-17",
-  "started_at": "2026-11-17T04:30:40.559934+00:00",
-  "completed_at": "2026-11-17T04:31:25.654496+00:00",
+  "date_kst": "2026-11-18",
+  "started_at": "2026-11-18T04:25:15.539310+00:00",
+  "completed_at": "2026-11-18T04:26:57.084427+00:00",
   "status": "partial_success",
   "stages": {
     "collection": {
-      "status": "success",
+      "status": "partial_success",
       "error_code": null
     },
     "titles": {
-      "status": "cached",
+      "status": "success",
       "error_code": null
     },
     "articles": {

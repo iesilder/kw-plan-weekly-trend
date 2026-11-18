@@ -1,11 +1,117 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-9c048bacb3d05b0412eb",
-  "generated_at": "2026-11-17T14:27:25.215041+00:00",
+  "generation_id": "finance-b9c8bebf1ab721e391c6",
+  "generated_at": "2026-11-18T04:25:15.539310+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 126,
+  "count": 133,
   "articles": [
+    {
+      "article_id": "article-9eb4f1fc3390e757db88",
+      "version_id": "version-891be0f6ba8f583c29f4",
+      "source_id": "newswire-securities",
+      "source_name": "뉴스와이어(보도자료) · 증권",
+      "title": "신한투자증권, 고객 투자비용 가볍게 한 ‘Light 상품’ 출시 4개월 만에 판매 5000억 돌파",
+      "source_url": "https://www.newswire.co.kr/newsRead.php?no=1047415",
+      "published_date": null,
+      "published_at": "2026-11-18T01:20:46.000000+00:00",
+      "source_updated_at": null,
+      "fetched_at": "2026-11-18T04:25:15.539310+00:00",
+      "institutions": [
+        "신한투자증권"
+      ]
+    },
+    {
+      "article_id": "article-92cba5c5640f60fe51a0",
+      "version_id": "version-1319d4084aaca513fe20",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "[표류하는 우투증권] 대표 연임 두고 공개 성토…조직 내홍 '이중고'",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445280",
+      "published_date": "2026-11-18",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-18T04:25:15.539310+00:00",
+      "institutions": [
+        "우투증권"
+      ]
+    },
+    {
+      "article_id": "article-86077800a9ee46fe736a",
+      "version_id": "version-f1ba1e3945c97bcd43d1",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "한투의 KDB생명 인수 '백지화' 배경은…'자본확충 규모'",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445312",
+      "published_date": "2026-11-18",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-18T04:25:15.539310+00:00",
+      "institutions": [
+        "KDB생명"
+      ]
+    },
+    {
+      "article_id": "article-7eb54c55f563d90e00c1",
+      "version_id": "version-a5d9a24f62e8da6d3cb7",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "앞으로 금감원장 제재 재량 좁아진다…금융위 판단 우선",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445344",
+      "published_date": "2026-11-18",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-18T04:25:15.539310+00:00",
+      "institutions": [
+        "금융감독원",
+        "금융위원회"
+      ]
+    },
+    {
+      "article_id": "article-730f2d57e279d2f2ede8",
+      "version_id": "version-458eea702eb83c0ceb47",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "거래 수수료 의존에 나란히 적자…빗썸은 신사업, 두나무는 해외로",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445295",
+      "published_date": "2026-11-18",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-18T04:25:15.539310+00:00",
+      "institutions": [
+        "빗썸"
+      ]
+    },
+    {
+      "article_id": "article-1aeac8ccdf496b542fcd",
+      "version_id": "version-e80ac0a4840c214a0d5b",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "유진투자증권, 비금융지주 증권사 최초 전주사무소 개소",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445276",
+      "published_date": "2026-11-18",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-18T04:25:15.539310+00:00",
+      "institutions": [
+        "유진투자증권"
+      ]
+    },
+    {
+      "article_id": "article-04b02d9f51d5d47388c1",
+      "version_id": "version-d9fb1ceea26846732e96",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "[표류하는 우투증권] 종금 시절보다 못하다…증자에도 '수익성' 저조",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445281",
+      "published_date": "2026-11-18",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-18T04:25:15.539310+00:00",
+      "institutions": [
+        "우투증권"
+      ]
+    },
     {
       "article_id": "article-fa0796ff1d000dd01169",
       "version_id": "version-54855fa85cec017aa694",

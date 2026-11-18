@@ -10,7 +10,7 @@
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442601",
       "source_name": "연합인포맥스(기사) · 증권",
       "body_hash": "9f19597b90f688a344fe0460082a6583ce5d62ba5d9a45b9882d1b84ccf91d06",
-      "body_fetched_at": "2026-11-14T06:27:37.540807+00:00",
+      "body_fetched_at": "2026-11-18T04:26:23.952185+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-06T07:57:51.808310+00:00",
@@ -213,7 +213,7 @@
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442518",
       "source_name": "연합인포맥스(기사) · 증권",
       "body_hash": "d65bb9731681d063527994c01e44fa17faf2a7c4d904d453b9199b9cd4db5e48",
-      "body_fetched_at": "2026-11-14T06:27:37.540807+00:00",
+      "body_fetched_at": "2026-11-18T04:26:23.952185+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-06T07:57:51.808337+00:00",
@@ -1473,7 +1473,7 @@
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444404",
       "source_name": "연합인포맥스(기사) · 증권",
       "body_hash": "108282bdcd194a6edc23cc976b7246c0b6393adbe9915555368802be987205e0",
-      "body_fetched_at": "2026-11-13T09:03:55.640692+00:00",
+      "body_fetched_at": "2026-11-18T04:26:23.952185+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-13T09:04:05.070773+00:00",
@@ -1533,6 +1533,78 @@
           }
         ]
       }
+    },
+    "issue-7949ba6c7cb3b24211e2": {
+      "metadata_fingerprint": "3ff61ffe063b6fb1dd2b2d72f869c3e791c1a7b9817641655f368dab160e2589",
+      "input_fingerprint": "732f682a5275ec9679689f7ec6a90d71053fc10c60a7f4e3208923070c6fe16b",
+      "evidence_ids": [
+        "version-4872612b531ae85fbcf2"
+      ],
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445205",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "body_hash": "f8452be1ec323c83ecc85673e427df86523795f73f63404bcd2afc4a1aaba933",
+      "body_fetched_at": "2026-11-18T04:26:23.952185+00:00",
+      "truncated": false,
+      "prompt_version": "article-bullets-v1",
+      "analyzed_at": "2026-11-18T04:26:54.631032+00:00",
+      "result": {
+        "key_change": {
+          "text": "KB증권 베트남법인의 현지 은행 계좌에서 비정상적인 자금 출금 사고가 발생해 당국이 조사에 착수함.",
+          "evidence_ids": [
+            "p1"
+          ]
+        },
+        "facts": [
+          {
+            "text": "17일 금융투자업계에 따르면 지난 6일 KB증권 베트남법인 명의의 현지 은행 계좌에서 원인을 알 수 없는 자금 유출이 발생함.",
+            "evidence_ids": [
+              "p2"
+            ]
+          },
+          {
+            "text": "유출된 자금은 현지 복수의 은행으로 분산 이체되었으며 정확한 송금 액수와 피해 규모를 특정하는 데 시일이 소요될 전망임.",
+            "evidence_ids": [
+              "p3"
+            ]
+          },
+          {
+            "text": "이번 사고로 빠져나간 돈은 현지 법인의 고유 자금으로 고객 피해는 발생하지 않음.",
+            "evidence_ids": [
+              "p5"
+            ]
+          },
+          {
+            "text": "KB증권은 내부 보안 전문 인력을 베트남 현지로 급파했으며 최종 피해 규모가 확정되는 대로 영업외손실로 반영할 예정임.",
+            "evidence_ids": [
+              "p6"
+            ]
+          }
+        ],
+        "stage": "점검·조사",
+        "why_candidate": "해외 법인 내부 통제 및 보안 사고 발생에 따른 리스크 점검 필요성 대두",
+        "evidence": [
+          {
+            "id": "p1",
+            "quote": "= KB증권 베트남법인의 현지 은행 계좌에서 비정상적인 자금 출금 사고가"
+          },
+          {
+            "id": "p2",
+            "quote": "17일 금융투자업계에 따르면 지난 6일 KB증권 베트남법인 명의의 현지"
+          },
+          {
+            "id": "p3",
+            "quote": "얽혀 있어, 정확한 송금 액수와 피해 규모를 특정하는 데는 다소 시일이"
+          },
+          {
+            "id": "p5",
+            "quote": "사고로 빠져나간 돈은 현지 법인의 고유 자금으로, 고객 피해는 발생하지"
+          },
+          {
+            "id": "p6",
+            "quote": "문 인력을 베트남 현지로 급파했다. 회사는 최종적인 피해 규모가 확정되는"
+          }
+        ]
+      }
     }
   },
   "checks": {
@@ -1546,13 +1618,13 @@
     },
     "issue-8cda78e7eb4a64c526cd": {
       "metadata_fingerprint": "861b5477be15223c416ce62e546c80ee19b3ed6a62c10fcaa4ec035b7f43f099",
-      "checked_at": "2026-11-14T06:27:37.540807+00:00",
+      "checked_at": "2026-11-18T04:26:23.952185+00:00",
       "reason_code": null,
       "status": "completed"
     },
     "issue-a7a9b220314dfbd5acef": {
       "metadata_fingerprint": "1d5daa6ffcd84c518fe16f5981662c7a7194760b0882b28347a6f78ae4986c06",
-      "checked_at": "2026-11-14T06:27:37.540807+00:00",
+      "checked_at": "2026-11-18T04:26:23.952185+00:00",
       "reason_code": null,
       "status": "completed"
     },
@@ -1660,7 +1732,7 @@
     },
     "issue-9afe8a3580c201c9f1bf": {
       "metadata_fingerprint": "7e788150d6359a1bcddb31d2fdc25a7b627512bb7668103deb23796ed5799c8f",
-      "checked_at": "2026-11-13T09:03:55.640692+00:00",
+      "checked_at": "2026-11-18T04:26:23.952185+00:00",
       "reason_code": null,
       "status": "completed"
     },
@@ -1674,20 +1746,26 @@
     },
     "issue-fbc4946e540a4c2d61ff": {
       "metadata_fingerprint": "c1b2ad50687186c37ae1faeeefe31e5b15e13b60db759e052210ea7e69229204",
-      "checked_at": "2026-11-13T09:03:55.640692+00:00",
+      "checked_at": "2026-11-18T04:26:23.952185+00:00",
+      "reason_code": "timeout",
+      "status": "unavailable"
+    },
+    "issue-7949ba6c7cb3b24211e2": {
+      "metadata_fingerprint": "3ff61ffe063b6fb1dd2b2d72f869c3e791c1a7b9817641655f368dab160e2589",
+      "checked_at": "2026-11-18T04:26:23.952185+00:00",
       "reason_code": null,
       "status": "completed"
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-17T04:31:11.127786+00:00",
-    "completed_at": "2026-11-17T04:31:23.945700+00:00",
+    "attempted_at": "2026-11-18T04:26:23.952185+00:00",
+    "completed_at": "2026-11-18T04:26:54.631058+00:00",
     "status": "partial_success",
     "error_code": null,
-    "request_count": 0,
+    "request_count": 1,
     "fetch_count": 5,
-    "completed_count": 0,
-    "cached_count": 2,
-    "failed_count": 0
+    "completed_count": 1,
+    "cached_count": 5,
+    "failed_count": 1
   }
 }

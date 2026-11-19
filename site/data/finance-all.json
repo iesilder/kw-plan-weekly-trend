@@ -1,11 +1,26 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-414749e38702c925710b",
-  "generated_at": "2026-11-19T03:31:27.129533+00:00",
+  "generation_id": "finance-737f40891fd35f9734ba",
+  "generated_at": "2026-11-19T13:13:08.407894+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 143,
+  "count": 145,
   "articles": [
+    {
+      "article_id": "article-c580cd95c100f92ca21e",
+      "version_id": "version-229690b6c4f23baa1cf4",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "'당국 제재' 다 같이 얽혔는데…삼성증권은 표정관리",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445539",
+      "published_date": "2026-11-19",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-19T13:13:08.407894+00:00",
+      "institutions": [
+        "삼성증권"
+      ]
+    },
     {
       "article_id": "article-bad6f37630499e48d121",
       "version_id": "version-a333f9dfa55dbb625931",
@@ -94,6 +109,21 @@
       "fetched_at": "2026-11-19T03:31:27.129533+00:00",
       "institutions": [
         "KB증권"
+      ]
+    },
+    {
+      "article_id": "article-0f41aa3dbe9e51d4ad40",
+      "version_id": "version-99c8f6c681547d892f00",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "금감원, 퇴직연금 업계 '과당경쟁' 질타…\"책무 망각 말라\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445563",
+      "published_date": "2026-11-19",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-19T13:13:08.407894+00:00",
+      "institutions": [
+        "금융감독원"
       ]
     },
     {

@@ -1,11 +1,101 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-481a9662ae8bb6cafc88",
-  "generated_at": "2026-11-18T14:01:21.289263+00:00",
+  "generation_id": "finance-414749e38702c925710b",
+  "generated_at": "2026-11-19T03:31:27.129533+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 137,
+  "count": 143,
   "articles": [
+    {
+      "article_id": "article-bad6f37630499e48d121",
+      "version_id": "version-a333f9dfa55dbb625931",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "한투지주, KDB생명서 카디프생명 인수로 선회",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445475",
+      "published_date": "2026-11-19",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-19T03:31:27.129533+00:00",
+      "institutions": [
+        "KDB생명"
+      ]
+    },
+    {
+      "article_id": "article-9dc5d24396d3f55f148a",
+      "version_id": "version-e52545bdee5a0a89daf5",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "국민은행 등판에도 미지근한 신종자본증권 조달…리테일 외면에 주춤",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445476",
+      "published_date": "2026-11-19",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-19T03:31:27.129533+00:00",
+      "institutions": [
+        "KB국민은행"
+      ]
+    },
+    {
+      "article_id": "article-6bee74bf73038cf83bb2",
+      "version_id": "version-603e44c99d69c60224bd",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "낙인효과만 찍힌 KDB생명…'재논의 vs 재입찰' 고민 커진다",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445453",
+      "published_date": "2026-11-19",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-19T03:31:27.129533+00:00",
+      "institutions": [
+        "KDB생명"
+      ]
+    },
+    {
+      "article_id": "article-582ce0173038ae1b44f6",
+      "version_id": "version-479c22388536cf3bb514",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "키움증권, 美 ETF 시장 공략 가속…'우주 데이터센터'로 영토 확장",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445445",
+      "published_date": "2026-11-19",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-19T03:31:27.129533+00:00",
+      "institutions": [
+        "키움증권"
+      ]
+    },
+    {
+      "article_id": "article-3dff3735a6a4b1857cc6",
+      "version_id": "version-323495772f2742900e28",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "정은보 한국거래소 이사장, 세계거래소연맹 이사 연임",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445511",
+      "published_date": "2026-11-19",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-19T03:31:27.129533+00:00",
+      "institutions": [
+        "한국거래소"
+      ]
+    },
+    {
+      "article_id": "article-218742856bc89595a04d",
+      "version_id": "version-7c2acb56c86fde796d0d",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "KB증권 \"AI 규제, 수요 방향 못 바꾼다…中 인프라 투자가 완충판\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445454",
+      "published_date": "2026-11-19",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-19T03:31:27.129533+00:00",
+      "institutions": [
+        "KB증권"
+      ]
+    },
     {
       "article_id": "article-9eb4f1fc3390e757db88",
       "version_id": "version-891be0f6ba8f583c29f4",

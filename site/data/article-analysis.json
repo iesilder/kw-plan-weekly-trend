@@ -1,47 +1,188 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-3a7b00b5a02d7605f4c4",
-  "generated_at": "2026-11-18T21:59:28.025307+00:00",
+  "generation_id": "live-0747eb2f09287b115d4c",
+  "generated_at": "2026-11-19T03:32:08.801699+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "article-bullets-v1",
   "auto_analysis_enabled": true,
   "counts": {
-    "unavailable": 0,
-    "pending": 1,
-    "not_applicable": 12,
-    "failed": 5,
     "stale": 0,
-    "completed": 18,
-    "eligible": 24
+    "pending": 0,
+    "not_applicable": 12,
+    "completed": 20,
+    "unavailable": 0,
+    "failed": 5,
+    "eligible": 25
   },
   "last_attempt": {
-    "attempted_at": "2026-11-18T04:26:23.952185+00:00",
-    "completed_at": "2026-11-18T04:26:54.631058+00:00",
+    "attempted_at": "2026-11-19T03:32:00.127410+00:00",
+    "completed_at": "2026-11-19T03:32:08.791354+00:00",
     "status": "partial_success",
     "error_code": null,
     "request_count": 1,
     "fetch_count": 5,
-    "completed_count": 1,
-    "cached_count": 5,
-    "failed_count": 1
+    "completed_count": 2,
+    "cached_count": 7,
+    "failed_count": 0
   },
   "items": {
+    "issue-218742856bc89595a04d": {
+      "status": "completed",
+      "reason_code": null,
+      "evidence_ids": [
+        "version-7c2acb56c86fde796d0d"
+      ],
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445454",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "input_fingerprint": "aa2e3685277682fc2938544f2bc16504ac675094a5e51dc5509285c2142ae46d",
+      "result_fingerprint": "aa2e3685277682fc2938544f2bc16504ac675094a5e51dc5509285c2142ae46d",
+      "analyzed_at": "2026-11-19T03:32:08.791323+00:00",
+      "body_hash": "f7c3f4341dcace59d0b50347c462286a354a69d91e5eb99af41efa09ebe86a14",
+      "body_fetched_at": "2026-11-19T03:32:00.127410+00:00",
+      "truncated": false,
+      "result": {
+        "key_change": {
+          "text": "미국의 AI 규제 강화 우려에도 중국의 독자적 AI 인프라 투자 확대로 글로벌 메모리 수요 하방이 완충될 것으로 전망됨에 따라 KB증권이 삼성전자와 SK하이닉스를 최선호주로 제시함",
+          "evidence_ids": [
+            "p2",
+            "p17"
+          ]
+        },
+        "facts": [
+          {
+            "text": "19일 KB증권 연구원은 중국의 독립적인 AI 인프라 투자 사이클이 글로벌 메모리 수요의 하방을 완충할 가능성을 언급함",
+            "evidence_ids": [
+              "p3"
+            ]
+          },
+          {
+            "text": "현재 글로벌 메모리 시장에서 중국 수요가 차지하는 비중은 약 29% 수준으로 추정됨",
+            "evidence_ids": [
+              "p6"
+            ]
+          },
+          {
+            "text": "미국의 해외 첨단 연산 자원 접근 규제가 중국의 자체 AI 인프라 자립을 자극할 것으로 전망됨",
+            "evidence_ids": [
+              "p9"
+            ]
+          },
+          {
+            "text": "시장 변동성은 연말까지 이어질 수 있으나 2027년 1월 3일 미국 상·하원이 새롭게 구성된 이후 불확실성이 해소될 수 있음",
+            "evidence_ids": [
+              "p15"
+            ]
+          }
+        ],
+        "stage": "검토",
+        "why_candidate": "미국 AI 규제 환경 변화에 따른 글로벌 메모리 수요 전망과 주요 반도체 종목 투자 전략을 분석한 내용임",
+        "evidence": [
+          {
+            "id": "p2",
+            "quote": "른 인공지능(AI) 인프라 투자 둔화 우려에도 글로벌 메모리"
+          },
+          {
+            "id": "p17",
+            "quote": "바탕으로 반도체 업종에서 삼성전자와 SK하이닉스를 최선호주로"
+          },
+          {
+            "id": "p3",
+            "quote": "이창민·김연수 KB증권 연구원은 19일 미국의 AI 산업에"
+          },
+          {
+            "id": "p6",
+            "quote": "리 시장에서 중국 수요가 차지하는 비중은 약 29% 수준으로"
+          },
+          {
+            "id": "p9",
+            "quote": "접근 규제'가 중국의 AI 인프라 자립을 더욱 자극할 것으로"
+          },
+          {
+            "id": "p15",
+            "quote": "장 변동성은 연말까지 이어질 수 있지만 2027년 1월 3일"
+          }
+        ]
+      }
+    },
     "issue-0ee76b1052e424819526": {
-      "status": "pending",
+      "status": "completed",
       "reason_code": null,
       "evidence_ids": [
         "version-7d6de3cada946d516a87"
       ],
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445401",
       "source_name": "연합인포맥스(기사) · 증권",
-      "input_fingerprint": null,
-      "result_fingerprint": null,
-      "analyzed_at": null,
-      "body_hash": null,
-      "body_fetched_at": null,
+      "input_fingerprint": "d2e436cce605442af0202da9045197da0003a5b17c83c3090b5a636f0a92b6b2",
+      "result_fingerprint": "d2e436cce605442af0202da9045197da0003a5b17c83c3090b5a636f0a92b6b2",
+      "analyzed_at": "2026-11-19T03:32:08.791345+00:00",
+      "body_hash": "fec15d1be09549c08feded39a1e26ddcae402b977d4f7d6f75f35cdd0875cb6a",
+      "body_fetched_at": "2026-11-19T03:32:00.127410+00:00",
       "truncated": false,
-      "result": null
+      "result": {
+        "key_change": {
+          "text": "한국투자증권이 운영자금 조달을 위해 모회사 한국투자금융지주가 참여하는 6천500억원 규모의 유상증자를 18일 공시함",
+          "evidence_ids": [
+            "p1",
+            "p2"
+          ]
+        },
+        "facts": [
+          {
+            "text": "이번 유상증자로 발행되는 새 주식은 보통주 1만3000주이며, 증자 전 발행주식 총수는 보통주 3천523만1천340주임",
+            "evidence_ids": [
+              "p2",
+              "p3"
+            ]
+          },
+          {
+            "text": "신주배정기준일은 내달 3일이며 1주당 신주배정 주식 수는 0.0003690주임",
+            "evidence_ids": [
+              "p4"
+            ]
+          },
+          {
+            "text": "구주주 청약은 내달 21일 진행되며 납입일은 12월 23일, 신주의 배당기산일은 2026년 1월 1일로 예정됨",
+            "evidence_ids": [
+              "p5"
+            ]
+          },
+          {
+            "text": "발행되는 신주는 발행 즉시 1년간 전매제한 조치가 적용되어 한국예탁결제원에 예탁 및 보호예수됨",
+            "evidence_ids": [
+              "p7"
+            ]
+          }
+        ],
+        "stage": "추진·협약",
+        "why_candidate": "대규모 자본 확충을 통한 재무구조 개선 목적으로 진행되는 계열사 간 유상증자 일정 및 조건을 다룸",
+        "evidence": [
+          {
+            "id": "p1",
+            "quote": "달을 위해 6천500억원 규모의 유상증자를 결정했다고 18일"
+          },
+          {
+            "id": "p2",
+            "quote": "증자에 참여한다. 새로 발행되는 주식은 보통주 1만3000"
+          },
+          {
+            "id": "p3",
+            "quote": "증자 전 발행주식 총수는 보통주 3천523만1천340주다."
+          },
+          {
+            "id": "p4",
+            "quote": "내달 3일이며, 1주당 신주배정 주식 수는 0.0003690"
+          },
+          {
+            "id": "p5",
+            "quote": "구주주 청약은 내달 21일 진행되며, 납입일은 12월 23일"
+          },
+          {
+            "id": "p7",
+            "quote": "1년간 전매제한 조치가 적용된다. 이에 따라 한국예탁결제원에"
+          }
+        ]
+      }
     },
     "issue-7949ba6c7cb3b24211e2": {
       "status": "completed",
@@ -288,7 +429,7 @@
       "result_fingerprint": "9d52136126b623d8aecd940305e42f69424b941dddf5c7bc055839fae688e9c7",
       "analyzed_at": "2026-11-13T09:04:05.070749+00:00",
       "body_hash": "c5c91abd3f77d464bbe5aa883f16c7ede12d757c7d50250f922ca974e1e43500",
-      "body_fetched_at": "2026-11-13T09:03:55.640692+00:00",
+      "body_fetched_at": "2026-11-19T03:32:00.127410+00:00",
       "truncated": false,
       "result": {
         "key_change": {
@@ -363,10 +504,6 @@
             "quote": "체 IB 부문 수익은 818억원으로 집계됐다. 주식자본시장("
           }
         ]
-      },
-      "refresh_failure": {
-        "reason_code": "timeout",
-        "checked_at": "2026-11-18T04:26:23.952185+00:00"
       }
     },
     "issue-bd7130e222288923d7e6": {
@@ -1277,7 +1414,7 @@
       "result_fingerprint": "5890a829daa561456ef45c1e38b92d8c4a6cc94afee6400fb31f6a78165d5cf5",
       "analyzed_at": "2026-11-06T07:57:51.808360+00:00",
       "body_hash": "4a2f12f5f3c3104be0fae7ad9a611c43f522c4880b37babd07eff19b6c023a8b",
-      "body_fetched_at": "2026-11-14T06:27:37.540807+00:00",
+      "body_fetched_at": "2026-11-19T03:32:00.127410+00:00",
       "truncated": false,
       "result": {
         "key_change": {
@@ -1360,7 +1497,7 @@
       "result_fingerprint": "5cc2aa9237d2b85b11b8bfd11ca26933ec5dda4f5fc90e4f5f224daccb721d61",
       "analyzed_at": "2026-11-06T07:57:51.808351+00:00",
       "body_hash": "f75f7a9deb199bc45dd1f76d2ff7c72d1ee3b3d0bfc7c995cd7c731737e2d9a3",
-      "body_fetched_at": "2026-11-14T06:27:37.540807+00:00",
+      "body_fetched_at": "2026-11-19T03:32:00.127410+00:00",
       "truncated": false,
       "result": {
         "key_change": {

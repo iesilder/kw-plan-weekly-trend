@@ -1,43 +1,73 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-3a7b00b5a02d7605f4c4",
-  "generated_at": "2026-11-18T21:59:28.025307+00:00",
+  "generation_id": "live-0747eb2f09287b115d4c",
+  "generated_at": "2026-11-19T03:32:00.120679+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "metadata-review-v2",
   "policy_version": "public-metadata-inference-v2",
   "auto_analysis_enabled": true,
   "last_attempt": {
-    "attempted_at": "2026-11-18T04:26:22.628482+00:00",
-    "completed_at": "2026-11-18T04:26:23.941001+00:00",
+    "attempted_at": "2026-11-19T03:31:58.618863+00:00",
+    "completed_at": "2026-11-19T03:32:00.115946+00:00",
     "status": "success",
     "error_code": null,
     "request_count": 1,
-    "eligible_count": 23,
-    "completed_count": 1,
-    "cached_count": 22,
+    "eligible_count": 25,
+    "completed_count": 2,
+    "cached_count": 23,
     "failed_count": 0
   },
   "counts": {
     "blocked": 12,
-    "completed": 23,
+    "completed": 25,
     "stale": 0,
     "failed": 0,
-    "not_analyzed": 1,
-    "eligible": 24
+    "not_analyzed": 0,
+    "eligible": 25
   },
   "items": {
+    "issue-218742856bc89595a04d": {
+      "status": "completed",
+      "reason_code": null,
+      "input_fingerprint": "10993bb36a62d5719da12db647d2aaea8cffaea5b09d6ce5a9d890886f291f34",
+      "input_evidence_ids": [
+        "version-7c2acb56c86fde796d0d"
+      ],
+      "result_fingerprint": "10993bb36a62d5719da12db647d2aaea8cffaea5b09d6ce5a9d890886f291f34",
+      "analyzed_at": "2026-11-19T03:32:00.115946+00:00",
+      "error_code": null,
+      "result": {
+        "suggested_topic_id": "risk",
+        "relevance": "relevant",
+        "rationale": "제공된 뉴스 타이틀에 따르면 KB증권은 AI 규제 및 중국 인프라 투자 관련 분석을 언급하고 있으며 정책 및 리스크 관점의 변화 가능성을 검토할 수 있어 리뷰 대상이 됩니다.",
+        "check_points": [
+          "기사 본문에서 AI 규제가 수요에 미치는 영향 분석 내용을 확인할 것",
+          "중국 인프라 투자의 완충판 역할 관련 구체적 논리를 대조할 것"
+        ],
+        "duplicate_issue_ids": []
+      }
+    },
     "issue-0ee76b1052e424819526": {
-      "status": "not_analyzed",
+      "status": "completed",
       "reason_code": null,
       "input_fingerprint": "d5971fafd4b5f0adfae451c3af519ed1e50e7ed5cd5bbcc177f2db71881cf3d3",
       "input_evidence_ids": [
         "version-7d6de3cada946d516a87"
       ],
-      "result_fingerprint": null,
-      "analyzed_at": null,
+      "result_fingerprint": "d5971fafd4b5f0adfae451c3af519ed1e50e7ed5cd5bbcc177f2db71881cf3d3",
+      "analyzed_at": "2026-11-19T03:32:00.115946+00:00",
       "error_code": null,
-      "result": null
+      "result": {
+        "suggested_topic_id": "performance",
+        "relevance": "relevant",
+        "rationale": "제공된 뉴스 타이틀에 따르면 한국투자증권이 지주로부터 자금을 조달하여 자본 확충 및 재무구조 개선을 추진한다는 내용이 포함되어 있어 실적 및 자본 관련 리뷰 후보가 됩니다.",
+        "check_points": [
+          "기사 본문에서 지주를 통한 자금 조달 주체와 목적을 확인할 것",
+          "자본 확충에 따른 재무구조 개선 효과 관련 내용을 대조할 것"
+        ],
+        "duplicate_issue_ids": []
+      }
     },
     "issue-7949ba6c7cb3b24211e2": {
       "status": "completed",

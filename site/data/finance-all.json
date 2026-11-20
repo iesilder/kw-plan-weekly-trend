@@ -1,11 +1,56 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-ca3596766ad46e75b99d",
-  "generated_at": "2026-11-20T03:19:32.374594+00:00",
+  "generation_id": "finance-415d8460784fef4dc0c0",
+  "generated_at": "2026-11-20T12:56:48.178769+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 150,
+  "count": 154,
   "articles": [
+    {
+      "article_id": "article-f23adde6059b6c1f99dc",
+      "version_id": "version-f1d2452d20576ac3e39c",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "우리자산운용, 앤트로픽 공모주 확보…글로벌 IPO 소싱 역량 두각",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445769",
+      "published_date": "2026-11-20",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-20T12:56:48.178769+00:00",
+      "institutions": [
+        "우리자산운용"
+      ]
+    },
+    {
+      "article_id": "article-af3725de8491049d4f72",
+      "version_id": "version-c003e8f218105b0d4cb3",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "코스피 10개월 만에 저점…하나운용, '위기냐 기회냐' 긴급 웹세미나",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445791",
+      "published_date": "2026-11-20",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-20T12:56:48.178769+00:00",
+      "institutions": [
+        "하나자산운용"
+      ]
+    },
+    {
+      "article_id": "article-980ac273dfbc8107e034",
+      "version_id": "version-ab8cc6aa7da4509108f0",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "산업은행 픽 '아델'도 못 버텼다…IPO 위축에 연내 상장 철회",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445768",
+      "published_date": "2026-11-20",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-20T12:56:48.178769+00:00",
+      "institutions": [
+        "한국산업은행"
+      ]
+    },
     {
       "article_id": "article-7e49eece9847d4e1ddcf",
       "version_id": "version-6d474630a7cd3b219d31",
@@ -47,6 +92,21 @@
       "published_at": null,
       "source_updated_at": null,
       "fetched_at": "2026-11-20T03:19:32.374594+00:00",
+      "institutions": [
+        "금융감독원"
+      ]
+    },
+    {
+      "article_id": "article-392a3efc512fd7ae9001",
+      "version_id": "version-b5e7129eb00d9ca3c626",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "금감원, 'AI 커닝' 세무사 수석 고소…회계사 시험서도 부정행위",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445817",
+      "published_date": "2026-11-20",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-20T12:56:48.178769+00:00",
       "institutions": [
         "금융감독원"
       ]

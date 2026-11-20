@@ -408,7 +408,7 @@
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4442768",
       "source_name": "연합인포맥스(기사) · 증권",
       "body_hash": "d55ec6cc956b91f9db6c9997b3fff0ee42ff2fcb33badb65b16844f8393933fc",
-      "body_fetched_at": "2026-11-14T06:27:37.540807+00:00",
+      "body_fetched_at": "2026-11-20T03:20:11.152146+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-07T08:18:04.689996+00:00",
@@ -520,7 +520,7 @@
       "source_url": "https://www.fsc.go.kr/no010101/87929",
       "source_name": "금융위원회 · 보도자료",
       "body_hash": "04369dff2b40e9162604772cd8a3ea581bbfd3de58f2d5edef78ebc4ff4f835f",
-      "body_fetched_at": "2026-11-15T02:47:54.546053+00:00",
+      "body_fetched_at": "2026-11-20T03:20:11.152146+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-08T06:05:15.549147+00:00",
@@ -1760,6 +1760,155 @@
           }
         ]
       }
+    },
+    "issue-5c71332f8908ccf9855f": {
+      "metadata_fingerprint": "57fd1f94d4584c844e199c4686c28e0bfdb2b4caac5dbfde9e7fdcfe7019e414",
+      "input_fingerprint": "fedbbac597720d7a2da2ebe89279391ebee754558201c15c07ae0dc35910f6d3",
+      "evidence_ids": [
+        "version-b135d637010b26aa31f2"
+      ],
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445702",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "body_hash": "4e46fb4404bf1b1b86befd58ba2b857856e911aa3a037c180f5612b530cb14fb",
+      "body_fetched_at": "2026-11-20T03:20:11.152146+00:00",
+      "truncated": false,
+      "prompt_version": "article-bullets-v1",
+      "analyzed_at": "2026-11-20T03:20:24.191498+00:00",
+      "result": {
+        "facts": [
+          {
+            "evidence_ids": [
+              "p3"
+            ],
+            "text": "금감원은 20일 국내 가상자산사업자 28개사의 정보보안책임자(CISO)와 보안 담당자를 불러 침해사고 대응 간담회를 개최함"
+          },
+          {
+            "evidence_ids": [
+              "p8"
+            ],
+            "text": "간담회에서 가상자산사업자 보안사고 비상 대응 가이드라인 세부 내용을 안내하고 국내 가상자산사업자 침해사고 사례를 공유함"
+          },
+          {
+            "evidence_ids": [
+              "p9"
+            ],
+            "text": "전 금융권을 대상으로 진행 중인 외부접점 전수점검의 점검 기준과 방법도 함께 설명함"
+          },
+          {
+            "evidence_ids": [
+              "p11"
+            ],
+            "text": "금감원은 전산시스템의 취약점을 AI로 빠르게 찾아내 공격이 이뤄졌다는 점에 주목하고 있음"
+          }
+        ],
+        "key_change": {
+          "evidence_ids": [
+            "p2"
+          ],
+          "text": "금융감독원이 인공지능(AI)을 활용한 침해 사고 확산에 대응하여 가상자산사업자를 상대로 보안 점검에 나섬"
+        },
+        "stage": "점검·조사",
+        "why_candidate": "AI 해킹 위협이 고조되는 가상자산 업권을 대상으로 금감원의 보안 점검 및 대응 지침 안내가 이루어져 증권사 CISO 및 IT 부서의 참고 자료로 검토 필요",
+        "evidence": [
+          {
+            "id": "p2",
+            "quote": "활용한 침해 사고가 확산하자 이번엔 가상자산사업자를 상대로 보안 점검에"
+          },
+          {
+            "id": "p3",
+            "quote": "금감원은 20일 국내 가상자산사업자 28개사의 정보보안책임자(CISO)와"
+          },
+          {
+            "id": "p8",
+            "quote": "서 논의된 '가상자산사업자 보안사고 비상 대응 가이드라인'의 세부 내용을"
+          },
+          {
+            "id": "p9",
+            "quote": "전 금융권을 대상으로 진행 중인 외부접점 전수점검의 점검 기준과 방법도"
+          },
+          {
+            "id": "p11",
+            "quote": "하지 못한 취약점을 AI로 빠르게 찾아내 공격이 이뤄졌다는 점에 주목하고"
+          }
+        ]
+      }
+    },
+    "issue-0b279c61d8318d8a10dc": {
+      "metadata_fingerprint": "ce5530fe52e1538995e1f1dbfad3b7a2507da67b293cb8d832e01bbbe8237735",
+      "input_fingerprint": "9d98cce9d00d2e8498e030cccff2eef6f4147ee6957d39eda1e84d59a76e9a6b",
+      "evidence_ids": [
+        "version-4daffad45323f6ea1284"
+      ],
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445731",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "body_hash": "f4ff7c761ca13e2d5780fd0beb51aaeecf7e0a3c67a62e4d4a32cd4476bc2702",
+      "body_fetched_at": "2026-11-20T03:20:11.152146+00:00",
+      "truncated": false,
+      "prompt_version": "article-bullets-v1",
+      "analyzed_at": "2026-11-20T03:20:24.191520+00:00",
+      "result": {
+        "facts": [
+          {
+            "evidence_ids": [
+              "p3"
+            ],
+            "text": "메리츠증권은 최근 미래에셋벤처투자와 손잡고 올해 사실상 마지막 출자사업에 도전장을 내밀어 연패 탈출을 노리고 있음"
+          },
+          {
+            "evidence_ids": [
+              "p4"
+            ],
+            "text": "메리츠증권은 한국벤처타자가 진행 중인 2026년 LP 성장펀드 3차 출자사업 세컨더리 분야에 지원해 심사를 받고 있음"
+          },
+          {
+            "evidence_ids": [
+              "p6"
+            ],
+            "text": "메리츠증권은 앞서 올해 참여한 6건의 주요 정책·기관 출자사업에서 단 한 곳도 위탁운용사로 선정되지 못함"
+          },
+          {
+            "evidence_ids": [
+              "p8",
+              "p9"
+            ],
+            "text": "연초부터 진행한 모든 도전이 Co-GP 형태로 이루어졌으나 서류 심사 또는 적격후보 단계에서 탈락함"
+          }
+        ],
+        "key_change": {
+          "evidence_ids": [
+            "p2"
+          ],
+          "text": "메리츠증권이 올해 모태펀드 등 주요 정책자금 및 기관 출자사업에서 6전 6패의 부진을 겪음"
+        },
+        "stage": "추진·협약",
+        "why_candidate": "메리츠증권이 대형 VC와 컨소시엄을 구성해 정책 출자사업에 재도전 중인 이력이 확인되어 증권사의 VC 협력 및 펀드 운용 역량 트렌드 파악에 활용 가능",
+        "evidence": [
+          {
+            "id": "p2",
+            "quote": "올해 모태펀드 등 주요 정책자금 및 기관 출자사업에서 '6"
+          },
+          {
+            "id": "p3",
+            "quote": "최근 미래에셋벤처투자와 손잡고 올해 사실상 마지막 출자사업에"
+          },
+          {
+            "id": "p4",
+            "quote": "인 '2026년 LP 성장펀드(Track 2) 3차 출자사업"
+          },
+          {
+            "id": "p6",
+            "quote": "메리츠증권은 올해 참여한 6건의 주요 정책·기관 출자사업에서"
+          },
+          {
+            "id": "p8",
+            "quote": "올해 출자사업 도전 이력을 보면 전 건이 Co-GP 형태로"
+          },
+          {
+            "id": "p9",
+            "quote": "함께 지원했지만, 이들 사업 모두 1차 서류 심사 단계에서"
+          }
+        ]
+      }
     }
   },
   "checks": {
@@ -1797,13 +1946,13 @@
     },
     "issue-b37f533f8536327de29d": {
       "metadata_fingerprint": "c84baeb8161a58821abf7b571cdf6b154499bb24e010e1f96a21a061919c838e",
-      "checked_at": "2026-11-14T06:27:37.540807+00:00",
+      "checked_at": "2026-11-20T03:20:11.152146+00:00",
       "reason_code": null,
       "status": "completed"
     },
     "issue-3108a2f8608f22965149": {
       "metadata_fingerprint": "a0064e4b48f2dbdaa06785c58893c57a7656368da105699eaa85d7ba9150400e",
-      "checked_at": "2026-11-15T02:47:54.546053+00:00",
+      "checked_at": "2026-11-20T03:20:11.152146+00:00",
       "reason_code": null,
       "status": "completed"
     },
@@ -1922,17 +2071,37 @@
       "checked_at": "2026-11-19T03:32:00.127410+00:00",
       "reason_code": null,
       "status": "completed"
+    },
+    "issue-5c71332f8908ccf9855f": {
+      "metadata_fingerprint": "57fd1f94d4584c844e199c4686c28e0bfdb2b4caac5dbfde9e7fdcfe7019e414",
+      "checked_at": "2026-11-20T03:20:11.152146+00:00",
+      "reason_code": null,
+      "status": "completed"
+    },
+    "issue-0b279c61d8318d8a10dc": {
+      "metadata_fingerprint": "ce5530fe52e1538995e1f1dbfad3b7a2507da67b293cb8d832e01bbbe8237735",
+      "checked_at": "2026-11-20T03:20:11.152146+00:00",
+      "reason_code": null,
+      "status": "completed"
+    },
+    "issue-c580cd95c100f92ca21e": {
+      "metadata_fingerprint": "6a1eda0fd90b27670f08ef6a8f4d4e1d09db24b270667bf9c0efecc460a5c58f",
+      "checked_at": "2026-11-20T03:20:11.152146+00:00",
+      "reason_code": "output_number_mismatch",
+      "status": "failed",
+      "input_fingerprint": "18cfa028b039189138ddf90084f63e0e381fd04221d69720cd31e33c7b4c21c1",
+      "body_hash": "0ab34191b0f99501e21e9c255717012ee1e393465d9a5ced65b31b07ee73770e"
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-19T03:32:00.127410+00:00",
-    "completed_at": "2026-11-19T03:32:08.791354+00:00",
+    "attempted_at": "2026-11-20T03:20:11.152146+00:00",
+    "completed_at": "2026-11-20T03:20:24.191529+00:00",
     "status": "partial_success",
-    "error_code": null,
+    "error_code": "partial_invalid_output",
     "request_count": 1,
     "fetch_count": 5,
     "completed_count": 2,
     "cached_count": 7,
-    "failed_count": 0
+    "failed_count": 1
   }
 }

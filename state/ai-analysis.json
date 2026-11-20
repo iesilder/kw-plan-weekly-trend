@@ -661,21 +661,94 @@
         "duplicate_issue_ids": []
       },
       "duplicate_context": {}
+    },
+    "2cb08b995cef578f564858794359669ae05e882e3a133afaf9ed6c52dca5a6bf": {
+      "issue_id": "issue-5c71332f8908ccf9855f",
+      "input_fingerprint": "2cb08b995cef578f564858794359669ae05e882e3a133afaf9ed6c52dca5a6bf",
+      "input_evidence_ids": [
+        "version-b135d637010b26aa31f2"
+      ],
+      "provider": "google_gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "metadata-review-v2",
+      "policy_version": "public-metadata-inference-v2",
+      "analyzed_at": "2026-11-20T03:20:11.139681+00:00",
+      "result": {
+        "check_points": [
+          "기사에 따르면 금감원이 가상자산 CISO를 소집한 배경",
+          "AI 해킹 관련 대비 요구 사항의 구체적 내용",
+          "가상자산 업계의 대응 체계 점검 여부"
+        ],
+        "duplicate_issue_ids": [],
+        "rationale": "기사에 따르면 금융감독원이 AI 해킹 대비를 위해 가상자산 CISO를 소집하고 철저한 대비를 요구한 바 있어, 관련 정책 및 리스크 대응 현황 검토가 필요합니다.",
+        "relevance": "relevant",
+        "suggested_topic_id": "risk"
+      },
+      "duplicate_context": {}
+    },
+    "eece682ba08ddc73896ea52c47c76cf421eb12c3d89e2d4f85f9a81ab6c5b86f": {
+      "issue_id": "issue-c580cd95c100f92ca21e",
+      "input_fingerprint": "eece682ba08ddc73896ea52c47c76cf421eb12c3d89e2d4f85f9a81ab6c5b86f",
+      "input_evidence_ids": [
+        "version-229690b6c4f23baa1cf4"
+      ],
+      "provider": "google_gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "metadata-review-v2",
+      "policy_version": "public-metadata-inference-v2",
+      "analyzed_at": "2026-11-20T03:20:11.139681+00:00",
+      "result": {
+        "check_points": [
+          "기사에 언급된 당국 제재 관련 내용",
+          "삼성증권의 상황과 관련된 세부 배경",
+          "타 증권사와의 차이점"
+        ],
+        "duplicate_issue_ids": [],
+        "rationale": "기사에 따르면 당국 제재와 관련하여 삼성증권의 상황이 언급되었으므로, 규제 리스크 및 정책 대응 측면에서 검토가 필요합니다.",
+        "relevance": "relevant",
+        "suggested_topic_id": "risk"
+      },
+      "duplicate_context": {}
+    },
+    "08aefaa2187ee459e5a68088c20b4eb027168beac873ec0b1ae61c13a6eccb3c": {
+      "issue_id": "issue-0b279c61d8318d8a10dc",
+      "input_fingerprint": "08aefaa2187ee459e5a68088c20b4eb027168beac873ec0b1ae61c13a6eccb3c",
+      "input_evidence_ids": [
+        "version-4daffad45323f6ea1284"
+      ],
+      "provider": "google_gemini",
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "metadata-review-v2",
+      "policy_version": "public-metadata-inference-v2",
+      "analyzed_at": "2026-11-20T03:20:11.139681+00:00",
+      "result": {
+        "check_points": [
+          "기사에 따르면 메리츠증권의 정책 및 기관 출자 사업 참여 현황",
+          "미래벤처와의 도전 관련 내용",
+          "향후 출자 사업 추진 계획"
+        ],
+        "duplicate_issue_ids": [],
+        "rationale": "기사에 따르면 메리츠증권이 정책 및 기관 출자 사업과 관련하여 도전 및 사업 추진을 다루고 있어 경영 및 사업 전략 검토가 필요합니다.",
+        "relevance": "relevant",
+        "suggested_topic_id": "strategy"
+      },
+      "duplicate_context": {}
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-19T03:31:58.618863+00:00",
-    "completed_at": "2026-11-19T03:32:00.115946+00:00",
+    "attempted_at": "2026-11-20T03:20:09.255256+00:00",
+    "completed_at": "2026-11-20T03:20:11.139681+00:00",
     "status": "success",
     "error_code": null,
     "request_count": 1,
-    "eligible_count": 25,
-    "completed_count": 2,
-    "cached_count": 23,
+    "eligible_count": 28,
+    "completed_count": 3,
+    "cached_count": 25,
     "failed_count": 0,
     "fingerprints": [
-      "10993bb36a62d5719da12db647d2aaea8cffaea5b09d6ce5a9d890886f291f34",
-      "d5971fafd4b5f0adfae451c3af519ed1e50e7ed5cd5bbcc177f2db71881cf3d3"
+      "2cb08b995cef578f564858794359669ae05e882e3a133afaf9ed6c52dca5a6bf",
+      "eece682ba08ddc73896ea52c47c76cf421eb12c3d89e2d4f85f9a81ab6c5b86f",
+      "08aefaa2187ee459e5a68088c20b4eb027168beac873ec0b1ae61c13a6eccb3c"
     ]
   },
   "failures": {

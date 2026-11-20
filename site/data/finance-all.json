@@ -1,11 +1,86 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-737f40891fd35f9734ba",
-  "generated_at": "2026-11-19T13:13:08.407894+00:00",
+  "generation_id": "finance-ca3596766ad46e75b99d",
+  "generated_at": "2026-11-20T03:19:32.374594+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 145,
+  "count": 150,
   "articles": [
+    {
+      "article_id": "article-7e49eece9847d4e1ddcf",
+      "version_id": "version-6d474630a7cd3b219d31",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "휘청이는 비트코인…NH증권 \"디베이스먼트 재부각 필요\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445655",
+      "published_date": "2026-11-20",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-20T03:19:32.374594+00:00",
+      "institutions": [
+        "NH증권"
+      ]
+    },
+    {
+      "article_id": "article-666a346066c2929521d0",
+      "version_id": "version-2b99b301d6db04295998",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "iM증권 \"한중 FTA 후속협상 타결…中 관객 10만명 당 엔터 영업익 45억↑\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445671",
+      "published_date": "2026-11-20",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-20T03:19:32.374594+00:00",
+      "institutions": [
+        "iM증권"
+      ]
+    },
+    {
+      "article_id": "article-5c71332f8908ccf9855f",
+      "version_id": "version-b135d637010b26aa31f2",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "금감원, 'AI 해킹' 대비 가상자산 CISO 소집…\"철저한 대비 필요 시점 \"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445702",
+      "published_date": "2026-11-20",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-20T03:19:32.374594+00:00",
+      "institutions": [
+        "금융감독원"
+      ]
+    },
+    {
+      "article_id": "article-28a16118e4f8ff98c163",
+      "version_id": "version-c7194937dcdf0e86afb8",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "신한증권·벤처, LP 성장펀드 펀드레이징 나섰다",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445706",
+      "published_date": "2026-11-20",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-20T03:19:32.374594+00:00",
+      "institutions": [
+        "신한증권"
+      ]
+    },
+    {
+      "article_id": "article-0b279c61d8318d8a10dc",
+      "version_id": "version-4daffad45323f6ea1284",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "메리츠증권, 정책·기관 출자 사업 '6전 6패'…미래벤처와 '마수걸이' 도전",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445731",
+      "published_date": "2026-11-20",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-20T03:19:32.374594+00:00",
+      "institutions": [
+        "메리츠증권"
+      ]
+    },
     {
       "article_id": "article-c580cd95c100f92ca21e",
       "version_id": "version-229690b6c4f23baa1cf4",

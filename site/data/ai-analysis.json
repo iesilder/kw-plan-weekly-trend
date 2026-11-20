@@ -1,43 +1,107 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-43fcf9e7fdd57aa2badc",
-  "generated_at": "2026-11-19T21:38:34.410825+00:00",
+  "generation_id": "live-fddf40f2d29fc4824a8e",
+  "generated_at": "2026-11-20T03:20:11.144977+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "metadata-review-v2",
   "policy_version": "public-metadata-inference-v2",
   "auto_analysis_enabled": true,
   "last_attempt": {
-    "attempted_at": "2026-11-19T03:31:58.618863+00:00",
-    "completed_at": "2026-11-19T03:32:00.115946+00:00",
+    "attempted_at": "2026-11-20T03:20:09.255256+00:00",
+    "completed_at": "2026-11-20T03:20:11.139681+00:00",
     "status": "success",
     "error_code": null,
     "request_count": 1,
-    "eligible_count": 25,
-    "completed_count": 2,
-    "cached_count": 23,
+    "eligible_count": 28,
+    "completed_count": 3,
+    "cached_count": 25,
     "failed_count": 0
   },
   "counts": {
-    "blocked": 12,
-    "completed": 25,
+    "blocked": 13,
+    "completed": 28,
     "stale": 0,
     "failed": 0,
-    "not_analyzed": 1,
-    "eligible": 26
+    "not_analyzed": 0,
+    "eligible": 28
   },
   "items": {
+    "issue-5c71332f8908ccf9855f": {
+      "status": "completed",
+      "reason_code": null,
+      "input_fingerprint": "2cb08b995cef578f564858794359669ae05e882e3a133afaf9ed6c52dca5a6bf",
+      "input_evidence_ids": [
+        "version-b135d637010b26aa31f2"
+      ],
+      "result_fingerprint": "2cb08b995cef578f564858794359669ae05e882e3a133afaf9ed6c52dca5a6bf",
+      "analyzed_at": "2026-11-20T03:20:11.139681+00:00",
+      "error_code": null,
+      "result": {
+        "check_points": [
+          "기사에 따르면 금감원이 가상자산 CISO를 소집한 배경",
+          "AI 해킹 관련 대비 요구 사항의 구체적 내용",
+          "가상자산 업계의 대응 체계 점검 여부"
+        ],
+        "duplicate_issue_ids": [],
+        "rationale": "기사에 따르면 금융감독원이 AI 해킹 대비를 위해 가상자산 CISO를 소집하고 철저한 대비를 요구한 바 있어, 관련 정책 및 리스크 대응 현황 검토가 필요합니다.",
+        "relevance": "relevant",
+        "suggested_topic_id": "risk"
+      }
+    },
+    "issue-0b279c61d8318d8a10dc": {
+      "status": "completed",
+      "reason_code": null,
+      "input_fingerprint": "08aefaa2187ee459e5a68088c20b4eb027168beac873ec0b1ae61c13a6eccb3c",
+      "input_evidence_ids": [
+        "version-4daffad45323f6ea1284"
+      ],
+      "result_fingerprint": "08aefaa2187ee459e5a68088c20b4eb027168beac873ec0b1ae61c13a6eccb3c",
+      "analyzed_at": "2026-11-20T03:20:11.139681+00:00",
+      "error_code": null,
+      "result": {
+        "check_points": [
+          "기사에 따르면 메리츠증권의 정책 및 기관 출자 사업 참여 현황",
+          "미래벤처와의 도전 관련 내용",
+          "향후 출자 사업 추진 계획"
+        ],
+        "duplicate_issue_ids": [],
+        "rationale": "기사에 따르면 메리츠증권이 정책 및 기관 출자 사업과 관련하여 도전 및 사업 추진을 다루고 있어 경영 및 사업 전략 검토가 필요합니다.",
+        "relevance": "relevant",
+        "suggested_topic_id": "strategy"
+      }
+    },
+    "issue-a20cf14208a0c31db680": {
+      "status": "blocked",
+      "reason_code": "dart_not_sent",
+      "input_fingerprint": null,
+      "input_evidence_ids": [],
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "error_code": null,
+      "result": null
+    },
     "issue-c580cd95c100f92ca21e": {
-      "status": "not_analyzed",
+      "status": "completed",
       "reason_code": null,
       "input_fingerprint": "eece682ba08ddc73896ea52c47c76cf421eb12c3d89e2d4f85f9a81ab6c5b86f",
       "input_evidence_ids": [
         "version-229690b6c4f23baa1cf4"
       ],
-      "result_fingerprint": null,
-      "analyzed_at": null,
+      "result_fingerprint": "eece682ba08ddc73896ea52c47c76cf421eb12c3d89e2d4f85f9a81ab6c5b86f",
+      "analyzed_at": "2026-11-20T03:20:11.139681+00:00",
       "error_code": null,
-      "result": null
+      "result": {
+        "check_points": [
+          "기사에 언급된 당국 제재 관련 내용",
+          "삼성증권의 상황과 관련된 세부 배경",
+          "타 증권사와의 차이점"
+        ],
+        "duplicate_issue_ids": [],
+        "rationale": "기사에 따르면 당국 제재와 관련하여 삼성증권의 상황이 언급되었으므로, 규제 리스크 및 정책 대응 측면에서 검토가 필요합니다.",
+        "relevance": "relevant",
+        "suggested_topic_id": "risk"
+      }
     },
     "issue-218742856bc89595a04d": {
       "status": "completed",

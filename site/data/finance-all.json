@@ -1,11 +1,26 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-415d8460784fef4dc0c0",
-  "generated_at": "2026-11-20T12:56:48.178769+00:00",
+  "generation_id": "finance-e5f91a514aa4594254a8",
+  "generated_at": "2026-11-21T23:20:14.860418+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 154,
+  "count": 155,
   "articles": [
+    {
+      "article_id": "article-a5ae713128319501e3ad",
+      "version_id": "version-ab008ba8ebc5368b044d",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "IBK자산운용, 첫 VC 콘테스트 열었다…지역 투자에 100억 배정",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445866",
+      "published_date": "2026-11-22",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-21T23:20:14.860418+00:00",
+      "institutions": [
+        "IBK자산운용"
+      ]
+    },
     {
       "article_id": "article-f23adde6059b6c1f99dc",
       "version_id": "version-f1d2452d20576ac3e39c",

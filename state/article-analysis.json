@@ -558,7 +558,7 @@
       "source_url": "https://www.fsc.go.kr/no010101/88010",
       "source_name": "금융위원회 · 보도자료",
       "body_hash": "1cbfe184fc67c6c74d82c4cd036c9fbe016b5dfdb60f22e3a15c4ae3766ea478",
-      "body_fetched_at": "2026-11-16T02:46:01.772256+00:00",
+      "body_fetched_at": "2026-11-22T06:52:35.713459+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-08T06:05:15.549153+00:00",
@@ -608,7 +608,7 @@
       "source_url": "https://www.fsc.go.kr/no010101/88013",
       "source_name": "금융위원회 · 보도자료",
       "body_hash": "c9f9e4cf21699822d1f1087cc8473d49b0c26153a8ea23667856d4d9afb1cdee",
-      "body_fetched_at": "2026-11-16T02:46:01.772256+00:00",
+      "body_fetched_at": "2026-11-22T06:52:35.713459+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-08T06:05:15.549162+00:00",
@@ -1094,7 +1094,7 @@
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444088",
       "source_name": "연합인포맥스(기사) · 증권",
       "body_hash": "d5f34346de45f8d12d2724905a0ddc6a40d9208bec4e4d75f9ea3d7629ffce4f",
-      "body_fetched_at": "2026-11-16T02:46:01.772256+00:00",
+      "body_fetched_at": "2026-11-22T06:52:35.713459+00:00",
       "truncated": true,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-11T07:49:12.277599+00:00",
@@ -1615,7 +1615,7 @@
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445454",
       "source_name": "연합인포맥스(기사) · 증권",
       "body_hash": "f7c3f4341dcace59d0b50347c462286a354a69d91e5eb99af41efa09ebe86a14",
-      "body_fetched_at": "2026-11-21T02:19:25.534197+00:00",
+      "body_fetched_at": "2026-11-22T06:52:35.713459+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-19T03:32:08.791323+00:00",
@@ -1770,7 +1770,7 @@
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445702",
       "source_name": "연합인포맥스(기사) · 증권",
       "body_hash": "4e46fb4404bf1b1b86befd58ba2b857856e911aa3a037c180f5612b530cb14fb",
-      "body_fetched_at": "2026-11-20T03:20:11.152146+00:00",
+      "body_fetched_at": "2026-11-22T06:52:35.713459+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-20T03:20:24.191498+00:00",
@@ -1958,13 +1958,13 @@
     },
     "issue-34d0a1c085f04dc0c774": {
       "metadata_fingerprint": "c5faf15e5848466df26e886615ce53dfaf97601f0bb8496446168a0ffc5878e4",
-      "checked_at": "2026-11-16T02:46:01.772256+00:00",
+      "checked_at": "2026-11-22T06:52:35.713459+00:00",
       "reason_code": null,
       "status": "completed"
     },
     "issue-49697d9828e2c35c9098": {
       "metadata_fingerprint": "3c566b62685aeaad57530298021ea3a4ac9575234a72d65a9073d89aa16cb045",
-      "checked_at": "2026-11-16T02:46:01.772256+00:00",
+      "checked_at": "2026-11-22T06:52:35.713459+00:00",
       "reason_code": null,
       "status": "completed"
     },
@@ -2018,7 +2018,7 @@
     },
     "issue-58ca23d8b67c0c120f13": {
       "metadata_fingerprint": "64c10ad828d3bdf5a91b1c2f9af245dd34f8e3663b7897e51aba29358fbc0188",
-      "checked_at": "2026-11-16T02:46:01.772256+00:00",
+      "checked_at": "2026-11-22T06:52:35.713459+00:00",
       "reason_code": null,
       "status": "completed"
     },
@@ -2062,7 +2062,7 @@
     },
     "issue-218742856bc89595a04d": {
       "metadata_fingerprint": "fd567ef2722f81c5e6e68b0d9b1dc0ab8d5dfd892840881b4cfe9de5841d8de8",
-      "checked_at": "2026-11-21T02:19:25.534197+00:00",
+      "checked_at": "2026-11-22T06:52:35.713459+00:00",
       "reason_code": null,
       "status": "completed"
     },
@@ -2074,7 +2074,7 @@
     },
     "issue-5c71332f8908ccf9855f": {
       "metadata_fingerprint": "57fd1f94d4584c844e199c4686c28e0bfdb2b4caac5dbfde9e7fdcfe7019e414",
-      "checked_at": "2026-11-20T03:20:11.152146+00:00",
+      "checked_at": "2026-11-22T06:52:35.713459+00:00",
       "reason_code": null,
       "status": "completed"
     },
@@ -2094,14 +2094,14 @@
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-21T02:19:25.534197+00:00",
-    "completed_at": "2026-11-21T02:19:32.644511+00:00",
+    "attempted_at": "2026-11-22T06:52:35.713459+00:00",
+    "completed_at": "2026-11-22T06:52:45.854429+00:00",
     "status": "partial_success",
     "error_code": null,
     "request_count": 0,
     "fetch_count": 5,
     "completed_count": 0,
-    "cached_count": 7,
+    "cached_count": 5,
     "failed_count": 0
   }
 }

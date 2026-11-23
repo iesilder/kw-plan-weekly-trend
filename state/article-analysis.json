@@ -1196,7 +1196,7 @@
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444106",
       "source_name": "연합인포맥스(기사) · 증권",
       "body_hash": "bbdd7e0e462a952096ad95a49d0b8ce2a544374b83a13c87d6d62cf626533974",
-      "body_fetched_at": "2026-11-16T02:46:01.772256+00:00",
+      "body_fetched_at": "2026-11-23T02:49:30.288201+00:00",
       "truncated": true,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-11T07:49:12.277620+00:00",
@@ -1303,7 +1303,7 @@
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4444240",
       "source_name": "연합인포맥스(기사) · 증권",
       "body_hash": "2f87b9d20adabc4c06a421e0c161603b1a11cf3ba82a65a3e4d228ac1d0d3874",
-      "body_fetched_at": "2026-11-16T02:46:01.772256+00:00",
+      "body_fetched_at": "2026-11-23T02:49:30.288201+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-11T07:49:12.277625+00:00",
@@ -1909,6 +1909,59 @@
           }
         ]
       }
+    },
+    "issue-31cbccb96b7db0db5a79": {
+      "metadata_fingerprint": "e59da1dcdb74c31fb83806f96e3503c0c1442893ad15736f218bbb4b8880c593",
+      "input_fingerprint": "dfd74f166516628ca4aa72a780682d9e8a74c292ef8e7eaf8810d9a562a53556",
+      "evidence_ids": [
+        "version-ac5c1ea9599930e783c1"
+      ],
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445984",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "body_hash": "702a123cc243b62ec1ea53c841d145766fc94e2cf6f7f52c8f3b2269ed8a624b",
+      "body_fetched_at": "2026-11-23T02:49:30.288201+00:00",
+      "truncated": false,
+      "prompt_version": "article-bullets-v1",
+      "analyzed_at": "2026-11-23T02:49:39.395182+00:00",
+      "result": {
+        "facts": [
+          {
+            "evidence_ids": [
+              "p4"
+            ],
+            "text": "삼성증권은 해당 사안을 현재 금융당국에 신고한 상태임."
+          },
+          {
+            "evidence_ids": [
+              "p5"
+            ],
+            "text": "구체적인 사고 발생 시점, 유출 경위, 정보의 종류, 외부 해킹 및 내부 시스템 관리 문제 여부는 추가 확인이 필요한 상황임."
+          }
+        ],
+        "key_change": {
+          "evidence_ids": [
+            "p2",
+            "p4"
+          ],
+          "text": "삼성증권에서 고객정보 8천241건이 유출된 것으로 파악됨."
+        },
+        "stage": "검토",
+        "why_candidate": "삼성증권의 고객정보 유출 사고 발생 사실과 당국 신고 정황을 신속히 파악하기 위함",
+        "evidence": [
+          {
+            "id": "p2",
+            "quote": "(서울=연합인포맥스) 정원 기자 = 삼성증권에서 고객정보 8천241건이 유출된 것으로 파악됐다."
+          },
+          {
+            "id": "p4",
+            "quote": "23일 금융투자업계에 따르면 삼성증권에서 고객정보 8천241건이 유출된 것으로 알려졌다. 현재 금융당국에 신고한 상태다"
+          },
+          {
+            "id": "p5",
+            "quote": "구체적인 사고 발생 시점과 유출 경위, 정보의 종류 등은 추가 확인이 필요한 상황이다. 외부 해킹에 따른 사고인지, 내"
+          }
+        ]
+      }
     }
   },
   "checks": {
@@ -2024,13 +2077,13 @@
     },
     "issue-93c517fdfeaf40cf4dcd": {
       "metadata_fingerprint": "aea083317d2c92cce515a4bf39e3e764ae399702cce60bf9ceea70901fc8fb6f",
-      "checked_at": "2026-11-16T02:46:01.772256+00:00",
+      "checked_at": "2026-11-23T02:49:30.288201+00:00",
       "reason_code": null,
       "status": "completed"
     },
     "issue-bea21caac6c606445447": {
       "metadata_fingerprint": "0f0a34383ee5fd12cd4fd098f8884770abeae715fe7d46ce96145f66a750603b",
-      "checked_at": "2026-11-16T02:46:01.772256+00:00",
+      "checked_at": "2026-11-23T02:49:30.288201+00:00",
       "reason_code": null,
       "status": "completed"
     },
@@ -2091,17 +2144,37 @@
       "status": "failed",
       "input_fingerprint": "18cfa028b039189138ddf90084f63e0e381fd04221d69720cd31e33c7b4c21c1",
       "body_hash": "0ab34191b0f99501e21e9c255717012ee1e393465d9a5ced65b31b07ee73770e"
+    },
+    "issue-de60dffe14727669f60b": {
+      "metadata_fingerprint": "1e42f2014b372d226b1ed835ecfcac80f450a1992c8a5c0a770dcad06513ca86",
+      "checked_at": "2026-11-23T02:49:30.288201+00:00",
+      "reason_code": "body_not_found",
+      "status": "unavailable"
+    },
+    "issue-31cbccb96b7db0db5a79": {
+      "metadata_fingerprint": "e59da1dcdb74c31fb83806f96e3503c0c1442893ad15736f218bbb4b8880c593",
+      "checked_at": "2026-11-23T02:49:30.288201+00:00",
+      "reason_code": null,
+      "status": "completed"
+    },
+    "issue-306e32814cff223f7723": {
+      "metadata_fingerprint": "51f306be717bf93aa7e33b14f8834405964aec3af22f85386c8303365a766f9c",
+      "checked_at": "2026-11-23T02:49:30.288201+00:00",
+      "reason_code": "output_number_mismatch",
+      "status": "failed",
+      "input_fingerprint": "d553eed66d30d684eb66cbeb171f2c6d70d52558195b8f1bbf7aaa4c381dbadd",
+      "body_hash": "248376e35bdf407e3c8ae33d656d8b483a54609faf3b897720f4f0f8e83e0b9d"
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-22T06:52:35.713459+00:00",
-    "completed_at": "2026-11-22T06:52:45.854429+00:00",
+    "attempted_at": "2026-11-23T02:49:30.288201+00:00",
+    "completed_at": "2026-11-23T02:49:39.395213+00:00",
     "status": "partial_success",
-    "error_code": null,
-    "request_count": 0,
+    "error_code": "partial_invalid_output",
+    "request_count": 1,
     "fetch_count": 5,
-    "completed_count": 0,
-    "cached_count": 5,
-    "failed_count": 0
+    "completed_count": 1,
+    "cached_count": 7,
+    "failed_count": 2
   }
 }

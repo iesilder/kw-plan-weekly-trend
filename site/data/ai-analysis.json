@@ -1,32 +1,104 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-e44341b07a7f00d246c5",
-  "generated_at": "2026-11-22T21:48:55.633396+00:00",
+  "generation_id": "live-2ff2692438c44f8555d9",
+  "generated_at": "2026-11-23T02:49:30.281109+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "metadata-review-v2",
   "policy_version": "public-metadata-inference-v2",
   "auto_analysis_enabled": true,
   "last_attempt": {
-    "attempted_at": "2026-11-22T06:52:35.705319+00:00",
-    "completed_at": "2026-11-22T06:52:35.705319+00:00",
-    "status": "cached",
+    "attempted_at": "2026-11-23T02:49:28.400656+00:00",
+    "completed_at": "2026-11-23T02:49:30.276044+00:00",
+    "status": "success",
     "error_code": null,
-    "request_count": 0,
-    "eligible_count": 28,
-    "completed_count": 0,
+    "request_count": 1,
+    "eligible_count": 31,
+    "completed_count": 3,
     "cached_count": 28,
     "failed_count": 0
   },
   "counts": {
     "blocked": 13,
-    "completed": 28,
+    "completed": 31,
     "stale": 0,
     "failed": 0,
     "not_analyzed": 0,
-    "eligible": 28
+    "eligible": 31
   },
   "items": {
+    "issue-de60dffe14727669f60b": {
+      "status": "completed",
+      "reason_code": null,
+      "input_fingerprint": "5127e14d720ccb731de43bf233120ad4636ae80221c56ad558af1604693dd5c1",
+      "input_evidence_ids": [
+        "version-e7e7b06954b1283c4549"
+      ],
+      "result_fingerprint": "5127e14d720ccb731de43bf233120ad4636ae80221c56ad558af1604693dd5c1",
+      "analyzed_at": "2026-11-23T02:49:30.276044+00:00",
+      "error_code": null,
+      "result": {
+        "check_points": [
+          "제공된 기사 제목에 따르면 삼성증권에서 해킹으로 인한 고객정보 유출이 발생했다고 합니다.",
+          "유출된 고객정보 건수 등 세부 내용과 피해 규모를 원문에서 확인하시기 바랍니다."
+        ],
+        "duplicate_issue_ids": [
+          "issue-306e32814cff223f7723",
+          "issue-31cbccb96b7db0db5a79"
+        ],
+        "rationale": "제공된 뉴스 기사 제목에 따르면 삼성증권에서 해킹 사고로 인한 고객정보 유출이 발생했다고 하여, 보안 및 리스크 관리 측면의 검토 후보가 됩니다.",
+        "relevance": "relevant",
+        "suggested_topic_id": "risk"
+      }
+    },
+    "issue-31cbccb96b7db0db5a79": {
+      "status": "completed",
+      "reason_code": null,
+      "input_fingerprint": "1e9a59609be445ac5a71529c549a299d6bf8b7a6ae72e07ad439eb0f054994f0",
+      "input_evidence_ids": [
+        "version-ac5c1ea9599930e783c1"
+      ],
+      "result_fingerprint": "1e9a59609be445ac5a71529c549a299d6bf8b7a6ae72e07ad439eb0f054994f0",
+      "analyzed_at": "2026-11-23T02:49:30.276044+00:00",
+      "error_code": null,
+      "result": {
+        "check_points": [
+          "제공된 기사 제목에 따르면 삼성증권에서 해킹으로 인한 고객정보 유출이 발생했다고 합니다.",
+          "유출된 고객정보 건수 등 세부 내용과 피해 규모를 원문에서 확인하시기 바랍니다."
+        ],
+        "duplicate_issue_ids": [
+          "issue-306e32814cff223f7723",
+          "issue-de60dffe14727669f60b"
+        ],
+        "rationale": "제공된 뉴스 기사 제목에 따르면 삼성증권에서 해킹 사고로 인한 고객정보 유출이 발생했다고 하여, 보안 및 리스크 관리 측면의 검토 후보가 됩니다.",
+        "relevance": "relevant",
+        "suggested_topic_id": "risk"
+      }
+    },
+    "issue-306e32814cff223f7723": {
+      "status": "completed",
+      "reason_code": null,
+      "input_fingerprint": "e3b867f6bf48aece91c9fa00cc0000e1926c5ffa42813ce9081a4cd84e836db7",
+      "input_evidence_ids": [
+        "version-bfcbb4e07959c2e28e1c"
+      ],
+      "result_fingerprint": "e3b867f6bf48aece91c9fa00cc0000e1926c5ffa42813ce9081a4cd84e836db7",
+      "analyzed_at": "2026-11-23T02:49:30.276044+00:00",
+      "error_code": null,
+      "result": {
+        "check_points": [
+          "제공된 기사 제목에 따르면 삼성증권에서 해킹으로 인한 고객정보 유출이 발생했다고 합니다.",
+          "유출된 고객정보 건수 등 세부 내용과 피해 규모를 원문에서 확인하시기 바랍니다."
+        ],
+        "duplicate_issue_ids": [
+          "issue-31cbccb96b7db0db5a79",
+          "issue-de60dffe14727669f60b"
+        ],
+        "rationale": "제공된 뉴스 기사 제목에 따르면 삼성증권에서 해킹 사고로 인한 고객정보 유출이 발생했다고 하여, 보안 및 리스크 관리 측면의 검토 후보가 됩니다.",
+        "relevance": "relevant",
+        "suggested_topic_id": "risk"
+      }
+    },
     "issue-5c71332f8908ccf9855f": {
       "status": "completed",
       "reason_code": null,

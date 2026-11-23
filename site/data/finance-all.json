@@ -1,11 +1,131 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-e5f91a514aa4594254a8",
-  "generated_at": "2026-11-21T23:20:14.860418+00:00",
+  "generation_id": "finance-d1cfc51abedbc10c0742",
+  "generated_at": "2026-11-23T02:48:53.337799+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 155,
+  "count": 163,
   "articles": [
+    {
+      "article_id": "article-de60dffe14727669f60b",
+      "version_id": "version-e7e7b06954b1283c4549",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "삼성증권서도 해킹 터졌다…고객정보 8천241건 유출",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445983",
+      "published_date": "2026-11-23",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-23T02:48:53.337799+00:00",
+      "institutions": [
+        "삼성증권"
+      ]
+    },
+    {
+      "article_id": "article-d5355f00313225fe9d43",
+      "version_id": "version-b8ff9311e40cc58383e7",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "[증시 AI충격파] DS증권, 1997년초와 닮은 美증시…\"긴축우려 잦아들면 반등\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445938",
+      "published_date": "2026-11-23",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-23T02:48:53.337799+00:00",
+      "institutions": [
+        "DS증권"
+      ]
+    },
+    {
+      "article_id": "article-c43ce58c386d26c632ca",
+      "version_id": "version-9eec9046f7158ab47a6c",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "금융정보분석원 설립 25주년 및 제20회 「자금세탁방지의 날」 기념식 개최",
+      "source_url": "https://www.fsc.go.kr/no010101/88183",
+      "published_date": "2026-11-23",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-23T02:48:53.337799+00:00",
+      "institutions": [
+        "금융정보분석원"
+      ]
+    },
+    {
+      "article_id": "article-5ffc5611a6d5332a785e",
+      "version_id": "version-e80e458516b8351a5be7",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "이억원 금융위원장, 글로벌 금융안정 공조와 한-유럽 금융협력 강화로 한국 금융의 지평 넓혀",
+      "source_url": "https://www.fsc.go.kr/no010101/88182",
+      "published_date": "2026-11-23",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-23T02:48:53.337799+00:00",
+      "institutions": [
+        "금융위원회"
+      ]
+    },
+    {
+      "article_id": "article-4b2965204ab98c6aafae",
+      "version_id": "version-0c800144a3bbe036c439",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "한투운용, 글로벌 AI 밸류체인 담은 신규 TDF 출시",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445979",
+      "published_date": "2026-11-23",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-23T02:48:53.337799+00:00",
+      "institutions": [
+        "한국투자신탁운용"
+      ]
+    },
+    {
+      "article_id": "article-346282865998d748f194",
+      "version_id": "version-3df980e3bbd8e4311460",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "\"AI 메가트렌드 20년 간다\"…한투운용, 고수익 TDF 출시(종합)",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446009",
+      "published_date": "2026-11-23",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-23T02:48:53.337799+00:00",
+      "institutions": [
+        "한국투자신탁운용"
+      ]
+    },
+    {
+      "article_id": "article-31cbccb96b7db0db5a79",
+      "version_id": "version-ac5c1ea9599930e783c1",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "삼성증권서도 해킹 터졌다…고객정보 8천241건 유출(종합)",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445984",
+      "published_date": "2026-11-23",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-23T02:48:53.337799+00:00",
+      "institutions": [
+        "삼성증권"
+      ]
+    },
+    {
+      "article_id": "article-306e32814cff223f7723",
+      "version_id": "version-bfcbb4e07959c2e28e1c",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "삼성증권서도 해킹 터졌다…고객정보 8천241건 유출(종합)",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445991",
+      "published_date": "2026-11-23",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-23T02:48:53.337799+00:00",
+      "institutions": [
+        "삼성증권"
+      ]
+    },
     {
       "article_id": "article-a5ae713128319501e3ad",
       "version_id": "version-ab008ba8ebc5368b044d",

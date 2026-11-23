@@ -1,11 +1,26 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-d1cfc51abedbc10c0742",
-  "generated_at": "2026-11-23T02:48:53.337799+00:00",
+  "generation_id": "finance-c3f8c1861a79f4f8cdcf",
+  "generated_at": "2026-11-23T12:48:40.657649+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 163,
+  "count": 166,
   "articles": [
+    {
+      "article_id": "article-f5635237a2aa2d81d34d",
+      "version_id": "version-ccf0a6d206d96dcb8565",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "배재규 한투운용 대표 \"오픈AI·엔트로픽 희생될 수 있어\" 경고",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446026",
+      "published_date": "2026-11-23",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-23T12:48:40.657649+00:00",
+      "institutions": [
+        "한국투자신탁운용"
+      ]
+    },
     {
       "article_id": "article-de60dffe14727669f60b",
       "version_id": "version-e7e7b06954b1283c4549",
@@ -52,6 +67,21 @@
       ]
     },
     {
+      "article_id": "article-8812293bcacee9427f28",
+      "version_id": "version-f546721efa2a8463e57c",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "금융위, 자사주 하루 매입 한도 대폭 완화…24일부터 3개월간",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446057",
+      "published_date": "2026-11-23",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-23T12:48:40.657649+00:00",
+      "institutions": [
+        "금융위원회"
+      ]
+    },
+    {
       "article_id": "article-5ffc5611a6d5332a785e",
       "version_id": "version-e80e458516b8351a5be7",
       "source_id": "fsc-press-releases",
@@ -64,6 +94,21 @@
       "fetched_at": "2026-11-23T02:48:53.337799+00:00",
       "institutions": [
         "금융위원회"
+      ]
+    },
+    {
+      "article_id": "article-5fcdeae571803c241fd6",
+      "version_id": "version-e4b768072a91eb53737e",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "우리투자증권, 첫 공모채 수요예측 모집액의 14배…전만기 민평 밑돌아",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446084",
+      "published_date": "2026-11-23",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-23T12:48:40.657649+00:00",
+      "institutions": [
+        "우리투자증권"
       ]
     },
     {
@@ -113,15 +158,15 @@
     },
     {
       "article_id": "article-306e32814cff223f7723",
-      "version_id": "version-bfcbb4e07959c2e28e1c",
+      "version_id": "version-a928df3b712c57529f25",
       "source_id": "einfomax-s1n2",
       "source_name": "연합인포맥스(기사) · 증권",
-      "title": "삼성증권서도 해킹 터졌다…고객정보 8천241건 유출(종합)",
+      "title": "삼성증권서도 해킹 터졌다…고객정보 8천241건 유출(종합2보)",
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445991",
       "published_date": "2026-11-23",
       "published_at": null,
       "source_updated_at": null,
-      "fetched_at": "2026-11-23T02:48:53.337799+00:00",
+      "fetched_at": "2026-11-23T12:48:40.657649+00:00",
       "institutions": [
         "삼성증권"
       ]

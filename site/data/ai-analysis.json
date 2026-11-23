@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-2ff2692438c44f8555d9",
-  "generated_at": "2026-11-23T02:49:30.281109+00:00",
+  "generation_id": "live-c5e3a06175a03f3b9ded",
+  "generated_at": "2026-11-23T12:48:40.657649+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "metadata-review-v2",
@@ -20,15 +20,39 @@
   },
   "counts": {
     "blocked": 13,
-    "completed": 31,
-    "stale": 0,
+    "completed": 28,
+    "stale": 3,
     "failed": 0,
     "not_analyzed": 0,
     "eligible": 31
   },
   "items": {
+    "issue-306e32814cff223f7723": {
+      "status": "stale",
+      "reason_code": null,
+      "input_fingerprint": "d0231bf3b84c5cc3968f5a68b2d293256b78752bb1b11206d1419fb266b308c9",
+      "input_evidence_ids": [
+        "version-a928df3b712c57529f25"
+      ],
+      "result_fingerprint": "e3b867f6bf48aece91c9fa00cc0000e1926c5ffa42813ce9081a4cd84e836db7",
+      "analyzed_at": "2026-11-23T02:49:30.276044+00:00",
+      "error_code": null,
+      "result": {
+        "check_points": [
+          "제공된 기사 제목에 따르면 삼성증권에서 해킹으로 인한 고객정보 유출이 발생했다고 합니다.",
+          "유출된 고객정보 건수 등 세부 내용과 피해 규모를 원문에서 확인하시기 바랍니다."
+        ],
+        "duplicate_issue_ids": [
+          "issue-31cbccb96b7db0db5a79",
+          "issue-de60dffe14727669f60b"
+        ],
+        "rationale": "제공된 뉴스 기사 제목에 따르면 삼성증권에서 해킹 사고로 인한 고객정보 유출이 발생했다고 하여, 보안 및 리스크 관리 측면의 검토 후보가 됩니다.",
+        "relevance": "relevant",
+        "suggested_topic_id": "risk"
+      }
+    },
     "issue-de60dffe14727669f60b": {
-      "status": "completed",
+      "status": "stale",
       "reason_code": null,
       "input_fingerprint": "5127e14d720ccb731de43bf233120ad4636ae80221c56ad558af1604693dd5c1",
       "input_evidence_ids": [
@@ -52,7 +76,7 @@
       }
     },
     "issue-31cbccb96b7db0db5a79": {
-      "status": "completed",
+      "status": "stale",
       "reason_code": null,
       "input_fingerprint": "1e9a59609be445ac5a71529c549a299d6bf8b7a6ae72e07ad439eb0f054994f0",
       "input_evidence_ids": [
@@ -68,30 +92,6 @@
         ],
         "duplicate_issue_ids": [
           "issue-306e32814cff223f7723",
-          "issue-de60dffe14727669f60b"
-        ],
-        "rationale": "제공된 뉴스 기사 제목에 따르면 삼성증권에서 해킹 사고로 인한 고객정보 유출이 발생했다고 하여, 보안 및 리스크 관리 측면의 검토 후보가 됩니다.",
-        "relevance": "relevant",
-        "suggested_topic_id": "risk"
-      }
-    },
-    "issue-306e32814cff223f7723": {
-      "status": "completed",
-      "reason_code": null,
-      "input_fingerprint": "e3b867f6bf48aece91c9fa00cc0000e1926c5ffa42813ce9081a4cd84e836db7",
-      "input_evidence_ids": [
-        "version-bfcbb4e07959c2e28e1c"
-      ],
-      "result_fingerprint": "e3b867f6bf48aece91c9fa00cc0000e1926c5ffa42813ce9081a4cd84e836db7",
-      "analyzed_at": "2026-11-23T02:49:30.276044+00:00",
-      "error_code": null,
-      "result": {
-        "check_points": [
-          "제공된 기사 제목에 따르면 삼성증권에서 해킹으로 인한 고객정보 유출이 발생했다고 합니다.",
-          "유출된 고객정보 건수 등 세부 내용과 피해 규모를 원문에서 확인하시기 바랍니다."
-        ],
-        "duplicate_issue_ids": [
-          "issue-31cbccb96b7db0db5a79",
           "issue-de60dffe14727669f60b"
         ],
         "rationale": "제공된 뉴스 기사 제목에 따르면 삼성증권에서 해킹 사고로 인한 고객정보 유출이 발생했다고 하여, 보안 및 리스크 관리 측면의 검토 후보가 됩니다.",

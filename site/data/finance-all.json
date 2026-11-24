@@ -1,11 +1,26 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-c3f8c1861a79f4f8cdcf",
-  "generated_at": "2026-11-23T12:48:40.657649+00:00",
+  "generation_id": "finance-aa9926a356e9692eec8b",
+  "generated_at": "2026-11-24T00:54:04.908470+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 166,
+  "count": 167,
   "articles": [
+    {
+      "article_id": "article-c678458f3eaf995e5a61",
+      "version_id": "version-04444c21dd50b5e68d60",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "\"이름 바꿨는데 수수료가 쑥\"…금감원, ETF 문제제기에 황당 결론",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446162",
+      "published_date": "2026-11-24",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-24T00:54:04.908470+00:00",
+      "institutions": [
+        "금융감독원"
+      ]
+    },
     {
       "article_id": "article-f5635237a2aa2d81d34d",
       "version_id": "version-ccf0a6d206d96dcb8565",

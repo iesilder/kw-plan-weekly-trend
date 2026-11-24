@@ -1,40 +1,119 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-5f0a42356abe8c543e4b",
-  "generated_at": "2026-11-24T00:54:04.908470+00:00",
+  "generation_id": "live-0732d5da28b2520fe901",
+  "generated_at": "2026-11-24T10:59:11.141942+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "article-bullets-v1",
   "auto_analysis_enabled": true,
   "counts": {
-    "completed": 23,
-    "unavailable": 1,
-    "not_applicable": 13,
     "stale": 0,
-    "failed": 6,
-    "pending": 1,
-    "eligible": 31
+    "completed": 26,
+    "pending": 0,
+    "not_applicable": 13,
+    "failed": 7,
+    "unavailable": 1,
+    "eligible": 34
   },
   "last_attempt": {
-    "attempted_at": "2026-11-23T02:49:30.288201+00:00",
-    "completed_at": "2026-11-23T02:49:39.395213+00:00",
+    "attempted_at": "2026-11-24T10:58:56.201764+00:00",
+    "completed_at": "2026-11-24T10:59:11.131210+00:00",
     "status": "partial_success",
     "error_code": "partial_invalid_output",
     "request_count": 1,
     "fetch_count": 5,
-    "completed_count": 1,
-    "cached_count": 7,
+    "completed_count": 3,
+    "cached_count": 0,
     "failed_count": 2
   },
   "items": {
-    "issue-306e32814cff223f7723": {
-      "status": "pending",
+    "issue-f56397cafa534d689a1b": {
+      "status": "completed",
       "reason_code": null,
       "evidence_ids": [
-        "version-a928df3b712c57529f25"
+        "version-aa0112b6a9918a916121"
       ],
-      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445991",
-      "source_name": "연합인포맥스(기사) · 증권",
+      "source_url": "https://www.fsc.go.kr/no010101/88195",
+      "source_name": "금융위원회 · 보도자료",
+      "input_fingerprint": "188f3e9c8032e1393109027842b20ac2ebe3362fa1bde80f197b04154cc19f5b",
+      "result_fingerprint": "188f3e9c8032e1393109027842b20ac2ebe3362fa1bde80f197b04154cc19f5b",
+      "analyzed_at": "2026-11-24T10:59:11.131199+00:00",
+      "body_hash": "39d85fba9c487c54c26229fab668908db482f2abdc83001e098669eb8ddd3da9",
+      "body_fetched_at": "2026-11-24T10:58:56.201764+00:00",
+      "truncated": false,
+      "result": {
+        "facts": [
+          {
+            "evidence_ids": [
+              "p2"
+            ],
+            "text": "사업자의 부채비율 200% 이하 및 법령준수체계 요건은 1년간 유예기간이 적용되어 당장 불수리 사유에 해당하지 않으나 충족 수준과 유예기간 내 충족 가능성을 점검함"
+          },
+          {
+            "evidence_ids": [
+              "p3"
+            ],
+            "text": "부칙신고가 수리되더라도 신고 유효기간은 연장되지 않으며 사업자는 별도로 유효기간 만료 45일 전까지 갱신신고를 하여야 함"
+          },
+          {
+            "evidence_ids": [
+              "p4"
+            ],
+            "text": "법 시행 전에 발생한 사유에 대해서는 종전 규정이 적용되며 대주주의 벌금형이나 채무불이행은 이번 부칙신고의 불수리 사유에 해당하지 않음"
+          },
+          {
+            "evidence_ids": [
+              "p4"
+            ],
+            "text": "유예기간 종료 이후 요건을 충족하지 못한 사업자는 직권말소 대상이 될 수 있음"
+          },
+          {
+            "evidence_ids": [
+              "p5"
+            ],
+            "text": "FIU와 금감원은 11.23일부터 접수된 신고건의 심사를 일제히 진행할 예정임"
+          }
+        ],
+        "key_change": {
+          "evidence_ids": [
+            "p1"
+          ],
+          "text": "특금법 부칙에 따른 신고 접수 결과 법 시행 당시 신고가 수리된 가상자산사업자 28개 모두 기한 내에 부칙신고서를 제출함"
+        },
+        "stage": "점검·조사",
+        "why_candidate": "개정 특금법 시행에 따라 기존 가상자산사업자의 강화된 요건 이행 상황을 점검하고 건전성을 제고하기 위함",
+        "evidence": [
+          {
+            "id": "p1",
+            "quote": "행 당시 신고가 수리된 가상자산사업자 28개 모두 기한 내에 부칙신고서를"
+          },
+          {
+            "id": "p2",
+            "quote": "부채비율(200% 이하) 및 법령준수체계 요건*은 개정법 시행 후 1년"
+          },
+          {
+            "id": "p3",
+            "quote": "다. 사업자는 부칙신고와 별개로, 유효기간 만료 45일 전까지 갱신신고를"
+          },
+          {
+            "id": "p4",
+            "quote": "한다. 유예기간 종료 이후 요건을 충족하지 못한 사업자는 직권말소 대상이"
+          },
+          {
+            "id": "p5",
+            "quote": "FIU와 금감원은 11.23일부터 접수된 신고건의 심사를 일제히 진행할"
+          }
+        ]
+      }
+    },
+    "issue-b7fa0d4c0325d932939c": {
+      "status": "failed",
+      "reason_code": "output_number_mismatch",
+      "evidence_ids": [
+        "version-e5c736eafb9b64c1fcd9"
+      ],
+      "source_url": "https://www.fsc.go.kr/no010101/88199",
+      "source_name": "금융위원회 · 보도자료",
       "input_fingerprint": null,
       "result_fingerprint": null,
       "analyzed_at": null,
@@ -42,6 +121,204 @@
       "body_fetched_at": null,
       "truncated": false,
       "result": null
+    },
+    "issue-619df34b8c4f3d638d83": {
+      "status": "completed",
+      "reason_code": null,
+      "evidence_ids": [
+        "version-082c5d1fc27f8b961707"
+      ],
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446190",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "input_fingerprint": "62cca64446748f93964719899b3fe05b2f06530987eb151cf966cde7d87d5313",
+      "result_fingerprint": "62cca64446748f93964719899b3fe05b2f06530987eb151cf966cde7d87d5313",
+      "analyzed_at": "2026-11-24T10:59:11.131193+00:00",
+      "body_hash": "c31ae3a5b9d908a3a33a730c578ddf8addd33f0ead1cc2984ec62451049d3ef7",
+      "body_fetched_at": "2026-11-24T10:58:56.201764+00:00",
+      "truncated": false,
+      "result": {
+        "facts": [
+          {
+            "evidence_ids": [
+              "p2"
+            ],
+            "text": "내년 5월까지 한시적으로 적용되며 해킹 확인 시 3영업일 내 보안조치 계획을 보고해야 함"
+          },
+          {
+            "evidence_ids": [
+              "p4"
+            ],
+            "text": "금융감독원은 24일 가상자산사업자의 선제적 입출금 차단 행위에 대해 내년 5월 말까지 한시적으로 제재를 면제하기로 함"
+          },
+          {
+            "evidence_ids": [
+              "p5"
+            ],
+            "text": "금융위원회가 지난 12일 가상자산업권 보안 대책회의에서 해킹 의심 단계의 선제적 입출금 차단을 허용하겠다고 발표한 데 따른 후속 조치임"
+          },
+          {
+            "evidence_ids": [
+              "p7"
+            ],
+            "text": "사업자는 해킹 가능성이 있는 가상자산이나 지갑 등을 대상으로 입금과 출금을 동시에 차단하여 추가 입금으로 인한 피해 확산을 방지해야 함"
+          },
+          {
+            "evidence_ids": [
+              "p8"
+            ],
+            "text": "이용자에 대한 사전통지 의무를 지키지 못한 경우에도 제재하지 않으나 차단 이후 지체 없이 사유를 통지하고 금융위원회에 즉시 보고해야 함"
+          },
+          {
+            "evidence_ids": [
+              "p10"
+            ],
+            "text": "가상자산사업자는 보안시스템 점검 및 취약점 보완 등 필요한 조치의 이행계획을 해킹 가능성 탐지일로부터 3영업일 이내에 금감원에 보고하고 이후 1주일 단위로 진행 상황을 보고해야 함"
+          }
+        ],
+        "key_change": {
+          "evidence_ids": [
+            "p3"
+          ],
+          "text": "가상자산사업자가 해킹이 의심되는 경우 이용자에게 사전 통지하지 않고도 최대 12시간 동안 입출금을 차단할 수 있게 됨"
+        },
+        "stage": "출시·시행",
+        "why_candidate": "해킹 의심 시 신속한 입출금 차단을 허용하고 제재를 면제함으로써 이용자 자산 보호를 강화하기 위함",
+        "evidence": [
+          {
+            "id": "p3",
+            "quote": "통지하지 않고도 최대 12시간 동안 입출금을 차단할"
+          },
+          {
+            "id": "p2",
+            "quote": "내년 5월까지 한시적용…해킹 확인 시 3영업일 내"
+          },
+          {
+            "id": "p4",
+            "quote": "대해 내년 5월 말까지 한시적으로 제재를 면제하기로"
+          },
+          {
+            "id": "p5",
+            "quote": "이는 금융위원회가 지난 12일 '가상자산업권 보안"
+          },
+          {
+            "id": "p7",
+            "quote": "있는 가상자산이나 지갑 등을 대상으로 입금과 출금을"
+          },
+          {
+            "id": "p8",
+            "quote": "이용자에 대한 사전통지 의무를 지키지 못한 경우에도"
+          },
+          {
+            "id": "p10",
+            "quote": "조치의 이행계획을 해킹 가능성 탐지일로부터 3영업일"
+          }
+        ]
+      }
+    },
+    "issue-306e32814cff223f7723": {
+      "status": "completed",
+      "reason_code": null,
+      "evidence_ids": [
+        "version-a928df3b712c57529f25"
+      ],
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445991",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "input_fingerprint": "42e077a882a3ce2a04bd1f98f248c356e716ea1f5853d881ad3a905c033fdc66",
+      "result_fingerprint": "42e077a882a3ce2a04bd1f98f248c356e716ea1f5853d881ad3a905c033fdc66",
+      "analyzed_at": "2026-11-24T10:59:11.131162+00:00",
+      "body_hash": "67c098749048d43137542ca86cb01ea80664965e179b4ff6d3f4c49a533707cd",
+      "body_fetched_at": "2026-11-24T10:58:56.201764+00:00",
+      "truncated": false,
+      "result": {
+        "facts": [
+          {
+            "evidence_ids": [
+              "p4",
+              "p2"
+            ],
+            "text": "금융투자업계에 따르면 삼성증권에서 고객정보 8천241건이 유출된 것으로 알려졌으며 현재 금융당국에 신고한 상태임"
+          },
+          {
+            "evidence_ids": [
+              "p5"
+            ],
+            "text": "사고 발생 시점과 유출 경위, 정보 종류 등은 추가 확인이 필요한 상황이며 외부 해킹인지 내부 시스템 관리 문제인지 아직 확인되지 않음"
+          },
+          {
+            "evidence_ids": [
+              "p7",
+              "p8"
+            ],
+            "text": "지난달 대신증권에서는 외부 해킹으로 3만8천490명의 개인·신용정보가 유출되어 투자일임 비대면 증권계좌 개설 연계 서버에서 비정상적인 접근이 확인됨"
+          },
+          {
+            "evidence_ids": [
+              "p9"
+            ],
+            "text": "이달 초 미래에셋증권에서도 외부 공격으로 고객 3천800여명의 계좌번호와 임직원 3만5천여명의 개인정보가 유출된 것으로 알려짐"
+          },
+          {
+            "evidence_ids": [
+              "p13",
+              "p15"
+            ],
+            "text": "삼성증권은 2021년 11월 투자 교육 사이트 개인정보 노출 문제로 2023년 3월 개인정보위로부터 과징금 9천800만원과 과태료 360만원을 부과받은 전력이 있음"
+          },
+          {
+            "evidence_ids": [
+              "p19"
+            ],
+            "text": "금융위원회는 이달 초 금융사와 가상자산사업자 등 580여곳을 대상으로 외부 접속 경로와 내부통제 운영 실태를 전수 점검하겠다는 방침을 밝힘"
+          }
+        ],
+        "key_change": {
+          "evidence_ids": [
+            "p2",
+            "p4"
+          ],
+          "text": "삼성증권에서 고객정보 8천241건이 유출된 것으로 파악되어 금융당국에 신고한 상태임"
+        },
+        "stage": "점검·조사",
+        "why_candidate": "최근 증권사들의 잇따른 정보 유출 사고로 인해 내부통제 체계와 경영진의 책임에 대한 점검 필요성이 대두됨",
+        "evidence": [
+          {
+            "id": "p2",
+            "quote": "자 = 삼성증권에서 고객정보 8천241건"
+          },
+          {
+            "id": "p4",
+            "quote": "따르면 삼성증권에서 고객정보 8천241건"
+          },
+          {
+            "id": "p5",
+            "quote": "과정에서 발생한 문제인지도 아직 확인되지"
+          },
+          {
+            "id": "p7",
+            "quote": "고객 3만8천490명의 개인·신용정보가"
+          },
+          {
+            "id": "p8",
+            "quote": "증권계좌 개설 연계 서버에서 비정상적인"
+          },
+          {
+            "id": "p9",
+            "quote": "3천800여명의 계좌번호와 임직원 3만"
+          },
+          {
+            "id": "p13",
+            "quote": "2021년 11월 삼성증권이 운영하던 투"
+          },
+          {
+            "id": "p15",
+            "quote": "과징금 9천800만원과 과태료 360만원"
+          },
+          {
+            "id": "p19",
+            "quote": "금융사와 가상자산사업자 등 580여곳을"
+          }
+        ]
+      }
     },
     "issue-de60dffe14727669f60b": {
       "status": "unavailable",

@@ -1,11 +1,26 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-aa9926a356e9692eec8b",
-  "generated_at": "2026-11-24T00:54:04.908470+00:00",
+  "generation_id": "finance-8eff8cc48e0f8d016f10",
+  "generated_at": "2026-11-24T10:58:13.470120+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 167,
+  "count": 173,
   "articles": [
+    {
+      "article_id": "article-cf5bbb9849c61a6b210b",
+      "version_id": "version-e486157e569c0c9b8ee5",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "금감원·거래소, 불법 공매도 3개월간 특별감시 돌입",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446273",
+      "published_date": "2026-11-24",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-24T10:58:13.470120+00:00",
+      "institutions": [
+        "금융감독원"
+      ]
+    },
     {
       "article_id": "article-c678458f3eaf995e5a61",
       "version_id": "version-04444c21dd50b5e68d60",
@@ -19,6 +34,81 @@
       "fetched_at": "2026-11-24T00:54:04.908470+00:00",
       "institutions": [
         "금융감독원"
+      ]
+    },
+    {
+      "article_id": "article-b420a5292dce523b5c70",
+      "version_id": "version-fbe1f03119dcb4ac6f10",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "이병철 회장, 다올투자증권 지분 매각 추진",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446312",
+      "published_date": "2026-11-24",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-24T10:58:13.470120+00:00",
+      "institutions": [
+        "다올투자증권"
+      ]
+    },
+    {
+      "article_id": "article-818fc715065b5ec709b4",
+      "version_id": "version-67739c434606829e34d1",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "고객 돈으로 '몰빵 투자'…금감원, 랩어카운트 관행 손본다",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446279",
+      "published_date": "2026-11-24",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-24T10:58:13.470120+00:00",
+      "institutions": [
+        "금융감독원"
+      ]
+    },
+    {
+      "article_id": "article-8153afae8cb03991458a",
+      "version_id": "version-349086a6ebb642c3ca0d",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "IMM, 1천800억 펀드 조성해 산은 투자 딜 합류…삼성증권 PBS 계약",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446186",
+      "published_date": "2026-11-24",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-24T10:58:13.470120+00:00",
+      "institutions": [
+        "삼성증권"
+      ]
+    },
+    {
+      "article_id": "article-20cd02b95a62431afb9a",
+      "version_id": "version-44628d32c632e27c0a6c",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "금융위, 코인거래소 지분 '20% 원칙' 공식화…승인 땐 34%",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446281",
+      "published_date": "2026-11-24",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-24T10:58:13.470120+00:00",
+      "institutions": [
+        "금융위원회"
+      ]
+    },
+    {
+      "article_id": "article-fdfe86b34e6e96745abc",
+      "version_id": "version-7bc3970fb4a0c7019a3f",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "금융정보분석원 설립 25주년 기념 자금세탁방지 국제세미나 개최",
+      "source_url": "https://www.fsc.go.kr/no010101/88188",
+      "published_date": "2026-11-23",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-24T10:58:13.470120+00:00",
+      "institutions": [
+        "금융정보분석원"
       ]
     },
     {

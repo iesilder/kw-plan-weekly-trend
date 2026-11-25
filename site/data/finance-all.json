@@ -1,11 +1,26 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-786a8e8fe85215bd2afd",
-  "generated_at": "2026-11-25T04:15:59.254102+00:00",
+  "generation_id": "finance-000698b9f05a3f00009f",
+  "generated_at": "2026-11-25T14:33:08.543548+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 179,
+  "count": 185,
   "articles": [
+    {
+      "article_id": "article-ffd7677e5cc75131f08f",
+      "version_id": "version-8fdfe136102139b9a8ec",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "금투협, '수성웹툰·부산주공' K-0TC 상장폐지지정기업부 신규지정",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446491",
+      "published_date": "2026-11-25",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-25T14:33:08.543548+00:00",
+      "institutions": [
+        "금융투자협회"
+      ]
+    },
     {
       "article_id": "article-f22dc5c2824e6a72a099",
       "version_id": "version-f288d15a83fa5d15c6c3",
@@ -37,6 +52,21 @@
       ]
     },
     {
+      "article_id": "article-8fa79ef8e8a1c38e33cc",
+      "version_id": "version-bcd56d63d866d5d6720f",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "우리투자증권, 출범 후 첫 희망퇴직…5년 이상 정규직 대상",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446524",
+      "published_date": "2026-11-25",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-25T14:33:08.543548+00:00",
+      "institutions": [
+        "우리투자증권"
+      ]
+    },
+    {
       "article_id": "article-76ab64f27e5a2a065f30",
       "version_id": "version-967c60ce4ff73db15336",
       "source_id": "einfomax-s1n7",
@@ -49,6 +79,21 @@
       "fetched_at": "2026-11-25T04:15:59.254102+00:00",
       "institutions": [
         "모두의카드"
+      ]
+    },
+    {
+      "article_id": "article-74f33f0fbe9a0f12d77b",
+      "version_id": "version-b56912a46545df9b07df",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "주식 미리 사놓고 호재성 기사 보도…증선위, 언론사 기자 고발",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446532",
+      "published_date": "2026-11-25",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-25T14:33:08.543548+00:00",
+      "institutions": [
+        "증권선물위원회"
       ]
     },
     {
@@ -92,6 +137,51 @@
       "published_at": null,
       "source_updated_at": null,
       "fetched_at": "2026-11-25T04:15:59.254102+00:00",
+      "institutions": [
+        "다올투자증권"
+      ]
+    },
+    {
+      "article_id": "article-3d4c77b4286c159b3770",
+      "version_id": "version-a6b9eb1d7e31a324411c",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "메리츠증권, 위불 홍콩과 한국주식 서비스…외국인통합계좌 첫선",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446492",
+      "published_date": "2026-11-25",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-25T14:33:08.543548+00:00",
+      "institutions": [
+        "메리츠증권"
+      ]
+    },
+    {
+      "article_id": "article-2ad395d877ca14db79f4",
+      "version_id": "version-3ace942726c7901020ce",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "빗썸 해킹, 한 시간이라더니 보름간 이어져…추가 피해도 확인",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446549",
+      "published_date": "2026-11-25",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-25T14:33:08.543548+00:00",
+      "institutions": [
+        "빗썸"
+      ]
+    },
+    {
+      "article_id": "article-0d5d56403813ca07a572",
+      "version_id": "version-f3b0865b139a8cacfb66",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "다올투자증권, 경영권 매각설에 \"구체적으로 결정된 사항 없어\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446516",
+      "published_date": "2026-11-25",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-25T14:33:08.543548+00:00",
       "institutions": [
         "다올투자증권"
       ]

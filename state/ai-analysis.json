@@ -927,23 +927,16 @@
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-24T10:58:52.119839+00:00",
-    "completed_at": "2026-11-24T10:58:56.188781+00:00",
-    "status": "success",
+    "attempted_at": "2026-11-25T04:16:31.471841+00:00",
+    "completed_at": "2026-11-25T04:16:31.471841+00:00",
+    "status": "cached",
     "error_code": null,
-    "request_count": 1,
+    "request_count": 0,
     "eligible_count": 34,
-    "completed_count": 6,
-    "cached_count": 28,
+    "completed_count": 0,
+    "cached_count": 34,
     "failed_count": 0,
-    "fingerprints": [
-      "d0231bf3b84c5cc3968f5a68b2d293256b78752bb1b11206d1419fb266b308c9",
-      "1e9a59609be445ac5a71529c549a299d6bf8b7a6ae72e07ad439eb0f054994f0",
-      "5127e14d720ccb731de43bf233120ad4636ae80221c56ad558af1604693dd5c1",
-      "5c4f35317bc44e9a6ec6feef65a5be96dc8cb8150f530ff35188c9e9348f1115",
-      "89ceeca2346e235b8a79e9579b5a45ed32939857b847fa14d2c303f319560b88",
-      "8effa7e05c1456bedfe037a982cf9e9589ab626a4a0afb8fb10dc51d6dd8d7d1"
-    ]
+    "fingerprints": []
   },
   "failures": {
     "101df6aece80efda1804316fe3517d5260db894c3f51acb3521fa0f7b116dbf3": {

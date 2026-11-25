@@ -646,7 +646,7 @@
       "source_url": "https://www.fsc.go.kr/no010101/88054",
       "source_name": "금융위원회 · 보도자료",
       "body_hash": "492f630b75f37657e6ec2384c2baceb4eca0f863773abf7c66bebbc251e61ca9",
-      "body_fetched_at": "2026-11-17T04:31:11.127786+00:00",
+      "body_fetched_at": "2026-11-25T04:16:31.477817+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-09T02:41:57.518730+00:00",
@@ -1615,7 +1615,7 @@
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445454",
       "source_name": "연합인포맥스(기사) · 증권",
       "body_hash": "f7c3f4341dcace59d0b50347c462286a354a69d91e5eb99af41efa09ebe86a14",
-      "body_fetched_at": "2026-11-22T06:52:35.713459+00:00",
+      "body_fetched_at": "2026-11-25T04:16:31.477817+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-19T03:32:08.791323+00:00",
@@ -1770,7 +1770,7 @@
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445702",
       "source_name": "연합인포맥스(기사) · 증권",
       "body_hash": "4e46fb4404bf1b1b86befd58ba2b857856e911aa3a037c180f5612b530cb14fb",
-      "body_fetched_at": "2026-11-22T06:52:35.713459+00:00",
+      "body_fetched_at": "2026-11-25T04:16:31.477817+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-20T03:20:24.191498+00:00",
@@ -2297,13 +2297,13 @@
     },
     "issue-0727cc1f0b22bdd5ae98": {
       "metadata_fingerprint": "c4bff4f8ee3488b2109f525c18330f375d86a095ce5667cf7b76b1c897ddc71c",
-      "checked_at": "2026-11-17T04:31:11.127786+00:00",
+      "checked_at": "2026-11-25T04:16:31.477817+00:00",
       "reason_code": null,
       "status": "completed"
     },
     "issue-d9fb63dca1fe16a50763": {
       "metadata_fingerprint": "daa9fc86b72052797efb1408e0b7b851868817634c34a63712995847c19bd062",
-      "checked_at": "2026-11-17T04:31:11.127786+00:00",
+      "checked_at": "2026-11-25T04:16:31.477817+00:00",
       "reason_code": "output_number_mismatch",
       "status": "failed",
       "input_fingerprint": "c5be86c3728e1f4dc600561af7c91744cdeaaa2e8e6d7a00c8965c923614782e",
@@ -2389,7 +2389,7 @@
     },
     "issue-218742856bc89595a04d": {
       "metadata_fingerprint": "fd567ef2722f81c5e6e68b0d9b1dc0ab8d5dfd892840881b4cfe9de5841d8de8",
-      "checked_at": "2026-11-22T06:52:35.713459+00:00",
+      "checked_at": "2026-11-25T04:16:31.477817+00:00",
       "reason_code": null,
       "status": "completed"
     },
@@ -2401,7 +2401,7 @@
     },
     "issue-5c71332f8908ccf9855f": {
       "metadata_fingerprint": "57fd1f94d4584c844e199c4686c28e0bfdb2b4caac5dbfde9e7fdcfe7019e414",
-      "checked_at": "2026-11-22T06:52:35.713459+00:00",
+      "checked_at": "2026-11-25T04:16:31.477817+00:00",
       "reason_code": null,
       "status": "completed"
     },
@@ -2421,7 +2421,7 @@
     },
     "issue-de60dffe14727669f60b": {
       "metadata_fingerprint": "1e42f2014b372d226b1ed835ecfcac80f450a1992c8a5c0a770dcad06513ca86",
-      "checked_at": "2026-11-24T10:58:56.201764+00:00",
+      "checked_at": "2026-11-25T04:16:31.477817+00:00",
       "reason_code": "body_not_found",
       "status": "unavailable"
     },
@@ -2459,14 +2459,14 @@
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-24T10:58:56.201764+00:00",
-    "completed_at": "2026-11-24T10:59:11.131210+00:00",
+    "attempted_at": "2026-11-25T04:16:31.477817+00:00",
+    "completed_at": "2026-11-25T04:16:40.499467+00:00",
     "status": "partial_success",
-    "error_code": "partial_invalid_output",
-    "request_count": 1,
+    "error_code": null,
+    "request_count": 0,
     "fetch_count": 5,
-    "completed_count": 3,
-    "cached_count": 0,
-    "failed_count": 2
+    "completed_count": 0,
+    "cached_count": 6,
+    "failed_count": 1
   }
 }

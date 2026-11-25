@@ -1,11 +1,101 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-8eff8cc48e0f8d016f10",
-  "generated_at": "2026-11-24T10:58:13.470120+00:00",
+  "generation_id": "finance-786a8e8fe85215bd2afd",
+  "generated_at": "2026-11-25T04:15:59.254102+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 173,
+  "count": 179,
   "articles": [
+    {
+      "article_id": "article-f22dc5c2824e6a72a099",
+      "version_id": "version-f288d15a83fa5d15c6c3",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "금감원, 환매중단펀드 보유 퇴직연금도 실물이전 허용…내년 1월 시행",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446467",
+      "published_date": "2026-11-25",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-25T04:15:59.254102+00:00",
+      "institutions": [
+        "금융감독원"
+      ]
+    },
+    {
+      "article_id": "article-ac142af964a93ead0230",
+      "version_id": "version-ffa1d4179fe52b62b9ff",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "미래에셋캐피탈, 증권·벤처에 1천200억 출자…그룹 핵심 투자축 강화",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446433",
+      "published_date": "2026-11-25",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-25T04:15:59.254102+00:00",
+      "institutions": [
+        "미래에셋캐피탈"
+      ]
+    },
+    {
+      "article_id": "article-76ab64f27e5a2a065f30",
+      "version_id": "version-967c60ce4ff73db15336",
+      "source_id": "einfomax-s1n7",
+      "source_name": "연합인포맥스(기사) · IB·기업",
+      "title": "내달부터 13~18세 청소년도 '모두의카드'로 대중교통비 환급",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446439",
+      "published_date": "2026-11-25",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-25T04:15:59.254102+00:00",
+      "institutions": [
+        "모두의카드"
+      ]
+    },
+    {
+      "article_id": "article-749d6be4140d38625d4e",
+      "version_id": "version-213adc1781ae58e594c9",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "iM증권 \"美 반도체 급락·관세 우려…코스피, 하방압력 불가피\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446357",
+      "published_date": "2026-11-25",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-25T04:15:59.254102+00:00",
+      "institutions": [
+        "iM증권"
+      ]
+    },
+    {
+      "article_id": "article-6164a82f5ed7cfae255e",
+      "version_id": "version-30256852aff4e3bcef37",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "비바리퍼블리카, 첫 외화채 조달 채비…글로벌 NDR 나섰다",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446381",
+      "published_date": "2026-11-25",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-25T04:15:59.254102+00:00",
+      "institutions": [
+        "토스"
+      ]
+    },
+    {
+      "article_id": "article-6111d7bab61d8161ece3",
+      "version_id": "version-8f16d0c32221e672ed28",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "거래소, 다올투자증권 경영권 매각설 조회공시 요구…장중 28% 급등",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446394",
+      "published_date": "2026-11-25",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-25T04:15:59.254102+00:00",
+      "institutions": [
+        "다올투자증권"
+      ]
+    },
     {
       "article_id": "article-cf5bbb9849c61a6b210b",
       "version_id": "version-e486157e569c0c9b8ee5",

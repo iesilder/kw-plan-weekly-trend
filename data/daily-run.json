@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
-  "date_kst": "2026-11-24",
-  "started_at": "2026-11-24T10:58:13.470120+00:00",
-  "completed_at": "2026-11-24T10:59:14.963880+00:00",
+  "date_kst": "2026-11-25",
+  "started_at": "2026-11-25T04:15:59.254102+00:00",
+  "completed_at": "2026-11-25T04:16:42.207976+00:00",
   "status": "partial_success",
   "stages": {
     "collection": {
@@ -10,12 +10,12 @@
       "error_code": null
     },
     "titles": {
-      "status": "success",
+      "status": "cached",
       "error_code": null
     },
     "articles": {
       "status": "partial_success",
-      "error_code": "partial_invalid_output"
+      "error_code": null
     }
   }
 }

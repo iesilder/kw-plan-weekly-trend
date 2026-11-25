@@ -1,30 +1,30 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-ffddc444e9b87d67640e",
-  "generated_at": "2026-11-24T21:14:57.011151+00:00",
+  "generation_id": "live-460d037a9740281e9c85",
+  "generated_at": "2026-11-25T04:16:40.504670+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "article-bullets-v1",
   "auto_analysis_enabled": true,
   "counts": {
-    "pending": 0,
-    "unavailable": 1,
     "completed": 26,
+    "unavailable": 1,
+    "stale": 0,
+    "pending": 0,
     "not_applicable": 13,
     "failed": 7,
-    "stale": 0,
     "eligible": 34
   },
   "last_attempt": {
-    "attempted_at": "2026-11-24T10:58:56.201764+00:00",
-    "completed_at": "2026-11-24T10:59:11.131210+00:00",
+    "attempted_at": "2026-11-25T04:16:31.477817+00:00",
+    "completed_at": "2026-11-25T04:16:40.499467+00:00",
     "status": "partial_success",
-    "error_code": "partial_invalid_output",
-    "request_count": 1,
+    "error_code": null,
+    "request_count": 0,
     "fetch_count": 5,
-    "completed_count": 3,
-    "cached_count": 0,
-    "failed_count": 2
+    "completed_count": 0,
+    "cached_count": 6,
+    "failed_count": 1
   },
   "items": {
     "issue-f56397cafa534d689a1b": {
@@ -402,7 +402,7 @@
       "result_fingerprint": "fedbbac597720d7a2da2ebe89279391ebee754558201c15c07ae0dc35910f6d3",
       "analyzed_at": "2026-11-20T03:20:24.191498+00:00",
       "body_hash": "4e46fb4404bf1b1b86befd58ba2b857856e911aa3a037c180f5612b530cb14fb",
-      "body_fetched_at": "2026-11-22T06:52:35.713459+00:00",
+      "body_fetched_at": "2026-11-25T04:16:31.477817+00:00",
       "truncated": false,
       "result": {
         "facts": [
@@ -585,7 +585,7 @@
       "result_fingerprint": "aa2e3685277682fc2938544f2bc16504ac675094a5e51dc5509285c2142ae46d",
       "analyzed_at": "2026-11-19T03:32:08.791323+00:00",
       "body_hash": "f7c3f4341dcace59d0b50347c462286a354a69d91e5eb99af41efa09ebe86a14",
-      "body_fetched_at": "2026-11-22T06:52:35.713459+00:00",
+      "body_fetched_at": "2026-11-25T04:16:31.477817+00:00",
       "truncated": false,
       "result": {
         "key_change": {
@@ -1909,7 +1909,7 @@
       "result_fingerprint": "23c0ab5249d23d70024957a163f240e63aaccf9b22982b03428e0e45ffd5c798",
       "analyzed_at": "2026-11-09T02:41:57.518730+00:00",
       "body_hash": "492f630b75f37657e6ec2384c2baceb4eca0f863773abf7c66bebbc251e61ca9",
-      "body_fetched_at": "2026-11-17T04:31:11.127786+00:00",
+      "body_fetched_at": "2026-11-25T04:16:31.477817+00:00",
       "truncated": false,
       "result": {
         "key_change": {

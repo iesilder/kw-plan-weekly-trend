@@ -1,11 +1,131 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-000698b9f05a3f00009f",
-  "generated_at": "2026-11-25T14:33:08.543548+00:00",
+  "generation_id": "finance-50b9cd06d2a5d6967c54",
+  "generated_at": "2026-11-26T08:22:45.355066+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 185,
+  "count": 193,
   "articles": [
+    {
+      "article_id": "article-e0f6a89513e5e8115b69",
+      "version_id": "version-dc2e804bf25bbe4e4bb8",
+      "source_id": "newswire-securities",
+      "source_name": "뉴스와이어(보도자료) · 증권",
+      "title": "이너스커뮤니티, 유진투자증권 ‘유진 독서클럽 2기’ 성료",
+      "source_url": "https://www.newswire.co.kr/newsRead.php?no=1048015",
+      "published_date": null,
+      "published_at": "2026-11-26T00:00:00.000000+00:00",
+      "source_updated_at": null,
+      "fetched_at": "2026-11-26T08:22:45.355066+00:00",
+      "institutions": [
+        "유진투자증권"
+      ]
+    },
+    {
+      "article_id": "article-fed030290e4cd08f6908",
+      "version_id": "version-f7c95e5cbbc0ffd431fb",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "삼성자산운용 임원 인사…이시완 대체투자부문장 부사장 승진",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446644",
+      "published_date": "2026-11-26",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-26T08:22:45.355066+00:00",
+      "institutions": [
+        "삼성자산운용"
+      ]
+    },
+    {
+      "article_id": "article-e188a1eb7407653a4c74",
+      "version_id": "version-ad825b16a01cceb5a13f",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "이억원 금융위원장, 메리츠지주 김용범 부회장과 만나 민간 자본시장 개혁기구 구성 및 운영방안 논의",
+      "source_url": "https://www.fsc.go.kr/no010101/88245",
+      "published_date": "2026-11-26",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-26T08:22:45.355066+00:00",
+      "institutions": [
+        "금융위원회"
+      ]
+    },
+    {
+      "article_id": "article-e125a966c34b9c8fa285",
+      "version_id": "version-0377b516cb7f88ea303b",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "[인사] 삼성증권",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446645",
+      "published_date": "2026-11-26",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-26T08:22:45.355066+00:00",
+      "institutions": [
+        "삼성증권"
+      ]
+    },
+    {
+      "article_id": "article-d72088c76a463aa99726",
+      "version_id": "version-cec0cfb50911f8472f85",
+      "source_id": "fsc-press-releases",
+      "source_name": "금융위원회 · 보도자료",
+      "title": "「주식회사 등의 외부감사에 관한 법률」위반 혐의에 대한 감리결과 조치 - 제21차 증권선물위원회(11.25.) 조치 의결",
+      "source_url": "https://www.fsc.go.kr/no010101/88230",
+      "published_date": "2026-11-26",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-26T08:22:45.355066+00:00",
+      "institutions": [
+        "증권선물위원회"
+      ]
+    },
+    {
+      "article_id": "article-afaf6ea10bc63bcd9fca",
+      "version_id": "version-7cd87ba77380e31a795d",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "금감원, 부적격 유사투자자문업자 108곳 직권말소",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446701",
+      "published_date": "2026-11-26",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-26T08:22:45.355066+00:00",
+      "institutions": [
+        "금융감독원"
+      ]
+    },
+    {
+      "article_id": "article-55e5378a007e5c330d3d",
+      "version_id": "version-211ca3c857f4c663f064",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "삼성증권 임원 인사…신임 부사장에 백승목·윤석모·한성주",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446660",
+      "published_date": "2026-11-26",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-26T08:22:45.355066+00:00",
+      "institutions": [
+        "삼성증권"
+      ]
+    },
+    {
+      "article_id": "article-016c686ae3a96f14906e",
+      "version_id": "version-acc0a6654a346ebdc8c9",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "메리츠증권, 3천억대 美 인프라 사모대출 1년 만에 조기 회수",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446760",
+      "published_date": "2026-11-26",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-26T08:22:45.355066+00:00",
+      "institutions": [
+        "메리츠증권"
+      ]
+    },
     {
       "article_id": "article-ffd7677e5cc75131f08f",
       "version_id": "version-8fdfe136102139b9a8ec",

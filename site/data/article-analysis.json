@@ -1,32 +1,126 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-cfae82d591b081b0861b",
-  "generated_at": "2026-11-25T23:39:41.710640+00:00",
+  "generation_id": "live-b2c9a84fc4ba4f7450b4",
+  "generated_at": "2026-11-26T08:23:41.235219+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "article-bullets-v1",
   "auto_analysis_enabled": true,
   "counts": {
-    "stale": 0,
-    "failed": 7,
     "pending": 0,
-    "completed": 26,
+    "completed": 27,
     "unavailable": 1,
+    "failed": 7,
     "not_applicable": 13,
-    "eligible": 34
+    "stale": 0,
+    "eligible": 35
   },
   "last_attempt": {
-    "attempted_at": "2026-11-25T04:16:31.477817+00:00",
-    "completed_at": "2026-11-25T04:16:40.499467+00:00",
+    "attempted_at": "2026-11-26T08:23:30.358054+00:00",
+    "completed_at": "2026-11-26T08:23:41.225994+00:00",
     "status": "partial_success",
     "error_code": null,
-    "request_count": 0,
+    "request_count": 1,
     "fetch_count": 5,
-    "completed_count": 0,
-    "cached_count": 6,
+    "completed_count": 1,
+    "cached_count": 2,
     "failed_count": 1
   },
   "items": {
+    "issue-55e5378a007e5c330d3d": {
+      "status": "completed",
+      "reason_code": null,
+      "evidence_ids": [
+        "version-211ca3c857f4c663f064"
+      ],
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446660",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "input_fingerprint": "3e888cfbbbbc96bf512bff48fb466c17281d18e500103f231d67cae3e16d61d0",
+      "result_fingerprint": "3e888cfbbbbc96bf512bff48fb466c17281d18e500103f231d67cae3e16d61d0",
+      "analyzed_at": "2026-11-26T08:23:41.225970+00:00",
+      "body_hash": "e3a241beaf338a38ebe4207240e49f3fcab5d3105bc410760f49b37d89969d5a",
+      "body_fetched_at": "2026-11-26T08:23:30.358054+00:00",
+      "truncated": false,
+      "result": {
+        "facts": [
+          {
+            "evidence_ids": [
+              "p3"
+            ],
+            "text": "이번 정기 임원인사에서 부사장 3명과 상무 3명 총 6명이 승진했다."
+          },
+          {
+            "evidence_ids": [
+              "p4",
+              "p5"
+            ],
+            "text": "신임 부사장 승진자는 백승목 디지털자산관리본부장과 윤석모 리서치센터장이다."
+          },
+          {
+            "evidence_ids": [
+              "p6",
+              "p7"
+            ],
+            "text": "한성주 S&T부문장이 부사장으로 승진하고, 구자성·김준식·정명지 담당이 상무로 승진했다."
+          },
+          {
+            "evidence_ids": [
+              "p8"
+            ],
+            "text": "이번 인사는 성과주의 원칙에 따라 경영실적 향상에 기여한 우수 인재를 발탁하여 사업 경쟁력과 성장 기반을 강화하기 위해 단행되었다."
+          },
+          {
+            "evidence_ids": [
+              "p9"
+            ],
+            "text": "회사는 조만간 조직개편과 보직 인사를 확정해 발표할 예정이다."
+          }
+        ],
+        "key_change": {
+          "evidence_ids": [
+            "p2",
+            "p3"
+          ],
+          "text": "삼성증권이 박종문 대표이사 체제를 유지하면서 성과주의 기반의 정기 임원 인사를 단행했다."
+        },
+        "stage": "성과",
+        "why_candidate": "증권사의 임원 인사 결과와 승진자 명단을 다룬 기사로, 경영진 구성 변화를 파악하기 위해 검토가 필요하다.",
+        "evidence": [
+          {
+            "id": "p2",
+            "quote": "삼성증권이 박종문 대표이사 체제를 유지하면서"
+          },
+          {
+            "id": "p3",
+            "quote": "임원인사에서 부사장 3명과 상무 3명 총 6명"
+          },
+          {
+            "id": "p4",
+            "quote": "백승목 신임 부사장은 1973년생으로 서강대"
+          },
+          {
+            "id": "p5",
+            "quote": "윤석모 신임 부사장은 1976년생으로 연세대"
+          },
+          {
+            "id": "p6",
+            "quote": "한성주 신임 부사장은 1972년생으로 미국 인"
+          },
+          {
+            "id": "p7",
+            "quote": "신임 상무에는 구자성 디지털플랫폼담당, 김준식"
+          },
+          {
+            "id": "p8",
+            "quote": "인사 원칙에 따라 회사 경영실적 향상에 기여한"
+          },
+          {
+            "id": "p9",
+            "quote": "조직개편과 보직 인사를 확정해 발표할 예정이다"
+          }
+        ]
+      }
+    },
     "issue-f56397cafa534d689a1b": {
       "status": "completed",
       "reason_code": null,
@@ -402,7 +496,7 @@
       "result_fingerprint": "fedbbac597720d7a2da2ebe89279391ebee754558201c15c07ae0dc35910f6d3",
       "analyzed_at": "2026-11-20T03:20:24.191498+00:00",
       "body_hash": "4e46fb4404bf1b1b86befd58ba2b857856e911aa3a037c180f5612b530cb14fb",
-      "body_fetched_at": "2026-11-25T04:16:31.477817+00:00",
+      "body_fetched_at": "2026-11-26T08:23:30.358054+00:00",
       "truncated": false,
       "result": {
         "facts": [
@@ -585,7 +679,7 @@
       "result_fingerprint": "aa2e3685277682fc2938544f2bc16504ac675094a5e51dc5509285c2142ae46d",
       "analyzed_at": "2026-11-19T03:32:08.791323+00:00",
       "body_hash": "f7c3f4341dcace59d0b50347c462286a354a69d91e5eb99af41efa09ebe86a14",
-      "body_fetched_at": "2026-11-25T04:16:31.477817+00:00",
+      "body_fetched_at": "2026-11-26T08:23:30.358054+00:00",
       "truncated": false,
       "result": {
         "key_change": {

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-cfae82d591b081b0861b",
-  "generated_at": "2026-11-25T23:39:41.710640+00:00",
+  "generation_id": "live-b2c9a84fc4ba4f7450b4",
+  "generated_at": "2026-11-26T08:22:45.355066+00:00",
   "report_week": "2026-W48",
   "is_demo": false,
   "topics": [
@@ -27,6 +27,48 @@
     }
   ],
   "candidates": [
+    {
+      "issue_id": "issue-55e5378a007e5c330d3d",
+      "title": "삼성증권 임원 인사…신임 부사장에 백승목·윤석모·한성주",
+      "company": "삼성증권",
+      "company_ids": [
+        "company-4"
+      ],
+      "companies": [
+        "삼성증권"
+      ],
+      "topic_id": "strategy",
+      "topic": "조직·경영전략",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(임원, 인사)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-211ca3c857f4c663f064"
+      ],
+      "detail_path": "data/issues/issue-55e5378a007e5c330d3d.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "published_at": null,
+      "published_date": "2026-11-26",
+      "fetched_at": "2026-11-26T08:22:45.355066+00:00",
+      "matched_keywords": [
+        "임원",
+        "인사"
+      ],
+      "matched_topic_ids": [
+        "strategy"
+      ],
+      "tags": [
+        "조직개편"
+      ],
+      "event_stage": "조직 변경",
+      "classification_rules_version": "news-events-v2",
+      "content_filter": "topics",
+      "content_policy_version": "news-events-v2_4f5b3edf25e4ff4a"
+    },
     {
       "issue_id": "issue-f56397cafa534d689a1b",
       "title": "개정 특금법에 따른 기존 가상자산사업자 신고접수 결과 및 향후 심사절차 안내",

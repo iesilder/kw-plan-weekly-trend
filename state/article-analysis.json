@@ -1615,7 +1615,7 @@
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445454",
       "source_name": "연합인포맥스(기사) · 증권",
       "body_hash": "f7c3f4341dcace59d0b50347c462286a354a69d91e5eb99af41efa09ebe86a14",
-      "body_fetched_at": "2026-11-25T04:16:31.477817+00:00",
+      "body_fetched_at": "2026-11-26T08:23:30.358054+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-19T03:32:08.791323+00:00",
@@ -1770,7 +1770,7 @@
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445702",
       "source_name": "연합인포맥스(기사) · 증권",
       "body_hash": "4e46fb4404bf1b1b86befd58ba2b857856e911aa3a037c180f5612b530cb14fb",
-      "body_fetched_at": "2026-11-25T04:16:31.477817+00:00",
+      "body_fetched_at": "2026-11-26T08:23:30.358054+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-20T03:20:24.191498+00:00",
@@ -2236,12 +2236,105 @@
           }
         ]
       }
+    },
+    "issue-55e5378a007e5c330d3d": {
+      "metadata_fingerprint": "9bd2e01994a33ac8b7616095cba767c1853b2c0a9ef55cec02ce0d10ab20ddc4",
+      "input_fingerprint": "3e888cfbbbbc96bf512bff48fb466c17281d18e500103f231d67cae3e16d61d0",
+      "evidence_ids": [
+        "version-211ca3c857f4c663f064"
+      ],
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446660",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "body_hash": "e3a241beaf338a38ebe4207240e49f3fcab5d3105bc410760f49b37d89969d5a",
+      "body_fetched_at": "2026-11-26T08:23:30.358054+00:00",
+      "truncated": false,
+      "prompt_version": "article-bullets-v1",
+      "analyzed_at": "2026-11-26T08:23:41.225970+00:00",
+      "result": {
+        "facts": [
+          {
+            "evidence_ids": [
+              "p3"
+            ],
+            "text": "이번 정기 임원인사에서 부사장 3명과 상무 3명 총 6명이 승진했다."
+          },
+          {
+            "evidence_ids": [
+              "p4",
+              "p5"
+            ],
+            "text": "신임 부사장 승진자는 백승목 디지털자산관리본부장과 윤석모 리서치센터장이다."
+          },
+          {
+            "evidence_ids": [
+              "p6",
+              "p7"
+            ],
+            "text": "한성주 S&T부문장이 부사장으로 승진하고, 구자성·김준식·정명지 담당이 상무로 승진했다."
+          },
+          {
+            "evidence_ids": [
+              "p8"
+            ],
+            "text": "이번 인사는 성과주의 원칙에 따라 경영실적 향상에 기여한 우수 인재를 발탁하여 사업 경쟁력과 성장 기반을 강화하기 위해 단행되었다."
+          },
+          {
+            "evidence_ids": [
+              "p9"
+            ],
+            "text": "회사는 조만간 조직개편과 보직 인사를 확정해 발표할 예정이다."
+          }
+        ],
+        "key_change": {
+          "evidence_ids": [
+            "p2",
+            "p3"
+          ],
+          "text": "삼성증권이 박종문 대표이사 체제를 유지하면서 성과주의 기반의 정기 임원 인사를 단행했다."
+        },
+        "stage": "성과",
+        "why_candidate": "증권사의 임원 인사 결과와 승진자 명단을 다룬 기사로, 경영진 구성 변화를 파악하기 위해 검토가 필요하다.",
+        "evidence": [
+          {
+            "id": "p2",
+            "quote": "삼성증권이 박종문 대표이사 체제를 유지하면서"
+          },
+          {
+            "id": "p3",
+            "quote": "임원인사에서 부사장 3명과 상무 3명 총 6명"
+          },
+          {
+            "id": "p4",
+            "quote": "백승목 신임 부사장은 1973년생으로 서강대"
+          },
+          {
+            "id": "p5",
+            "quote": "윤석모 신임 부사장은 1976년생으로 연세대"
+          },
+          {
+            "id": "p6",
+            "quote": "한성주 신임 부사장은 1972년생으로 미국 인"
+          },
+          {
+            "id": "p7",
+            "quote": "신임 상무에는 구자성 디지털플랫폼담당, 김준식"
+          },
+          {
+            "id": "p8",
+            "quote": "인사 원칙에 따라 회사 경영실적 향상에 기여한"
+          },
+          {
+            "id": "p9",
+            "quote": "조직개편과 보직 인사를 확정해 발표할 예정이다"
+          }
+        ]
+      }
     }
   },
   "checks": {
     "issue-193dc2f5a4e04bf16e42": {
       "metadata_fingerprint": "024fff796db09cd9eb62f0a7767a58c5b3fe24cc2513753a8eaeed8a50553e2e",
-      "checked_at": "2026-11-17T04:31:11.127786+00:00",
+      "checked_at": "2026-11-26T08:23:30.358054+00:00",
       "reason_code": "output_number_mismatch",
       "status": "failed",
       "input_fingerprint": "81150e1273a3958b334df596fd44f227daef2026216333669b3465f0eb8ad0f0",
@@ -2389,7 +2482,7 @@
     },
     "issue-218742856bc89595a04d": {
       "metadata_fingerprint": "fd567ef2722f81c5e6e68b0d9b1dc0ab8d5dfd892840881b4cfe9de5841d8de8",
-      "checked_at": "2026-11-25T04:16:31.477817+00:00",
+      "checked_at": "2026-11-26T08:23:30.358054+00:00",
       "reason_code": null,
       "status": "completed"
     },
@@ -2401,7 +2494,7 @@
     },
     "issue-5c71332f8908ccf9855f": {
       "metadata_fingerprint": "57fd1f94d4584c844e199c4686c28e0bfdb2b4caac5dbfde9e7fdcfe7019e414",
-      "checked_at": "2026-11-25T04:16:31.477817+00:00",
+      "checked_at": "2026-11-26T08:23:30.358054+00:00",
       "reason_code": null,
       "status": "completed"
     },
@@ -2421,7 +2514,7 @@
     },
     "issue-de60dffe14727669f60b": {
       "metadata_fingerprint": "1e42f2014b372d226b1ed835ecfcac80f450a1992c8a5c0a770dcad06513ca86",
-      "checked_at": "2026-11-25T04:16:31.477817+00:00",
+      "checked_at": "2026-11-26T08:23:30.358054+00:00",
       "reason_code": "body_not_found",
       "status": "unavailable"
     },
@@ -2456,17 +2549,23 @@
       "status": "failed",
       "input_fingerprint": "6a95dd5e0d8c4c2156a1d10cd9ec61286d35393fe3c04c518ecde491b13d6992",
       "body_hash": "14fd23f03ddb6265a3019d285a8cd710bd585df851474dc7373d40ddffa046ad"
+    },
+    "issue-55e5378a007e5c330d3d": {
+      "metadata_fingerprint": "9bd2e01994a33ac8b7616095cba767c1853b2c0a9ef55cec02ce0d10ab20ddc4",
+      "checked_at": "2026-11-26T08:23:30.358054+00:00",
+      "reason_code": null,
+      "status": "completed"
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-25T04:16:31.477817+00:00",
-    "completed_at": "2026-11-25T04:16:40.499467+00:00",
+    "attempted_at": "2026-11-26T08:23:30.358054+00:00",
+    "completed_at": "2026-11-26T08:23:41.225994+00:00",
     "status": "partial_success",
     "error_code": null,
-    "request_count": 0,
+    "request_count": 1,
     "fetch_count": 5,
-    "completed_count": 0,
-    "cached_count": 6,
+    "completed_count": 1,
+    "cached_count": 2,
     "failed_count": 1
   }
 }

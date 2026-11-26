@@ -1,32 +1,53 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-cfae82d591b081b0861b",
-  "generated_at": "2026-11-25T23:39:41.710640+00:00",
+  "generation_id": "live-b2c9a84fc4ba4f7450b4",
+  "generated_at": "2026-11-26T08:23:30.352124+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "metadata-review-v2",
   "policy_version": "public-metadata-inference-v2",
   "auto_analysis_enabled": true,
   "last_attempt": {
-    "attempted_at": "2026-11-25T04:16:31.471841+00:00",
-    "completed_at": "2026-11-25T04:16:31.471841+00:00",
-    "status": "cached",
+    "attempted_at": "2026-11-26T08:23:28.989883+00:00",
+    "completed_at": "2026-11-26T08:23:30.348351+00:00",
+    "status": "success",
     "error_code": null,
-    "request_count": 0,
-    "eligible_count": 34,
-    "completed_count": 0,
+    "request_count": 1,
+    "eligible_count": 35,
+    "completed_count": 1,
     "cached_count": 34,
     "failed_count": 0
   },
   "counts": {
     "blocked": 13,
-    "completed": 34,
+    "completed": 35,
     "stale": 0,
     "failed": 0,
     "not_analyzed": 0,
-    "eligible": 34
+    "eligible": 35
   },
   "items": {
+    "issue-55e5378a007e5c330d3d": {
+      "status": "completed",
+      "reason_code": null,
+      "input_fingerprint": "685e4248b2d49ef1f58e3825786f0c77e7cb23b96f6d94e56c9604c14dab5abb",
+      "input_evidence_ids": [
+        "version-211ca3c857f4c663f064"
+      ],
+      "result_fingerprint": "685e4248b2d49ef1f58e3825786f0c77e7cb23b96f6d94e56c9604c14dab5abb",
+      "analyzed_at": "2026-11-26T08:23:30.348351+00:00",
+      "error_code": null,
+      "result": {
+        "check_points": [
+          "기사에 언급된 신임 부사장 명단과 직위가 실제 공시 및 인사 내용과 일치하는지 확인",
+          "이번 임원 인사의 배경 및 조직 개편 방향이 포함되었는지 확인"
+        ],
+        "duplicate_issue_ids": [],
+        "rationale": "제공된 기사 제목에 따르면 삼성증권이 신임 부사장으로 백승목, 윤석모, 한성주를 선임하는 임원 인사를 단행하였으므로, 경영 전략 및 조직 변화 측면에서 검토가 필요합니다.",
+        "relevance": "relevant",
+        "suggested_topic_id": "strategy"
+      }
+    },
     "issue-f56397cafa534d689a1b": {
       "status": "completed",
       "reason_code": null,

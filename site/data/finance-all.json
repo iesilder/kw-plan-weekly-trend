@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-50b9cd06d2a5d6967c54",
-  "generated_at": "2026-11-26T08:22:45.355066+00:00",
+  "generation_id": "finance-620f893dc09e2c5bb430",
+  "generated_at": "2026-11-26T19:03:33.467013+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
   "count": 193,
@@ -83,15 +83,15 @@
     },
     {
       "article_id": "article-afaf6ea10bc63bcd9fca",
-      "version_id": "version-7cd87ba77380e31a795d",
+      "version_id": "version-070417ac83489a729bea",
       "source_id": "einfomax-s1n2",
       "source_name": "연합인포맥스(기사) · 증권",
-      "title": "금감원, 부적격 유사투자자문업자 108곳 직권말소",
+      "title": "금감원, 부적격 유사투자자문업자 106곳 직권말소",
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446701",
       "published_date": "2026-11-26",
       "published_at": null,
       "source_updated_at": null,
-      "fetched_at": "2026-11-26T08:22:45.355066+00:00",
+      "fetched_at": "2026-11-26T19:03:33.467013+00:00",
       "institutions": [
         "금융감독원"
       ]

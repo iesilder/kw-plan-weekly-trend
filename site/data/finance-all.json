@@ -1,11 +1,57 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-9ef139314451f29f17ad",
-  "generated_at": "2026-11-27T02:13:42.812154+00:00",
+  "generation_id": "finance-23740bd741145451491d",
+  "generated_at": "2026-11-27T10:55:27.055627+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 196,
+  "count": 200,
   "articles": [
+    {
+      "article_id": "article-e8eef2bb64761c768652",
+      "version_id": "version-95378bf4891f306dc915",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "삼성증권, 고객정보 유출 3천927명 추가 확인…총 1만2천168명",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4447005",
+      "published_date": "2026-11-27",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-27T10:55:27.055627+00:00",
+      "institutions": [
+        "삼성증권"
+      ]
+    },
+    {
+      "article_id": "article-c9258c68f1aa1aee39e5",
+      "version_id": "version-73694c1dc820cb3643f6",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "금감원, LS증권 첫 정기검사 착수",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446949",
+      "published_date": "2026-11-27",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-27T10:55:27.055627+00:00",
+      "institutions": [
+        "금융감독원",
+        "LS증권"
+      ]
+    },
+    {
+      "article_id": "article-9b32102a678807c6694c",
+      "version_id": "version-10f8fc77d142399c3db9",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "국민연금 3분기말 운용수익률 13.28%…적립금 200조 급감",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4447008",
+      "published_date": "2026-11-27",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-27T10:55:27.055627+00:00",
+      "institutions": [
+        "국민연금공단"
+      ]
+    },
     {
       "article_id": "article-7abbb951bf8a7cc22e6a",
       "version_id": "version-f5f7020573f9e0d5ebff",
@@ -34,6 +80,21 @@
       "fetched_at": "2026-11-27T02:13:42.812154+00:00",
       "institutions": [
         "DB자산운용"
+      ]
+    },
+    {
+      "article_id": "article-28a6f82a7868b52fd8d0",
+      "version_id": "version-de96e8d30bc148f27073",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "AI 부정행위 예방에 수천만원 투입…금투협, '수능급' 철통 감시 나선다",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446976",
+      "published_date": "2026-11-27",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-27T10:55:27.055627+00:00",
+      "institutions": [
+        "금융투자협회"
       ]
     },
     {

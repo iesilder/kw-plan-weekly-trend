@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-7aa1f2e46f892ec4421c",
-  "generated_at": "2026-11-26T19:03:33.467013+00:00",
+  "generation_id": "live-254acf692011a3dc7a8f",
+  "generated_at": "2026-11-27T02:13:42.812154+00:00",
   "report_week": "2026-W48",
   "is_demo": false,
   "topics": [
@@ -27,6 +27,48 @@
     }
   ],
   "candidates": [
+    {
+      "issue_id": "issue-952c4771653ad40c6afc",
+      "title": "금융회사 검사‧제재‧인허가 전반의 공공성과 투명성을 제고합니다. - 「금융행정 쇄신방안」 마련",
+      "company": "금융위원회",
+      "company_ids": [],
+      "companies": [
+        "금융위원회"
+      ],
+      "topic_id": "risk",
+      "topic": "정책·인허가·리스크",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(허가, 제재, 검사)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-9d42e9ee416e31912fd7"
+      ],
+      "detail_path": "data/issues/issue-952c4771653ad40c6afc.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "금융위원회 · 보도자료",
+      "published_at": null,
+      "published_date": "2026-11-27",
+      "fetched_at": "2026-11-27T02:13:42.812154+00:00",
+      "matched_keywords": [
+        "허가",
+        "제재",
+        "검사"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ],
+      "tags": [
+        "인허가",
+        "리스크"
+      ],
+      "event_stage": "점검·조사",
+      "classification_rules_version": "news-events-v2",
+      "content_filter": "topics",
+      "content_policy_version": "news-events-v2_06ff3f3f95045b8f"
+    },
     {
       "issue_id": "issue-55e5378a007e5c330d3d",
       "title": "삼성증권 임원 인사…신임 부사장에 백승목·윤석모·한성주",

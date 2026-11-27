@@ -1,32 +1,54 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-7aa1f2e46f892ec4421c",
-  "generated_at": "2026-11-26T19:03:33.467013+00:00",
+  "generation_id": "live-254acf692011a3dc7a8f",
+  "generated_at": "2026-11-27T02:14:22.020082+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "metadata-review-v2",
   "policy_version": "public-metadata-inference-v2",
   "auto_analysis_enabled": true,
   "last_attempt": {
-    "attempted_at": "2026-11-26T08:23:28.989883+00:00",
-    "completed_at": "2026-11-26T08:23:30.348351+00:00",
+    "attempted_at": "2026-11-27T02:14:21.001794+00:00",
+    "completed_at": "2026-11-27T02:14:22.016161+00:00",
     "status": "success",
     "error_code": null,
     "request_count": 1,
-    "eligible_count": 35,
+    "eligible_count": 36,
     "completed_count": 1,
-    "cached_count": 34,
+    "cached_count": 35,
     "failed_count": 0
   },
   "counts": {
     "blocked": 13,
-    "completed": 35,
+    "completed": 36,
     "stale": 0,
     "failed": 0,
     "not_analyzed": 0,
-    "eligible": 35
+    "eligible": 36
   },
   "items": {
+    "issue-952c4771653ad40c6afc": {
+      "status": "completed",
+      "reason_code": null,
+      "input_fingerprint": "f822c4967a0d8e05276f7b9ab1c31bbba0aed66413b2ff4eafd9e4be79ca097a",
+      "input_evidence_ids": [
+        "version-9d42e9ee416e31912fd7"
+      ],
+      "result_fingerprint": "f822c4967a0d8e05276f7b9ab1c31bbba0aed66413b2ff4eafd9e4be79ca097a",
+      "analyzed_at": "2026-11-27T02:14:22.016161+00:00",
+      "error_code": null,
+      "result": {
+        "check_points": [
+          "금융회사 검사 및 제재 방식의 변화 내용 확인",
+          "인허가 절차의 공공성과 투명성 제고 방안 확인",
+          "금융행정 쇄신방안의 주요 내용 확인"
+        ],
+        "duplicate_issue_ids": [],
+        "rationale": "보도자료 제목에 따르면 금융회사의 검사, 제재, 인허가 전반의 공공성과 투명성을 높이기 위한 금융행정 쇄신방안이 마련되었다고 하며, 이는 관련 규제 및 정책 방향의 변화 가능성을 검토할 필요가 있으므로 검토 후보가 될 수 있다.",
+        "relevance": "relevant",
+        "suggested_topic_id": "risk"
+      }
+    },
     "issue-55e5378a007e5c330d3d": {
       "status": "completed",
       "reason_code": null,

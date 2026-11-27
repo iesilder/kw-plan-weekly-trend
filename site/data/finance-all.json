@@ -1,11 +1,56 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-620f893dc09e2c5bb430",
-  "generated_at": "2026-11-26T19:03:33.467013+00:00",
+  "generation_id": "finance-9ef139314451f29f17ad",
+  "generated_at": "2026-11-27T02:13:42.812154+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 193,
+  "count": 196,
   "articles": [
+    {
+      "article_id": "article-7abbb951bf8a7cc22e6a",
+      "version_id": "version-f5f7020573f9e0d5ebff",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "한화리츠, 한화손보 사소문 사옥 편입…\"CBD·장기 임차자산\"",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446883",
+      "published_date": "2026-11-27",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-27T02:13:42.812154+00:00",
+      "institutions": [
+        "한화손해보험"
+      ]
+    },
+    {
+      "article_id": "article-437ea9bc51130d4e3d8e",
+      "version_id": "version-d425549e0809e610f3a1",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "[인사] DB자산운용",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446940",
+      "published_date": "2026-11-27",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-27T02:13:42.812154+00:00",
+      "institutions": [
+        "DB자산운용"
+      ]
+    },
+    {
+      "article_id": "article-110a9ef8aaebff1600b6",
+      "version_id": "version-d1b9d02e11c9039c539f",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "[인사] DB증권",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446939",
+      "published_date": "2026-11-27",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-27T02:13:42.812154+00:00",
+      "institutions": [
+        "DB증권"
+      ]
+    },
     {
       "article_id": "article-e0f6a89513e5e8115b69",
       "version_id": "version-dc2e804bf25bbe4e4bb8",

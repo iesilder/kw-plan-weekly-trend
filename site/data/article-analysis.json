@@ -1,32 +1,48 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-7aa1f2e46f892ec4421c",
-  "generated_at": "2026-11-26T19:03:33.467013+00:00",
+  "generation_id": "live-254acf692011a3dc7a8f",
+  "generated_at": "2026-11-27T02:14:32.622591+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "article-bullets-v1",
   "auto_analysis_enabled": true,
   "counts": {
-    "failed": 7,
     "stale": 0,
-    "completed": 27,
     "unavailable": 1,
+    "completed": 27,
+    "failed": 8,
     "pending": 0,
     "not_applicable": 13,
-    "eligible": 35
+    "eligible": 36
   },
   "last_attempt": {
-    "attempted_at": "2026-11-26T08:23:30.358054+00:00",
-    "completed_at": "2026-11-26T08:23:41.225994+00:00",
+    "attempted_at": "2026-11-27T02:14:22.026154+00:00",
+    "completed_at": "2026-11-27T02:14:32.613198+00:00",
     "status": "partial_success",
-    "error_code": null,
+    "error_code": "invalid_output",
     "request_count": 1,
     "fetch_count": 5,
-    "completed_count": 1,
-    "cached_count": 2,
-    "failed_count": 1
+    "completed_count": 0,
+    "cached_count": 5,
+    "failed_count": 2
   },
   "items": {
+    "issue-952c4771653ad40c6afc": {
+      "status": "failed",
+      "reason_code": "output_number_mismatch",
+      "evidence_ids": [
+        "version-9d42e9ee416e31912fd7"
+      ],
+      "source_url": "https://www.fsc.go.kr/no010101/88250",
+      "source_name": "금융위원회 · 보도자료",
+      "input_fingerprint": null,
+      "result_fingerprint": null,
+      "analyzed_at": null,
+      "body_hash": null,
+      "body_fetched_at": null,
+      "truncated": false,
+      "result": null
+    },
     "issue-55e5378a007e5c330d3d": {
       "status": "completed",
       "reason_code": null,
@@ -1555,7 +1571,7 @@
       "result_fingerprint": "6447aa648d4efd7f245e16aa6fe5e22dfb767573d9c2343b069035f9e19a9350",
       "analyzed_at": "2026-11-08T06:05:15.549125+00:00",
       "body_hash": "f400c83724dbf289d52867a873072a9e8b146a8939cadd56dc30dfff70d09f7c",
-      "body_fetched_at": "2026-11-17T04:31:11.127786+00:00",
+      "body_fetched_at": "2026-11-27T02:14:22.026154+00:00",
       "truncated": false,
       "result": {
         "key_change": {
@@ -2350,7 +2366,7 @@
       "result_fingerprint": "cae6dd6c68e382f069448bef424ca3aed6e3a0f313085c2a1cf816e41ce8f52a",
       "analyzed_at": "2026-11-06T07:57:51.808310+00:00",
       "body_hash": "9f19597b90f688a344fe0460082a6583ce5d62ba5d9a45b9882d1b84ccf91d06",
-      "body_fetched_at": "2026-11-18T04:26:23.952185+00:00",
+      "body_fetched_at": "2026-11-27T02:14:22.026154+00:00",
       "truncated": false,
       "result": {
         "key_change": {

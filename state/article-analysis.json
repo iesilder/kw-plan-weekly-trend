@@ -1615,7 +1615,7 @@
       "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4445454",
       "source_name": "연합인포맥스(기사) · 증권",
       "body_hash": "f7c3f4341dcace59d0b50347c462286a354a69d91e5eb99af41efa09ebe86a14",
-      "body_fetched_at": "2026-11-26T08:23:30.358054+00:00",
+      "body_fetched_at": "2026-11-28T02:45:02.416412+00:00",
       "truncated": false,
       "prompt_version": "article-bullets-v1",
       "analyzed_at": "2026-11-19T03:32:08.791323+00:00",
@@ -2329,6 +2329,199 @@
           }
         ]
       }
+    },
+    "issue-10da84c1c177da3ff052": {
+      "metadata_fingerprint": "cd8f76f70fa1dde718c17f899c6e9079182966b3f0345a4d4cf57e2f055a8c3c",
+      "input_fingerprint": "a41325f1958e14f607f5d719610f945ee1d2009c88d13f90e41654a572c08898",
+      "evidence_ids": [
+        "version-944d3bd21ca598669fcd"
+      ],
+      "source_url": "https://www.fsc.go.kr/no010101/88256",
+      "source_name": "금융위원회 · 보도자료",
+      "body_hash": "1a23920037b68433cb976e9927c42c10c58e287d107c531c46d7d6164abcd771",
+      "body_fetched_at": "2026-11-28T02:45:02.416412+00:00",
+      "truncated": false,
+      "prompt_version": "article-bullets-v1",
+      "analyzed_at": "2026-11-28T02:45:14.269368+00:00",
+      "result": {
+        "facts": [
+          {
+            "evidence_ids": [
+              "p1"
+            ],
+            "text": "재정경제부 장관과 관계기관 합동으로 ’26.11.27.(금) 07:40 정부서울청사에서 시장상황점검회의 개최"
+          },
+          {
+            "evidence_ids": [
+              "p1"
+            ],
+            "text": "국제유가 하락 및 외환·채권시장 안정세와 달리 글로벌 AI 산업 불확실성 등으로 국내외 증시 변동성 확대 진단"
+          },
+          {
+            "evidence_ids": [
+              "p1"
+            ],
+            "text": "11월 24일부터 가동 중인 불법공매도 합동점검 TF를 통한 일일동향 점검 및 위법 혐의 엄중 대응 계획"
+          },
+          {
+            "evidence_ids": [
+              "p1"
+            ],
+            "text": "향후 시장상황에 따른 필요 조치 가동을 위한 대응태세 유지 확인"
+          }
+        ],
+        "key_change": {
+          "evidence_ids": [
+            "p1"
+          ],
+          "text": "정부가 관계기관 합동 시장상황점검회의를 열어 국내외 금융 및 부동산시장 동향과 시장안정조치 이행상황 점검"
+        },
+        "stage": "점검·조사",
+        "why_candidate": "정부의 금융시장 상황 및 시장안정조치 이행 점검 사안으로 증권사 경영기획 차원에서 거시경제 및 규제 동향 파악에 참고할 필요가 있음",
+        "evidence": [
+          {
+            "id": "p1",
+            "quote": "26.11.27.(금) 07:40, 정부서울청사에서 관계기관 합동 「시장상황점검회의」를 개최하여 최근 국내외 금융·외환시장 및 부동산시장 동향과"
+          }
+        ]
+      }
+    },
+    "issue-c9258c68f1aa1aee39e5": {
+      "metadata_fingerprint": "663a9cb210f91d00f04049e3e51ed784e07adddb007f4342151a3e4199acf78b",
+      "input_fingerprint": "c11c86e96a5d653d825dc91bae1a1f01942cead008d48aca5577e480c2f748db",
+      "evidence_ids": [
+        "version-73694c1dc820cb3643f6"
+      ],
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4446949",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "body_hash": "876b72b5608bf5b46d0d6bb522efe35b8970fd280b9a0b8220a092bf053a3a64",
+      "body_fetched_at": "2026-11-28T02:45:02.416412+00:00",
+      "truncated": false,
+      "prompt_version": "article-bullets-v1",
+      "analyzed_at": "2026-11-28T02:45:14.269391+00:00",
+      "result": {
+        "facts": [
+          {
+            "evidence_ids": [
+              "p3"
+            ],
+            "text": "검사 기간은 27일부터 오는 12월 17일까지 진행 예정"
+          },
+          {
+            "evidence_ids": [
+              "p4",
+              "p5"
+            ],
+            "text": "금감원의 올해 IBK투자증권, 한화투자증권에 이은 세 번째 증권업계 정기검사 마무리"
+          },
+          {
+            "evidence_ids": [
+              "p6"
+            ],
+            "text": "한화투자증권은 지난 8월 2011년 이후 15년 만에 정기검사를 받은 바 있음"
+          }
+        ],
+        "key_change": {
+          "evidence_ids": [
+            "p2",
+            "p3"
+          ],
+          "text": "금융감독원이 LS증권에 대한 창립 이래 첫 정기검사에 착수"
+        },
+        "stage": "점검·조사",
+        "why_candidate": "금감원의 증권사 정기검사 확대 기조에 따른 리스크 관리 및 내부통제 점검 사항으로 업계 전반의 규제 동향 파악에 유용함",
+        "evidence": [
+          {
+            "id": "p2",
+            "quote": "(서울=연합인포맥스) 신민경 기자 = 금융감독원이 LS증권 정기검사에 착"
+          },
+          {
+            "id": "p3",
+            "quote": "했다. 증권 전반 업무를 들여다볼 예정으로 기간은 오는 12월 17일까지"
+          },
+          {
+            "id": "p4",
+            "quote": "IBK투자증권과 한화투자증권, LS증권 세 곳에 대한 증권업계 정기검사"
+          },
+          {
+            "id": "p5",
+            "quote": "올해 첫 대상은 IBK투자증권으로 창립 이후 처음으로 정기검사를 받았다."
+          },
+          {
+            "id": "p6",
+            "quote": "이어 지난 8월 한화투자증권은 2011년 이후 15년 만에 정기검사를 받"
+          }
+        ]
+      }
+    },
+    "issue-e8eef2bb64761c768652": {
+      "metadata_fingerprint": "98432e71fd6f7507283f643d04097be42df0ebe1349ceb387fa30244cd3477d5",
+      "input_fingerprint": "8a410772169e7398c76682bbe4ad108adbecb748d314649c7774c19e7cb38e63",
+      "evidence_ids": [
+        "version-95378bf4891f306dc915"
+      ],
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4447005",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "body_hash": "49e36be0699d47c0f2f1acf9701c2952a02343797051863c986bb8642a983136",
+      "body_fetched_at": "2026-11-28T02:45:02.416412+00:00",
+      "truncated": false,
+      "prompt_version": "article-bullets-v1",
+      "analyzed_at": "2026-11-28T02:45:14.269395+00:00",
+      "result": {
+        "facts": [
+          {
+            "evidence_ids": [
+              "p3",
+              "p6"
+            ],
+            "text": "지난 21일 고객의소리 시스템에서 접수고객 8천241명의 첨부파일이 유출된 가운데 2차 정밀검증을 거쳐 추가 확인"
+          },
+          {
+            "evidence_ids": [
+              "p3",
+              "p5"
+            ],
+            "text": "새롭게 정보유출이 발생한 것이 아닌 기존 신고 유출 파일의 정밀검증으로 최종 유출고객 총수는 1만2천168명으로 집계"
+          },
+          {
+            "evidence_ids": [
+              "p7"
+            ],
+            "text": "사고 인지 직후 방화벽 차단 조치 및 금융감독원 등 유관기관 신고를 완료하고 홈페이지 공지 및 개별 안내 진행 예정"
+          }
+        ],
+        "key_change": {
+          "evidence_ids": [
+            "p2",
+            "p3"
+          ],
+          "text": "삼성증권의 개인정보 유출 사고 피해 규모가 종전 8천241명에서 1만2천168명으로 증가"
+        },
+        "stage": "점검·조사",
+        "why_candidate": "대형 증권사의 고객정보 유출 사고 규모 확대 및 추가 확인 사안으로 당국 신고 및 사후 조치 대응 참고에 유익함",
+        "evidence": [
+          {
+            "id": "p2",
+            "quote": "사고로 인한 피해 규모가 종전 발표한 8천241명에서 1만2천168명으로"
+          },
+          {
+            "id": "p3",
+            "quote": "21일 고객의소리(VOC) 시스템에서 접수고객 8천241명의 첨부파일이"
+          },
+          {
+            "id": "p6",
+            "quote": "지난 21일 삼성증권은 VOC 시스템에서 고객 8천241명의 첨부파일이"
+          },
+          {
+            "id": "p5",
+            "quote": "가된 숫자\"라며 \"이에 따라 최종 확인된 유출고객 총수는 1만2천168명"
+          },
+          {
+            "id": "p7",
+            "quote": "직후 방화벽 차단 조치를 하고 금융감독원과 한국인터넷진흥원 등 유관기관"
+          }
+        ]
+      }
     }
   },
   "checks": {
@@ -2482,7 +2675,7 @@
     },
     "issue-218742856bc89595a04d": {
       "metadata_fingerprint": "fd567ef2722f81c5e6e68b0d9b1dc0ab8d5dfd892840881b4cfe9de5841d8de8",
-      "checked_at": "2026-11-26T08:23:30.358054+00:00",
+      "checked_at": "2026-11-28T02:45:02.416412+00:00",
       "reason_code": null,
       "status": "completed"
     },
@@ -2514,7 +2707,7 @@
     },
     "issue-de60dffe14727669f60b": {
       "metadata_fingerprint": "1e42f2014b372d226b1ed835ecfcac80f450a1992c8a5c0a770dcad06513ca86",
-      "checked_at": "2026-11-27T02:14:22.026154+00:00",
+      "checked_at": "2026-11-28T02:45:02.416412+00:00",
       "reason_code": "body_not_found",
       "status": "unavailable"
     },
@@ -2563,17 +2756,35 @@
       "status": "failed",
       "input_fingerprint": "4075f71197c73481b86bbb7a0d5244d8ba492902fcc56261d0784d237b62a746",
       "body_hash": "84f120da5ca49cc6762b4e58c38d12e5b0ddb13006d650975fdbf056e906fae6"
+    },
+    "issue-10da84c1c177da3ff052": {
+      "metadata_fingerprint": "cd8f76f70fa1dde718c17f899c6e9079182966b3f0345a4d4cf57e2f055a8c3c",
+      "checked_at": "2026-11-28T02:45:02.416412+00:00",
+      "reason_code": null,
+      "status": "completed"
+    },
+    "issue-c9258c68f1aa1aee39e5": {
+      "metadata_fingerprint": "663a9cb210f91d00f04049e3e51ed784e07adddb007f4342151a3e4199acf78b",
+      "checked_at": "2026-11-28T02:45:02.416412+00:00",
+      "reason_code": null,
+      "status": "completed"
+    },
+    "issue-e8eef2bb64761c768652": {
+      "metadata_fingerprint": "98432e71fd6f7507283f643d04097be42df0ebe1349ceb387fa30244cd3477d5",
+      "checked_at": "2026-11-28T02:45:02.416412+00:00",
+      "reason_code": null,
+      "status": "completed"
     }
   },
   "last_attempt": {
-    "attempted_at": "2026-11-27T02:14:22.026154+00:00",
-    "completed_at": "2026-11-27T02:14:32.613198+00:00",
+    "attempted_at": "2026-11-28T02:45:02.416412+00:00",
+    "completed_at": "2026-11-28T02:45:14.269401+00:00",
     "status": "partial_success",
-    "error_code": "invalid_output",
+    "error_code": null,
     "request_count": 1,
     "fetch_count": 5,
-    "completed_count": 0,
-    "cached_count": 5,
-    "failed_count": 2
+    "completed_count": 3,
+    "cached_count": 1,
+    "failed_count": 1
   }
 }

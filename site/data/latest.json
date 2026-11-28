@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-3d5a9e1ed31bd9c8c98e",
-  "generated_at": "2026-11-27T20:00:19.625185+00:00",
+  "generation_id": "live-3794a17c67e27d106cc2",
+  "generated_at": "2026-11-28T02:44:21.624328+00:00",
   "report_week": "2026-W48",
   "is_demo": false,
   "topics": [
@@ -27,6 +27,43 @@
     }
   ],
   "candidates": [
+    {
+      "issue_id": "issue-10da84c1c177da3ff052",
+      "title": "금융시장 동향 및 증시안정조치 진행상황 점검",
+      "company": "금융위원회",
+      "company_ids": [],
+      "companies": [
+        "금융위원회"
+      ],
+      "topic_id": "risk",
+      "topic": "정책·인허가·리스크",
+      "priority": "unranked",
+      "report_status": "no_history",
+      "why_now": "제목의 회사·업권 정보와 주제 키워드(점검)를 기준으로 분류했습니다. 중요도·시사점은 아직 분석하지 않았습니다.",
+      "bullets": [],
+      "evidence_ids": [
+        "version-944d3bd21ca598669fcd"
+      ],
+      "detail_path": "data/issues/issue-10da84c1c177da3ff052.json",
+      "is_demo": false,
+      "analysis_status": "pending_ai",
+      "evidence_confidence": "metadata_only",
+      "source_name": "금융위원회 · 보도자료",
+      "published_at": null,
+      "published_date": "2026-11-27",
+      "fetched_at": "2026-11-28T02:44:21.624328+00:00",
+      "matched_keywords": [
+        "점검"
+      ],
+      "matched_topic_ids": [
+        "risk"
+      ],
+      "tags": [],
+      "event_stage": "점검·조사",
+      "classification_rules_version": "news-events-v2",
+      "content_filter": "topics",
+      "content_policy_version": "news-events-v2_06ff3f3f95045b8f"
+    },
     {
       "issue_id": "issue-e8eef2bb64761c768652",
       "title": "삼성증권, 고객정보 유출 3천927명 추가 확인…총 1만2천168명",

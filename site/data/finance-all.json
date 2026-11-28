@@ -1,11 +1,26 @@
 {
   "schema_version": "1.0",
-  "generation_id": "finance-23740bd741145451491d",
-  "generated_at": "2026-11-27T10:55:27.055627+00:00",
+  "generation_id": "finance-5648ecf6b07fbdcc89e0",
+  "generated_at": "2026-11-28T02:44:21.624328+00:00",
   "is_demo": false,
   "match_basis": "title_institution_name",
-  "count": 200,
+  "count": 201,
   "articles": [
+    {
+      "article_id": "article-8572d708a953fefd8d8b",
+      "version_id": "version-d6046bb355bf532e1e7c",
+      "source_id": "einfomax-s1n2",
+      "source_name": "연합인포맥스(기사) · 증권",
+      "title": "넥스트증권 김승연 대표, 포춘 테크 포럼 참석…AI 기반 증권업 미래 제시",
+      "source_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4447048",
+      "published_date": "2026-11-28",
+      "published_at": null,
+      "source_updated_at": null,
+      "fetched_at": "2026-11-28T02:44:21.624328+00:00",
+      "institutions": [
+        "넥스트증권"
+      ]
+    },
     {
       "article_id": "article-e8eef2bb64761c768652",
       "version_id": "version-95378bf4891f306dc915",

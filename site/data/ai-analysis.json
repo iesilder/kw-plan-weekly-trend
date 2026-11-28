@@ -1,55 +1,94 @@
 {
   "schema_version": "1.0",
-  "generation_id": "live-3d5a9e1ed31bd9c8c98e",
-  "generated_at": "2026-11-27T20:00:19.625185+00:00",
+  "generation_id": "live-3794a17c67e27d106cc2",
+  "generated_at": "2026-11-28T02:45:02.409944+00:00",
   "provider": "google_gemini",
   "model": "gemini-3.5-flash-lite",
   "prompt_version": "metadata-review-v2",
   "policy_version": "public-metadata-inference-v2",
   "auto_analysis_enabled": true,
   "last_attempt": {
-    "attempted_at": "2026-11-27T02:14:21.001794+00:00",
-    "completed_at": "2026-11-27T02:14:22.016161+00:00",
+    "attempted_at": "2026-11-28T02:45:00.705541+00:00",
+    "completed_at": "2026-11-28T02:45:02.404779+00:00",
     "status": "success",
     "error_code": null,
     "request_count": 1,
-    "eligible_count": 36,
-    "completed_count": 1,
-    "cached_count": 35,
+    "eligible_count": 39,
+    "completed_count": 3,
+    "cached_count": 36,
     "failed_count": 0
   },
   "counts": {
     "blocked": 13,
-    "completed": 36,
+    "completed": 39,
     "stale": 0,
     "failed": 0,
-    "not_analyzed": 2,
-    "eligible": 38
+    "not_analyzed": 0,
+    "eligible": 39
   },
   "items": {
+    "issue-10da84c1c177da3ff052": {
+      "status": "completed",
+      "reason_code": null,
+      "input_fingerprint": "88dfdf0798441ae1ca07a69c867eef07c9fca8c3b07c4892f37435f1ec6218cb",
+      "input_evidence_ids": [
+        "version-944d3bd21ca598669fcd"
+      ],
+      "result_fingerprint": "88dfdf0798441ae1ca07a69c867eef07c9fca8c3b07c4892f37435f1ec6218cb",
+      "analyzed_at": "2026-11-28T02:45:02.404779+00:00",
+      "error_code": null,
+      "result": {
+        "check_points": [
+          "금융시장 동향 점검 내용 확인",
+          "증시안정조치 진행상황 확인"
+        ],
+        "duplicate_issue_ids": [],
+        "rationale": "금융위원회 보도자료 제목에 따르면 금융시장 동향 및 증시안정조치 진행상황을 점검한 것으로 나타나 정책 및 리스크 검토 후보가 됩니다.",
+        "relevance": "relevant",
+        "suggested_topic_id": "risk"
+      }
+    },
     "issue-e8eef2bb64761c768652": {
-      "status": "not_analyzed",
+      "status": "completed",
       "reason_code": null,
       "input_fingerprint": "4d9b3e194568063f55a17812e879f0b2855e40ff076482fde0a4dbf9a643104c",
       "input_evidence_ids": [
         "version-95378bf4891f306dc915"
       ],
-      "result_fingerprint": null,
-      "analyzed_at": null,
+      "result_fingerprint": "4d9b3e194568063f55a17812e879f0b2855e40ff076482fde0a4dbf9a643104c",
+      "analyzed_at": "2026-11-28T02:45:02.404779+00:00",
       "error_code": null,
-      "result": null
+      "result": {
+        "check_points": [
+          "고객정보 유출 추가 확인 경위 확인",
+          "유출 피해 규모 및 대응 조치 확인"
+        ],
+        "duplicate_issue_ids": [],
+        "rationale": "연합인포맥스 기사 제목에 따르면 삼성증권의 고객정보 유출 인원이 추가로 확인된 것으로 나타나 리스크 및 보안 점검 후보가 됩니다.",
+        "relevance": "relevant",
+        "suggested_topic_id": "risk"
+      }
     },
     "issue-c9258c68f1aa1aee39e5": {
-      "status": "not_analyzed",
+      "status": "completed",
       "reason_code": null,
       "input_fingerprint": "c592d2c23f2ae06769a48046ac7976a0e780b2a171245bed7f1fdfb370afa5be",
       "input_evidence_ids": [
         "version-73694c1dc820cb3643f6"
       ],
-      "result_fingerprint": null,
-      "analyzed_at": null,
+      "result_fingerprint": "c592d2c23f2ae06769a48046ac7976a0e780b2a171245bed7f1fdfb370afa5be",
+      "analyzed_at": "2026-11-28T02:45:02.404779+00:00",
       "error_code": null,
-      "result": null
+      "result": {
+        "check_points": [
+          "금감원 정기검사 착수 배경 확인",
+          "LS증권 관련 검사 대상 업무 확인"
+        ],
+        "duplicate_issue_ids": [],
+        "rationale": "연합인포맥스 기사 제목에 따르면 금감원이 LS증권에 대한 첫 정기검사에 착수한 것으로 나타나 규제 및 리스크 검토 후보가 됩니다.",
+        "relevance": "relevant",
+        "suggested_topic_id": "risk"
+      }
     },
     "issue-952c4771653ad40c6afc": {
       "status": "completed",
